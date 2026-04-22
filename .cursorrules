@@ -1,0 +1,23 @@
+# Project Identity
+- **Project:** CFIP-V1.5 (Carrier-First Integration Platform) / Project TNA.
+- **Roles:** Visitor, Owner, Carrier, Government.
+- **Tech Stack:** Next.js 15+ (App Router), Tailwind CSS, TNAContext.
+
+# SPATIAL Design System (Visual Rules)
+- **Primary Brand Colors:** Navy (`#02488D`), Cyan Mid (`#00B4C9`), Cyan Light (`#18CCE5`).
+- **Typography:** Use `Rubik` for all English/Arabic UI text, and `JetBrains Mono` specifically for TNA Codes (e.g., TNA-XXXX).
+- **Buttons (Primary):** Must use `radius-pill` (999px) and a linear gradient background from Navy to Cyan Mid (`linear-gradient(135deg, #02488D, #00B4C9)`).
+- **Buttons (Secondary/Outline):** Transparent background with `1.5px solid #00B4C9` border and Navy text.
+- **RTL Standards:** Always use Tailwind logical properties (`ps-*`, `pe-*`, `ms-*`, `me-*`) to ensure seamless LTR/RTL flipping.
+
+# CFIP Data Model Constraints (Business Logic)
+- [cite_start]**Financial Rule (CRITICAL):** Binding activation is strictly BLOCKED until `financial_transaction.status = PAID`[cite: 112].
+- [cite_start]**Accounting:** Every `rent_contract` must have balanced `ledger_entries` (debit sum = credit sum)[cite: 182].
+- [cite_start]**Verification Rule:** No `na_sub_address` can be used in a binding unless `is_verified = TRUE` and approved by a `gov_user`[cite: 186, 187].
+- **Audit Immutability:** The `admin_audit_log` table is IMMUTABLE. [cite_start]Never write code that attempts to update or delete records here[cite: 192].
+
+# Agent Testing Protocol
+- Use Playwright for E2E testing.
+- ALWAYS check `package.json` before suggesting new imports.
+- If a test fails in the terminal, automatically analyze the error, locate the failing Next.js component or route, apply a fix, and re-run.
+- NEVER use placeholders like "// TODO". Fully implement based on the CFIP data model.

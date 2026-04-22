@@ -1,0 +1,28 @@
+{
+    "common": {
+        "next": "Next",
+        "back": "Back",
+        "confirm": "Confirm",
+        "cancel": "Cancel",
+        "loading": "Loading..."
+    },
+    "auth": {
+        "title": "Create New Account",
+        "personal_data": "Personal Data",
+        "full_name": "Official Full Name",
+        "doc_number": "Official Document Number",
+        "passport": "Passport",
+        "national_id": "National ID",
+        "iqama": "Iqama",
+        "dob": "Date of Birth",
+        "mobile": "Mobile Number",
+        "confirm_checkbox": "I declare that all personal data is correct",
+        "account_data": "User Account Data",
+        "username": "Username",
+        "email": "Email Address",
+        "password": "Password",
+        "confirm_password": "Confirm Password",
+        "terms_and_conditions": "I agree to the terms and conditions",
+        "create_account": "Create New User Account"
+    }
+}
