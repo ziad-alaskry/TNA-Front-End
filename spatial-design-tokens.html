@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPATIAL — Design Token System</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* ─── BRAND PRIMITIVES (Source: Brand PDF) ─── */
+    --primitive-cyan-light:   #18CCE5;
+    --primitive-cyan-mid:     #00B4C9;
+    --primitive-navy:         #02488D;
+    --primitive-gray-mid:     #B7B7B7;
+
+    /* ─── EXTENDED PALETTE (Source: Figma UI samples) ─── */
+    --primitive-cyan-hover:   #0FB5CC;
+    --primitive-navy-dark:    #013A70;
+    --primitive-navy-light:   #1A6FC4;
+    --primitive-amber:        #F5A623;   /* status badge from Home-Screen-1 */
+    --primitive-green:        #28A745;   /* success checkmark */
+    --primitive-red:          #DC3545;
+    --primitive-orange:       #FD7E14;
+
+    /* ─── SEMANTIC: BRAND ─── */
+    --color-brand-primary:    var(--primitive-navy);
+    --color-brand-secondary:  var(--primitive-cyan-mid);
+    --color-brand-accent:     var(--primitive-cyan-light);
+
+    /* ─── SEMANTIC: STATUS ─── */
+    --color-success:          #28A745;
+    --color-success-bg:       #E8F7EC;
+    --color-success-border:   #A3D9B1;
+    --color-error:            #DC3545;
+    --color-error-bg:         #FDECEA;
+    --color-error-border:     #F5B3BA;
+    --color-warning:          #F5A623;
+    --color-warning-bg:       #FEF6E7;
+    --color-warning-border:   #FAD98D;
+    --color-info:             var(--primitive-cyan-mid);
+    --color-info-bg:          #E6F7FA;
+    --color-info-border:      #99DDE8;
+    --color-pending:          #1A6FC4;   /* "under processing" teal-blue spinner */
+    --color-pending-bg:       #EAF2FB;
+
+    /* ─── SEMANTIC: NEUTRAL SCALE (9-step) ─── */
+    --neutral-50:   #FAFAFA;   /* app background (splash/forms) */
+    --neutral-100:  #F4F5F6;   /* screen bg, list areas */
+    --neutral-200:  #EAECEE;   /* section separator fills */
+    --neutral-300:  #D8DBDF;   /* divider lines, borders */
+    --neutral-400:  #B7B7B7;   /* icon inactive, placeholder */
+    --neutral-500:  #8C9098;   /* body text secondary */
+    --neutral-600:  #5C6370;   /* sub-labels */
+    --neutral-700:  #3A3F47;   /* body text primary */
+    --neutral-800:  #1E2228;   /* headings */
+    --neutral-900:  #0A0D10;   /* display text */
+
+    /* ─── SEMANTIC: SURFACE LEVELS ─── */
+    --surface-100:  var(--neutral-100);   /* main app background */
+    --surface-200:  #FFFFFF;              /* cards, form containers */
+    --surface-300:  #FFFFFF;              /* modals, bottom sheets */
+    --surface-dark-100: var(--primitive-navy);
+    --surface-dark-200: var(--primitive-navy-dark);
+
+    /* ─── TYPOGRAPHY ─── */
+    --font-family-en:  'Rubik', sans-serif;
+    --font-family-ar:  'Rubik', sans-serif;
+    --font-family-code: 'JetBrains Mono', monospace;
+
+    /* Scale (Display → Code) */
+    --text-display-size:    32px;   /* app name / splash heading */
+    --text-display-weight:  800;
+    --text-display-lh:      1.2;
+    --text-display-ls:      -0.02em;
+
+    --text-heading-size:    22px;   /* section headings */
+    --text-heading-weight:  700;
+    --text-heading-lh:      1.3;
+    --text-heading-ls:      -0.01em;
+
+    --text-subheading-size:   17px;
+    --text-subheading-weight: 600;
+    --text-subheading-lh:     1.4;
+    --text-subheading-ls:     0;
+
+    --text-body-size:       15px;   /* list items, descriptions */
+    --text-body-weight:     400;
+    --text-body-lh:         1.6;
+    --text-body-ls:         0;
+
+    --text-body-medium-weight: 500;
+
+    --text-label-size:      13px;   /* input labels, captions */
+    --text-label-weight:    400;
+    --text-label-lh:        1.5;
+    --text-label-ls:        0.01em;
+
+    --text-caption-size:    11px;
+    --text-caption-weight:  400;
+    --text-caption-lh:      1.4;
+    --text-caption-ls:      0.02em;
+
+    --text-code-size:       14px;   /* TNA address codes */
+    --text-code-weight:     500;
+    --text-code-lh:         1.5;
+    --text-code-ls:         0.04em;
+
+    /* ─── SPACING (Base unit: 4px) ─── */
+    --space-1:   4px;
+    --space-2:   8px;
+    --space-3:   12px;
+    --space-4:   16px;
+    --space-5:   20px;
+    --space-6:   24px;
+    --space-7:   28px;
+    --space-8:   32px;
+    --space-10:  40px;
+    --space-12:  48px;
+    --space-16:  64px;
+
+    /* Screen horizontal padding = 20px (5 units) */
+    --layout-screen-padding: var(--space-5);
+    --layout-section-gap:    var(--space-6);
+    --layout-card-padding:   var(--space-4);
+
+    /* ─── BORDER RADIUS ─── */
+    --radius-xs:   6px;    /* checkbox, small tags */
+    --radius-sm:   10px;   /* input fields, small cards */
+    --radius-md:   14px;   /* standard cards */
+    --radius-lg:   20px;   /* large cards, modals */
+    --radius-pill: 999px;  /* primary CTA buttons */
+
+    /* ─── SHADOWS ─── */
+    --shadow-card:    0 2px 8px rgba(2,72,141,0.08);
+    --shadow-modal:   0 8px 32px rgba(2,72,141,0.16);
+    --shadow-btn:     0 4px 16px rgba(0,180,201,0.30);
+
+    /* ─── COMPONENT: PRIMARY BUTTON ─── */
+    --btn-primary-bg-from:   var(--primitive-navy);
+    --btn-primary-bg-to:     var(--primitive-cyan-mid);
+    --btn-primary-height:    56px;
+    --btn-primary-padding:   0 var(--space-6);
+    --btn-primary-radius:    var(--radius-pill);
+    --btn-primary-font-size: var(--text-body-size);
+    --btn-primary-weight:    700;
+    --btn-primary-color:     #FFFFFF;
+    --btn-primary-shadow:    var(--shadow-btn);
+
+    /* ─── COMPONENT: OUTLINE BUTTON ─── */
+    --btn-outline-height:    52px;
+    --btn-outline-radius:    var(--radius-pill);
+    --btn-outline-border:    1.5px solid var(--primitive-cyan-mid);
+    --btn-outline-color:     var(--primitive-navy);
+
+    /* ─── COMPONENT: INPUT FIELD ─── */
+    --input-height:          52px;
+    --input-padding:         0 var(--space-4);
+    --input-radius:          var(--radius-sm);
+    --input-bg:              #FFFFFF;
+    --input-border:          1px solid var(--neutral-300);
+    --input-border-focus:    1.5px solid var(--primitive-cyan-mid);
+    --input-font-size:       var(--text-body-size);
+    --input-placeholder-color: var(--neutral-400);
+    --input-icon-color:      var(--neutral-400);
+
+    /* ─── COMPONENT: DROPDOWN/SELECT ─── */
+    --select-trigger-bg:     var(--neutral-700);
+    --select-trigger-radius: var(--radius-pill);
+    --select-trigger-color:  #FFFFFF;
+    --select-trigger-height: var(--input-height);
+
+    /* ─── NAVIGATION BAR ─── */
+    --navbar-height:         72px;
+    --navbar-bg:             #FFFFFF;
+    --navbar-border:         1px solid var(--neutral-200);
+    --navbar-icon-active:    var(--primitive-navy);
+    --navbar-icon-inactive:  var(--neutral-400);
+    --navbar-label-size:     var(--text-caption-size);
+    --navbar-active-indicator: 3px solid var(--primitive-amber); /* orange underline on active tab */
+
+    /* ─── STATUS CHIPS ─── */
+    --chip-success-bg:   var(--color-success-bg);
+    --chip-success-text: var(--color-success);
+    --chip-pending-bg:   var(--color-pending-bg);
+    --chip-pending-text: var(--color-pending);
+    --chip-unlinked-bg:  var(--neutral-100);
+    --chip-unlinked-text:var(--neutral-500);
+    --chip-radius:       var(--radius-xs);
+    --chip-padding:      var(--space-1) var(--space-2);
+    --chip-font-size:    var(--text-label-size);
+  }
+
+  /* ══════════════════════════════════════════
+     DOCUMENT STYLES
+  ══════════════════════════════════════════ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-family-en);
+    background: var(--neutral-100);
+    color: var(--neutral-800);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page-header {
+    background: var(--primitive-navy);
+    color: white;
+    padding: 48px 48px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    right: -80px; top: -80px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(24,204,229,0.18) 0%, transparent 70%);
+  }
+  .page-header .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(24,204,229,0.15);
+    border: 1px solid rgba(24,204,229,0.3);
+    color: var(--primitive-cyan-light);
+    font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 12px; border-radius: 99px;
+    margin-bottom: 16px;
+  }
+  .page-header h1 {
+    font-size: 36px; font-weight: 800; letter-spacing: -0.02em;
+    color: #fff;
+  }
+  .page-header h1 span { color: var(--primitive-cyan-light); }
+  .page-header p { color: rgba(255,255,255,0.65); font-size: 14px; margin-top: 8px; max-width: 540px; }
+
+  .content { max-width: 1100px; margin: 0 auto; padding: 40px 40px 80px; }
+
+  /* Section */
+  .section { margin-bottom: 56px; }
+  .section-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--neutral-200);
+  }
+  .section-header .num {
+    display: flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; border-radius: 8px;
+    background: var(--primitive-navy); color: white;
+    font-size: 12px; font-weight: 700;
+  }
+  .section-header h2 { font-size: 18px; font-weight: 700; color: var(--neutral-900); }
+  .section-header .src { font-size: 11px; font-weight: 500; color: var(--neutral-500); margin-left: auto;
+    border: 1px solid var(--neutral-300); padding: 2px 8px; border-radius: 99px; }
+
+  /* Code block */
+  pre {
+    background: #0D1117;
+    color: #E6EDF3;
+    font-family: var(--font-family-code);
+    font-size: 13px;
+    line-height: 1.7;
+    padding: 24px 28px;
+    border-radius: 12px;
+    overflow-x: auto;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .kw  { color: #FF7B72; }   /* keyword */
+  .str { color: #A5D6FF; }   /* string */
+  .cmt { color: #6E7681; }   /* comment */
+  .fn  { color: #D2A8FF; }   /* function/key */
+  .num { color: #79C0FF; }   /* number */
+  .obj { color: #FFA657; }   /* object key */
+
+  /* Swatch grid */
+  .swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+  .swatch {
+    border-radius: 10px; overflow: hidden;
+    box-shadow: var(--shadow-card);
+    background: white;
+  }
+  .swatch-color { height: 64px; }
+  .swatch-info { padding: 10px 12px; }
+  .swatch-name { font-size: 11px; font-weight: 600; color: var(--neutral-600); text-transform: uppercase; letter-spacing: 0.05em; }
+  .swatch-hex  { font-family: var(--font-family-code); font-size: 12px; color: var(--neutral-800); margin-top: 2px; }
+  .swatch-token{ font-size: 10px; color: var(--neutral-400); margin-top: 2px; }
+
+  /* Token table */
+  .token-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .token-table th {
+    text-align: left; padding: 10px 14px;
+    background: var(--neutral-200); color: var(--neutral-600);
+    font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .token-table td { padding: 10px 14px; border-bottom: 1px solid var(--neutral-200); vertical-align: middle; }
+  .token-table tr:last-child td { border-bottom: none; }
+  .token-table tr:hover td { background: var(--neutral-50); }
+  .token-name { font-family: var(--font-family-code); color: var(--primitive-navy); font-size: 12px; }
+  .token-val  { font-family: var(--font-family-code); color: var(--neutral-600); font-size: 12px; }
+  .token-preview-color { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: middle; margin-right: 6px; border: 1px solid rgba(0,0,0,0.1); }
+
+  /* Component spec cards */
+  .spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .spec-card {
+    background: white; border-radius: 14px;
+    padding: 20px 24px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--neutral-200);
+  }
+  .spec-card h3 { font-size: 14px; font-weight: 700; color: var(--neutral-900); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .spec-card h3::before {
+    content: '';
+    display: inline-block; width: 3px; height: 14px;
+    background: var(--primitive-cyan-mid); border-radius: 99px;
+  }
+  .spec-row { display: flex; justify-content: space-between; align-items: center;
+    padding: 7px 0; border-bottom: 1px dashed var(--neutral-200); font-size: 12px; }
+  .spec-row:last-child { border-bottom: none; }
+  .spec-row .key { color: var(--neutral-500); }
+  .spec-row .val { font-family: var(--font-family-code); color: var(--primitive-navy); font-weight: 500; }
+
+  /* Live previews */
+  .preview-area {
+    background: var(--neutral-100);
+    border: 1px dashed var(--neutral-300);
+    border-radius: 14px;
+    padding: 28px 24px;
+    display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
+  }
+
+  .demo-btn-primary {
+    height: var(--btn-primary-height);
+    padding: var(--btn-primary-padding);
+    border-radius: var(--btn-primary-radius);
+    background: linear-gradient(135deg, var(--btn-primary-bg-from), var(--btn-primary-bg-to));
+    color: var(--btn-primary-color);
+    font-family: var(--font-family-en);
+    font-size: var(--btn-primary-font-size);
+    font-weight: var(--btn-primary-weight);
+    border: none; cursor: pointer;
+    box-shadow: var(--btn-primary-shadow);
+    min-width: 180px;
+  }
+  .demo-btn-outline {
+    height: var(--btn-outline-height);
+    padding: 0 var(--space-6);
+    border-radius: var(--btn-outline-radius);
+    border: var(--btn-outline-border);
+    background: transparent;
+    color: var(--btn-outline-color);
+    font-family: var(--font-family-en);
+    font-size: var(--text-body-size);
+    font-weight: 600;
+    cursor: pointer;
+    min-width: 160px;
+  }
+  .demo-input {
+    height: var(--input-height);
+    padding: var(--input-padding);
+    border-radius: var(--input-radius);
+    border: var(--input-border);
+    background: var(--input-bg);
+    font-family: var(--font-family-en);
+    font-size: var(--input-font-size);
+    color: var(--neutral-700);
+    width: 220px;
+    outline: none;
+  }
+  .demo-input:focus { border: var(--input-border-focus); }
+  .demo-input::placeholder { color: var(--input-placeholder-color); }
+
+  .demo-chip-success {
+    background: var(--chip-success-bg); color: var(--chip-success-text);
+    font-size: var(--chip-font-size); font-weight: 600;
+    padding: var(--chip-padding); border-radius: var(--chip-radius);
+  }
+  .demo-chip-pending {
+    background: var(--chip-pending-bg); color: var(--chip-pending-text);
+    font-size: var(--chip-font-size); font-weight: 600;
+    padding: var(--chip-padding); border-radius: var(--chip-radius);
+  }
+  .demo-chip-warning {
+    background: var(--color-warning-bg); color: var(--color-warning);
+    font-size: var(--chip-font-size); font-weight: 600;
+    padding: var(--chip-padding); border-radius: var(--chip-radius);
+  }
+
+  .tabs { display: flex; gap: 0; background: white; border: 1px solid var(--neutral-200); border-radius: 10px; overflow: hidden; margin-bottom: 16px; }
+  .tab { flex: 1; padding: 10px 16px; font-size: 13px; font-weight: 600; cursor: pointer; background: none; border: none; font-family: var(--font-family-en); color: var(--neutral-500); transition: all 0.15s; }
+  .tab.active { background: var(--primitive-navy); color: white; }
+
+  .code-block-wrapper { position: relative; }
+  .copy-note { position: absolute; top: 12px; right: 16px; font-size: 10px; color: var(--neutral-500); font-family: var(--font-family-code); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 700px) { .grid-2, .spec-grid { grid-template-columns: 1fr; } }
+
+  .info-callout {
+    background: var(--color-info-bg);
+    border-left: 3px solid var(--primitive-cyan-mid);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    font-size: 13px; color: var(--neutral-700);
+    margin-bottom: 20px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ──────────── HEADER ──────────── -->
+<div class="page-header">
+  <div class="badge">⬡ SPATIAL · Design Token System · v1.0</div>
+  <h1>SPATIAL <span>Token</span> Architecture</h1>
+  <p>Extracted from the SPATIAL Visual Identity PDF + 14 Figma app screens. Production-ready for Tailwind CSS and vanilla CSS. Powers 6 Master Shell Templates.</p>
+</div>
+
+<div class="content">
+
+  <!-- ── 1. COLOR PALETTE ── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">1</div>
+      <h2>Brand Primitives & Color Palette</h2>
+      <span class="src">Source: Brand PDF + Figma Samples</span>
+    </div>
+
+    <p style="font-size:13px;color:var(--neutral-500);margin-bottom:16px;">Core brand colors extracted from the Visual Identity PDF. Semantic tokens extend these for UI use.</p>
+
+    <div class="swatch-grid" style="margin-bottom:24px;">
+      <div class="swatch"><div class="swatch-color" style="background:#02488D;"></div><div class="swatch-info"><div class="swatch-name">Navy / Primary</div><div class="swatch-hex">#02488D</div><div class="swatch-token">--color-brand-primary</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#00B4C9;"></div><div class="swatch-info"><div class="swatch-name">Cyan Mid</div><div class="swatch-hex">#00B4C9</div><div class="swatch-token">--color-brand-secondary</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#18CCE5;"></div><div class="swatch-info"><div class="swatch-name">Cyan Light</div><div class="swatch-hex">#18CCE5</div><div class="swatch-token">--color-brand-accent</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#F5A623;"></div><div class="swatch-info"><div class="swatch-name">Amber / Active</div><div class="swatch-hex">#F5A623</div><div class="swatch-token">--color-warning</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#28A745;"></div><div class="swatch-info"><div class="swatch-name">Success Green</div><div class="swatch-hex">#28A745</div><div class="swatch-token">--color-success</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#DC3545;"></div><div class="swatch-info"><div class="swatch-name">Error Red</div><div class="swatch-hex">#DC3545</div><div class="swatch-token">--color-error</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#1A6FC4;"></div><div class="swatch-info"><div class="swatch-name">Processing Blue</div><div class="swatch-hex">#1A6FC4</div><div class="swatch-token">--color-pending</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#B7B7B7;"></div><div class="swatch-info"><div class="swatch-name">Gray Mid</div><div class="swatch-hex">#B7B7B7</div><div class="swatch-token">--neutral-400</div></div></div>
+    </div>
+
+    <p style="font-size:13px;color:var(--neutral-600);margin-bottom:12px;font-weight:600;">9-Step Neutral Scale</p>
+    <div style="display:grid;grid-template-columns:repeat(9,1fr);border-radius:10px;overflow:hidden;box-shadow:var(--shadow-card);">
+      <div style="background:#FAFAFA;height:48px;"></div>
+      <div style="background:#F4F5F6;height:48px;"></div>
+      <div style="background:#EAECEE;height:48px;"></div>
+      <div style="background:#D8DBDF;height:48px;"></div>
+      <div style="background:#B7B7B7;height:48px;"></div>
+      <div style="background:#8C9098;height:48px;"></div>
+      <div style="background:#5C6370;height:48px;"></div>
+      <div style="background:#3A3F47;height:48px;"></div>
+      <div style="background:#1E2228;height:48px;"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(9,1fr);font-size:10px;color:var(--neutral-500);font-family:var(--font-family-code);text-align:center;margin-top:4px;">
+      <div>50</div><div>100</div><div>200</div><div>300</div><div>400</div><div>500</div><div>600</div><div>700</div><div>800</div>
+    </div>
+  </div>
+
+  <!-- ── 2. TYPOGRAPHY ── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">2</div>
+      <h2>Typography System</h2>
+      <span class="src">Source: Brand PDF (Rubik) + Figma</span>
+    </div>
+
+    <div class="info-callout">
+      Font family: <strong>Rubik</strong> — used for both English and Arabic (supports Arabic script). Weights: <strong>300 Light · 400 Regular · 500 Medium · 700 Bold · 800 ExtraBold</strong>. Address codes use <strong>JetBrains Mono</strong>.
+    </div>
+
+    <table class="token-table" style="background:white;border-radius:12px;overflow:hidden;box-shadow:var(--shadow-card);">
+      <thead><tr><th>Role</th><th>Token Prefix</th><th>Size</th><th>Weight</th><th>Line-Height</th><th>Letter-Spacing</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td><span style="font-size:28px;font-weight:800;color:#0D1117;">Aa</span></td><td class="token-name">--text-display</td><td class="token-val">32px</td><td class="token-val">800</td><td class="token-val">1.2</td><td class="token-val">-0.02em</td><td style="font-size:12px;color:var(--neutral-500);">Splash screen app name</td></tr>
+        <tr><td><span style="font-size:22px;font-weight:700;color:#1E2228;">Aa</span></td><td class="token-name">--text-heading</td><td class="token-val">22px</td><td class="token-val">700</td><td class="token-val">1.3</td><td class="token-val">-0.01em</td><td style="font-size:12px;color:var(--neutral-500);">Section headings, card titles</td></tr>
+        <tr><td><span style="font-size:17px;font-weight:600;color:#3A3F47;">Aa</span></td><td class="token-name">--text-subheading</td><td class="token-val">17px</td><td class="token-val">600</td><td class="token-val">1.4</td><td class="token-val">0</td><td style="font-size:12px;color:var(--neutral-500);">Nav bar screen title, form labels</td></tr>
+        <tr><td><span style="font-size:15px;font-weight:400;color:#3A3F47;">Aa</span></td><td class="token-name">--text-body</td><td class="token-val">15px</td><td class="token-val">400 / 500</td><td class="token-val">1.6</td><td class="token-val">0</td><td style="font-size:12px;color:var(--neutral-500);">List items, descriptions</td></tr>
+        <tr><td><span style="font-size:13px;font-weight:400;color:#5C6370;">Aa</span></td><td class="token-name">--text-label</td><td class="token-val">13px</td><td class="token-val">400</td><td class="token-val">1.5</td><td class="token-val">0.01em</td><td style="font-size:12px;color:var(--neutral-500);">Input placeholder, captions</td></tr>
+        <tr><td><span style="font-size:11px;font-weight:400;color:#8C9098;">Aa</span></td><td class="token-name">--text-caption</td><td class="token-val">11px</td><td class="token-val">400</td><td class="token-val">1.4</td><td class="token-val">0.02em</td><td style="font-size:12px;color:var(--neutral-500);">Tab bar labels, helper text</td></tr>
+        <tr><td><span style="font-family:monospace;font-size:14px;color:#02488D;">TNA-</span></td><td class="token-name">--text-code</td><td class="token-val">14px</td><td class="token-val">500</td><td class="token-val">1.5</td><td class="token-val">0.04em</td><td style="font-size:12px;color:var(--neutral-500);">Address codes (TNA-XXXX), IDs</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── 3. SPACING & RADII ── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">3</div>
+      <h2>Atomic Scale — Spacing & Radii</h2>
+      <span class="src">Source: Figma Samples</span>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <p style="font-size:12px;font-weight:600;color:var(--neutral-600);margin-bottom:12px;">SPACING — Base Unit: 4px</p>
+        <table class="token-table" style="background:white;border-radius:12px;overflow:hidden;box-shadow:var(--shadow-card);">
+          <thead><tr><th>Token</th><th>Value</th><th>rem</th><th>Usage</th></tr></thead>
+          <tbody>
+            <tr><td class="token-name">--space-1</td><td class="token-val">4px</td><td class="token-val">0.25rem</td><td style="font-size:11px;color:var(--neutral-500);">Icon gap, tight padding</td></tr>
+            <tr><td class="token-name">--space-2</td><td class="token-val">8px</td><td class="token-val">0.5rem</td><td style="font-size:11px;color:var(--neutral-500);">Chip padding, list row gap</td></tr>
+            <tr><td class="token-name">--space-3</td><td class="token-val">12px</td><td class="token-val">0.75rem</td><td style="font-size:11px;color:var(--neutral-500);">Internal card gap</td></tr>
+            <tr><td class="token-name">--space-4</td><td class="token-val">16px</td><td class="token-val">1rem</td><td style="font-size:11px;color:var(--neutral-500);">Card padding, input padding</td></tr>
+            <tr><td class="token-name">--space-5</td><td class="token-val">20px</td><td class="token-val">1.25rem</td><td style="font-size:11px;color:var(--neutral-500);"><strong>Screen side padding</strong></td></tr>
+            <tr><td class="token-name">--space-6</td><td class="token-val">24px</td><td class="token-val">1.5rem</td><td style="font-size:11px;color:var(--neutral-500);">Section gap, btn padding-x</td></tr>
+            <tr><td class="token-name">--space-8</td><td class="token-val">32px</td><td class="token-val">2rem</td><td style="font-size:11px;color:var(--neutral-500);">Between sections</td></tr>
+            <tr><td class="token-name">--space-12</td><td class="token-val">48px</td><td class="token-val">3rem</td><td style="font-size:11px;color:var(--neutral-500);">Top spacing on forms</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <p style="font-size:12px;font-weight:600;color:var(--neutral-600);margin-bottom:12px;">BORDER RADIUS</p>
+        <table class="token-table" style="background:white;border-radius:12px;overflow:hidden;box-shadow:var(--shadow-card);">
+          <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
+          <tbody>
+            <tr><td class="token-name">--radius-xs</td><td class="token-val">6px</td><td style="font-size:11px;color:var(--neutral-500);">Checkboxes, small tags</td></tr>
+            <tr><td class="token-name">--radius-sm</td><td class="token-val">10px</td><td style="font-size:11px;color:var(--neutral-500);">Input fields, dropdowns</td></tr>
+            <tr><td class="token-name">--radius-md</td><td class="token-val">14px</td><td style="font-size:11px;color:var(--neutral-500);">Standard list cards</td></tr>
+            <tr><td class="token-name">--radius-lg</td><td class="token-val">20px</td><td style="font-size:11px;color:var(--neutral-500);">Feature cards, modals</td></tr>
+            <tr><td class="token-name">--radius-pill</td><td class="token-val">999px</td><td style="font-size:11px;color:var(--neutral-500);"><strong>Primary CTA buttons</strong></td></tr>
+          </tbody>
+        </table>
+
+        <p style="font-size:12px;font-weight:600;color:var(--neutral-600);margin:16px 0 12px;">SURFACE LEVELS</p>
+        <table class="token-table" style="background:white;border-radius:12px;overflow:hidden;box-shadow:var(--shadow-card);">
+          <thead><tr><th>Token</th><th>Color</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr><td class="token-name">--surface-100</td><td><span class="token-preview-color" style="background:#F4F5F6;"></span><span class="token-val">#F4F5F6</span></td><td style="font-size:11px;color:var(--neutral-500);">Main app background</td></tr>
+            <tr><td class="token-name">--surface-200</td><td><span class="token-preview-color" style="background:#FFFFFF;border-color:#ddd;"></span><span class="token-val">#FFFFFF</span></td><td style="font-size:11px;color:var(--neutral-500);">Cards, form containers</td></tr>
+            <tr><td class="token-name">--surface-300</td><td><span class="token-preview-color" style="background:#FFFFFF;border-color:#ddd;"></span><span class="token-val">#FFFFFF</span></td><td style="font-size:11px;color:var(--neutral-500);">Modals, bottom sheets</td></tr>
+            <tr><td class="token-name">--surface-dark</td><td><span class="token-preview-color" style="background:#02488D;"></span><span class="token-val">#02488D</span></td><td style="font-size:11px;color:var(--neutral-500);">Dark cards, nav overlays</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 4. COMPONENT SPECS ── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">4</div>
+      <h2>Component Reference — Buttons & Inputs</h2>
+      <span class="src">Source: Figma Samples</span>
+    </div>
+
+    <p style="font-size:13px;color:var(--neutral-500);margin-bottom:16px;">Live previews rendered from the tokens defined in this document.</p>
+
+    <div class="preview-area" style="margin-bottom:20px;">
+      <button class="demo-btn-primary">تسجيل الدخول</button>
+      <button class="demo-btn-outline">إنشاء حساب جديد</button>
+      <input class="demo-input" placeholder="الأسم الثلاثي الرسمي" />
+      <span class="demo-chip-success">✓ مرتبط بنجاح</span>
+      <span class="demo-chip-pending">⟳ تحت المعالجة</span>
+      <span class="demo-chip-warning">◉ غير مرتبط</span>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <h3>Primary Button (CTA)</h3>
+        <div class="spec-row"><span class="key">Height</span><span class="val">56px</span></div>
+        <div class="spec-row"><span class="key">Padding X</span><span class="val">24px</span></div>
+        <div class="spec-row"><span class="key">Border Radius</span><span class="val">999px (pill)</span></div>
+        <div class="spec-row"><span class="key">Background</span><span class="val">gradient(#02488D → #00B4C9)</span></div>
+        <div class="spec-row"><span class="key">Font Size</span><span class="val">15px</span></div>
+        <div class="spec-row"><span class="key">Font Weight</span><span class="val">700 Bold</span></div>
+        <div class="spec-row"><span class="key">Color</span><span class="val">#FFFFFF</span></div>
+        <div class="spec-row"><span class="key">Shadow</span><span class="val">0 4px 16px rgba(0,180,201,.30)</span></div>
+        <div class="spec-row"><span class="key">Min Width</span><span class="val">full-width (screen − 40px)</span></div>
+      </div>
+
+      <div class="spec-card">
+        <h3>Outline Button (Secondary)</h3>
+        <div class="spec-row"><span class="key">Height</span><span class="val">52px</span></div>
+        <div class="spec-row"><span class="key">Padding X</span><span class="val">24px</span></div>
+        <div class="spec-row"><span class="key">Border Radius</span><span class="val">999px (pill)</span></div>
+        <div class="spec-row"><span class="key">Background</span><span class="val">transparent</span></div>
+        <div class="spec-row"><span class="key">Border</span><span class="val">1.5px solid #00B4C9</span></div>
+        <div class="spec-row"><span class="key">Font Size</span><span class="val">15px</span></div>
+        <div class="spec-row"><span class="key">Font Weight</span><span class="val">600</span></div>
+        <div class="spec-row"><span class="key">Color</span><span class="val">#02488D</span></div>
+      </div>
+
+      <div class="spec-card">
+        <h3>Text Input Field</h3>
+        <div class="spec-row"><span class="key">Height</span><span class="val">52px</span></div>
+        <div class="spec-row"><span class="key">Padding X</span><span class="val">16px</span></div>
+        <div class="spec-row"><span class="key">Border Radius</span><span class="val">10px</span></div>
+        <div class="spec-row"><span class="key">Background</span><span class="val">#FFFFFF</span></div>
+        <div class="spec-row"><span class="key">Border (default)</span><span class="val">1px solid #D8DBDF</span></div>
+        <div class="spec-row"><span class="key">Border (focus)</span><span class="val">1.5px solid #00B4C9</span></div>
+        <div class="spec-row"><span class="key">Font Size</span><span class="val">15px</span></div>
+        <div class="spec-row"><span class="key">Placeholder Color</span><span class="val">#B7B7B7</span></div>
+        <div class="spec-row"><span class="key">Icon Color</span><span class="val">#B7B7B7 (leading icon)</span></div>
+      </div>
+
+      <div class="spec-card">
+        <h3>Dropdown / Select Trigger</h3>
+        <div class="spec-row"><span class="key">Height</span><span class="val">52px</span></div>
+        <div class="spec-row"><span class="key">Border Radius</span><span class="val">999px (pill)</span></div>
+        <div class="spec-row"><span class="key">Background (active)</span><span class="val">#3A3F47 (dark)</span></div>
+        <div class="spec-row"><span class="key">Color (active)</span><span class="val">#FFFFFF</span></div>
+        <div class="spec-row"><span class="key">Min Width</span><span class="val">~140px (label auto)</span></div>
+        <div class="spec-row"><span class="key">Chevron Icon</span><span class="val">16×16px, white</span></div>
+        <div class="spec-row"><span class="key">Note</span><span class="val">Appears adjacent to input</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 5. TAILWIND CONFIG ── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">5</div>
+      <h2>Tailwind CSS Config</h2>
+      <span class="src">Deliverable 1 of 3</span>
+    </div>
+    <div class="code-block-wrapper">
+      <span class="copy-note">tailwind.config.js</span>
+      <pre><span class="cmt">/** @type {import('tailwindcss').Config} */</span>
+<span class="kw">module</span>.<span class="fn">exports</span> = {
+  content: [<span class="str">'./src/**/*.{js,jsx,ts,tsx}'</span>],
+  theme: {
+    extend: {
+      <span class="obj">colors</span>: {
+        <span class="cmt">// ── Brand Primitives ──</span>
+        brand: {
+          navy:       <span class="str">'#02488D'</span>,
+          <span class="str">'navy-dark'</span>: <span class="str">'#013A70'</span>,
+          cyan:       <span class="str">'#00B4C9'</span>,
+          <span class="str">'cyan-light'</span>:<span class="str">'#18CCE5'</span>,
+        },
+        <span class="cmt">// ── Semantic Status ──</span>
+        success: {
+          DEFAULT: <span class="str">'#28A745'</span>,
+          bg:      <span class="str">'#E8F7EC'</span>,
+          border:  <span class="str">'#A3D9B1'</span>,
+        },
+        error: {
+          DEFAULT: <span class="str">'#DC3545'</span>,
+          bg:      <span class="str">'#FDECEA'</span>,
+          border:  <span class="str">'#F5B3BA'</span>,
+        },
+        warning: {
+          DEFAULT: <span class="str">'#F5A623'</span>,
+          bg:      <span class="str">'#FEF6E7'</span>,
+          border:  <span class="str">'#FAD98D'</span>,
+        },
+        info: {
+          DEFAULT: <span class="str">'#00B4C9'</span>,
+          bg:      <span class="str">'#E6F7FA'</span>,
+          border:  <span class="str">'#99DDE8'</span>,
+        },
+        pending: {
+          DEFAULT: <span class="str">'#1A6FC4'</span>,
+          bg:      <span class="str">'#EAF2FB'</span>,
+        },
+        <span class="cmt">// ── Neutral Scale (9-step) ──</span>
+        neutral: {
+          <span class="num">50</span>:  <span class="str">'#FAFAFA'</span>,
+          <span class="num">100</span>: <span class="str">'#F4F5F6'</span>,   <span class="cmt">// surface-100: app bg</span>
+          <span class="num">200</span>: <span class="str">'#EAECEE'</span>,   <span class="cmt">// borders, separators</span>
+          <span class="num">300</span>: <span class="str">'#D8DBDF'</span>,   <span class="cmt">// input border default</span>
+          <span class="num">400</span>: <span class="str">'#B7B7B7'</span>,   <span class="cmt">// placeholder, icon inactive</span>
+          <span class="num">500</span>: <span class="str">'#8C9098'</span>,   <span class="cmt">// secondary text</span>
+          <span class="num">600</span>: <span class="str">'#5C6370'</span>,   <span class="cmt">// sublabels</span>
+          <span class="num">700</span>: <span class="str">'#3A3F47'</span>,   <span class="cmt">// body text</span>
+          <span class="num">800</span>: <span class="str">'#1E2228'</span>,   <span class="cmt">// heading text</span>
+          <span class="num">900</span>: <span class="str">'#0A0D10'</span>,   <span class="cmt">// display text</span>
+        },
+      },
+      <span class="obj">fontFamily</span>: {
+        sans:  [<span class="str">'Rubik'</span>, <span class="str">'sans-serif'</span>],
+        arabic:[<span class="str">'Rubik'</span>, <span class="str">'sans-serif'</span>],
+        mono:  [<span class="str">'JetBrains Mono'</span>, <span class="str">'monospace'</span>],
+      },
+      <span class="obj">fontSize</span>: {
+        <span class="str">'display'</span>: [<span class="str">'32px'</span>, { lineHeight: <span class="str">'1.2'</span>, letterSpacing: <span class="str">'-0.02em'</span>, fontWeight: <span class="str">'800'</span> }],
+        <span class="str">'heading'</span>: [<span class="str">'22px'</span>, { lineHeight: <span class="str">'1.3'</span>, letterSpacing: <span class="str">'-0.01em'</span>, fontWeight: <span class="str">'700'</span> }],
+        <span class="str">'subheading'</span>:[<span class="str">'17px'</span>, { lineHeight: <span class="str">'1.4'</span>, fontWeight: <span class="str">'600'</span> }],
+        <span class="str">'body'</span>:    [<span class="str">'15px'</span>, { lineHeight: <span class="str">'1.6'</span> }],
+        <span class="str">'label'</span>:   [<span class="str">'13px'</span>, { lineHeight: <span class="str">'1.5'</span>, letterSpacing: <span class="str">'0.01em'</span> }],
+        <span class="str">'caption'</span>: [<span class="str">'11px'</span>, { lineHeight: <span class="str">'1.4'</span>, letterSpacing: <span class="str">'0.02em'</span> }],
+        <span class="str">'code'</span>:    [<span class="str">'14px'</span>, { lineHeight: <span class="str">'1.5'</span>, letterSpacing: <span class="str">'0.04em'</span> }],
+      },
+      <span class="obj">spacing</span>: {
+        <span class="str">'1'</span>:  <span class="str">'4px'</span>,
+        <span class="str">'2'</span>:  <span class="str">'8px'</span>,
+        <span class="str">'3'</span>:  <span class="str">'12px'</span>,
+        <span class="str">'4'</span>:  <span class="str">'16px'</span>,
+        <span class="str">'5'</span>:  <span class="str">'20px'</span>,   <span class="cmt">// screen-padding</span>
+        <span class="str">'6'</span>:  <span class="str">'24px'</span>,   <span class="cmt">// section-gap</span>
+        <span class="str">'7'</span>:  <span class="str">'28px'</span>,
+        <span class="str">'8'</span>:  <span class="str">'32px'</span>,
+        <span class="str">'10'</span>: <span class="str">'40px'</span>,
+        <span class="str">'12'</span>: <span class="str">'48px'</span>,
+        <span class="str">'16'</span>: <span class="str">'64px'</span>,
+      },
+      <span class="obj">borderRadius</span>: {
+        <span class="str">'xs'</span>:   <span class="str">'6px'</span>,
+        <span class="str">'sm'</span>:   <span class="str">'10px'</span>,
+        <span class="str">'md'</span>:   <span class="str">'14px'</span>,
+        <span class="str">'lg'</span>:   <span class="str">'20px'</span>,
+        <span class="str">'pill'</span>: <span class="str">'9999px'</span>,
+      },
+      <span class="obj">boxShadow</span>: {
+        <span class="str">'card'</span>:  <span class="str">'0 2px 8px rgba(2,72,141,0.08)'</span>,
+        <span class="str">'modal'</span>: <span class="str">'0 8px 32px rgba(2,72,141,0.16)'</span>,
+        <span class="str">'btn'</span>:   <span class="str">'0 4px 16px rgba(0,180,201,0.30)'</span>,
+      },
+      <span class="obj">height</span>: {
+        <span class="str">'btn-lg'</span>:    <span class="str">'56px'</span>,
+        <span class="str">'btn-md'</span>:    <span class="str">'52px'</span>,
+        <span class="str">'input'</span>:     <span class="str">'52px'</span>,
+        <span class="str">'navbar'</span>:    <span class="str">'72px'</span>,
+      },
+      <span class="obj">backgroundImage</span>: {
+        <span class="str">'btn-primary'</span>: <span class="str">'linear-gradient(135deg, #02488D, #00B4C9)'</span>,
+        <span class="str">'splash-bg'</span>:   <span class="str">'linear-gradient(150deg, #F4F5F6 60%, #E6F7FA 100%)'</span>,
+      },
+    },
+  },
+  plugins: [],
+};</pre>
+    </div>
+  </div>
+
+  <!-- ── 6. CSS VARIABLES ── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">6</div>
+      <h2>CSS Custom Properties</h2>
+      <span class="src">Deliverable 2 of 3</span>
+    </div>
+    <div class="code-block-wrapper">
+      <span class="copy-note">tokens.css</span>
+      <pre><span class="cmt">/* ═══════════════════════════════════════════════════
+   SPATIAL Design Token System — tokens.css
+   Source of truth: Brand PDF + 14 Figma Screens
+   Base unit: 4px grid
+═══════════════════════════════════════════════════ */</span>
+
+<span class="fn">:root</span> {
+
+  <span class="cmt">/* ─── BRAND PRIMITIVES ─── */</span>
+  <span class="obj">--primitive-cyan-light</span>:  <span class="str">#18CCE5</span>;
+  <span class="obj">--primitive-cyan-mid</span>:    <span class="str">#00B4C9</span>;
+  <span class="obj">--primitive-navy</span>:        <span class="str">#02488D</span>;
+  <span class="obj">--primitive-navy-dark</span>:   <span class="str">#013A70</span>;
+  <span class="obj">--primitive-navy-light</span>:  <span class="str">#1A6FC4</span>;
+  <span class="obj">--primitive-amber</span>:       <span class="str">#F5A623</span>;
+  <span class="obj">--primitive-green</span>:       <span class="str">#28A745</span>;
+  <span class="obj">--primitive-red</span>:         <span class="str">#DC3545</span>;
+
+  <span class="cmt">/* ─── SEMANTIC: BRAND ─── */</span>
+  <span class="obj">--color-brand-primary</span>:   <span class="str">#02488D</span>;
+  <span class="obj">--color-brand-secondary</span>: <span class="str">#00B4C9</span>;
+  <span class="obj">--color-brand-accent</span>:    <span class="str">#18CCE5</span>;
+
+  <span class="cmt">/* ─── SEMANTIC: STATUS ─── */</span>
+  <span class="obj">--color-success</span>:          <span class="str">#28A745</span>;
+  <span class="obj">--color-success-bg</span>:       <span class="str">#E8F7EC</span>;
+  <span class="obj">--color-success-border</span>:   <span class="str">#A3D9B1</span>;
+  <span class="obj">--color-error</span>:            <span class="str">#DC3545</span>;
+  <span class="obj">--color-error-bg</span>:         <span class="str">#FDECEA</span>;
+  <span class="obj">--color-error-border</span>:     <span class="str">#F5B3BA</span>;
+  <span class="obj">--color-warning</span>:          <span class="str">#F5A623</span>;
+  <span class="obj">--color-warning-bg</span>:       <span class="str">#FEF6E7</span>;
+  <span class="obj">--color-warning-border</span>:   <span class="str">#FAD98D</span>;
+  <span class="obj">--color-info</span>:             <span class="str">#00B4C9</span>;
+  <span class="obj">--color-info-bg</span>:          <span class="str">#E6F7FA</span>;
+  <span class="obj">--color-info-border</span>:      <span class="str">#99DDE8</span>;
+  <span class="obj">--color-pending</span>:          <span class="str">#1A6FC4</span>;
+  <span class="obj">--color-pending-bg</span>:       <span class="str">#EAF2FB</span>;
+
+  <span class="cmt">/* ─── NEUTRAL SCALE (9-step) ─── */</span>
+  <span class="obj">--neutral-50</span>:  <span class="str">#FAFAFA</span>;
+  <span class="obj">--neutral-100</span>: <span class="str">#F4F5F6</span>;
+  <span class="obj">--neutral-200</span>: <span class="str">#EAECEE</span>;
+  <span class="obj">--neutral-300</span>: <span class="str">#D8DBDF</span>;
+  <span class="obj">--neutral-400</span>: <span class="str">#B7B7B7</span>;
+  <span class="obj">--neutral-500</span>: <span class="str">#8C9098</span>;
+  <span class="obj">--neutral-600</span>: <span class="str">#5C6370</span>;
+  <span class="obj">--neutral-700</span>: <span class="str">#3A3F47</span>;
+  <span class="obj">--neutral-800</span>: <span class="str">#1E2228</span>;
+  <span class="obj">--neutral-900</span>: <span class="str">#0A0D10</span>;
+
+  <span class="cmt">/* ─── SURFACE LEVELS ─── */</span>
+  <span class="obj">--surface-100</span>: <span class="str">#F4F5F6</span>;   <span class="cmt">/* main app bg */</span>
+  <span class="obj">--surface-200</span>: <span class="str">#FFFFFF</span>;   <span class="cmt">/* cards, sections */</span>
+  <span class="obj">--surface-300</span>: <span class="str">#FFFFFF</span>;   <span class="cmt">/* modals, sheets */</span>
+  <span class="obj">--surface-dark-100</span>: <span class="str">#02488D</span>;
+  <span class="obj">--surface-dark-200</span>: <span class="str">#013A70</span>;
+
+  <span class="cmt">/* ─── TYPOGRAPHY ─── */</span>
+  <span class="obj">--font-en</span>:  <span class="str">'Rubik', sans-serif</span>;
+  <span class="obj">--font-ar</span>:  <span class="str">'Rubik', sans-serif</span>;
+  <span class="obj">--font-mono</span>:<span class="str">'JetBrains Mono', monospace</span>;
+
+  <span class="obj">--text-display-size</span>:     <span class="num">32px</span>;   <span class="obj">--text-display-weight</span>:  <span class="num">800</span>;
+  <span class="obj">--text-display-lh</span>:       <span class="num">1.2</span>;    <span class="obj">--text-display-ls</span>:     <span class="str">-0.02em</span>;
+  <span class="obj">--text-heading-size</span>:     <span class="num">22px</span>;   <span class="obj">--text-heading-weight</span>:  <span class="num">700</span>;
+  <span class="obj">--text-heading-lh</span>:       <span class="num">1.3</span>;    <span class="obj">--text-heading-ls</span>:     <span class="str">-0.01em</span>;
+  <span class="obj">--text-subheading-size</span>:  <span class="num">17px</span>;   <span class="obj">--text-subheading-weight</span>:<span class="num">600</span>;
+  <span class="obj">--text-subheading-lh</span>:    <span class="num">1.4</span>;
+  <span class="obj">--text-body-size</span>:        <span class="num">15px</span>;   <span class="obj">--text-body-weight</span>:     <span class="num">400</span>;
+  <span class="obj">--text-body-lh</span>:          <span class="num">1.6</span>;
+  <span class="obj">--text-label-size</span>:       <span class="num">13px</span>;   <span class="obj">--text-label-lh</span>:       <span class="num">1.5</span>;
+  <span class="obj">--text-caption-size</span>:     <span class="num">11px</span>;   <span class="obj">--text-caption-ls</span>:     <span class="str">0.02em</span>;
+  <span class="obj">--text-code-size</span>:        <span class="num">14px</span>;   <span class="obj">--text-code-ls</span>:        <span class="str">0.04em</span>;
+
+  <span class="cmt">/* ─── SPACING (4px base) ─── */</span>
+  <span class="obj">--space-1</span>:  <span class="num">4px</span>;    <span class="obj">--space-2</span>:  <span class="num">8px</span>;
+  <span class="obj">--space-3</span>:  <span class="num">12px</span>;   <span class="obj">--space-4</span>:  <span class="num">16px</span>;
+  <span class="obj">--space-5</span>:  <span class="num">20px</span>;   <span class="obj">--space-6</span>:  <span class="num">24px</span>;
+  <span class="obj">--space-7</span>:  <span class="num">28px</span>;   <span class="obj">--space-8</span>:  <span class="num">32px</span>;
+  <span class="obj">--space-10</span>: <span class="num">40px</span>;   <span class="obj">--space-12</span>: <span class="num">48px</span>;
+  <span class="obj">--space-16</span>: <span class="num">64px</span>;
+
+  <span class="obj">--layout-screen-padding</span>: <span class="num">20px</span>;
+  <span class="obj">--layout-section-gap</span>:    <span class="num">24px</span>;
+  <span class="obj">--layout-card-padding</span>:   <span class="num">16px</span>;
+
+  <span class="cmt">/* ─── BORDER RADIUS ─── */</span>
+  <span class="obj">--radius-xs</span>:   <span class="num">6px</span>;
+  <span class="obj">--radius-sm</span>:   <span class="num">10px</span>;   <span class="cmt">/* inputs */</span>
+  <span class="obj">--radius-md</span>:   <span class="num">14px</span>;   <span class="cmt">/* cards */</span>
+  <span class="obj">--radius-lg</span>:   <span class="num">20px</span>;   <span class="cmt">/* large cards */</span>
+  <span class="obj">--radius-pill</span>: <span class="num">999px</span>;  <span class="cmt">/* buttons */</span>
+
+  <span class="cmt">/* ─── SHADOWS ─── */</span>
+  <span class="obj">--shadow-card</span>:  <span class="str">0 2px 8px rgba(2,72,141,0.08)</span>;
+  <span class="obj">--shadow-modal</span>: <span class="str">0 8px 32px rgba(2,72,141,0.16)</span>;
+  <span class="obj">--shadow-btn</span>:   <span class="str">0 4px 16px rgba(0,180,201,0.30)</span>;
+
+  <span class="cmt">/* ─── COMPONENT: PRIMARY BUTTON ─── */</span>
+  <span class="obj">--btn-primary-height</span>:    <span class="num">56px</span>;
+  <span class="obj">--btn-primary-radius</span>:    <span class="kw">var</span>(<span class="obj">--radius-pill</span>);
+  <span class="obj">--btn-primary-font-size</span>: <span class="kw">var</span>(<span class="obj">--text-body-size</span>);
+  <span class="obj">--btn-primary-weight</span>:    <span class="num">700</span>;
+  <span class="obj">--btn-primary-color</span>:     <span class="str">#FFFFFF</span>;
+  <span class="obj">--btn-primary-bg</span>:
+    <span class="fn">linear-gradient</span>(<span class="num">135deg</span>, <span class="str">#02488D</span>, <span class="str">#00B4C9</span>);
+
+  <span class="cmt">/* ─── COMPONENT: OUTLINE BUTTON ─── */</span>
+  <span class="obj">--btn-outline-height</span>:    <span class="num">52px</span>;
+  <span class="obj">--btn-outline-radius</span>:    <span class="kw">var</span>(<span class="obj">--radius-pill</span>);
+  <span class="obj">--btn-outline-border</span>:    <span class="str">1.5px solid #00B4C9</span>;
+
+  <span class="cmt">/* ─── COMPONENT: INPUT ─── */</span>
+  <span class="obj">--input-height</span>:          <span class="num">52px</span>;
+  <span class="obj">--input-padding</span>:         <span class="str">0 16px</span>;
+  <span class="obj">--input-radius</span>:          <span class="kw">var</span>(<span class="obj">--radius-sm</span>);
+  <span class="obj">--input-bg</span>:              <span class="str">#FFFFFF</span>;
+  <span class="obj">--input-border</span>:          <span class="str">1px solid #D8DBDF</span>;
+  <span class="obj">--input-border-focus</span>:    <span class="str">1.5px solid #00B4C9</span>;
+
+  <span class="cmt">/* ─── NAVIGATION BAR ─── */</span>
+  <span class="obj">--navbar-height</span>:         <span class="num">72px</span>;
+  <span class="obj">--navbar-bg</span>:             <span class="str">#FFFFFF</span>;
+  <span class="obj">--navbar-icon-active</span>:    <span class="str">#02488D</span>;
+  <span class="obj">--navbar-icon-inactive</span>:  <span class="str">#B7B7B7</span>;
+  <span class="obj">--navbar-active-bar</span>:     <span class="str">3px solid #F5A623</span>;
+}</pre>
+    </div>
+  </div>
+
+  <!-- ── 7. COMPONENT SUMMARY ── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">7</div>
+      <h2>6 Master Template Shell Slots</h2>
+      <span class="src">Deliverable 3 of 3</span>
+    </div>
+
+    <table class="token-table" style="background:white;border-radius:12px;overflow:hidden;box-shadow:var(--shadow-card);">
+      <thead><tr><th>Shell</th><th>Screens Covered</th><th>Surface</th><th>Key Slots</th><th>Nav?</th></tr></thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:700;">SPLASH</td>
+          <td style="font-size:12px;color:var(--neutral-500);">Splash-Screen-1.1</td>
+          <td><span style="font-family:monospace;font-size:11px;">surface-100 + diagonal pattern</span></td>
+          <td style="font-size:12px;">Logo · Title · 3× CTA Buttons · Divider</td>
+          <td>✗</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">ONBOARDING</td>
+          <td style="font-size:12px;color:var(--neutral-500);">SignUp-1.1, 1.2, 1.3, 1.4</td>
+          <td><span style="font-family:monospace;font-size:11px;">surface-100 + white form area</span></td>
+          <td style="font-size:12px;">Header · Progress Stepper · Form Slot · Footer CTA</td>
+          <td>Back arrow only</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">HOME / DASHBOARD</td>
+          <td style="font-size:12px;color:var(--neutral-500);">Home-Screen-1.1, 2.1, 3.1</td>
+          <td><span style="font-family:monospace;font-size:11px;">surface-100</span></td>
+          <td style="font-size:12px;">Appbar · Banner Carousel · Stats Row · List Section × N · Sticky CTA</td>
+          <td>Bottom nav (5-tab)</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">DETAIL / FORM</td>
+          <td style="font-size:12px;color:var(--neutral-500);">TNA-Screen-1.1, 1.2, 1.3</td>
+          <td><span style="font-family:monospace;font-size:11px;">surface-100 + surface-200 (groups)</span></td>
+          <td style="font-size:12px;">Appbar · Label Group × N · Input/Select Slot · Footer CTA</td>
+          <td>Bottom nav + back</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">LIST / INDEX</td>
+          <td style="font-size:12px;color:var(--neutral-500);">Home-Screen-4.1, 4.2</td>
+          <td><span style="font-family:monospace;font-size:11px;">surface-100</span></td>
+          <td style="font-size:12px;">Appbar · Filter Row · Scrollable Card List · Empty State Slot</td>
+          <td>Bottom nav</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">NEW TNA FLOW</td>
+          <td style="font-size:12px;color:var(--neutral-500);">New-TNA-Screen-1.png</td>
+          <td><span style="font-family:monospace;font-size:11px;">surface-200 (modal sheet)</span></td>
+          <td style="font-size:12px;">Handle · Title · Map/Location Picker · Address Code Display · Submit CTA</td>
+          <td>Bottom sheet</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- /content -->
+</body>
+</html>

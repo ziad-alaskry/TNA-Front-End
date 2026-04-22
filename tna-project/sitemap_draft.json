@@ -1,0 +1,988 @@
+{
+  "sitemap": [
+    {
+      "title": "TNA Gov - Sub-Address Verification Detail (Pending)",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Global Sign-Up Page",
+      "template": "Detail View",
+      "device": "MOBILE"
+    },
+    {
+      "title": "Visitor Rental Payment Checkout - Fixed",
+      "template": "Detail View",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Activity Log - Activities Tab",
+      "template": "Data Table",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Carrier Manager - Desktop Navigation",
+      "template": "Map/Task",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Carrier - Staff Registration (Driver)",
+      "template": "Form/Wizard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Binding Requests Active List",
+      "template": "Data Table",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "لوحة تحكم المالك - TNA Owner Dashboard (RTL)",
+      "template": "Dashboard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Gov - Sub-Address Verification Success State",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Carrier Driver - Universal Bottom Nav Bar",
+      "template": "Modal/Utility",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Visitor - Universal Bottom Nav Bar",
+      "template": "Modal/Utility",
+      "device": "MOBILE"
+    },
+    {
+      "title": "Visitor Address Search - Unified UI",
+      "template": "Detail View",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Carrier - Staff Registration (Dispatcher)",
+      "template": "Form/Wizard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "Landing Page - Golden Polish",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA KYC Status - Verified State",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "Visitor Home Dashboard",
+      "template": "Dashboard",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Owner - Payout History Empty State (White Theme)",
+      "template": "Data Table",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Visitor - Refund Request Form",
+      "template": "Form/Wizard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Binding Requests Active List",
+      "template": "Data Table",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Login Screen Error Variant 2",
+      "template": "Data Table",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Activity Log - Transactions Tab",
+      "template": "Data Table",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Address & Deed Registration",
+      "template": "Form/Wizard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Design System Reference Document",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "Visitor Checkout - With Recovery",
+      "template": "Detail View",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Carrier - Register New Shipment Form",
+      "template": "Form/Wizard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Login Screen Variant 1",
+      "template": "Data Table",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Address Detail Screen",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Create Sub-Address Error State",
+      "template": "Form/Wizard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Visitor - Polished Home Dashboard",
+      "template": "Dashboard",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA My Shipments List - Active View",
+      "template": "Data Table",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "Driver Dashboard - With Navigation",
+      "template": "Dashboard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Visitor - My Shipments List (Refined)",
+      "template": "Data Table",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Government - Polished Dashboard",
+      "template": "Dashboard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Gov - Agency Hierarchy Management",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "hero section.png",
+      "template": "Detail View"
+    },
+    {
+      "title": "Gov Review - Rejection Modal",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Financial Transaction History (Dark)",
+      "template": "Data Table",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Gov - Issuance Detail Review (Approved)",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Gov - Sub-Address Verification Queue Active View",
+      "template": "Data Table",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Binding Requests Standardized",
+      "template": "Detail View",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Owner - Payout History Empty State (White Theme)",
+      "template": "Data Table",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Deed Uploaded State",
+      "template": "Form/Wizard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Login Screen Error Variant 2",
+      "template": "Data Table",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA My Shipments List - Empty State",
+      "template": "Data Table",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Government Dashboard Home",
+      "template": "Dashboard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Gov - Side Navigation Bar",
+      "template": "Map/Task",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Binding Requests Empty State",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Address & Deed Registration",
+      "template": "Form/Wizard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Gov - Sub-Address Document Review View",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Driver - Universal Bottom Nav Bar",
+      "template": "Modal/Utility",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Owner - Sub-Address Management Refined",
+      "template": "Detail View",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Gov - Issuance Review Queue Active View",
+      "template": "Data Table",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Carrier - Staff Registration (Manager Role)",
+      "template": "Form/Wizard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Carrier - Shipment Chat Screen",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Gov - Add New Agency Form",
+      "template": "Form/Wizard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "Gov Dashboard - Master Polish",
+      "template": "Dashboard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Gov - Issuance Review Detail View",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Carrier Manager - Polished Dashboard",
+      "template": "Dashboard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Binding Requests Empty State",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Payment Success - Golden Polish",
+      "template": "Detail View",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Owner - Earnings Dashboard (Polished)",
+      "template": "Dashboard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "Owner Registration - Golden Polish",
+      "template": "Form/Wizard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Gov - Issuance Policy Configuration (Moderated)",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Carrier - Staff Registration (Driver Role)",
+      "template": "Form/Wizard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Gov - Audit Log Viewer List View",
+      "template": "Data Table",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Payment Confirmation & Receipt",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "Visitor Rent Quote Calculator - Refined",
+      "template": "Detail View",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Government Home Dashboard",
+      "template": "Dashboard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Universal Header Variants",
+      "template": "Modal/Utility",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "Owner Dashboard - Golden Polish",
+      "template": "Dashboard",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Owner - Create Sub-Address Form",
+      "template": "Form/Wizard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "Create Sub-Address Bottom Sheet",
+      "template": "Form/Wizard",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Carrier - Staff Registration (Manager)",
+      "template": "Form/Wizard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "Carrier Manager Home Dashboard",
+      "template": "Dashboard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "Visitor TNA Detail Screen",
+      "template": "Detail View",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA KYC Status - Rejected State",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Payout Method Setup Screen",
+      "template": "Form/Wizard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Binding Requests (Polished)",
+      "template": "Detail View",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Carrier Manager - Orange Identity Dashboard (RTL)",
+      "template": "Dashboard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Sub-Address Details",
+      "template": "Detail View",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Carrier Home Dashboard (Driver)",
+      "template": "Dashboard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Polished Home (Refined)",
+      "template": "Dashboard",
+      "device": "MOBILE"
+    },
+    {
+      "title": "Owner Home - Master Polish",
+      "template": "Dashboard",
+      "device": "MOBILE"
+    },
+    {
+      "title": "Visitor TNA Detail - Golden Polish",
+      "template": "Detail View",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Universal Header Variants",
+      "template": "Modal/Utility",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "Owner Addresses - Success State",
+      "template": "Detail View",
+      "device": "MOBILE"
+    },
+    {
+      "title": "Visitor Address Detail - Refined",
+      "template": "Detail View",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Owner Onboarding - Property Type Selection",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Create Sub-Address Error State",
+      "template": "Form/Wizard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Advanced Filter Panel",
+      "template": "Modal/Utility",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "Visitor Home - Master Polish",
+      "template": "Dashboard",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Carrier - Driver Home Dashboard (Refined)",
+      "template": "Dashboard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Gov - Employee Management List",
+      "template": "Data Table",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Financial Transaction History (Dark)",
+      "template": "Data Table",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Earnings Dashboard (Dark)",
+      "template": "Dashboard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "Visitor Refund Request - Refined",
+      "template": "Detail View",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Owner - Financial Transactions (Light)",
+      "template": "Data Table",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Gov - Side Navigation Bar",
+      "template": "Map/Task",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Sub-Address Management Screen",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Payout History (White Theme)",
+      "template": "Data Table",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Payout History (White Theme)",
+      "template": "Data Table",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "Global Sign-Up - Golden Polish",
+      "template": "Detail View",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Address Search & Discovery Screen",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Polished Home Dashboard",
+      "template": "Dashboard",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Visitor Home - Unified Architecture",
+      "template": "Dashboard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Create Sub-Address Form",
+      "template": "Form/Wizard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "Visitor Home Dashboard",
+      "template": "Dashboard",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Login Screen Error Variant 2",
+      "template": "Data Table",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "Carrier Manager Dashboard (Polished)",
+      "template": "Dashboard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Home Dashboard",
+      "template": "Dashboard",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Owner Onboarding - Property Type Selection",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Landing Page - Unified Background",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Payout History & Method Setup",
+      "template": "Data Table",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Rental Payment Checkout Screen",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Carrier Manager - Polished Dashboard (Refined)",
+      "template": "Dashboard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Earnings Dashboard (Dark)",
+      "template": "Dashboard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Design System Reference Document",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Visitor - Rent Quote Calculator",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Gov - Issuance Detail Review (Pending)",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Addresses List - Blue FAB Update",
+      "template": "Data Table",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner Onboarding - Refined Step 1",
+      "template": "Detail View",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Visitor - Universal Bottom Nav Bar",
+      "template": "Modal/Utility",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Carrier Manager - Navigation Bar",
+      "template": "Map/Task",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Universal Bottom Nav Bar",
+      "template": "Modal/Utility",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Address Detail & Rental Preview Screen",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Visitor - Rent Quote Calculator",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Carrier - Delivery Location Map",
+      "template": "Map/Task",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Earnings Dashboard (Refined)",
+      "template": "Dashboard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner Onboarding - Property Type Selection",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Carrier - Registration Step 1",
+      "template": "Form/Wizard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "Carrier Manager - Master Polish",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Gov - Add New Employee Form",
+      "template": "Form/Wizard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Universal Bottom Nav Bar",
+      "template": "Modal/Utility",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Government Dashboard (Polished)",
+      "template": "Dashboard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Address Search - Master Polish",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Gov - Issuance Policy Configuration (Autonomous)",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "Profile & Settings",
+      "template": "Detail View",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Universal Header Variants",
+      "template": "Modal/Utility",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "Visitor TNA Detail - Master Polish",
+      "template": "Detail View",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Owner - Payout Method Setup Screen",
+      "template": "Form/Wizard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Deed Uploaded State",
+      "template": "Form/Wizard",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Sub-Address Management Screen",
+      "template": "Detail View",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Payment Success State",
+      "template": "Detail View",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Gov - Audit Log Detail JSON Diff",
+      "template": "Data Table",
+      "device": "DESKTOP"
+    },
+    {
+      "title": "TNA Owner - Home Dashboard (Polished)",
+      "template": "Dashboard",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Definitive Login & Error States",
+      "template": "Data Table",
+      "device": "MOBILE"
+    },
+    {
+      "title": "TNA Carrier - Registration Technical Step 3",
+      "template": "Form/Wizard",
+      "device": "DESKTOP"
+    }
+  ],
+  "tables": {
+    "`users`": [
+      "user_id",
+      "username",
+      "email",
+      "password_hash",
+      "created_at",
+      "updated_at",
+      "is_active",
+      "last_login_at"
+    ],
+    "`visitors`": [
+      "visitor_id",
+      "user_id",
+      "full_name",
+      "nationality",
+      "date_of_birth",
+      "document_type",
+      "document_number",
+      "mobile",
+      "emergency_contact",
+      "bank_account_info",
+      "max_active_tnas",
+      "created_at"
+    ],
+    "`owners`": [
+      "owner_id",
+      "user_id",
+      "owner_type",
+      "business_name",
+      "commercial_registration",
+      "national_id",
+      "tax_id",
+      "mobile",
+      "full_name",
+      "date_of_birth",
+      "nationality",
+      "bank_account_info",
+      "contact_info",
+      "is_verified",
+      "created_at"
+    ],
+    "`carriers`": [
+      "carrier_id",
+      "user_id",
+      "company_name",
+      "commercial_registration",
+      "license_number",
+      "api_key",
+      "contact_info",
+      "is_verified",
+      "is_active",
+      "created_at"
+    ],
+    "`gov_users`": [
+      "gov_user_id",
+      "user_id",
+      "full_name",
+      "employee_id",
+      "department",
+      "role",
+      "permissions",
+      "is_active",
+      "created_at"
+    ],
+    "`tna_issuance_requests`": [
+      "request_id",
+      "visitor_id",
+      "request_status",
+      "mode_at_submission",
+      "eligibility_snapshot",
+      "reviewed_by_gov_user_id",
+      "review_decision_reason",
+      "created_at",
+      "reviewed_at"
+    ],
+    "`visitor_tnas`": [
+      "tna_id",
+      "visitor_id",
+      "tna_code",
+      "status",
+      "issued_at",
+      "expires_at",
+      "issued_from_request_id",
+      "metadata"
+    ],
+    "`owner_national_addresses`": [
+      "na_id",
+      "owner_id",
+      "full_address",
+      "city",
+      "region",
+      "postal_code",
+      "building_number",
+      "street_name",
+      "district",
+      "registry_reference",
+      "address_metadata",
+      "is_verified",
+      "created_at"
+    ],
+    "`na_sub_addresses`": [
+      "sub_address_id",
+      "na_id",
+      "suffix_code",
+      "label",
+      "sub_address_type",
+      "is_available",
+      "is_default",
+      "max_concurrent_bindings",
+      "created_at"
+    ],
+    "`bindings`": [
+      "binding_id",
+      "tna_id",
+      "sub_address_id",
+      "status",
+      "start_at",
+      "end_at",
+      "rental_period_days",
+      "approved_by_owner_id",
+      "approved_at",
+      "rejection_reason",
+      "payment_order_id",
+      "created_at",
+      "updated_at"
+    ],
+    "`shipments`": [
+      "shipment_id",
+      "carrier_id",
+      "tracking_number",
+      "tna_id",
+      "status",
+      "shipment_type",
+      "weight",
+      "dimensions",
+      "estimated_delivery",
+      "actual_delivery",
+      "created_at",
+      "updated_at"
+    ],
+    "`shipment_messages`": [
+      "message_id",
+      "shipment_id",
+      "sender_user_id",
+      "message_text",
+      "attachments",
+      "created_at",
+      "is_read"
+    ],
+    "`pricing_catalog`": [
+      "price_id",
+      "fee_type",
+      "base_price",
+      "currency",
+      "pricing_rules",
+      "effective_from",
+      "effective_to",
+      "is_active",
+      "created_at"
+    ],
+    "`payment_orders`": [
+      "order_id",
+      "user_id",
+      "order_type",
+      "gross_amount",
+      "tax_amount",
+      "net_amount",
+      "currency",
+      "status",
+      "line_items",
+      "created_at",
+      "paid_at"
+    ],
+    "`payments`": [
+      "payment_id",
+      "order_id",
+      "payment_method",
+      "transaction_reference",
+      "amount",
+      "status",
+      "gateway_response",
+      "created_at"
+    ],
+    "`refunds`": [
+      "refund_id",
+      "payment_id",
+      "refund_amount",
+      "reason",
+      "status",
+      "created_at",
+      "processed_at"
+    ],
+    "`owner_earnings`": [
+      "earning_id",
+      "owner_id",
+      "binding_id",
+      "gross_amount",
+      "platform_fee",
+      "net_amount",
+      "currency",
+      "status",
+      "earned_at",
+      "settled_at"
+    ],
+    "`payouts`": [
+      "payout_id",
+      "owner_id",
+      "total_amount",
+      "currency",
+      "payout_method",
+      "payout_details",
+      "status",
+      "included_earnings_count",
+      "created_at",
+      "completed_at"
+    ],
+    "`admin_audit_log`": [
+      "audit_id",
+      "actor_type",
+      "actor_id",
+      "action",
+      "entity_type",
+      "entity_id",
+      "metadata",
+      "ip_address",
+      "user_agent",
+      "created_at"
+    ],
+    "`user_activity_log`": [
+      "log_id",
+      "user_id",
+      "activity_type",
+      "description",
+      "activity_data",
+      "status",
+      "created_at"
+    ],
+    "`issuance_policy`": [
+      "policy_id",
+      "issuance_mode",
+      "max_active_tnas_per_visitor",
+      "eligibility_rules",
+      "routing_rules",
+      "effective_from",
+      "effective_to",
+      "is_active",
+      "created_at"
+    ]
+  }
+}

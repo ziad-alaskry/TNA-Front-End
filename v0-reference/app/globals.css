@@ -1,0 +1,265 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* ─── BRAND PRIMITIVES ─── */
+  --primitive-cyan-light: #18CCE5;
+  --primitive-cyan-mid: #00B4C9;
+  --primitive-cyan-hover: #0FB5CC;
+  --primitive-navy: #02488D;
+  --primitive-navy-dark: #013A70;
+  --primitive-navy-light: #1A6FC4;
+  --primitive-amber: #F5A623;
+  --primitive-green: #28A745;
+  --primitive-red: #DC3545;
+  --primitive-orange: #FD7E14;
+  --primitive-gray-mid: #B7B7B7;
+
+  /* ─── SEMANTIC: BRAND ─── */
+  --color-brand-primary: var(--primitive-navy);
+  --color-brand-secondary: var(--primitive-cyan-mid);
+  --color-brand-accent: var(--primitive-cyan-light);
+
+  /* ─── SEMANTIC: STATUS ─── */
+  --color-success: #28A745;
+  --color-success-bg: #E8F7EC;
+  --color-success-border: #A3D9B1;
+  --color-error: #DC3545;
+  --color-error-bg: #FDECEA;
+  --color-error-border: #F5B3BA;
+  --color-warning: #F5A623;
+  --color-warning-bg: #FEF6E7;
+  --color-warning-border: #FAD98D;
+  --color-info: var(--primitive-cyan-mid);
+  --color-info-bg: #E6F7FA;
+  --color-info-border: #99DDE8;
+  --color-pending: #1A6FC4;
+  --color-pending-bg: #EAF2FB;
+
+  /* ─── NEUTRAL SCALE (9-step) ─── */
+  --neutral-50: #FAFAFA;
+  --neutral-100: #F4F5F6;
+  --neutral-200: #EAECEE;
+  --neutral-300: #D8DBDF;
+  --neutral-400: #B7B7B7;
+  --neutral-500: #8C9098;
+  --neutral-600: #5C6370;
+  --neutral-700: #3A3F47;
+  --neutral-800: #1E2228;
+  --neutral-900: #0A0D10;
+
+  /* ─── SURFACE LEVELS ─── */
+  --surface-100: var(--neutral-100);
+  --surface-200: #FFFFFF;
+  --surface-300: #FFFFFF;
+  --surface-dark-100: var(--primitive-navy);
+  --surface-dark-200: var(--primitive-navy-dark);
+
+  /* ─── TYPOGRAPHY ─── */
+  --font-en: 'Rubik', sans-serif;
+  --font-ar: 'Rubik', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --text-display-size: 32px;
+  --text-display-weight: 800;
+  --text-display-lh: 1.2;
+  --text-display-ls: -0.02em;
+
+  --text-heading-size: 22px;
+  --text-heading-weight: 700;
+  --text-heading-lh: 1.3;
+  --text-heading-ls: -0.01em;
+
+  --text-subheading-size: 17px;
+  --text-subheading-weight: 600;
+  --text-subheading-lh: 1.4;
+  --text-subheading-ls: 0;
+
+  --text-body-size: 15px;
+  --text-body-weight: 400;
+  --text-body-lh: 1.6;
+  --text-body-ls: 0;
+
+  --text-body-medium-weight: 500;
+
+  --text-label-size: 13px;
+  --text-label-weight: 400;
+  --text-label-lh: 1.5;
+  --text-label-ls: 0.01em;
+
+  --text-caption-size: 11px;
+  --text-caption-weight: 400;
+  --text-caption-lh: 1.4;
+  --text-caption-ls: 0.02em;
+
+  --text-code-size: 14px;
+  --text-code-weight: 500;
+  --text-code-lh: 1.5;
+  --text-code-ls: 0.04em;
+
+  /* ─── SPACING (4px base) ─── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  --layout-screen-padding: var(--space-5);
+  --layout-section-gap: var(--space-6);
+  --layout-card-padding: var(--space-4);
+
+  /* ─── BORDER RADIUS ─── */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  /* ─── SHADOWS ─── */
+  --shadow-card: 0 2px 8px rgba(2, 72, 141, 0.08);
+  --shadow-modal: 0 8px 32px rgba(2, 72, 141, 0.16);
+  --shadow-btn: 0 4px 16px rgba(0, 180, 201, 0.3);
+
+  /* ─── COMPONENT: PRIMARY BUTTON ─── */
+  --btn-primary-bg-from: var(--primitive-navy);
+  --btn-primary-bg-to: var(--primitive-cyan-mid);
+  --btn-primary-height: 56px;
+  --btn-primary-padding: 0 var(--space-6);
+  --btn-primary-radius: var(--radius-pill);
+  --btn-primary-font-size: var(--text-body-size);
+  --btn-primary-weight: 700;
+  --btn-primary-color: #FFFFFF;
+  --btn-primary-shadow: var(--shadow-btn);
+
+  /* ─── COMPONENT: OUTLINE BUTTON ─── */
+  --btn-outline-height: 52px;
+  --btn-outline-radius: var(--radius-pill);
+  --btn-outline-border: 1.5px solid var(--primitive-cyan-mid);
+  --btn-outline-color: var(--primitive-navy);
+
+  /* ─── COMPONENT: INPUT ─── */
+  --input-height: 52px;
+  --input-padding: 0 var(--space-4);
+  --input-radius: var(--radius-sm);
+  --input-bg: #FFFFFF;
+  --input-border: 1px solid var(--neutral-300);
+  --input-border-focus: 1.5px solid var(--primitive-cyan-mid);
+  --input-font-size: var(--text-body-size);
+  --input-placeholder-color: var(--neutral-400);
+  --input-icon-color: var(--neutral-400);
+
+  /* ─── NAVIGATION BAR ─── */
+  --navbar-height: 72px;
+  --navbar-bg: #FFFFFF;
+  --navbar-border: 1px solid var(--neutral-200);
+  --navbar-icon-active: var(--primitive-navy);
+  --navbar-icon-inactive: var(--neutral-400);
+  --navbar-label-size: var(--text-caption-size);
+  --navbar-active-indicator: 3px solid var(--primitive-amber);
+
+  /* ─── STATUS CHIPS ─── */
+  --chip-success-bg: var(--color-success-bg);
+  --chip-success-text: var(--color-success);
+  --chip-pending-bg: var(--color-pending-bg);
+  --chip-pending-text: var(--color-pending);
+  --chip-unlinked-bg: var(--neutral-100);
+  --chip-unlinked-text: var(--neutral-500);
+  --chip-radius: var(--radius-xs);
+  --chip-padding: var(--space-1) var(--space-2);
+  --chip-font-size: var(--text-label-size);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    background: var(--surface-100);
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-en);
+    background: var(--surface-100);
+    color: var(--neutral-800);
+    font-size: var(--text-body-size);
+    font-weight: var(--text-body-weight);
+    line-height: var(--text-body-lh);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: var(--text-heading-weight);
+    line-height: var(--text-heading-lh);
+    letter-spacing: var(--text-heading-ls);
+    color: var(--neutral-900);
+  }
+
+  h1 {
+    font-size: var(--text-display-size);
+    font-weight: var(--text-display-weight);
+    line-height: var(--text-display-lh);
+    letter-spacing: var(--text-display-ls);
+  }
+
+  h2 {
+    font-size: var(--text-heading-size);
+  }
+
+  h3 {
+    font-size: var(--text-subheading-size);
+    font-weight: var(--text-subheading-weight);
+    line-height: var(--text-subheading-lh);
+  }
+
+  input, textarea, select {
+    font-family: var(--font-en);
+    font-size: var(--input-font-size);
+    border-radius: var(--radius-sm);
+  }
+
+  input::placeholder {
+    color: var(--input-placeholder-color);
+  }
+
+  button {
+    font-family: var(--font-en);
+    cursor: pointer;
+    border-radius: var(--radius-pill);
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: var(--text-code-size);
+    letter-spacing: var(--text-code-ls);
+  }
+
+  /* ─── RTL SUPPORT ─── */
+  [dir="rtl"] {
+    direction: rtl;
+    text-align: right;
+  }
+}
+
+/* ─── SHADCN TOKEN BRIDGE (maps generic shadcn tokens to brand primitives) ─── */
+:root {
+  --primary: var(--primitive-navy);
+  --primary-foreground: #FFFFFF;
+  --secondary: var(--primitive-cyan-mid);
+  --secondary-foreground: #FFFFFF;
+  --accent: var(--primitive-cyan-light);
+  --accent-foreground: var(--primitive-navy);
+  --ring: var(--primitive-cyan-mid);
+}

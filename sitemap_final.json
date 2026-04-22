@@ -1,0 +1,202 @@
+[
+  {
+    "route": "/auth/login",
+    "template": "Detail View",
+    "role": "Public",
+    "ui_states": [],
+    "logical_blueprint": "Secure authentication portal for all system roles.",
+    "data_mapping": "users.email, users.password_hash"
+  },
+  {
+    "route": "/auth/signup",
+    "template": "Form/Wizard",
+    "role": "Public",
+    "ui_states": [],
+    "logical_blueprint": "Multi-step registration for Visitors, Owners, and Carrier Staff.",
+    "data_mapping": "users.full_name, users.nationality, users.date_of_birth, users.document_type, users.document_number, users.mobile"
+  },
+  {
+    "route": "/visitor/home",
+    "template": "Dashboard",
+    "role": "Visitor",
+    "ui_states": [],
+    "logical_blueprint": "Overview of active temporary addresses and shipment status.",
+    "data_mapping": "visitors.visitor_id, visitors.full_name, visitor_tnas.tna_code, visitor_tnas.status"
+  },
+  {
+    "route": "/visitor/search",
+    "template": "Detail View",
+    "role": "Visitor",
+    "ui_states": [],
+    "logical_blueprint": "Discover physical national addresses for TNA issuance.",
+    "data_mapping": "owner_national_addresses.na_id, owner_national_addresses.full_address, owner_national_addresses.city, owner_national_addresses.region"
+  },
+  {
+    "route": "/visitor/tna/request",
+    "template": "Form/Wizard",
+    "role": "Visitor",
+    "ui_states": [],
+    "logical_blueprint": "Apply for a new temporary address binding.",
+    "data_mapping": "visitor_tnas.visitor_id, visitor_tnas.request_status, visitor_tnas.eligibility_snapshot"
+  },
+  {
+    "route": "/visitor/tna/detail",
+    "template": "Detail View",
+    "role": "Visitor",
+    "ui_states": [],
+    "logical_blueprint": "Management and lifecycle details of a specific TNA code.",
+    "data_mapping": "visitor_tnas.tna_id, visitor_tnas.tna_code, visitor_tnas.status, visitor_tnas.issued_at, visitor_tnas.expires_at"
+  },
+  {
+    "route": "/visitor/shipments",
+    "template": "Data Table",
+    "role": "Visitor",
+    "ui_states": [],
+    "logical_blueprint": "Track incoming shipments using active TNA codes.",
+    "data_mapping": "shipments.tracking_number, shipments.status, shipments.estimated_delivery"
+  },
+  {
+    "route": "/visitor/checkout",
+    "template": "Form/Wizard",
+    "role": "Visitor",
+    "ui_states": [],
+    "logical_blueprint": "Finalize TNA issuance fees and service payments.",
+    "data_mapping": "payouts.total_amount, payouts.status"
+  },
+  {
+    "route": "/owner/home",
+    "template": "Dashboard",
+    "role": "Owner",
+    "ui_states": [],
+    "logical_blueprint": "Summary of owned properties, active bindings, and account balance.",
+    "data_mapping": "owners.owner_id, owners.full_name, owners.is_verified, owner_accounts.wallet_balance"
+  },
+  {
+    "route": "/owner/properties",
+    "template": "Data Table",
+    "role": "Owner",
+    "ui_states": [],
+    "logical_blueprint": "Portfolio of verified physical national addresses.",
+    "data_mapping": "owner_national_addresses.na_id, owner_national_addresses.city, owner_national_addresses.district, owner_national_addresses.is_verified"
+  },
+  {
+    "route": "/owner/property/add",
+    "template": "Form/Wizard",
+    "role": "Owner",
+    "ui_states": [],
+    "logical_blueprint": "Register a new physical address for TNA participation.",
+    "data_mapping": "owner_national_addresses.full_address, owner_national_addresses.registry_reference, owner_national_addresses.building_number"
+  },
+  {
+    "route": "/owner/bindings",
+    "template": "Data Table",
+    "role": "Owner",
+    "ui_states": [],
+    "logical_blueprint": "Manage active and pending tenant-to-property links.",
+    "data_mapping": "bindings.binding_id, bindings.status, bindings.start_at, bindings.end_at"
+  },
+  {
+    "route": "/owner/earnings",
+    "template": "Dashboard",
+    "role": "Owner",
+    "ui_states": [],
+    "logical_blueprint": "Detailed financial breakdown of rental income from TNA bindings.",
+    "data_mapping": "owner_accounts.wallet_balance, payouts.total_amount"
+  },
+  {
+    "route": "/owner/payouts",
+    "template": "Data Table",
+    "role": "Owner",
+    "ui_states": [],
+    "logical_blueprint": "Historical list of bank transfers and settlement reports.",
+    "data_mapping": "payouts.payout_id, payouts.total_amount, payouts.status, payouts.payout_method"
+  },
+  {
+    "route": "/carrier/home",
+    "template": "Dashboard",
+    "role": "Carrier",
+    "ui_states": [],
+    "logical_blueprint": "Fleet performance and shipment distribution overview.",
+    "data_mapping": "carrier_staff.carrier_id, carrier_vehicles.vehicle_id, carrier_vehicles.status"
+  },
+  {
+    "route": "/carrier/fleet",
+    "template": "Data Table",
+    "role": "Carrier",
+    "ui_states": [],
+    "logical_blueprint": "Manage vehicles and assigned delivery personnel.",
+    "data_mapping": "carrier_vehicles.vehicle_id, carrier_vehicles.plate_number, carrier_staff.full_name, carrier_staff.role"
+  },
+  {
+    "route": "/carrier/shipments",
+    "template": "Data Table",
+    "role": "Carrier",
+    "ui_states": [],
+    "logical_blueprint": "Master list of all logistics tasks assigned to the carrier.",
+    "data_mapping": "shipments.shipment_id, shipments.tracking_number, shipments.status, shipments.actual_delivery"
+  },
+  {
+    "route": "/carrier/driver/tasks",
+    "template": "Dashboard",
+    "role": "Carrier",
+    "ui_states": [],
+    "logical_blueprint": "Daily route and task list for delivery staff.",
+    "data_mapping": "shipments.tracking_number, shipments.status, visitor_tnas.tna_code"
+  },
+  {
+    "route": "/carrier/driver/map",
+    "template": "Map/Task",
+    "role": "Carrier",
+    "ui_states": [],
+    "logical_blueprint": "Geospatial guidance for TNA-based package delivery.",
+    "data_mapping": "owner_national_addresses.latitude, owner_national_addresses.longitude, owner_national_addresses.full_address"
+  },
+  {
+    "route": "/gov/home",
+    "template": "Dashboard",
+    "role": "Government",
+    "ui_states": [],
+    "logical_blueprint": "High-level audit of system health and verification volume.",
+    "data_mapping": "gov_users.full_name, gov_users.role, admin_audit_log.action"
+  },
+  {
+    "route": "/gov/verification/queue",
+    "template": "Data Table",
+    "role": "Government",
+    "ui_states": [],
+    "logical_blueprint": "Central queue for auditing pending TNA and Address requests.",
+    "data_mapping": "visitor_tnas.tna_id, visitor_tnas.request_status, visitor_tnas.created_at"
+  },
+  {
+    "route": "/gov/verification/detail",
+    "template": "Detail View",
+    "role": "Government",
+    "ui_states": [],
+    "logical_blueprint": "In-depth review of supporting documents for a verification request.",
+    "data_mapping": "visitor_tnas.eligibility_snapshot, visitor_tnas.review_decision_reason"
+  },
+  {
+    "route": "/gov/policy",
+    "template": "Detail View",
+    "role": "Government",
+    "ui_states": [],
+    "logical_blueprint": "Configure global issuance rules and autonomous logic modes.",
+    "data_mapping": "policy_configuration.issuance_mode, policy_configuration.eligibility_rules"
+  },
+  {
+    "route": "/gov/audit",
+    "template": "Data Table",
+    "role": "Government",
+    "ui_states": [],
+    "logical_blueprint": "Immutable record of all administrative actions in the system.",
+    "data_mapping": "admin_audit_log.audit_id, admin_audit_log.actor_type, admin_audit_log.action, admin_audit_log.created_at"
+  },
+  {
+    "route": "/gov/agencies",
+    "template": "Data Table",
+    "role": "Government",
+    "ui_states": [],
+    "logical_blueprint": "Manage system permissions and government agency hierarchy.",
+    "data_mapping": "gov_users.full_name, gov_users.permissions, gov_users.department"
+  }
+]
