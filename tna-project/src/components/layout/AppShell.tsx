@@ -7,6 +7,7 @@ import { SidebarContent } from './RoleSidebar'
 import { useLocale } from '@/i18n/LocaleProvider'
 import Breadcrumbs from '@/components/shared/Breadcrumbs'
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher'
+import { BottomNav } from './BottomNav'
 
 type UserRole = 'Visitor' | 'Owner' | 'Gov' | 'Carrier'
 
@@ -105,11 +106,7 @@ export function AppShell({
 
       {/* BOTTOM NAV (Mobile) */}
       {showBottomNav ? (
-        <nav className="border-t border-slate-200 bg-white md:hidden py-3">
-          <div className="flex h-full items-center justify-around px-0">
-            {/* Nav items */}
-          </div>
-        </nav>
+        <BottomNav role={role} />
       ) : null}
 
       {/* FOOTER */}

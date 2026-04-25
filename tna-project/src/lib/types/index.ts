@@ -6,3 +6,4 @@ export * from './bindings';
 export * from './deliveries';
 export * from './admin';
 export * from './carrier';
+export * from './owner';

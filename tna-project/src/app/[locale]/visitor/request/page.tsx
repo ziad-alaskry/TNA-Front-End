@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import FormWizardLayout from '@/components/templates/FormWizardLayout';
+import { AppShell } from '@/components/layout/AppShell';
 import Select from '@/components/ui/Select';
 import { 
     MapPin, 

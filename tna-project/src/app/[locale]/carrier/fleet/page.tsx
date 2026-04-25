@@ -1,176 +1,121 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
-import DataTableLayout, { DataTableColumn } from '@/components/templates/DataTableLayout';
-import Button from '@/components/ui/Button'; 
-import Modal from '@/components/ui/Modal'; 
-import Select from '@/components/ui/Select'; 
-import { useFleetContext } from '@/context/FleetContext'; 
-import { CarrierVehicle, CarrierStaff } from '@/lib/types/carrier'; 
+import React from 'react'
+import { AppShell } from '@/components/layout/AppShell'
+import DataTableLayout, { DataTableColumn } from '@/components/templates/DataTableLayout'
+import { 
+    Truck, 
+    SteeringWheel, 
+    CheckCircle, 
+    WarningCircle, 
+    PlusCircle,
+    Gear,
+    DotsThreeVertical,
+    ArrowRight
+} from '@phosphor-icons/react'
+import { useRouter, useParams } from 'next/navigation'
 
-// Assume t() function for translation is available
-const t = (key: string) => key; // Placeholder for translation
+interface Vehicle {
+    id: string;
+    plate_number: string;
+    model: string;
+    driver_name: string;
+    status: 'AVAILABLE' | 'ON_TRIP' | 'MAINTENANCE';
+    last_service: string;
+}
+
+const mockFleet: Vehicle[] = [
+    { id: 'TRK-101', plate_number: 'أ ب ج ١٢٣٤', model: 'Hino 300 Series', driver_name: 'محمد علي', status: 'AVAILABLE', last_service: '2025/10/12' },
+    { id: 'TRK-205', plate_number: 'د هـ و ٥٦٧٨', model: 'ISUZU NPR', driver_name: 'إبراهيم حسن', status: 'ON_TRIP', last_service: '2025/11/01' },
+    { id: 'TRK-011', plate_number: 'س ك م ٩٩٠١', model: 'Mitsubishi Fuso', driver_name: 'خالد صالح', status: 'MAINTENANCE', last_service: '2025/08/20' },
+    { id: 'TRK-442', plate_number: 'ر ط ل ٢٢٣٣', model: 'Mercedes-Benz Actros', driver_name: 'فهد السبيعي', status: 'AVAILABLE', last_service: '2025/11/10' },
+];
 
 export default function CarrierFleetPage() {
-  // Consume global state from FleetContext
-  const { fleetData, assignDriver, updateVehicleStatus } = useFleetContext();
-  const { vehicles, staff } = fleetData;
+    const router = useRouter();
+    const { locale } = useParams();
 
-  const [isAssignDriverModalOpen, setIsAssignDriverModalOpen] = useState(false);
-  const [selectedVehicleId, setSelectedVehicleId] = useState<string | null>(null);
-  const [selectedDriverId, setSelectedDriverId] = useState<string | null>('unassigned');
-
-  // Filter staff to get only available drivers
-  const availableDrivers = staff.filter(s => s.position === 'DRIVER' && s.is_active);
-
-  const handleAssignDriver = () => {
-    if (!selectedVehicleId) return;
-
-    const newDriverId = selectedDriverId === 'unassigned' ? null : selectedDriverId;
-    const newStatus: CarrierVehicle['status'] = newDriverId ? 'ON_TRIP' : 'IDLE';
-
-    // Call context function to update state
-    assignDriver(selectedVehicleId, newDriverId);
-    updateVehicleStatus(selectedVehicleId, newStatus);
-
-    setIsAssignDriverModalOpen(false);
-    setSelectedVehicleId(null); // Reset selection
-    setSelectedDriverId('unassigned'); // Reset driver selection
-    alert(`Driver assignment updated for vehicle ${selectedVehicleId}`);
-  };
-
-  const openAssignDriverModal = (vehicleId: string, currentDriverId: string | null) => {
-    setSelectedVehicleId(vehicleId);
-    setSelectedDriverId(currentDriverId || 'unassigned');
-    setIsAssignDriverModalOpen(true);
-  };
-
-  // Define the columns for the DataTable, applying amber/orange branding and RTL support
-  const vehicleColumns: DataTableColumn<CarrierVehicle>[] = [
-    {
-      key: 'vehicle_id',
-      label: t('vehicleId'),
-    },
-    {
-      key: 'plate_number',
-      label: t('licensePlate'),
-    },
-    {
-      key: 'assigned_staff_id', 
-      label: t('assignedDriver'),
-      render: (val, row) => {
-        const driverId = row.assigned_staff_id;
-        const driver = staff.find(s => s.staff_id === driverId);
-        // Ensure RTL-friendly display for driver name and ID
-        return (
-          <div className="text-start">
-            {driver ? (
-              <span className="text-start pe-2">{driver.full_name} ({driver.staff_id})</span>
-            ) : (
-              <span className="text-gray-500">{t('unassigned')}</span>
-            )}
-          </div>
-        );
-      },
-    },
-    {
-      key: 'status',
-      label: t('status'),
-      render: (val, row) => {
-        const status = row.status;
-        let badgeColor = 'bg-neutral-200 text-neutral-700';
-        if (status === 'ON_TRIP') badgeColor = 'bg-warning-bg text-warning';
-        if (status === 'IDLE') badgeColor = 'bg-success-bg text-success';
-
-        return (
-          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${badgeColor} text-start`}>
-            {t(status)}
-          </span>
-        );
-      },
-    },
-    {
-      key: 'vehicle_id', // Required for typing
-      label: t('actions'),
-      render: (val, row) => {
-        const vehicle = row;
-        
-        return (
-          <div className="flex space-x-2 text-start">
-            <Button 
-              onClick={() => openAssignDriverModal(vehicle.vehicle_id, vehicle.assigned_staff_id || null)} 
-              variant="outline" 
-              className="border-warning text-warning hover:bg-warning-bg" // Warning/Amber accent
-              disabled={vehicle.status === 'ON_TRIP'} // Disable if already on trip, or handle re-assignment logic
-            >
-              {t(vehicle.assigned_staff_id ? 'reassignDriver' : 'assignDriver')}
-            </Button>
-          </div>
-        );
-      },
-    },
-  ];
-
-  return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-2xl font-semibold mb-6 text-amber-600">{t('carrierFleetManagement')}</h1> {/* Amber accent for heading */}
-      
-      <DataTableLayout
-        title={t('carrierFleetManagement')}
-        columns={vehicleColumns}
-        data={vehicles} // Use state data from context
-        // Apply amber/orange theme to DataTableLayout elements if possible
-      />
-
-      {/* Assign Driver Modal */}
-      <Modal
-        isOpen={isAssignDriverModalOpen}
-        onClose={() => {
-          setIsAssignDriverModalOpen(false);
-          setSelectedVehicleId(null);
-          setSelectedDriverId('unassigned');
-        }}
-        title={t('assignDriverToVehicle')}
-        footer={
-          <div className="flex justify-end space-x-2">
-            <Button onClick={() => {
-                setIsAssignDriverModalOpen(false);
-                setSelectedVehicleId(null);
-                setSelectedDriverId('unassigned');
-              }} 
-              variant="outline" 
-              className="border-gray-400 text-gray-700 hover:bg-gray-50"
-            >
-              {t('cancel')}
-            </Button>
-            <Button 
-              onClick={handleAssignDriver} 
-              className="bg-amber-500 hover:bg-amber-600 text-white" // Amber accent
-              disabled={!selectedVehicleId} // Disable if no vehicle is selected
-            >
-              {t('assign')}
-            </Button>
-          </div>
+    const columns: DataTableColumn<Vehicle>[] = [
+        {
+            key: 'plate_number',
+            label: 'بيانات المركبة',
+            render: (val, row) => (
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded bg-neutral-100 flex flex-col items-center justify-center border border-neutral-200">
+                        <span className="text-[8px] font-bold text-neutral-400 leading-none">KSA</span>
+                        <span className="text-xs font-bold text-neutral-900 leading-none mt-0.5">{val}</span>
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="text-xs font-bold text-neutral-900">{row.model}</span>
+                        <span className="text-[10px] text-neutral-400">ID: {row.id}</span>
+                    </div>
+                </div>
+            )
+        },
+        {
+            key: 'driver_name',
+            label: 'السائق المعين',
+            render: (val) => (
+                <div className="flex items-center gap-2">
+                    <SteeringWheel size={18} className="text-neutral-400" />
+                    <span className="text-sm font-semibold text-neutral-700">{val}</span>
+                </div>
+            )
+        },
+        {
+            key: 'status',
+            label: 'الحالة التشغيلية',
+            render: (val) => {
+                const configs: Record<Vehicle['status'], { label: string; class: string; icon: React.ReactNode }> = {
+                    AVAILABLE: { label: 'جاهز للعمل', class: 'bg-success-bg text-success', icon: <CheckCircle size={14} /> },
+                    ON_TRIP: { label: 'في مهمة', class: 'bg-info-bg text-primary', icon: <Truck size={14} /> },
+                    MAINTENANCE: { label: 'تحت الصيانة', class: 'bg-error-bg text-error', icon: <Gear size={14} /> },
+                };
+                const config = configs[val as Vehicle['status']];
+                return (
+                    <div className={`flex items-center gap-2 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider ${config.class}`}>
+                        {config.icon}
+                        {config.label}
+                    </div>
+                )
+            }
+        },
+        {
+            key: 'last_service',
+            label: 'آخر صيانة',
+            render: (val) => <span className="text-xs text-neutral-500">{val}</span>
+        },
+        {
+            key: 'id',
+            label: '',
+            render: () => (
+                <div className="flex justify-end">
+                    <button className="p-2 rounded-sm hover:bg-neutral-100 text-neutral-400 transition-colors">
+                        <ArrowRight size={18} className="rotate-180" />
+                    </button>
+                    <button className="p-2 rounded-sm hover:bg-neutral-100 text-neutral-400 transition-colors">
+                        <DotsThreeVertical size={20} weight="bold" />
+                    </button>
+                </div>
+            )
         }
-      >
-        {selectedVehicleId && (
-          <>
-            <p className="mb-4">{t('selectDriverForVehicle')}: {selectedVehicleId}</p>
-            <Select
-              label={t('driver')}
-              options={[
-                { value: 'unassigned', label: t('unassigned') },
-                ...availableDrivers.map(staff => ({ value: staff.staffId, label: `${staff.name} (${staff.staffId})` })) // Display name and ID
-              ]}
-              value={selectedDriverId || 'unassigned'} // Set initial value
-              onChange={(e) => setSelectedDriverId(e.target.value)}
-              error="" // Placeholder for error
-              className="mb-4"
-              // Apply amber focus ring if available in Select component
-            />
-          </>
-        )}
-      </Modal>
-    </div>
-  );
+    ];
+
+    return (
+        <AppShell role="Carrier" header="إدارة الأسطول">
+            <DataTableLayout
+                title="قائمة مركبات النقل"
+                columns={columns}
+                data={mockFleet}
+                onRowClick={(row) => console.log('Viewing vehicle details:', row.id)}
+            >
+                <button 
+                    className="h-11 px-6 rounded-sm bg-primary text-white font-bold flex items-center gap-2 hover:bg-opacity-90 transition-all shadow-btn"
+                >
+                    <PlusCircle size={20} weight="bold" />
+                    إضافة مركبة للأسطول
+                </button>
+            </DataTableLayout>
+        </AppShell>
+    );
 }

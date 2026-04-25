@@ -3,7 +3,13 @@
 import React from 'react'
 import { AppShell } from '@/components/layout/AppShell'
 import DataTableLayout, { DataTableColumn } from '@/components/templates/DataTableLayout'
-import { Package, Truck, Calendar, MapPin, Info } from '@phosphor-icons/react'
+import { 
+    Package as PackageIcon, 
+    Truck as TruckIcon, 
+    Calendar as CalendarIcon, 
+    MapPin as MapPinIcon, 
+    Info as InfoIcon 
+} from '@phosphor-icons/react'
 
 interface Shipment {
     id: string;
@@ -53,7 +59,7 @@ export default function VisitorShipmentsPage() {
             render: (val) => (
                 <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-sm bg-neutral-100 flex items-center justify-center text-neutral-400">
-                        <Truck size={18} />
+                        <TruckIcon size={18} />
                     </div>
                     <span className="font-mono font-bold text-neutral-900">{val}</span>
                 </div>
@@ -73,13 +79,13 @@ export default function VisitorShipmentsPage() {
             key: 'status',
             label: 'الحالة',
             render: (val) => {
-                const configs = {
+                const configs: Record<Shipment['status'], { label: string; class: string }> = {
                     IN_TRANSIT: { label: 'في الطريق', class: 'bg-info-bg text-primary' },
                     DELIVERED: { label: 'تم التوصيل', class: 'bg-success-bg text-success' },
                     OUT_FOR_DELIVERY: { label: 'مع المندوب', class: 'bg-warning-bg text-warning' },
                     PENDING: { label: 'قيد التجهيز', class: 'bg-neutral-100 text-neutral-500' },
                 };
-                const config = configs[val as keyof typeof configs];
+                const config = configs[val as Shipment['status']];
                 return <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider ${config.class}`}>{config.label}</span>
             }
         },
@@ -104,7 +110,7 @@ export default function VisitorShipmentsPage() {
                 onRowClick={(row) => console.log('Viewing shipment:', row.id)}
             >
                 <div className="flex items-center gap-2 p-3 bg-primary/5 rounded-md border border-primary/10">
-                    <Info size={20} weight="fill" className="text-primary" />
+                    <InfoIcon size={20} weight="fill" className="text-primary" />
                     <p className="text-xs text-neutral-600">يتم تحديث حالات الشحنات تلقائياً بناءً على بيانات الناقلين.</p>
                 </div>
             </DataTableLayout>

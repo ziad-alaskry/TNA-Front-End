@@ -1,9 +1,9 @@
 {
   "pages": {
-    "/[locale]/visitor/home/page": [
+    "/[locale]/visitor/search/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/visitor/home/page.js"
+      "static/chunks/app/[locale]/visitor/search/page.js"
     ],
     "/[locale]/visitor/layout": [
       "static/chunks/webpack.js",
@@ -16,30 +16,20 @@
       "static/css/css-src_app_globals_css-src_app_tokens_css-node_modules_next_font_google_target_css.css",
       "static/chunks/app/[locale]/layout.js"
     ],
-    "/[locale]/owner/home/page": [
+    "/[locale]/visitor/home/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/owner/home/page.js"
+      "static/chunks/app/[locale]/visitor/home/page.js"
     ],
-    "/[locale]/owner/property/add/page": [
+    "/[locale]/visitor/wallet/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/owner/property/add/page.js"
+      "static/chunks/app/[locale]/visitor/wallet/page.js"
     ],
-    "/[locale]/owner/earnings/page": [
+    "/[locale]/visitor/shipments/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/owner/earnings/page.js"
-    ],
-    "/[locale]/owner/properties/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/owner/properties/page.js"
-    ],
-    "/[locale]/owner/bindings/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/owner/bindings/page.js"
+      "static/chunks/app/[locale]/visitor/shipments/page.js"
     ]
   }
 }

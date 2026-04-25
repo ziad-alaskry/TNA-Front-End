@@ -5,85 +5,50 @@
         "confirm": "Confirm",
         "cancel": "Cancel",
         "loading": "Loading...",
-        "property_search": "Property Search",
-        "my_properties": "My Properties",
-        "managed_properties": "Managed Properties",
-        "bind": "Bind",
-        "home": "Home",
+        "save": "Save",
+        "delete": "Delete",
+        "edit": "Edit",
+        "view_all": "View All",
         "menu": "Menu",
-        "search_placeholder": "Search...",
-        "no_data": "No data found",
-        "page_of": "Page {current} of {total}",
-        "total_records": "{count} total records",
-        "navigation": {
-            "search": "Search",
-            "notifications": "Notifications",
-            "logout": "Logout",
-            "profile": "Profile",
-            "settings": "Settings"
-        },
+        "support": "Support",
+        "logged_in_as": "Logged in as {role}",
         "roles": {
             "Visitor": {
                 "overview": "Overview",
-                "address_search": "Address Search",
-                "wallet": "TNA Wallet",
-                "codes": "My TNA Codes",
+                "address_search": "Search Address",
+                "wallet": "Digital Wallet",
+                "codes": "TNA Codes",
+                "shipments": "Track Shipments",
                 "profile": "Profile"
             },
             "Owner": {
-                "overview": "Overview",
-                "properties": "Properties",
-                "bindings": "Bindings",
+                "overview": "Dashboard",
+                "properties": "Manage Properties",
+                "bindings": "Linking Requests",
                 "earnings": "Earnings"
             },
             "Carrier": {
-                "overview": "Dispatch Home",
+                "overview": "Command Center",
                 "fleet": "Fleet Management",
-                "shipments": "Shipments"
+                "shipments": "Shipments",
+                "tasks": "Driver Tasks",
+                "reports": "Reports"
             },
             "Gov": {
-                "overview": "Command Center",
-                "queue": "Verification Queue",
-                "audit": "System Audit"
+                "overview": "System Metrics",
+                "queue": "Review Queue",
+                "audit": "Audit Logs",
+                "agencies": "Gov Agencies",
+                "policy": "Policy Config"
             }
         },
-        "support": "Support",
-        "logged_in_as": "Logged in as {role} Agent. For assistance, contact regional gov hub."
-    },
-    "owner": {
-        "properties": {
-            "title": "Managed Properties",
-            "tna_id": "TNA ID",
-            "address": "Address",
-            "status": "Status",
-            "verification_status": "Verification Status",
-            "verified": "Verified",
-            "pending": "Pending"
-        },
-        "earnings": {
-            "title": "Earnings Overview",
-            "subtitle": "Manage your revenue and withdrawal requests",
-            "total_earned": "Total Earned",
-            "available_balance": "Available Balance",
-            "pending_payouts": "Pending Payouts",
-            "available_for_withdrawal": "Available for Withdrawal",
-            "withdraw_funds": "Withdraw Funds",
-            "processing": "Processing...",
-            "min_withdrawal": "Minimum withdrawal: {amount} SAR",
-            "recent_transactions": "Recent Transactions",
-            "no_transactions": "Transaction history will appear here once you receive your first payout.",
-            "empty_title": "No Earnings Yet",
-            "empty_description": "Your earnings ledger is currently empty. Revenue will be generated automatically once your properties are bound to active TNAs.",
-            "empty_action": "View Asset Registry"
-        },
-        "bindings": {
-            "title": "Binding Requests",
-            "visitor_name": "Visitor Name",
-            "status": "Status",
-            "actions": "Actions",
-            "accept": "Accept",
-            "reject": "Reject",
-            "success_message": "TNA Activated Successfully"
+        "statuses": {
+            "ACTIVE": "Active",
+            "PENDING": "Pending Review",
+            "EXPIRED": "Expired",
+            "REJECTED": "Rejected",
+            "SUSPENDED": "Suspended",
+            "UNLINKED": "Unlinked"
         }
     },
     "auth": {
@@ -104,5 +69,112 @@
         "confirm_password": "Confirm Password",
         "terms_and_conditions": "I agree to the terms and conditions",
         "create_account": "Create New User Account"
+    },
+    "visitor": {
+        "home": {
+            "title": "Temporary National Address",
+            "subtitle": "Manage your addresses and shipments in one place",
+            "hero": {
+                "title": "Now with TNA Application",
+                "description": "You can get a temporary national address to receive and send shipments from anywhere in Saudi Arabia with ease and security"
+            },
+            "shipments": {
+                "title": "Shipments",
+                "from": "Shipment from",
+                "arrival_date": "Expected Arrival",
+                "to_tna": "To TNA Address"
+            },
+            "addresses": {
+                "title": "My Temporary Addresses",
+                "manage": "Manage Addresses",
+                "linked_success": "Linked Successfully",
+                "until_date": "Until date",
+                "not_linked": "Not Linked",
+                "suspended": "Suspended"
+            },
+            "actions": {
+                "create_new": "Create New Temporary National Address"
+            }
+        }
+    },
+    "owner": {
+        "home": {
+            "header": "Control Panel",
+            "title": "Welcome, Partner",
+            "subtitle": "Manage your properties, track linking requests, and monitor your earnings growth in the TNA platform.",
+            "stats": {
+                "properties": "Registered Properties",
+                "bindings": "Active Bindings",
+                "earnings": "Total Earnings",
+                "balance": "Available Balance"
+            },
+            "cta": {
+                "title": "Register a New Property",
+                "description": "Start earning by registering your properties on the platform and making them available to visitors looking for TNA addresses.",
+                "button": "Add New Property"
+            },
+            "withdraw": {
+                "title": "Withdraw Balance",
+                "current_balance": "Current Balance",
+                "statement": "Account Statement",
+                "transfer": "Transfer to Bank"
+            },
+            "analytics": {
+                "title": "Earnings Analytics (Last 7 Days)",
+                "view_details": "View Details",
+                "placeholder": "Interactive charts will be activated soon"
+            }
+        }
+    },
+    "carrier": {
+        "home": {
+            "header": "Operations Command Center",
+            "title": "Fleet and Logistics Summary",
+            "subtitle": "Monitor shipment performance and distribute daily tasks to drivers.",
+            "stats": {
+                "fleet_size": "Fleet Size",
+                "active_shipments": "Active Shipments",
+                "available_drivers": "Available Drivers",
+                "pending_distribution": "Pending Distribution"
+            },
+            "utilization": {
+                "title": "Fleet Utilization Index",
+                "view_report": "View Report",
+                "day_label": "Day"
+            },
+            "tasks": {
+                "title": "Task Distribution",
+                "description": "Distribute new shipments to available drivers and determine optimal routes.",
+                "map_button": "Distribution Map",
+                "manage_fleet": "Manage Fleet"
+            },
+            "tracking": {
+                "title": "Live Shipment Tracking",
+                "description": "There are currently {count} shipments in delivery mode.",
+                "button": "Enter Live Map"
+            }
+        }
+    },
+    "gov": {
+        "home": {
+            "header": "Control & Monitoring Center",
+            "title": "System Overview",
+            "subtitle": "Monitor TNA performance, verification statuses, and general policies across the Kingdom.",
+            "stats": {
+                "total_tnas": "Total TNA Addresses",
+                "pending_verification": "Pending Review",
+                "daily_issuance": "Daily Issuance Rate",
+                "critical_alerts": "Critical Alerts"
+            },
+            "map": {
+                "title": "Geographical Distribution of Requests",
+                "view_full": "View Full Map"
+            },
+            "actions": {
+                "title": "Quick Actions",
+                "policy_config": "Modify Policies",
+                "audit_logs": "Audit Logs"
+            }
+        }
     }
 }

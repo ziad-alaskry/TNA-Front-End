@@ -1,7 +1,7 @@
 'use client'
 
 import React, { ReactNode } from 'react'
-import { Check } from 'lucide-react'
+import { Check } from '@phosphor-icons/react'
 
 interface StepConfig {
   id: string

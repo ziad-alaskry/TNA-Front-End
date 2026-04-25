@@ -3,7 +3,7 @@
 import React from 'react';
 import { useAuthStore } from '@/lib/store/useAuthStore';
 import { useT } from '@/lib/hooks/useT';
-import { PlusIcon, HomeIcon, MapPinIcon } from 'lucide-react';
+import { Plus, House, MapPin } from '@phosphor-icons/react';
 
 // Mock addresses data
 const mockAddresses = [
@@ -16,7 +16,7 @@ const mockAddresses = [
 
 export default function MyAddressesOverview() {
     const { t } = useT();
-    const { userType } = useAuthStore();
+    const { role } = useAuthStore();
 
     const addressesCount = mockAddresses.length;
     const isLimitReached = addressesCount >= 5;
@@ -34,12 +34,12 @@ export default function MyAddressesOverview() {
                 {mockAddresses.map((addr) => (
                     <div key={addr.id} className="p-4 bg-white rounded-2xl border border-tna-gray-100 shadow-sm flex items-center gap-4">
                         <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                            <HomeIcon size={24} />
+                            <House size={24} />
                         </div>
                         <div className="flex-1">
                             <h3 className="font-bold text-tna-gray-900">{addr.name}</h3>
                             <p className="text-sm text-tna-gray-500 flex items-center gap-1 mt-0.5">
-                                <MapPinIcon size={14} />
+                                <MapPin size={14} />
                                 {addr.address}
                             </p>
                         </div>
@@ -55,7 +55,7 @@ export default function MyAddressesOverview() {
                         : 'bg-primary text-white hover:bg-primary/90 active:scale-[0.98]'
                     }`}
             >
-                <PlusIcon size={20} />
+                <Plus size={20} />
                 <span>إنشاء عنوان وطني جديد</span>
             </button>
 

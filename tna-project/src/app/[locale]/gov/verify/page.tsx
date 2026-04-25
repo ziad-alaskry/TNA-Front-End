@@ -1,75 +1,206 @@
 'use client'
 
-import React from 'react';
-import DataTableLayout, { DataTableColumn } from '@/components/templates/DataTableLayout'; 
-import Button from '@/components/ui/Button'; 
-import { useGovContext } from '@/context/GovContext'; 
-import { TNAIssuanceRequest } from '@/lib/types/tna';
+import React, { useState, Suspense } from 'react'
+import { AppShell } from '@/components/layout/AppShell'
+import { 
+    ShieldCheck, 
+    IdentificationCard, 
+    MapPin, 
+    FileText, 
+    Clock, 
+    CheckCircle, 
+    XCircle,
+    User,
+    ArrowRight,
+    CaretRight,
+    Eye,
+    ChatCircleDots,
+    BoundingBox
+} from '@phosphor-icons/react'
+import { useRouter, useParams, useSearchParams } from 'next/navigation'
+import Button from '@/components/ui/Button'
 
-// Assume t() function for translation is available
-const t = (key: string) => key; // Placeholder for translation
+function VerifyActionContent() {
+    const router = useRouter();
+    const { locale } = useParams();
+    const searchParams = useSearchParams();
+    const id = searchParams.get('id') || 'REQ-1002';
 
-export default function GovVerifyPage() {
-  // Consume global state for TNA data and update function
-  const { tnaData, updateTnaStatus, activeRole } = useGovContext();
+    const [decisionMode, setDecisionMode] = useState<'NONE' | 'APPROVE' | 'REJECT'>('NONE');
+    const [reason, setReason] = useState('');
 
-  // Define the columns for the DataTable
-  const tnaColumns: DataTableColumn<TNAIssuanceRequest>[] = [
-    {
-      key: 'visitor_id',
-      label: t('visitorId'),
-    },
-    {
-      key: 'mode_at_submission',
-      label: t('submissionMode'),
-    },
-    {
-      key: 'created_at',
-      label: t('requestDate'),
-    },
-    {
-      key: 'request_id',
-      label: t('actions'),
-      render: (val, row) => {
-        const tna = row;
+    const requestDetails = {
+        visitor: {
+            name: 'سالم الدوسري',
+            id_number: '1099228833',
+            nationality: 'سعودي',
+            document_source: 'National ID Gateway'
+        },
+        tna: {
+            code: 'TNA-667722',
+            type: 'RESIDENTIAL',
+            request_date: '2025/11/15 10:00 AM'
+        },
+        eligibility: {
+            is_new_registrant: true,
+            has_previous_violations: false,
+            credit_score_parity: 'OPTIMAL'
+        }
+    };
 
-        // Updated to use context function
-        const handleApprove = () => {
-          updateTnaStatus(tna.request_id, 'APPROVED');
-          alert(`TNA Approved for ID: ${tna.request_id}`);
-        };
+    return (
+        <AppShell role="Gov" header={`تدقيق الطلب: ${id}`}>
+            <div className="flex flex-col xl:flex-row gap-8">
+                {/* Left Panel: Request Details */}
+                <div className="flex-1 space-y-6">
+                    {/* Visitor Card */}
+                    <div className="p-6 rounded-md border border-neutral-200 bg-surface-200">
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center text-primary">
+                                <User size={20} weight="fill" />
+                            </div>
+                            <h3 className="font-bold text-neutral-900 text-lg">بيانات مقدم الطلب</h3>
+                        </div>
+                        <div className="grid grid-cols-2 gap-y-4 gap-x-8">
+                            {[
+                                { label: 'الاسم الكامل', value: requestDetails.visitor.name },
+                                { label: 'رقم الهوية', value: requestDetails.visitor.id_number },
+                                { label: 'الجنسية', value: requestDetails.visitor.nationality },
+                                { label: 'مصدر التحقق', value: requestDetails.visitor.document_source },
+                            ].map((item, i) => (
+                                <div key={i}>
+                                    <p className="text-[10px] font-bold text-neutral-400 uppercase mb-1">{item.label}</p>
+                                    <p className="text-sm font-bold text-neutral-800">{item.value}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
 
-        const handleReject = () => {
-          updateTnaStatus(tna.request_id, 'REJECTED');
-          alert(`TNA Rejected for ID: ${tna.request_id}`);
-        };
+                    {/* Eligibility Snapshot */}
+                    <div className="p-6 rounded-md border border-neutral-200 bg-surface-200">
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="w-10 h-10 rounded-md bg-secondary/10 flex items-center justify-center text-secondary">
+                                <ShieldCheck size={20} weight="fill" />
+                            </div>
+                            <h3 className="font-bold text-neutral-900 text-lg">مؤشرات الأهلية التلقائية</h3>
+                        </div>
+                        <div className="space-y-3">
+                            {[
+                                { label: 'سجل المخالفات القانونية', value: 'سليم', status: 'success' },
+                                { label: 'بروتوكول التحقق من الملكية', value: 'مكتمل بنجاح', status: 'success' },
+                                { label: 'توافق البيانات البايومترية', value: 'متطابق', status: 'success' }
+                            ].map((item, i) => (
+                                <div key={i} className="flex items-center justify-between p-3 bg-surface-100 rounded border border-neutral-100">
+                                    <span className="text-xs font-bold text-neutral-700">{item.label}</span>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-[10px] font-bold text-success uppercase">{item.value}</span>
+                                        <CheckCircle size={16} weight="fill" className="text-success" />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
 
-        return (
-          <div className="flex space-x-2 text-start">
-            <Button onClick={handleApprove} variant="success">
-              {t('approve')}
-            </Button>
-            <Button onClick={handleReject} variant="danger">
-              {t('reject')}
-            </Button>
-          </div>
-        );
-      },
-    },
-  ];
+                    {/* Attached Documents */}
+                    <div className="p-6 rounded-md border border-neutral-200 bg-surface-200">
+                        <h3 className="font-bold text-neutral-900 mb-4">المستندات المرفقة</h3>
+                        <div className="flex gap-4">
+                            {[1, 2].map(doc => (
+                                <div key={doc} className="w-32 h-40 bg-neutral-100 rounded border border-neutral-200 flex flex-col items-center justify-center gap-2 cursor-pointer group hover:border-primary transition-all relative overflow-hidden">
+                                    <FileText size={32} weight="thin" className="text-neutral-300 group-hover:text-primary" />
+                                    <span className="text-[10px] font-bold text-neutral-400">صورة الهوية</span>
+                                    <div className="absolute opacity-0 group-hover:opacity-100 bg-primary h-8 w-full bottom-0 flex items-center justify-center text-white text-[10px] font-bold transition-opacity">
+                                        معاينة المستند
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
 
-  // Filter out TNA requests that are no longer PENDING (e.g., already approved or rejected)
-  const pendingTnas = tnaData.filter(tna => tna.request_status === 'PENDING');
+                {/* Right Panel: Actions */}
+                <div className="w-full xl:w-[400px] space-y-6">
+                    <div className="p-6 rounded-md bg-neutral-900 text-white shadow-xl">
+                        <div className="mb-6">
+                            <p className="text-[10px] font-bold text-primary uppercase tracking-widest mb-1">اتخاذ القرار</p>
+                            <h3 className="text-xl font-bold">حالة الطلب: قيد المراجعة</h3>
+                        </div>
+                        
+                        <div className="space-y-4">
+                            <div className="p-4 bg-white/5 rounded border border-white/10">
+                                <div className="flex items-center gap-2 mb-2 text-primary">
+                                    <IdentificationCard size={18} weight="fill" />
+                                    <span className="text-xs font-bold">الكود المقترح</span>
+                                </div>
+                                <p className="text-2xl font-mono font-bold tracking-wider">{requestDetails.tna.code}</p>
+                            </div>
 
-  return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-2xl font-semibold mb-6 text-slate-800 border-b-2 border-blue-600">{t('pendingTnaVerifications')}</h1>
-      <DataTableLayout
-        title={t('pendingTnaVerifications')}
-        columns={tnaColumns}
-        data={pendingTnas} // Use data from context
-        // Add search/filter options if needed
-      />
-    </div>
-  );
+                            <div className="space-y-2 pt-4">
+                                {decisionMode === 'NONE' ? (
+                                    <>
+                                        <button 
+                                            onClick={() => setDecisionMode('APPROVE')}
+                                            className="w-full h-12 bg-success text-white font-bold rounded-sm flex items-center justify-center gap-2 hover:opacity-90 transition-all"
+                                        >
+                                            <CheckCircle size={20} weight="bold" />
+                                            اعتماد الطلب
+                                        </button>
+                                        <button 
+                                            onClick={() => setDecisionMode('REJECT')}
+                                            className="w-full h-12 bg-white/10 text-white font-bold rounded-sm hover:bg-white/20 transition-all flex items-center justify-center gap-2"
+                                        >
+                                            <XCircle size={20} weight="bold" />
+                                            رفض الطلب
+                                        </button>
+                                    </>
+                                ) : (
+                                    <div className="space-y-4 animate-in fade-in slide-in-from-top-2">
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">
+                                                {decisionMode === 'APPROVE' ? 'تأكيد الاعتماد' : 'تأكيد الرفض'}
+                                            </span>
+                                            <button onClick={() => setDecisionMode('NONE')} className="text-[10px] underline text-neutral-400">إلغاء</button>
+                                        </div>
+                                        <div className="relative">
+                                            <ChatCircleDots size={18} className="absolute right-3 top-3 text-white/30" />
+                                            <textarea 
+                                                value={reason}
+                                                onChange={(e) => setReason(e.target.value)}
+                                                placeholder="أدخل الملاحظات الإدارية..."
+                                                className="w-full h-32 bg-white/5 border border-white/10 rounded-sm p-3 pr-10 text-xs text-white focus:border-primary outline-none resize-none"
+                                            />
+                                        </div>
+                                        <button 
+                                            onClick={() => router.push(`/${locale}/gov/verification/queue`)}
+                                            className={`w-full h-12 font-bold rounded-sm text-sm ${
+                                                decisionMode === 'APPROVE' ? 'bg-success text-white' : 'bg-error text-white'
+                                            }`}
+                                        >
+                                            {decisionMode === 'APPROVE' ? 'تأكيد وحفظ' : 'إرسال الرفض النهائي'}
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                    <button 
+                        onClick={() => router.push(`/${locale}/gov/verification/queue`)}
+                        className="w-full h-12 flex items-center justify-between px-6 bg-surface-200 border border-neutral-200 rounded-md hover:bg-neutral-100 transition-colors"
+                    >
+                        <span className="text-xs font-bold text-neutral-500">العودة للطابور</span>
+                        <CaretRight size={18} weight="bold" className="rotate-180" />
+                    </button>
+                </div>
+            </div>
+        </AppShell>
+    );
+}
+
+export default function VerifyActionPage() {
+    return (
+        <Suspense fallback={<div className="p-8 text-center">Loading request details...</div>}>
+            <VerifyActionContent />
+        </Suspense>
+    );
 }

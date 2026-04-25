@@ -6,13 +6,13 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import {
-    User as UserIcon,
-    Mail as MailIcon,
-    Lock as LockIcon,
-    UserPlus as UserPlusIcon,
+    User,
+    Envelope,
+    Lock,
+    UserPlus,
     CaretLeft,
     Check,
-    Loader2
+    CircleNotch
 } from '@phosphor-icons/react';
 import { useRegistrationStore } from '@/lib/store/useRegistrationStore';
 import { useAuthStore } from '@/lib/store/useAuthStore';
@@ -35,7 +35,7 @@ type FormData = z.infer<typeof schema>;
 export default function RegisterAccountModule() {
     const router = useRouter();
     const { formData, resetRegistration } = useRegistrationStore();
-    const { login } = useAuthStore(); // Assuming login exists in useAuthStore for setting state
+    const { setAuth } = useAuthStore();
     const [isPending, setIsPending] = useState(false);
     const [apiError, setApiError] = useState<string | null>(null);
 
@@ -98,7 +98,7 @@ export default function RegisterAccountModule() {
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                     <InputField
                         label="اسم المستخدم"
-                        icon={UserIcon}
+                        icon={User}
                         placeholder="أدخل اسم المستخدم بالإنجليزية"
                         error={errors.username?.message}
                         {...register('username')}
@@ -106,7 +106,7 @@ export default function RegisterAccountModule() {
 
                     <InputField
                         label="البريد الإلكتروني"
-                        icon={MailIcon}
+                        icon={Envelope}
                         placeholder="example@domain.com"
                         type="email"
                         error={errors.email?.message}
@@ -115,7 +115,7 @@ export default function RegisterAccountModule() {
 
                     <InputField
                         label="كلمة المرور"
-                        icon={LockIcon}
+                        icon={Lock}
                         placeholder="أدخل كلمة مرور قوية"
                         type="password"
                         error={errors.password?.message}
@@ -124,7 +124,7 @@ export default function RegisterAccountModule() {
 
                     <InputField
                         label="تأكيد كلمة المرور"
-                        icon={LockIcon}
+                        icon={Lock}
                         placeholder="أعد كتابة كلمة المرور"
                         type="password"
                         error={errors.confirmPassword?.message}
@@ -167,10 +167,10 @@ export default function RegisterAccountModule() {
                             className="w-full h-btn-lg rounded-pill bg-btn-primary text-white font-bold flex items-center justify-center gap-2 shadow-btn transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {isPending ? (
-                                <Loader2 size={24} className="animate-spin" />
+                                <CircleNotch size={24} className="animate-spin" />
                             ) : (
                                 <>
-                                    <UserPlusIcon size={20} weight="bold" />
+                                    <UserPlus size={20} weight="bold" />
                                     <span>إنشاء الحساب</span>
                                 </>
                             )}

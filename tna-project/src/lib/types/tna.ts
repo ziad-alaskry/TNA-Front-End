@@ -1,5 +1,5 @@
 export type TNARequestStatus = 'PENDING' | 'UNDER_REVIEW' | 'APPROVED' | 'REJECTED' | 'ISSUED';
-export type TNAStatus = 'UNLINKED' | 'ACTIVE' | 'EXPIRED' | 'REVOKED';
+export type TNAStatus = 'UNLINKED' | 'ACTIVE' | 'EXPIRED' | 'REVOKED' | 'PENDING_OWNER_APPROVAL' | 'SUSPENDED';
 
 export interface TNAIssuanceRequest {
     request_id: string;

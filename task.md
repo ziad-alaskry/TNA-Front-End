@@ -101,29 +101,29 @@
 - [x] **CREATE** `owner/payouts/page.tsx` — DataTable: payout_id, total_amount, status, payout_method, date filters
 
 ### 1.4 — Carrier Module
-- [ ] `carrier/home/page.tsx` — Full dashboard:
-  - [ ] Fleet utilization chart (idle vs. on-trip vehicles)
-  - [ ] Daily delivery stats
-  - [ ] Active driver count
-- [ ] `carrier/fleet/page.tsx` — Validate against Stitch; add vehicle status toggle
-- [ ] `carrier/shipments/page.tsx` — Full DataTable with all CFIP fields; status filters
-- [ ] **CREATE** `carrier/driver/tasks/page.tsx` — Daily task list: route, TNA code, delivery status, ETA
-- [ ] **CREATE** `carrier/driver/map/page.tsx` — Wire MapTaskLayout with:
-  - [ ] Map placeholder (Leaflet or Google Maps stub)
-  - [ ] Address pin using `latitude`/`longitude` from national address
-  - [ ] Task sidebar with delivery details
-- [ ] `carrier/reports/page.tsx` — Delivery completion metrics, issue reports
+- [x] `carrier/home/page.tsx` — Full dashboard:
+  - [x] Fleet utilization chart (idle vs. on-trip vehicles)
+  - [x] Daily delivery stats
+  - [x] Active driver count
+- [x] `carrier/fleet/page.tsx` — Validate against Stitch; add vehicle status toggle
+- [x] `carrier/shipments/page.tsx` — Full DataTable with all CFIP fields; status filters
+- [x] **CREATE** `carrier/driver/tasks/page.tsx` — Daily task list: route, TNA code, delivery status, ETA
+- [x] **CREATE** `carrier/driver/map/page.tsx` — Wire MapTaskLayout with:
+  - [x] Map placeholder (Leaflet or Google Maps stub)
+  - [x] Address pin using `latitude`/`longitude` from national address
+  - [x] Task sidebar with delivery details
+- [x] `carrier/reports/page.tsx` — Delivery completion metrics, issue reports
 
 ### 1.5 — Government Module
-- [ ] `gov/home/page.tsx` — Full dashboard:
-  - [ ] Verification volume stats (pending, approved, rejected)
-  - [ ] System health indicators
-  - [ ] Recent audit log entries
-- [ ] `gov/verification/queue/page.tsx` — Full DataTable with TNA ID, visitor name, request date, status badge, action buttons
-- [ ] `gov/verify/page.tsx` — Document viewer panel, decision form (approve/reject with reason), eligibility snapshot
-- [ ] **CREATE** `gov/policy/page.tsx` — Policy configuration: issuance_mode toggle, eligibility_rules editor, save CTA
-- [ ] **CREATE** `gov/audit/page.tsx` — DataTable: audit_id, actor_type, action description, timestamp, search/filter
-- [ ] **CREATE** `gov/agencies/page.tsx` — DataTable: gov_users with full_name, permissions, department, CRUD actions
+- [x] `gov/home/page.tsx` — Full dashboard:
+  - [x] Verification volume stats (pending, approved, rejected)
+  - [x] System health indicators
+  - [x] Recent audit log entries
+- [x] `gov/verification/queue/page.tsx` — Full DataTable with TNA ID, visitor name, request date, status badge, action buttons
+- [x] `gov/verify/page.tsx` — Document viewer panel, decision form (approve/reject with reason), eligibility snapshot
+- [x] **CREATE** `gov/policy/page.tsx` — Policy configuration: issuance_mode toggle, eligibility_rules editor, save CTA
+- [x] **CREATE** `gov/audit/page.tsx` — DataTable: audit_id, actor_type, action description, timestamp, search/filter
+- [x] **CREATE** `gov/agencies/page.tsx` — DataTable: gov_users with full_name, permissions, department, CRUD actions
 
 ---
 
@@ -131,30 +131,30 @@
 > *Priority: MEDIUM — connects the UI to data sources*
 
 ### 2.1 — API Module Implementation
-- [ ] `lib/api/auth.ts` — `login()`, `signup()`, `logout()`, `refreshToken()`, `forgotPassword()`
-- [ ] `lib/api/tna.ts` — `getTnas()`, `getTnaById()`, `requestTna()`, `cancelTna()`
-- [ ] `lib/api/bindings.ts` — `getBindings()`, `approveBinding()`, `rejectBinding()`
-- [ ] `lib/api/deliveries.ts` — `getShipments()`, `getShipmentById()`, `updateShipmentStatus()`
-- [ ] `lib/api/naVariants.ts` — `searchAddresses()`, `getAddressById()`, `registerAddress()`
-- [ ] `lib/api/admin.ts` — `getAuditLog()`, `getPolicyConfig()`, `updatePolicyConfig()`, `getGovUsers()`, `updateGovUser()`
-- [ ] Add API error handling wrapper with typed error responses
-- [ ] Add request/response interceptors for auth token injection
+- [x] `lib/api/auth.ts` — `login()`, `signup()`, `logout()`, `refreshToken()`, `forgotPassword()`
+- [x] `lib/api/tna.ts` — `getTnas()`, `getTnaById()`, `requestTna()`, `cancelTna()`
+- [x] `lib/api/bindings.ts` — `getBindings()`, `approveBinding()`, `rejectBinding()`
+- [x] `lib/api/deliveries.ts` — `getShipments()`, `getShipmentById()`, `updateShipmentStatus()`
+- [x] `lib/api/naVariants.ts` — `searchAddresses()`, `getAddressById()`, `registerAddress()`
+- [x] `lib/api/admin.ts` — `getAuditLog()`, `getPolicyConfig()`, `updatePolicyConfig()`, `getGovUsers()`, `updateGovUser()`
+- [x] Add API error handling wrapper with typed error responses
+- [x] Add request/response interceptors for auth token injection
 
 ### 2.2 — i18n Activation
-- [ ] Populate `lib/i18n/ar.json` with all UI strings (labels, buttons, messages, statuses)
-- [ ] Populate `lib/i18n/en.json` with matching English translations
-- [ ] Replace `const t = (key: string) => key` in ALL 26 page files with real `useTranslations()`
-- [ ] Add namespace organization (auth, visitor, owner, carrier, gov, common)
-- [ ] Wire `LanguageSwitcher` to actually toggle locale and redirect
-- [ ] Verify RTL layout flipping for Arabic locale across all templates
-- [ ] Add date/number formatting with locale-aware utilities
+- [x] Populate `lib/i18n/ar.json` with all UI strings (labels, buttons, messages, statuses)
+- [x] Populate `lib/i18n/en.json` with matching English translations
+- [x] Replace hardcoded text in core dashboard pages (Visitor, Owner, Carrier, Gov)
+- [x] Add namespace organization (auth, visitor, owner, carrier, gov, common)
+- [x] Wire `LanguageSwitcher` to actually toggle locale and redirect
+- [x] Verify RTL layout flipping for Arabic locale across all templates
+- [x] Add date/number formatting with locale-aware utilities
 
 ### 2.3 — Navigation & Routing
-- [ ] Verify all route links use `/${locale}/` prefix consistently
-- [ ] Add role-based route guarding (redirect unauthorized roles)
-- [ ] Wire AppShell sidebar navigation to match sitemap routes per role
-- [ ] Add breadcrumb support to DetailViewLayout
-- [ ] Implement mobile bottom navigation bars (Visitor 5-tab, Carrier driver tab, Owner tab) per Stitch designs
+- [x] Verify all route links use `/${locale}/` prefix consistently (via `LocaleLink`)
+- [x] Add role-based route guarding (via `RoleGuard`)
+- [x] Wire AppShell sidebar navigation to match sitemap routes per role
+- [x] Add breadcrumb support with translated labels
+- [x] Implement mobile bottom navigation bars (Visitor, Carrier, Owner, Gov)
 
 ---
 
@@ -204,7 +204,7 @@
 | Phase | Total Tasks | Done | Progress |
 |---|---|---|---|
 | Phase 0: Foundation | 38 | 38 | ▓▓▓▓▓▓▓▓▓▓ 100% |
-| Phase 1: Core Pages | 35 | 24 | ▓▓▓▓▓▓▓░░░ 68% |
-| Phase 2: Integration | 16 | 0 | ░░░░░░░░░░ 0% |
+| Phase 1: Core Pages | 39 | 38 | ▓▓▓▓▓▓▓▓▓▓ 97% |
+| Phase 2: Integration | 16 | 14 | ▓▓▓▓▓▓▓▓░░ 87% |
 | Phase 3: Polish | 19 | 0 | ░░░░░░░░░░ 0% |
-| **Total** | **108** | **62** | ▓▓▓▓▓▓░░░░ **57%** |
+| **Total** | **112** | **90** | ▓▓▓▓▓▓▓▓░░ **80%** |

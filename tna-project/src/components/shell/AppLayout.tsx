@@ -10,15 +10,15 @@ interface AppLayoutProps {
 }
 
 const roleThemes: Record<string, string> = {
-    visitor: 'bg-white',
-    owner: 'bg-black text-white',
-    gov: 'bg-gray-100',
-    carrier: 'bg-yellow-50',
+    VISITOR: 'bg-white',
+    OWNER: 'bg-black text-white',
+    GOV_USER: 'bg-gray-100',
+    CARRIER_STAFF: 'bg-yellow-50',
 };
 
 export default function AppLayout({ children }: AppLayoutProps) {
-    const { userType } = useAuthStore();
-    const themeClass = userType ? roleThemes[userType] || 'bg-white' : 'bg-white';
+    const { role } = useAuthStore();
+    const themeClass = role ? roleThemes[role] || 'bg-white' : 'bg-white';
 
     return (
         <div className={`min-h-screen flex flex-col ${themeClass}`}>

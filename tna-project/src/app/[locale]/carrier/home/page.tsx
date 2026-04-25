@@ -3,51 +3,151 @@
 import React from 'react'
 import { AppShell } from '@/components/layout/AppShell'
 import { DashboardLayout } from '@/components/templates/DashboardLayout'
-import { Truck, Package, Clock, ShieldCheck } from 'lucide-react'
+import { 
+    Truck as TruckIcon, 
+    Package as PackageIcon, 
+    Clock as ClockIcon, 
+    ShieldCheck as ShieldCheckIcon, 
+    Users as UsersIcon, 
+    ChartBar as ChartBarIcon, 
+    CaretRight as CaretRightIcon,
+    MapPin as MapPinIcon,
+    ArrowRight as ArrowRightIcon
+} from '@phosphor-icons/react'
+import { useRouter, useParams } from 'next/navigation'
+import { useLocale } from '@/i18n/LocaleProvider'
+import { RoleGuard } from '@/components/shared/RoleGuard'
 
 export default function CarrierHomePage() {
+  const router = useRouter();
+  const { locale } = useParams();
+  const { t, isRTL } = useLocale();
+
   const stats = [
-    { label: 'Fleet Size', value: '24 Units', icon: <Truck size={24} /> },
-    { label: 'Active Shipments', value: '142', icon: <Package size={24} /> },
-    { label: 'Pending Dispatch', value: '12', icon: <Clock size={24} /> },
-    { label: 'Insurance Verify', value: 'Verified', icon: <ShieldCheck size={24} /> },
-  ]
+    { 
+        label: t('carrier.home.stats.fleet_size'), 
+        value: t('common.loading') !== 'Loading...' ? '٢٤ مركبة' : '24 Vehicles', 
+        icon: <TruckIcon size={24} weight="fill" className="text-primary" /> 
+    },
+    { 
+        label: t('carrier.home.stats.active_shipments'), 
+        value: '١٤٢', 
+        icon: <PackageIcon size={24} weight="fill" className="text-success" /> 
+    },
+    { 
+        label: t('carrier.home.stats.available_drivers'), 
+        value: t('common.loading') !== 'Loading...' ? '١٨ سائق' : '18 Drivers', 
+        icon: <UsersIcon size={24} weight="fill" className="text-secondary" /> 
+    },
+    { 
+        label: t('carrier.home.stats.pending_distribution'), 
+        value: '١٢', 
+        icon: <ClockIcon size={24} weight="fill" className="text-warning" /> 
+    },
+  ];
 
   const activity = [
     {
       id: '1',
-      title: 'Bulk Dispatch #99281',
-      description: '45 shipments assigned to King Fahd District route.',
-      timestamp: '15 mins ago',
+      title: 'توزيع شحنات رقم #٩٩٢٨١',
+      description: 'تم تعيين ٤٥ شحنة لمسار حي الملك فهد.',
+      timestamp: 'منذ ١٥ دقيقة',
       status: 'success' as const,
     },
     {
       id: '2',
-      title: 'Maintenance Alert: TRK-011',
-      description: 'Routine oil change required for Hino light truck.',
-      timestamp: '2 hours ago',
+      title: 'تنبيه صيانة: TRK-011',
+      description: 'تغيير زيت دوري مطلوب لشاحنة هينو خفيفة.',
+      timestamp: 'منذ ساعتين',
       status: 'pending' as const,
     },
     {
       id: '3',
-      title: 'Carrier License Synced',
-      description: 'MOT verification completed for 2026 fleet operations.',
-      timestamp: 'Yesterday',
+      title: 'مزامنة ترخيص الناقل',
+      description: 'اكتمل التحقق من وزارة النقل لعمليات أسطول ٢٠٢٦.',
+      timestamp: 'بالأمس',
       status: 'success' as const,
     },
-  ]
+  ];
 
   return (
-    <AppShell 
-      role="Carrier" 
-      header={<h1 className="text-xl font-bold">Logistics Command Center</h1>}
-    >
-      <DashboardLayout
-        title="Fleet & Logistics Overview"
-        subtitle="Fleet performance and shipment distribution overview."
-        stats={stats}
-        activity={activity}
-      />
-    </AppShell>
+    <RoleGuard requiredRole="Carrier">
+      <AppShell role="Carrier" header={t('carrier.home.header')}>
+        <DashboardLayout
+          title={t('carrier.home.title')}
+          subtitle={t('carrier.home.subtitle')}
+          stats={stats}
+          activity={activity}
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
+              {/* Fleet Utilization Card */}
+              <div className="lg:col-span-2 p-6 rounded-md border border-neutral-200 bg-surface-200 text-start">
+                  <div className="flex justify-between items-center mb-6">
+                      <h3 className="font-bold text-neutral-900 flex items-center gap-2">
+                          <ChartBarIcon size={20} className="text-primary" weight="fill" />
+                          {t('carrier.home.utilization.title')}
+                      </h3>
+                      <button className="text-[10px] font-bold text-neutral-400 hover:text-primary transition-colors uppercase tracking-widest">{t('carrier.home.utilization.view_report')}</button>
+                  </div>
+                  <div className="flex items-end gap-2 h-40">
+                      {[65, 40, 85, 70, 90, 55, 80].map((h, i) => (
+                          <div key={i} className="flex-1 flex flex-col items-center gap-2">
+                              <div className="w-full bg-primary/10 rounded-t-sm relative group cursor-pointer hover:bg-primary/20 transition-colors" style={{ height: `${h}%` }}>
+                                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-neutral-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                                      {h}%
+                                  </div>
+                              </div>
+                              <span className="text-[9px] font-bold text-neutral-400 font-mono italic uppercase tracking-tighter">{t('carrier.home.utilization.day_label')} {i+1}</span>
+                          </div>
+                      ))}
+                  </div>
+              </div>
+
+              {/* Tasks Quick Access */}
+              <div className="p-6 rounded-md bg-btn-primary text-white flex flex-col justify-between text-start">
+                  <div>
+                      <h4 className="text-lg font-bold mb-2">{t('carrier.home.tasks.title')}</h4>
+                      <p className="text-xs opacity-70 leading-relaxed">
+                          {t('carrier.home.tasks.description')}
+                      </p>
+                  </div>
+                  <div className="space-y-2 mt-6">
+                      <button 
+                          onClick={() => router.push(`/${locale}/carrier/shipments`)}
+                          className="w-full h-10 bg-white text-primary rounded-sm font-bold text-xs flex items-center justify-center gap-2 shadow-sm hover:bg-neutral-50 transition-colors"
+                      >
+                          <MapPinIcon size={16} weight="fill" />
+                          {t('carrier.home.tasks.map_button')}
+                      </button>
+                      <button 
+                          onClick={() => router.push(`/${locale}/carrier/fleet`)}
+                          className="w-full h-10 bg-white/20 text-white rounded-sm font-bold text-xs hover:bg-white/30 transition-colors"
+                      >
+                          {t('carrier.home.tasks.manage_fleet')}
+                      </button>
+                  </div>
+              </div>
+          </div>
+
+          {/* Live Tracking Banner */}
+          <div className="mt-8 p-4 rounded-md border border-primary/20 bg-primary/5 flex flex-col md:flex-row items-center justify-between gap-4 text-start">
+              <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary relative">
+                      <MapPinIcon size={24} weight="fill" />
+                      <span className="absolute -top-1 -right-1 w-3 h-3 bg-error rounded-full border-2 border-white animate-pulse" />
+                  </div>
+                  <div>
+                      <p className="text-sm font-bold text-neutral-900">{t('carrier.home.tracking.title')}</p>
+                      <p className="text-xs text-neutral-500">{t('carrier.home.tracking.description').replace('{count}', '١٢')}</p>
+                  </div>
+              </div>
+              <button className="h-9 px-6 bg-neutral-900 text-white text-xs font-bold rounded-pill hover:bg-black transition-colors flex items-center gap-2">
+                  {t('carrier.home.tracking.button')}
+                  <ArrowRightIcon size={14} className={isRTL ? 'rotate-180' : ''} />
+              </button>
+          </div>
+        </DashboardLayout>
+      </AppShell>
+    </RoleGuard>
   )
 }

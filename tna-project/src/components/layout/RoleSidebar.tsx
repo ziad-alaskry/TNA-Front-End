@@ -2,18 +2,21 @@
 
 import React from 'react'
 import { 
-    House, 
-    MagnifyingGlass, 
-    Wallet, 
-    User, 
-    IdentificationCard, 
-    Truck, 
-    ShieldCheck, 
-    ChartBar, 
-    Gear, 
-    Package, 
-    Link as LinkIcon,
-    Question
+    House as HouseIcon, 
+    MagnifyingGlass as MagnifyingGlassIcon, 
+    Wallet as WalletIcon, 
+    User as UserIcon, 
+    IdentificationCard as IdentificationCardIcon, 
+    Truck as TruckIcon, 
+    ShieldCheck as ShieldCheckIcon, 
+    ChartBar as ChartBarIcon, 
+    Gear as GearIcon, 
+    Question as QuestionIcon,
+    NavigationArrow as NavigationArrowIcon,
+    Fingerprint as FingerprintIcon,
+    Users as UsersIcon,
+    Package as PackageIcon,
+    Link as LinkIcon
 } from '@phosphor-icons/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -30,28 +33,32 @@ export function SidebarContent({ role }: SidebarProps) {
 
   const menuConfigs = {
     Visitor: [
-      { labelKey: 'common.roles.Visitor.overview', icon: <House size={22} />, href: '/visitor/home' },
-      { labelKey: 'common.roles.Visitor.address_search', icon: <MagnifyingGlass size={22} />, href: '/visitor/search' },
-      { labelKey: 'common.roles.Visitor.wallet', icon: <Wallet size={22} />, href: '/visitor/wallet' },
-      { labelKey: 'common.roles.Visitor.codes', icon: <IdentificationCard size={22} />, href: '/visitor/tnas' },
-      { labelKey: 'common.roles.Visitor.shipments', icon: <Package size={22} />, href: '/visitor/shipments' },
-      { labelKey: 'common.roles.Visitor.profile', icon: <User size={22} />, href: '/visitor/profile' },
+      { labelKey: 'common.roles.Visitor.overview', icon: <HouseIcon size={22} />, href: '/visitor/home' },
+      { labelKey: 'common.roles.Visitor.address_search', icon: <MagnifyingGlassIcon size={22} />, href: '/visitor/search' },
+      { labelKey: 'common.roles.Visitor.wallet', icon: <WalletIcon size={22} />, href: '/visitor/wallet' },
+      { labelKey: 'common.roles.Visitor.codes', icon: <IdentificationCardIcon size={22} />, href: '/visitor/tnas' },
+      { labelKey: 'common.roles.Visitor.shipments', icon: <PackageIcon size={22} />, href: '/visitor/shipments' },
+      { labelKey: 'common.roles.Visitor.profile', icon: <UserIcon size={22} />, href: '/visitor/profile' },
     ],
     Owner: [
-      { labelKey: 'common.roles.Owner.overview', icon: <House size={22} />, href: '/owner/home' },
-      { labelKey: 'common.roles.Owner.properties', icon: <MagnifyingGlass size={22} />, href: '/owner/properties' },
+      { labelKey: 'common.roles.Owner.overview', icon: <HouseIcon size={22} />, href: '/owner/home' },
+      { labelKey: 'common.roles.Owner.properties', icon: <MagnifyingGlassIcon size={22} />, href: '/owner/properties' },
       { labelKey: 'common.roles.Owner.bindings', icon: <LinkIcon size={22} />, href: '/owner/bindings' },
-      { labelKey: 'common.roles.Owner.earnings', icon: <Wallet size={22} />, href: '/owner/earnings' },
+      { labelKey: 'common.roles.Owner.earnings', icon: <WalletIcon size={22} />, href: '/owner/earnings' },
     ],
     Carrier: [
-      { labelKey: 'common.roles.Carrier.overview', icon: <House size={22} />, href: '/carrier/home' },
-      { labelKey: 'common.roles.Carrier.fleet', icon: <Truck size={22} />, href: '/carrier/fleet' },
-      { labelKey: 'common.roles.Carrier.shipments', icon: <Package size={22} />, href: '/carrier/shipments' },
+      { labelKey: 'common.roles.Carrier.overview', icon: <HouseIcon size={22} />, href: '/carrier/home' },
+      { labelKey: 'common.roles.Carrier.fleet', icon: <TruckIcon size={22} />, href: '/carrier/fleet' },
+      { labelKey: 'common.roles.Carrier.shipments', icon: <PackageIcon size={22} />, href: '/carrier/shipments' },
+      { labelKey: 'common.roles.Carrier.tasks', icon: <NavigationArrowIcon size={22} />, href: '/carrier/driver/tasks' },
+      { labelKey: 'common.roles.Carrier.reports', icon: <ChartBarIcon size={22} />, href: '/carrier/reports' },
     ],
     Gov: [
-      { labelKey: 'common.roles.Gov.overview', icon: <House size={22} />, href: '/gov/home' },
-      { labelKey: 'common.roles.Gov.queue', icon: <ChartBar size={22} />, href: '/gov/verification/queue' },
-      { labelKey: 'common.roles.Gov.audit', icon: <Gear size={22} />, href: '/gov/audit' },
+      { labelKey: 'common.roles.Gov.overview', icon: <HouseIcon size={22} />, href: '/gov/home' },
+      { labelKey: 'common.roles.Gov.queue', icon: <ChartBarIcon size={22} />, href: '/gov/verification/queue' },
+      { labelKey: 'common.roles.Gov.audit', icon: <FingerprintIcon size={22} />, href: '/gov/audit' },
+      { labelKey: 'common.roles.Gov.agencies', icon: <UsersIcon size={22} />, href: '/gov/agencies' },
+      { labelKey: 'common.roles.Gov.policy', icon: <GearIcon size={22} />, href: '/gov/policy' },
     ],
   }
 
@@ -99,7 +106,7 @@ export function SidebarContent({ role }: SidebarProps) {
       <div className="mt-auto pt-6 border-t border-neutral-100">
         <div className="rounded-md bg-neutral-50 p-4 border border-neutral-200/50">
           <div className="flex items-center gap-2 mb-2">
-            <Question size={18} className="text-primary" weight="fill" />
+            <QuestionIcon size={18} className="text-primary" weight="fill" />
             <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">{t('common.support')}</p>
           </div>
           <p className="text-xs text-neutral-600 font-medium leading-relaxed">

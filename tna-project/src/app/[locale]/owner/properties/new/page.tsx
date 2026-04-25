@@ -43,7 +43,6 @@ export default function AddPropertyPage() {
         currentStep={currentStep}
         onStepChange={setCurrentStep}
         onSubmit={methods.handleSubmit(onSubmit)}
-        submitButtonProps={{ className: 'bg-btn-primary text-white' }}
       >
         {currentStep === 0 && (
           <div className="space-y-4" dir="rtl">

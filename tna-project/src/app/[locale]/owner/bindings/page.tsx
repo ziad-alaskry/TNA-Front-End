@@ -87,12 +87,12 @@ export default function OwnerBindingsPage() {
             key: 'status',
             label: 'الحالة',
             render: (val) => {
-                const configs = {
+                const configs: Record<BindingRequest['status'], { label: string; class: string; icon: React.ReactNode }> = {
                     PENDING: { label: 'بانتظار موافقتك', class: 'bg-warning-bg text-warning', icon: <Clock size={14} /> },
                     ACTIVE: { label: 'نشط', class: 'bg-success-bg text-success', icon: <CheckCircle size={14} /> },
                     REJECTED: { label: 'مرفوض', class: 'bg-error-bg text-error', icon: <XCircle size={14} /> },
                 };
-                const config = configs[val];
+                const config = configs[val as BindingRequest['status']];
                 return (
                     <div className={`flex items-center gap-2 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider ${config.class}`}>
                         {config.icon}

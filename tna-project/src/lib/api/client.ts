@@ -1,8 +1,9 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useAuthStore } from '../store/useAuthStore';
+import { AppError, ApiError } from './types';
 
 const apiClient = axios.create({
-    baseURL: '/api',
+    baseURL: process.env.NEXT_PUBLIC_API_URL || '/api',
     headers: {
         'Content-Type': 'application/json',
     },
@@ -10,22 +11,39 @@ const apiClient = axios.create({
 
 // Request interceptor for JWT
 apiClient.interceptors.request.use((config) => {
-    const token = useAuthStore.getState().token;
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+    if (typeof window !== 'undefined') {
+        const token = useAuthStore.getState().token;
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
     }
     return config;
 });
 
-// Response interceptor for 401
+// Response interceptor for errors
 apiClient.interceptors.response.use(
     (response) => response,
-    (error) => {
-        if (error.response?.status === 401) {
-            useAuthStore.getState().clearAuth();
-            window.location.href = '/auth/login';
+    (error: AxiosError<ApiError>) => {
+        const status = error.response?.status;
+        const data = error.response?.data;
+
+        if (status === 401) {
+            useAuthStore.getState().logout();
+            // Optional: redirect to login if not already there
+            if (typeof window !== 'undefined' && !window.location.pathname.includes('/auth/login')) {
+                window.location.href = '/auth/login';
+            }
         }
-        return Promise.reject(error);
+
+        const message = data?.message || error.message || 'An unexpected error occurred';
+        const appError = new AppError(
+            message,
+            status,
+            data?.code,
+            data?.errors
+        );
+
+        return Promise.reject(appError);
     }
 );
 

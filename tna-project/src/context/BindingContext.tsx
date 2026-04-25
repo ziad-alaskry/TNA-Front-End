@@ -4,13 +4,14 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { TNA, TNAStatus } from '@/lib/types/tna';
 import { Binding } from '@/lib/types/bindings';
 import { OwnerAccount } from '@/lib/types/naOwner';
+import { Property } from '@/lib/types/owner';
 
 interface BindingContextType {
   visitorTnas: TNA[];
   addVisitorTna: (tna: Partial<TNA>) => void;
   acceptBindingRequest: (id: string, fee: number) => void;
   ownerAccount: OwnerAccount;
-  realEstateObjects: any[];
+  realEstateObjects: Property[];
 }
 
 const BindingContext = createContext<BindingContextType | undefined>(undefined);
@@ -49,7 +50,7 @@ export const BindingProvider = ({ children }: { children: ReactNode }) => {
     updated_at: new Date().toISOString(),
   });
 
-  const [realEstateObjects, setRealEstateObjects] = useState<any[]>([
+  const [realEstateObjects, setRealEstateObjects] = useState<Property[]>([
     {
       id: 'prop-01',
       name: 'فيلا الملقا ١٢',
