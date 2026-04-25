@@ -5,15 +5,15 @@ import DataTableLayout, { DataTableColumn } from '@/components/templates/DataTab
 import Button from '@/components/ui/Button'; 
 import Modal from '@/components/ui/Modal'; 
 import Select from '@/components/ui/Select'; 
-import { useTNAContext } from '@/context/TNAContext'; 
-import { CarrierVehicle, CarrierStaff, VehicleStatus, StaffRole } from '@/context/TNAContext'; 
+import { useFleetContext } from '@/context/FleetContext'; 
+import { CarrierVehicle, CarrierStaff } from '@/lib/types/carrier'; 
 
 // Assume t() function for translation is available
 const t = (key: string) => key; // Placeholder for translation
 
 export default function CarrierFleetPage() {
-  // Consume global state from TNAContext
-  const { fleetData, assignDriver, updateVehicleStatus } = useTNAContext();
+  // Consume global state from FleetContext
+  const { fleetData, assignDriver, updateVehicleStatus } = useFleetContext();
   const { vehicles, staff } = fleetData;
 
   const [isAssignDriverModalOpen, setIsAssignDriverModalOpen] = useState(false);
@@ -21,13 +21,13 @@ export default function CarrierFleetPage() {
   const [selectedDriverId, setSelectedDriverId] = useState<string | null>('unassigned');
 
   // Filter staff to get only available drivers
-  const availableDrivers = staff.filter(staff => staff.role === 'DRIVER' && staff.is_available);
+  const availableDrivers = staff.filter(s => s.position === 'DRIVER' && s.is_active);
 
   const handleAssignDriver = () => {
     if (!selectedVehicleId) return;
 
     const newDriverId = selectedDriverId === 'unassigned' ? null : selectedDriverId;
-    const newStatus: VehicleStatus = newDriverId ? 'ON_TRIP' : 'IDLE';
+    const newStatus: CarrierVehicle['status'] = newDriverId ? 'ON_TRIP' : 'IDLE';
 
     // Call context function to update state
     assignDriver(selectedVehicleId, newDriverId);
@@ -48,28 +48,24 @@ export default function CarrierFleetPage() {
   // Define the columns for the DataTable, applying amber/orange branding and RTL support
   const vehicleColumns: DataTableColumn<CarrierVehicle>[] = [
     {
-      key: 'vehicleId',
+      key: 'vehicle_id',
       label: t('vehicleId'),
     },
     {
-      key: 'model',
-      label: t('model'),
-    },
-    {
-      key: 'plateNumber',
+      key: 'plate_number',
       label: t('licensePlate'),
     },
     {
-      key: 'driverId', 
+      key: 'assigned_staff_id', 
       label: t('assignedDriver'),
       render: (val, row) => {
-        const driverId = row.driverId;
-        const driver = staff.find(staff => staff.staffId === driverId);
+        const driverId = row.assigned_staff_id;
+        const driver = staff.find(s => s.staff_id === driverId);
         // Ensure RTL-friendly display for driver name and ID
         return (
           <div className="text-start">
             {driver ? (
-              <span className="text-start pe-2">{driver.name} ({driver.staffId})</span>
+              <span className="text-start pe-2">{driver.full_name} ({driver.staff_id})</span>
             ) : (
               <span className="text-gray-500">{t('unassigned')}</span>
             )}
@@ -82,9 +78,9 @@ export default function CarrierFleetPage() {
       label: t('status'),
       render: (val, row) => {
         const status = row.status;
-        let badgeColor = 'bg-gray-200 text-gray-700';
-        if (status === 'ON_TRIP') badgeColor = 'bg-amber-100 text-amber-700';
-        if (status === 'IDLE') badgeColor = 'bg-green-100 text-green-700';
+        let badgeColor = 'bg-neutral-200 text-neutral-700';
+        if (status === 'ON_TRIP') badgeColor = 'bg-warning-bg text-warning';
+        if (status === 'IDLE') badgeColor = 'bg-success-bg text-success';
 
         return (
           <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${badgeColor} text-start`}>
@@ -94,7 +90,7 @@ export default function CarrierFleetPage() {
       },
     },
     {
-      key: 'vehicleId', // Required for typing
+      key: 'vehicle_id', // Required for typing
       label: t('actions'),
       render: (val, row) => {
         const vehicle = row;
@@ -102,12 +98,12 @@ export default function CarrierFleetPage() {
         return (
           <div className="flex space-x-2 text-start">
             <Button 
-              onClick={() => openAssignDriverModal(vehicle.vehicleId, vehicle.driverId)} 
+              onClick={() => openAssignDriverModal(vehicle.vehicle_id, vehicle.assigned_staff_id || null)} 
               variant="outline" 
-              className="border-amber-500 text-amber-500 hover:bg-amber-50" // Amber accent
+              className="border-warning text-warning hover:bg-warning-bg" // Warning/Amber accent
               disabled={vehicle.status === 'ON_TRIP'} // Disable if already on trip, or handle re-assignment logic
             >
-              {t(vehicle.driverId ? 'reassignDriver' : 'assignDriver')}
+              {t(vehicle.assigned_staff_id ? 'reassignDriver' : 'assignDriver')}
             </Button>
           </div>
         );

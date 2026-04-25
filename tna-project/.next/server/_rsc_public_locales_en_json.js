@@ -1,0 +1,25 @@
+"use strict";
+/*
+ * ATTENTION: An "eval-source-map" devtool has been used.
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+exports.id = "_rsc_public_locales_en_json";
+exports.ids = ["_rsc_public_locales_en_json"];
+exports.modules = {
+
+/***/ "(rsc)/./public/locales/en.json":
+/*!********************************!*\
+  !*** ./public/locales/en.json ***!
+  \********************************/
+/***/ ((module) => {
+
+module.exports = /*#__PURE__*/JSON.parse('{"common":{"next":"Next","back":"Back","confirm":"Confirm","cancel":"Cancel","loading":"Loading...","property_search":"Property Search","my_properties":"My Properties","managed_properties":"Managed Properties","bind":"Bind","home":"Home","menu":"Menu","search_placeholder":"Search...","no_data":"No data found","page_of":"Page {current} of {total}","total_records":"{count} total records","navigation":{"search":"Search","notifications":"Notifications","logout":"Logout","profile":"Profile","settings":"Settings"},"roles":{"Visitor":{"overview":"Overview","address_search":"Address Search","wallet":"TNA Wallet","codes":"My TNA Codes","profile":"Profile"},"Owner":{"overview":"Overview","properties":"Properties","bindings":"Bindings","earnings":"Earnings"},"Carrier":{"overview":"Dispatch Home","fleet":"Fleet Management","shipments":"Shipments"},"Gov":{"overview":"Command Center","queue":"Verification Queue","audit":"System Audit"}},"support":"Support","logged_in_as":"Logged in as {role} Agent. For assistance, contact regional gov hub."},"owner":{"properties":{"title":"Managed Properties","tna_id":"TNA ID","address":"Address","status":"Status","verification_status":"Verification Status","verified":"Verified","pending":"Pending"},"earnings":{"title":"Earnings Overview","subtitle":"Manage your revenue and withdrawal requests","total_earned":"Total Earned","available_balance":"Available Balance","pending_payouts":"Pending Payouts","available_for_withdrawal":"Available for Withdrawal","withdraw_funds":"Withdraw Funds","processing":"Processing...","min_withdrawal":"Minimum withdrawal: {amount} SAR","recent_transactions":"Recent Transactions","no_transactions":"Transaction history will appear here once you receive your first payout.","empty_title":"No Earnings Yet","empty_description":"Your earnings ledger is currently empty. Revenue will be generated automatically once your properties are bound to active TNAs.","empty_action":"View Asset Registry"},"bindings":{"title":"Binding Requests","visitor_name":"Visitor Name","status":"Status","actions":"Actions","accept":"Accept","reject":"Reject","success_message":"TNA Activated Successfully"}},"auth":{"title":"Create New Account","personal_data":"Personal Data","full_name":"Official Full Name","doc_number":"Official Document Number","passport":"Passport","national_id":"National ID","iqama":"Iqama","dob":"Date of Birth","mobile":"Mobile Number","confirm_checkbox":"I declare that all personal data is correct","account_data":"User Account Data","username":"Username","email":"Email Address","password":"Password","confirm_password":"Confirm Password","terms_and_conditions":"I agree to the terms and conditions","create_account":"Create New User Account"}}');
+
+/***/ })
+
+};
+;

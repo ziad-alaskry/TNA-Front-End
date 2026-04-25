@@ -3,8 +3,7 @@
 import React from 'react';
 import Button from '@/components/ui/Button'; // Assuming Button component is available
 import { ChartPlaceholder } from '@/components/ui/ChartPlaceholder'; // Placeholder for charts
-import { useTNAContext } from '@/context/TNAContext'; // Import TNAContext
-import { VehicleStatus, CarrierVehicle, CarrierStaff } from '@/context/TNAContext'; // Import types from context
+import { useFleetContext } from '@/context/FleetContext'; // Import FleetContext
 
 // Assume t() function for translation is available
 const t = (key: string) => key; // Placeholder for translation
@@ -14,38 +13,35 @@ interface KpiCardProps {
   title: string;
   value: string | number;
   metric: string; // e.g., 'ON_TRIP', 'DRIVER_UTILIZATION'
-  accentColor: string; // e.g., 'amber-500'
+  accentColor: string; // e.g., 'warning'
   description?: string; // Optional description for the KPI
 }
 
 const KpiCard: React.FC<KpiCardProps> = ({ title, value, metric, accentColor, description }) => {
   // Dynamic styling for accent border and text
-  const borderStartClass = `border-s-4 border-${accentColor}`; // Using logical property 'border-s'
-  const textClass = `text-${accentColor}`;
+  const borderStartClass = `border-s-4 border-warning`; // Using logical property 'border-s'
+  const textClass = `text-brand-navy`;
 
   return (
-    <div className={`p-6 rounded-lg shadow-sm bg-white ${borderStartClass} border-gray-200`}>
+    <div className={`p-6 rounded-md shadow-card bg-surface-200 ${borderStartClass} border-neutral-200`}>
       <div className="flex items-center justify-between mb-2">
-        <h3 className={`text-lg font-semibold ${textClass}`}>{title}</h3>
-        {/* Placeholder for an icon if needed */}
+        <h3 className={`text-lg font-bold ${textClass}`}>{title}</h3>
       </div>
-      <p className="text-3xl font-bold text-gray-800">{value}</p>
-      {description && <p className="text-sm text-gray-500 mt-1">{description}</p>}
+      <p className="text-3xl font-black text-neutral-900">{value}</p>
+      {description && <p className="text-caption text-neutral-500 mt-1 font-medium">{description}</p>}
     </div>
   );
 };
 
 export default function CarrierReportsPage() {
   // Consume global state for fleet data
-  const { fleetData } = useTNAContext();
+  const { fleetData } = useFleetContext();
   const { vehicles, staff } = fleetData; // Destructure vehicles and staff from fleetData
 
   // Calculate KPIs dynamically from context data
   const activeFleetCount = vehicles.filter(v => v.status === 'ON_TRIP').length;
-  const totalDrivers = staff.filter(s => s.role === 'DRIVER').length;
-  // Assuming drivers are considered 'on trip' if they are assigned to a vehicle that is 'ON_TRIP'
-  // Or, more accurately, if they are not available (is_available: false) and are drivers.
-  const driversOnTripOrAssigned = staff.filter(s => s.role === 'DRIVER' && !s.is_available).length; 
+  const totalDrivers = staff.filter(s => s.position === 'DRIVER').length;
+  const driversOnTripOrAssigned = staff.filter(s => s.position === 'DRIVER' && !s.is_active).length; 
   
   const driverUtilization = totalDrivers > 0 ? ((driversOnTripOrAssigned / totalDrivers) * 100).toFixed(1) : '0.0';
   const avgTurnaroundTime = "N/A"; // Placeholder for calculation

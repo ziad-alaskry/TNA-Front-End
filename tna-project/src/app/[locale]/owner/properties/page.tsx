@@ -1,64 +1,111 @@
 'use client'
 
 import React from 'react'
+import { AppShell } from '@/components/layout/AppShell'
 import DataTableLayout, { DataTableColumn } from '@/components/templates/DataTableLayout'
-import { useLocale } from '@/i18n/LocaleProvider'
-
-interface PropertyRecord {
-  na_id: string
-  address: string
-  verification_status: 'Verified' | 'Pending'
-}
+import { useBindingContext } from '@/context/BindingContext'
+import { useRouter, useParams } from 'next/navigation'
+import { 
+    House, 
+    MapPin, 
+    PlusCircle, 
+    CheckCircle, 
+    WarningCircle,
+    CaretRight,
+    ArrowRight
+} from '@phosphor-icons/react'
+import { Property } from '@/lib/types'
 
 export default function OwnerPropertiesPage() {
-  const { t } = useLocale()
+    const { realEstateObjects } = useBindingContext();
+    const router = useRouter();
+    const { locale } = useParams();
 
-  const columns: DataTableColumn<PropertyRecord>[] = [
-    { 
-      key: 'na_id', 
-      label: t('owner.properties.tna_id'),
-      render: (value: string) => (
-        <span className="inline-flex items-center rounded-sm bg-slate-100 px-2 py-1 font-mono text-xs font-medium text-slate-600 tracking-wider">
-          {value}
-        </span>
-      )
-    },
-    { key: 'address', label: t('owner.properties.address') },
-    { 
-      key: 'verification_status', 
-      label: t('owner.properties.verification_status'),
-      render: (value: string) => {
-        const isVerified = value === 'Verified'
-        const statusLabel = isVerified ? t('owner.properties.verified') : t('owner.properties.pending')
-        return (
-          <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium ${
-            isVerified 
-              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' 
-              : 'bg-amber-50 text-amber-700 border border-amber-200'
-          }`}>
-            <span className={`h-1.5 w-1.5 rounded-full ${isVerified ? 'bg-emerald-500' : 'bg-amber-500'}`} />
-            {statusLabel}
-          </span>
-        )
-      }
-    }
-  ]
+    const columns: DataTableColumn<Property>[] = [
+        {
+            key: 'name',
+            label: 'اسم العقار',
+            render: (val, row) => (
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-md bg-neutral-100 flex items-center justify-center text-neutral-400 group-hover:bg-primary/10 group-hover:text-primary transition-colors">
+                        <House size={20} weight="duotone" />
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="font-bold text-neutral-900">{val}</span>
+                        <span className="text-[10px] text-neutral-400">ID: {row.id}</span>
+                    </div>
+                </div>
+            )
+        },
+        {
+            key: 'building_number',
+            label: 'الموقع',
+            render: (val, row) => (
+                <div className="flex flex-col">
+                    <span className="text-xs font-semibold text-neutral-700">مبنى رقم {val}</span>
+                    <span className="text-[10px] text-neutral-500">القطاع {row.sector_id || '01'} · الرياض</span>
+                </div>
+            )
+        },
+        {
+            key: 'is_verified',
+            label: 'حالة التوثيق',
+            render: (val) => {
+                const isVerified = val === true || val === 'VERIFIED';
+                return (
+                    <div className="flex items-center gap-2">
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
+                            isVerified ? 'bg-success-bg text-success' : 'bg-warning-bg text-warning'
+                        }`}>
+                            {isVerified ? 'موثق' : 'قيد المراجعة'}
+                        </span>
+                        {isVerified && <CheckCircle size={14} weight="fill" className="text-success" />}
+                    </div>
+                )
+            }
+        },
+        {
+            key: 'id',
+            label: 'الارتباطات',
+            render: () => (
+                <div className="flex flex-col">
+                    <span className="text-sm font-bold text-neutral-900">٤ نشطة</span>
+                    <span className="text-[9px] text-neutral-400">من أصل ١٠ متاحة</span>
+                </div>
+            )
+        },
+        {
+            key: 'id',
+            label: '',
+            render: (id) => (
+                <div className="flex justify-end">
+                    <button 
+                        onClick={() => router.push(`/${locale}/owner/property/detail?id=${id}`)}
+                        className="p-2 rounded-sm hover:bg-neutral-100 text-neutral-400 transition-colors"
+                    >
+                        <ArrowRight size={18} className="rotate-180" />
+                    </button>
+                </div>
+            )
+        }
+    ];
 
-  const sampleData: PropertyRecord[] = [
-    { na_id: 'NA-8293-KSA', address: 'King Fahd Road, Sector 4, Riyadh', verification_status: 'Verified' },
-    { na_id: 'NA-1029-KSA', address: 'Jabal Omar Development, Makkah', verification_status: 'Pending' },
-    { na_id: 'NA-9942-KSA', address: 'Corniche Waterfront, Jeddah', verification_status: 'Verified' },
-    { na_id: 'NA-4432-KSA', address: 'Prince Turki St, Al Khobar', verification_status: 'Verified' },
-  ]
-
-  return (
-    <div className="font-rubik">
-      <DataTableLayout
-        title={t('owner.properties.title')}
-        columns={columns}
-        data={sampleData}
-        onRowClick={(row) => console.log('Clicked property:', row.na_id)}
-      />
-    </div>
-  )
+    return (
+        <AppShell role="Owner" header="عقاراتي">
+            <DataTableLayout
+                title="قائمة العقارات المسجلة"
+                columns={columns}
+                data={realEstateObjects}
+                onRowClick={(row) => router.push(`/${locale}/owner/property/detail?id=${row.id}`)}
+            >
+                <button 
+                    onClick={() => router.push(`/${locale}/owner/property/add`)}
+                    className="h-11 px-6 rounded-sm bg-primary text-white font-bold flex items-center gap-2 hover:bg-opacity-90 transition-all shadow-btn"
+                >
+                    <PlusCircle size={20} weight="bold" />
+                    تسجيل عقار جديد
+                </button>
+            </DataTableLayout>
+        </AppShell>
+    );
 }

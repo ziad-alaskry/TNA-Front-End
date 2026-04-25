@@ -6,7 +6,9 @@ import { isValidLocale, getDirection, type Locale } from '@/i18n/config'
 import { getMessages } from '@/i18n/request'
 import { notFound } from 'next/navigation'
 import { Rubik } from 'next/font/google'
-import { TNAProvider } from '@/context/TNAContext'; 
+import { GovProvider } from '@/context/GovContext';
+import { FleetProvider } from '@/context/FleetContext';
+import { BindingProvider } from '@/context/BindingContext';
 
 const rubik = Rubik({ subsets: ['latin', 'arabic'], weight: ['300', '400', '500', '600', '700', '800'] })
 
@@ -36,11 +38,15 @@ export default async function LocaleLayout({
 
   return (
     <html lang={validLocale} dir={dir} suppressHydrationWarning>
-      <body suppressHydrationWarning className={`${rubik.className} bg-slate-100 text-slate-900`}>
+      <body suppressHydrationWarning className={`${rubik.className} bg-surface-100 text-neutral-900`}>
         <LocaleProvider locale={validLocale} messages={messages}>
-          <TNAProvider>
-            <Providers>{children}</Providers>
-          </TNAProvider>
+          <GovProvider>
+            <FleetProvider>
+              <BindingProvider>
+                <Providers>{children}</Providers>
+              </BindingProvider>
+            </FleetProvider>
+          </GovProvider>
         </LocaleProvider>
       </body>
     </html>

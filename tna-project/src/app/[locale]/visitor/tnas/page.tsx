@@ -3,46 +3,75 @@
 import React from 'react'
 import { AppShell } from '@/components/layout/AppShell'
 import DataTableLayout, { DataTableColumn } from '@/components/templates/DataTableLayout'
-import { useTNAContext } from '@/context/TNAContext'
-import { useRouter } from 'next/navigation'
+import { useBindingContext } from '@/context/BindingContext'
+import { useRouter, useParams } from 'next/navigation'
 import Button from '@/components/ui/Button'
-
-const t = (key: string) => key;
+import { TNA } from '@/lib/types/tna'
+import { Eye } from '@phosphor-icons/react'
 
 export default function VisitorTnasPage() {
-  const { tnaData } = useTNAContext();
+  const { visitorTnas } = useBindingContext();
   const router = useRouter();
+  const { locale } = useParams();
 
-  const columns: DataTableColumn<any>[] = [
+  const columns: DataTableColumn<TNA>[] = [
     { 
       key: 'tna_code', 
-      label: t('tnaCode'), 
-      width: '25%',
-      render: (val) => <span className="font-mono">{val}</span> // JetBrains Mono requirement
+      label: 'كود العنوان', 
+      width: '30%',
+      render: (val) => <span className="font-mono font-bold text-primary">{val}</span>
     },
-    { key: 'status', label: t('status'), width: '25%' },
-    { key: 'created_at', label: t('createdAt'), width: '25%' },
+    { 
+        key: 'status', 
+        label: 'الحالة', 
+        width: '20%',
+        render: (val) => {
+            const isSuccess = val === 'ACTIVE';
+            return (
+                <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider ${
+                    isSuccess ? 'bg-success-bg text-success' : 'bg-warning-bg text-warning'
+                }`}>
+                    {val === 'ACTIVE' ? 'نشط' : 'قيد المراجعة'}
+                </span>
+            )
+        }
+    },
+    { 
+        key: 'issued_at', 
+        label: 'تاريخ الربط', 
+        width: '25%',
+        render: (val) => <span className="text-xs text-neutral-500 font-medium">{val ? new Date(val).toLocaleDateString() : '---'}</span>
+    },
     { 
       key: 'tna_id', 
-      label: t('actions'), 
+      label: '', 
       width: '25%', 
       render: (id) => (
-        <Button 
-          onClick={() => router.push(`/visitor/tna/detail?id=${id}`)}
-          className="bg-[linear-gradient(135deg,#02488D,#00B4C9)] text-white px-4 py-2" // Navy-to-Cyan gradient
-        >
-          {t('viewDetail')}
-        </Button>
+        <div className="flex justify-end">
+            <Button 
+                onClick={(e) => {
+                    e.stopPropagation();
+                    router.push(`/${locale}/visitor/tnas/${id}`);
+                }}
+                size="sm"
+                variant="outline"
+                className="gap-2 h-9"
+            >
+                <Eye size={16} />
+                عرض التفاصيل
+            </Button>
+        </div>
       )
     },
   ]
 
   return (
-    <AppShell role="Visitor" header={<h1 className="text-xl font-bold">{t('myTnaCodes')}</h1>}>
+    <AppShell role="Visitor" header="عناويني الوطنية">
       <DataTableLayout
-        title={t('myTnaCodes')}
+        title="قائمة العناوين المرتبطة"
         columns={columns}
-        data={tnaData}
+        data={visitorTnas}
+        onRowClick={(row) => router.push(`/${locale}/visitor/tnas/${row.tna_id}`)}
       />
     </AppShell>
   )

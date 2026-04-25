@@ -2,71 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('tokens.css');
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 @import url('https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css');
 
 @layer base {
   :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --destructive-foreground: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
-    --chart-1: oklch(0.646 0.222 41.116);
-    --chart-2: oklch(0.6 0.118 184.704);
-    --chart-3: oklch(0.398 0.07 227.392);
-    --chart-4: oklch(0.828 0.189 84.429);
-    --chart-5: oklch(0.769 0.188 70.08);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
+    --background: var(--surface-100);
+    --foreground: var(--neutral-700);
+    --card: var(--surface-200);
+    --card-foreground: var(--neutral-700);
+    --popover: var(--surface-300);
+    --popover-foreground: var(--neutral-700);
+    --primary: var(--color-brand-primary);
+    --primary-foreground: #FFFFFF;
+    --secondary: var(--color-brand-secondary);
+    --secondary-foreground: #FFFFFF;
+    --muted: var(--neutral-100);
+    --muted-foreground: var(--neutral-500);
+    --accent: var(--color-brand-accent);
+    --accent-foreground: #FFFFFF;
+    --destructive: var(--color-error);
+    --destructive-foreground: #FFFFFF;
+    --border: var(--neutral-300);
+    --input: var(--neutral-300);
+    --ring: var(--primitive-cyan-mid);
+    --radius: var(--radius-md);
 
-    /* TNA Brand Primitives */
-    --primitive-cyan-mid: #00B4C9;
-    --primitive-navy: #02488D;
-    --primitive-amber: #F5A623;
+    /* Sidebar legacy mapping (can be refined) */
+    --sidebar: var(--neutral-50);
+    --sidebar-foreground: var(--neutral-700);
+    --sidebar-primary: var(--color-brand-primary);
+    --sidebar-primary-foreground: #FFFFFF;
+    --sidebar-accent: var(--neutral-100);
+    --sidebar-accent-foreground: var(--color-brand-primary);
+    --sidebar-border: var(--neutral-200);
+    --sidebar-ring: var(--primitive-cyan-mid);
   }
 
   html, body {
-    font-family: 'Rubik', sans-serif;
+    font-family: var(--font-en);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
-    @apply bg-slate-100 text-slate-900;
+    @apply bg-background text-foreground;
   }
 }
 
 @layer components {
   /* System Backdrop Blur */
   .ui-topbar {
-    @apply sticky top-0 z-50 border-b border-slate-200 bg-white/80 backdrop-blur-md;
+    @apply sticky top-0 z-50 border-b border-neutral-200 bg-white/80 backdrop-blur-md;
+    height: var(--navbar-height);
   }
 
-  /* UI DNA: All cards/containers must be flat with a 1px border */
+  /* UI DNA: All cards/containers must match SPATIAL spec */
   .ui-contract-card {
-    border: 1px solid #e2e8f0;
-    border-radius: 8px; /* rounded-lg */
-    box-shadow: none;
+    background: var(--surface-200);
+    border: 1px solid var(--neutral-200);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    padding: var(--layout-card-padding);
   }
 }
 

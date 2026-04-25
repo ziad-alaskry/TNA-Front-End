@@ -1,28 +1,20 @@
 import { create } from 'zustand';
-
-export type AccountCategory = 'individual' | 'business' | null;
-export type UserSubType = 'visitor' | 'owner' | 'logistics' | 'gov' | null;
-
-export interface PersonalData {
-    fullName: string;
-    docType: 'passport' | 'national_id' | 'iqama';
-    docNumber: string;
-    dateOfBirth: string;
-    mobile: string;
-}
+import { SignupRequest, UserRole } from '@/lib/types/auth';
 
 interface RegistrationState {
-    accountCategory: AccountCategory;
-    userSubType: UserSubType;
-    personalData: PersonalData | null;
-    setRegistrationData: (data: Partial<Omit<RegistrationState, 'setRegistrationData' | 'resetRegistration'>>) => void;
-    resetRegistration: () => void;
+  step: number;
+  formData: Partial<SignupRequest>;
+  setStep: (step: number) => void;
+  updateFormData: (data: Partial<SignupRequest>) => void;
+  resetRegistration: () => void;
 }
 
 export const useRegistrationStore = create<RegistrationState>((set) => ({
-    accountCategory: null,
-    userSubType: null,
-    personalData: null,
-    setRegistrationData: (data) => set((state) => ({ ...state, ...data })),
-    resetRegistration: () => set({ accountCategory: null, userSubType: null, personalData: null }),
+  step: 1,
+  formData: {
+    user_role: 'VISITOR',
+  },
+  setStep: (step) => set({ step }),
+  updateFormData: (data) => set((state) => ({ formData: { ...state.formData, ...data } })),
+  resetRegistration: () => set({ step: 1, formData: { user_role: 'VISITOR' } }),
 }));

@@ -1,0 +1,140 @@
+/* ═══════════════════════════════════════════════════
+   SPATIAL Design Token System — tokens.css
+   Source of truth: Brand PDF + 14 Figma Screens
+   Base unit: 4px grid
+═══════════════════════════════════════════════════ */
+
+:root {
+  /* ─── BRAND PRIMITIVES ─── */
+  --primitive-cyan-light: #18CCE5;
+  --primitive-cyan-mid: #00B4C9;
+  --primitive-navy: #02488D;
+  --primitive-navy-dark: #013A70;
+  --primitive-navy-light: #1A6FC4;
+  --primitive-amber: #F5A623;
+  --primitive-green: #28A745;
+  --primitive-red: #DC3545;
+
+  /* ─── SEMANTIC: BRAND ─── */
+  --color-brand-primary: #F68B1E; /* Orange Theme */
+  --color-brand-secondary: #FFB347;
+  --color-brand-accent: #FFCC33;
+
+  /* ─── SEMANTIC: STATUS ─── */
+  --color-success: #28A745;
+  --color-success-bg: #E8F7EC;
+  --color-success-border: #A3D9B1;
+  --color-error: #DC3545;
+  --color-error-bg: #FDECEA;
+  --color-error-border: #F5B3BA;
+  --color-warning: #F5A623;
+  --color-warning-bg: #FEF6E7;
+  --color-warning-border: #FAD98D;
+  --color-info: #00B4C9;
+  --color-info-bg: #E6F7FA;
+  --color-info-border: #99DDE8;
+  --color-pending: #1A6FC4;
+  --color-pending-bg: #EAF2FB;
+
+  /* ─── NEUTRAL SCALE (9-step) ─── */
+  --neutral-50: #FAFAFA;
+  --neutral-100: #F4F5F6;
+  --neutral-200: #EAECEE;
+  --neutral-300: #D8DBDF;
+  --neutral-400: #B7B7B7;
+  --neutral-500: #8C9098;
+  --neutral-600: #5C6370;
+  --neutral-700: #3A3F47;
+  --neutral-800: #1E2228;
+  --neutral-900: #0A0D10;
+
+  /* ─── SURFACE LEVELS ─── */
+  --surface-100: #F4F5F6; /* main app bg */
+  --surface-200: #FFFFFF; /* cards, sections */
+  --surface-300: #FFFFFF; /* modals, sheets */
+  --surface-dark-100: #02488D;
+  --surface-dark-200: #013A70;
+
+  /* ─── TYPOGRAPHY ─── */
+  --font-en: 'Rubik', sans-serif;
+  --font-ar: 'Rubik', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --text-display-size: 32px;
+  --text-display-weight: 800;
+  --text-display-lh: 1.2;
+  --text-display-ls: -0.02em;
+  --text-heading-size: 22px;
+  --text-heading-weight: 700;
+  --text-heading-lh: 1.3;
+  --text-heading-ls: -0.01em;
+  --text-subheading-size: 17px;
+  --text-subheading-weight: 600;
+  --text-subheading-lh: 1.4;
+  --text-body-size: 15px;
+  --text-body-weight: 400;
+  --text-body-lh: 1.6;
+  --text-label-size: 13px;
+  --text-label-lh: 1.5;
+  --text-caption-size: 11px;
+  --text-caption-ls: 0.02em;
+  --text-code-size: 14px;
+  --text-code-ls: 0.04em;
+
+  /* ─── SPACING (4px base) ─── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  --layout-screen-padding: 20px;
+  --layout-section-gap: 24px;
+  --layout-card-padding: 16px;
+
+  /* ─── BORDER RADIUS ─── */
+  --radius-xs: 6px;
+  --radius-sm: 10px; /* inputs */
+  --radius-md: 14px; /* cards */
+  --radius-lg: 20px; /* large cards */
+  --radius-pill: 999px; /* buttons */
+
+  /* ─── SHADOWS ─── */
+  --shadow-card: 0 2px 8px rgba(246, 139, 30, 0.08);
+  --shadow-modal: 0 8px 32px rgba(246, 139, 30, 0.16);
+  --shadow-btn: 0 4px 16px rgba(246, 139, 30, 0.30);
+
+  /* ─── COMPONENT: PRIMARY BUTTON ─── */
+  --btn-primary-height: 56px;
+  --btn-primary-radius: var(--radius-pill);
+  --btn-primary-font-size: var(--text-body-size);
+  --btn-primary-weight: 700;
+  --btn-primary-color: #FFFFFF;
+  --btn-primary-bg: linear-gradient(135deg, #F68B1E, #FFB347);
+
+  /* ─── COMPONENT: OUTLINE BUTTON ─── */
+  --btn-outline-height: 52px;
+  --btn-outline-radius: var(--radius-pill);
+  --btn-outline-border: 1.5px solid #00B4C9;
+
+  /* ─── COMPONENT: INPUT ─── */
+  --input-height: 52px;
+  --input-padding: 0 16px;
+  --input-radius: var(--radius-sm);
+  --input-bg: #FFFFFF;
+  --input-border: 1px solid #D8DBDF;
+  --input-border-focus: 1.5px solid #F68B1E;
+
+  /* ─── NAVIGATION BAR ─── */
+  --navbar-height: 72px;
+  --navbar-bg: #FFFFFF;
+  --navbar-icon-active: #F68B1E;
+  --navbar-icon-inactive: #B7B7B7;
+  --navbar-active-bar: 3px solid #F5A623;
+}

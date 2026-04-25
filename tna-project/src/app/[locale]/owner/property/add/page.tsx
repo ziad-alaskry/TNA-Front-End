@@ -1,137 +1,177 @@
 'use client'
 
-import React, { useState } from 'react';
-import FormWizardLayout from '@/components/templates/FormWizardLayout'; // Assuming FormWizardLayout is here
-import Input from '@/components/ui/InputField'; // Assuming Input component is available
-import Button from '@/components/ui/Button'; // Assuming Button component is available
-import FileUpload from '@/components/ui/FileUpload'; // Placeholder for Deed Upload
-import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import React, { useState } from 'react'
+import { AppShell } from '@/components/layout/AppShell'
+import FormWizardLayout from '@/components/templates/FormWizardLayout'
+import InputField from '@/components/ui/InputField'
+import Select from '@/components/ui/Select'
+import { 
+    MapPin, 
+    IdentificationCard, 
+    FileArrowUp, 
+    CheckCircle,
+    Info,
+    CloudArrowUp,
+    Buildings
+} from '@phosphor-icons/react'
+import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import { useRouter, useParams } from 'next/navigation'
 
-// Conceptual Data Model for owner_national_addresses
-const ownerNationalAddressSchema = z.object({
-  buildingName: z.string().min(1, { message: 'Building Name is required' }),
-  unitNumber: z.string().min(1, { message: 'Unit Number is required' }),
-  ownerNationalId: z.string().min(1, { message: 'National ID is required' }),
-  deedFile: z.any().optional(), // Placeholder for file upload
+const propertySchema = z.object({
+  name: z.string().min(3, { message: 'اسم العقار يجب أن يحتوي على ٣ أحراف على الأقل' }),
+  city: z.string().min(1, { message: 'يجب اختيار المدينة' }),
+  district: z.string().min(1, { message: 'يجب اختيار الحي' }),
+  registry_ref: z.string().min(5, { message: 'رقم السجل العقاري غير صحيح' }),
+  building_number: z.string().min(4, { message: 'رقم المبنى يجب أن يتكون من ٤ أرقام' }),
+  has_docs: z.boolean().refine(val => val === true, { message: 'يجب إرفاق المستندات للمتابعة' })
 });
 
-type OwnerNationalAddressInputs = z.infer<typeof ownerNationalAddressSchema>;
-
-// Assume t() function for translation is available
-const t = (key: string) => key; // Placeholder for translation
+type PropertyInputs = z.infer<typeof propertySchema>;
 
 export default function AddPropertyPage() {
-  const methods = useForm<OwnerNationalAddressInputs>({
-    resolver: zodResolver(ownerNationalAddressSchema),
+  const router = useRouter();
+  const { locale } = useParams();
+  
+  const methods = useForm<PropertyInputs>({
+    resolver: zodResolver(propertySchema),
     defaultValues: {
-      buildingName: '',
-      unitNumber: '',
-      ownerNationalId: '',
-      deedFile: undefined,
-    },
+        name: '',
+        city: 'الرياض',
+        district: '',
+        registry_ref: '',
+        building_number: '',
+        has_docs: false
+    }
   });
 
-  const { handleSubmit, watch, formState: { errors, isValid, isDirty } } = methods;
-
   const [currentStep, setCurrentStep] = useState(0);
-
-  // Assume FormWizardLayout uses locale/direction for dynamic styling if needed.
-  // Here, we apply fixed orange accents as requested.
 
   const steps = [
     {
       id: 'step1',
-      label: t('propertyDetails'),
-      title: t('propertyDetails'),
-      description: t('enterBuildingAndOwnerInfo'),
+      label: 'موقع العقار',
+      title: 'حدد موقع العقار',
+      description: 'أدخل تفاصيل العنوان الجغرافي للعقار المراد تسجيله.',
       content: (
-        <>
-          <Input
-            label={t('buildingName')}
-            {...methods.register('buildingName')}
-            error={errors.buildingName?.message}
-            className="mb-4" // Basic margin for spacing
+        <div className="space-y-6">
+          <InputField
+            label="اسم العقار (للتوضيح)"
+            placeholder="مثال: فيلا الياسمين، عمارة النرجس"
+            {...methods.register('name')}
+            error={methods.formState.errors.name?.message}
           />
-          <Input
-            label={t('unitNumber')}
-            {...methods.register('unitNumber')}
-            error={errors.unitNumber?.message}
-            className="mb-4"
+          <div className="grid grid-cols-2 gap-4">
+            <Select
+                label="المدينة"
+                options={[{ value: 'الرياض', label: 'الرياض' }, { value: 'جدة', label: 'جدة' }]}
+                {...methods.register('city')}
+            />
+            <InputField
+                label="الحي"
+                placeholder="اسم الحي"
+                {...methods.register('district')}
+                error={methods.formState.errors.district?.message}
+            />
+          </div>
+          <InputField
+            label="رقم المبنى (٤ أرقام)"
+            placeholder="XXXX"
+            {...methods.register('building_number')}
+            error={methods.formState.errors.building_number?.message}
           />
-          <Input
-            label={t('ownerNationalId')}
-            {...methods.register('ownerNationalId')}
-            error={errors.ownerNationalId?.message}
-            className="mb-4"
-          />
-        </>
+          <div className="p-4 bg-primary/5 border border-primary/10 rounded-md flex gap-3">
+             <MapPin size={24} className="text-primary shrink-0" weight="fill" />
+             <p className="text-xs text-neutral-600 leading-relaxed">
+                يتم التحقق من صحة العنوان عبر الربط مع الهيئة العامة للعقار. يرجى التأكد من دقة المعلومات.
+             </p>
+          </div>
+        </div>
       ),
     },
     {
       id: 'step2',
-      label: t('deedUpload'),
-      title: t('deedUpload'),
-      description: t('uploadPropertyDeed'),
+      label: 'بيانات السجل',
+      title: 'تفاصيل الصك',
+      description: 'أدخل معلومات الملكية والسجل العقاري المعتمدة.',
       content: (
-        <>
-          <FileUpload
-            label={t('deedDocument')}
-            {...methods.register('deedFile')}
-            error={errors.deedFile?.message as string}
-            // Placeholder for upload component, ensuring it supports file types and validation
+        <div className="space-y-6">
+          <InputField
+            label="رقم صك الملكية / السجل"
+            placeholder="أدخل الرقم المسجل في منصة إيجار أو الصك"
+            {...methods.register('registry_ref')}
+            error={methods.formState.errors.registry_ref?.message}
           />
-        </>
+          <div className="space-y-3">
+            <p className="text-sm font-bold text-neutral-900">نوع العقار</p>
+            <div className="grid grid-cols-2 gap-3">
+                {['سكني', 'تجاري', 'مختلط', 'أخرى'].map(type => (
+                    <button key={type} type="button" className="p-4 border border-neutral-200 rounded-md text-sm font-medium hover:border-primary hover:bg-primary/5 transition-all">
+                        {type}
+                    </button>
+                ))}
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: 'step3',
+      label: 'المستندات',
+      title: 'رفع الوثائق',
+      description: 'يرجى إرفاق نسخة ضوئية من صك الملكية أو ما يثبت الحق في التصرف بالعقار.',
+      content: (
+        <div className="space-y-6">
+            <div 
+                onClick={() => methods.setValue('has_docs', true)}
+                className={`p-10 border-2 border-dashed rounded-lg flex flex-col items-center justify-center gap-4 cursor-pointer transition-all ${
+                    methods.watch('has_docs') ? 'border-primary bg-primary/5' : 'border-neutral-200 hover:border-primary/50'
+                }`}
+            >
+                <CloudArrowUp size={48} weight="thin" className={methods.watch('has_docs') ? 'text-primary' : 'text-neutral-300'} />
+                <div className="text-center">
+                    <p className="text-sm font-bold text-neutral-900">اضغط لرفع الملفات أو اسحبها هنا</p>
+                    <p className="text-[10px] text-neutral-400 mt-1">PDF, JPG, PNG (Max 5MB)</p>
+                </div>
+            </div>
+            
+            {methods.watch('has_docs') && (
+                <div className="p-3 bg-success-bg border border-success/20 rounded-md flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <CheckCircle size={20} className="text-success" weight="fill" />
+                        <span className="text-xs font-bold text-neutral-700">Property_Deed_Copy.pdf</span>
+                    </div>
+                    <button type="button" onClick={() => methods.setValue('has_docs', false)} className="text-[10px] font-bold text-error">حذف</button>
+                </div>
+            )}
+            
+            {methods.formState.errors.has_docs && <p className="text-xs text-error font-medium">{methods.formState.errors.has_docs.message}</p>}
+        </div>
       ),
     },
   ];
 
-  const onSubmit: SubmitHandler<OwnerNationalAddressInputs> = (data) => {
-    console.log('Form Data Submitted:', data);
-    // Logic to bind inputs to owner_national_addresses Data Model
-    // In a real app, this would involve API calls to save data.
-    alert('Property details submitted successfully!');
-    // Navigate to next step or final page upon successful submission
+  const onSubmit: SubmitHandler<PropertyInputs> = (data) => {
+    console.log('Adding Property:', data);
+    // Simulate API call
+    router.push(`/${locale}/owner/properties`);
   };
 
-  const handleStepChange = (newStep: number) => {
-    if (newStep > currentStep) {
-      // Trying to go forward, perform validation
-      const currentStepFields = steps[currentStep]?.content?.props?.children?.map((child: any) => child?.props?.name).filter(Boolean);
-      
-      if (currentStepFields && currentStepFields.length > 0) {
-        methods.trigger(currentStepFields as any).then(isValidStep => {
-          if (isValidStep) {
-            setCurrentStep(newStep);
-          }
-        });
-      } else {
-        // If no fields to validate in this step (e.g., review step), just move forward
-        setCurrentStep(newStep);
-      }
-    } else {
-      // Going backward or staying
-      setCurrentStep(newStep);
-    }
-  };
-
-  // Ensure the FormWizardLayout handles directionality and uses logical properties for its internal elements.
   return (
     <FormProvider {...methods}>
-      <FormWizardLayout
-        steps={steps}
-        currentStep={currentStep}
-        onStepChange={handleStepChange}
-        onSubmit={handleSubmit(onSubmit)}
-        onCancel={() => {
-            // Placeholder cancel logic
-            alert('Cancelled');
-        }}
-        canProceed={true}
-      >
-        {steps[currentStep].content}
-      </FormWizardLayout>
+      <AppShell role="Owner" header="تسجيل عقار">
+        <FormWizardLayout
+            steps={steps}
+            currentStep={currentStep}
+            onStepChange={setCurrentStep}
+            onSubmit={methods.handleSubmit(onSubmit)}
+            onCancel={() => router.back()}
+            canProceed={true}
+        >
+            {steps[currentStep].content}
+        </FormWizardLayout>
+      </AppShell>
     </FormProvider>
   );
 }

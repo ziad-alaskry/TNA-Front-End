@@ -1,29 +1,27 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-export type Lang = 'ar' | 'en';
-export type Dir = 'rtl' | 'ltr';
-
 interface LanguageState {
-    lang: Lang;
-    dir: Dir;
-    setLang: (lang: Lang) => void;
-    toggleLang: () => void;
+  locale: string;
+  lang: 'ar' | 'en'; // Alias for compatibility with useT
+  dir: 'rtl' | 'ltr';
+  setLanguage: (locale: string) => void;
 }
 
 export const useLanguageStore = create<LanguageState>()(
-    persist(
-        (set) => ({
-            lang: 'ar',
-            dir: 'rtl',
-            setLang: (lang) => set({ lang, dir: lang === 'ar' ? 'rtl' : 'ltr' }),
-            toggleLang: () => set((state) => {
-                const newLang = state.lang === 'ar' ? 'en' : 'ar';
-                return { lang: newLang, dir: newLang === 'ar' ? 'rtl' : 'ltr' };
-            }),
-        }),
-        {
-            name: 'tna-language-storage',
-        }
-    )
+  persist(
+    (set) => ({
+      locale: 'ar',
+      lang: 'ar',
+      dir: 'rtl',
+      setLanguage: (locale) => set({ 
+        locale, 
+        lang: locale as 'ar' | 'en',
+        dir: locale === 'ar' ? 'rtl' : 'ltr' 
+      }),
+    }),
+    {
+      name: 'language-storage',
+    }
+  )
 );

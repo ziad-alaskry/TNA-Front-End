@@ -2,76 +2,144 @@
 
 import React from 'react'
 import { AppShell } from '@/components/layout/AppShell'
-import { DashboardLayout } from '@/components/templates/DashboardLayout'
-import { Wallet, ArrowDownCircle, ArrowUpCircle, CreditCard, RefreshCw } from 'lucide-react'
+import { 
+    Wallet, 
+    ArrowUpRight, 
+    ArrowDownLeft, 
+    PlusCircle, 
+    Clock,
+    Receipt,
+    Bank,
+    CreditCard
+} from '@phosphor-icons/react'
+import { useBindingContext } from '@/context/BindingContext'
+import DataTableLayout, { DataTableColumn } from '@/components/templates/DataTableLayout'
+
+interface Transaction {
+    id: string;
+    type: 'TOP_UP' | 'PAYMENT' | 'REFUND';
+    amount: number;
+    description: string;
+    date: string;
+    method: string;
+}
+
+const mockTransactions: Transaction[] = [
+    {
+        id: 'TX-9901',
+        type: 'PAYMENT',
+        amount: -50.00,
+        description: 'رسوم إصدار عنوان وطني مؤقت - TNA-667722',
+        date: '2025/11/10 02:30 PM',
+        method: 'Wallet Balance'
+    },
+    {
+        id: 'TX-9855',
+        type: 'TOP_UP',
+        amount: 200.00,
+        description: 'شحن رصيد المحفظة',
+        date: '2025/11/10 10:15 AM',
+        method: 'Mada (**** 1234)'
+    },
+    {
+        id: 'TX-9721',
+        type: 'PAYMENT',
+        amount: -30.00,
+        description: 'تمديد فترة السكن - TNA-102938',
+        date: '2025/11/05 09:00 AM',
+        method: 'Wallet Balance'
+    }
+];
 
 export default function VisitorWalletPage() {
-  const stats = [
-    { 
-      label: 'Wallet Balance', 
-      value: '420.00 SAR', 
-      icon: <Wallet size={24} />,
-      description: 'visitor_accounts.current_balance'
-    },
-    { 
-      label: 'Total Paid Fees', 
-      value: '1,250 SAR', 
-      icon: <CreditCard size={24} />,
-    },
-    { 
-      label: 'Pending Refunds', 
-      value: '0.00 SAR', 
-      icon: <RefreshCw size={24} />,
-    },
-  ]
+    const { ownerAccount } = useBindingContext();
 
-  const activity = [
-    {
-      id: '1',
-      title: 'TNA Issuance Fee: #88192',
-      description: 'Payment for 30-day binding request.',
-      timestamp: '10 mins ago',
-      status: 'success' as const, // financial_transactions.status
-      amount: '140.00 SAR' // financial_transactions.amount
-    },
-    {
-      id: '2',
-      title: 'Auto-Renewal: TNA #4421',
-      description: 'Payment processed successfully.',
-      timestamp: '2 days ago',
-      status: 'success' as const,
-      amount: '140.00 SAR'
-    },
-    {
-      id: '3',
-      title: 'Deposit via MADA',
-      description: 'Wallet top-up.',
-      timestamp: '5 days ago',
-      status: 'success' as const,
-      amount: '500.00 SAR'
-    },
-  ]
+    const columns: DataTableColumn<Transaction>[] = [
+        {
+            key: 'type',
+            label: 'العملية',
+            render: (val, row) => (
+                <div className="flex items-center gap-3">
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                        val === 'TOP_UP' ? 'bg-success-bg text-success' : 'bg-error-bg text-error'
+                    }`}>
+                        {val === 'TOP_UP' ? <ArrowDownLeft size={16} weight="bold" /> : <ArrowUpRight size={16} weight="bold" />}
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="font-bold text-neutral-900">{row.description}</span>
+                        <span className="text-[10px] text-neutral-400">{row.id} • {row.method}</span>
+                    </div>
+                </div>
+            )
+        },
+        {
+            key: 'date',
+            label: 'التاريخ',
+            render: (val) => <span className="text-xs text-neutral-500">{val}</span>
+        },
+        {
+            key: 'amount',
+            label: 'المبلغ',
+            render: (val) => (
+                <span className={`font-bold ${val > 0 ? 'text-success' : 'text-neutral-900'}`}>
+                    {val > 0 ? `+${val.toFixed(2)}` : val.toFixed(2)} SAR
+                </span>
+            )
+        }
+    ];
 
-  return (
-    <AppShell 
-      role="Visitor" 
-      header={<h1 className="text-xl font-bold">Financial Portfolio</h1>}
-    >
-      <DashboardLayout
-        title="TNA Wallet Hub"
-        subtitle="Manage your issuance funds and track your service transaction history."
-        stats={stats}
-        activity={activity}
-      >
-        <div className="mt-8 flex gap-4">
-          <button className="bg-primitive-cyan-mid text-white px-6 py-2 rounded-sm text-sm font-bold hover:opacity-90 transition-opacity">
-            Top Up Wallet
-          </button>
-          <button className="border border-primitive-cyan-mid text-primitive-cyan-mid px-6 py-2 rounded-sm text-sm font-bold hover:bg-cyan-50 transition-colors">
-            Payment Methods
-          </button>
-        </div>
-      </DashboardLayout>
-    </AppShell>
-  )
+    return (
+        <AppShell role="Visitor" header="المحفظة الإلكترونية">
+            <div className="space-y-8">
+                {/* Balance Card */}
+                <div className="relative overflow-hidden p-8 rounded-md bg-btn-primary text-white shadow-btn flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div className="relative z-10">
+                        <p className="text-sm font-medium opacity-80 mb-2">الرصيد المتاح</p>
+                        <h2 className="text-4xl font-bold flex items-baseline gap-2">
+                            {ownerAccount.current_balance.toFixed(2)}
+                            <span className="text-lg opacity-80">SAR</span>
+                        </h2>
+                    </div>
+                    <div className="relative z-10 flex gap-4">
+                        <button className="h-12 px-6 rounded-pill bg-white text-primary font-bold flex items-center gap-2 shadow-sm hover:bg-neutral-50 transition-colors">
+                            <PlusCircle size={20} weight="fill" />
+                            شحن الرصيد
+                        </button>
+                        <button className="h-12 px-6 rounded-pill bg-white/20 text-white font-bold flex items-center gap-2 backdrop-blur-md hover:bg-white/30 transition-colors">
+                            <Receipt size={20} weight="fill" />
+                            كشف حساب
+                        </button>
+                    </div>
+                    
+                    {/* Decorative Blob */}
+                    <div className="absolute -top-12 -right-12 w-48 h-48 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+                </div>
+
+                {/* Quick Shortcuts */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {[
+                        { label: 'بطاقة مدى', icon: <CreditCard size={24} />, color: 'text-primary bg-primary/5' },
+                        { label: 'تحويل بنكي', icon: <Bank size={24} />, color: 'text-neutral-600 bg-neutral-100' },
+                        { label: 'Apple Pay', icon: <div className="font-bold"></div>, color: 'text-neutral-900 bg-neutral-100' },
+                        { label: 'STC Pay', icon: <div className="font-bold text-xs">STC</div>, color: 'text-error bg-error/5' },
+                    ].map((m, i) => (
+                        <button key={i} className="p-4 rounded-md border border-neutral-200 bg-surface-200 hover:border-primary/50 transition-all flex flex-col items-center gap-3">
+                            <div className={`w-12 h-12 rounded-md flex items-center justify-center ${m.color}`}>
+                                {m.icon}
+                            </div>
+                            <span className="text-xs font-bold text-neutral-700">{m.label}</span>
+                        </button>
+                    ))}
+                </div>
+
+                {/* Transaction History */}
+                <DataTableLayout
+                    title="العمليات الأخيرة"
+                    columns={columns}
+                    data={mockTransactions}
+                    pageSize={5}
+                />
+            </div>
+        </AppShell>
+    );
 }

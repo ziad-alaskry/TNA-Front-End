@@ -41,11 +41,12 @@ export function DashboardLayout({
   const getStatusColor = (status?: string) => {
     switch (status) {
       case 'success':
-        return 'bg-status-success-bg border-s-4 border-status-success'
+        return 'bg-success-bg border-s-4 border-success'
       case 'pending':
-        return 'bg-status-pending-bg border-s-4 border-status-pending'
+        return 'bg-pending-bg border-s-4 border-pending'
       case 'error':
-        return 'bg-status-error-bg border-s-4 border-status-error'
+        return 'bg-error-bg border-s-4 border-error'
+        return 'bg-error-100 border-s-4 border-error-500'
       default:
         return 'bg-surface-200'
     }
@@ -54,12 +55,12 @@ export function DashboardLayout({
   return (
     <div className="min-h-screen bg-surface-100">
       {/* HEADER SECTION */}
-      <div className="border-b border-neutral-200 bg-surface-200 px-5 py-8 shadow-card">
-        <h1 className="text-3xl font-bold text-neutral-900">
+      <div className="border-b border-surface-300 bg-surface-200 px-5 py-8 shadow-card">
+        <h1 className="text-3xl font-bold text-surface-900">
           {title}
         </h1>
         {subtitle && (
-          <p className="mt-2 text-neutral-500">{subtitle}</p>
+          <p className="mt-2 text-surface-600">{subtitle}</p>
         )}
       </div>
 
@@ -68,7 +69,7 @@ export function DashboardLayout({
         {/* STATS GRID */}
         {stats.length > 0 && (
           <div className="mb-12">
-            <h2 className="mb-6 text-lg font-semibold text-neutral-900">
+            <h2 className="mb-6 text-lg font-semibold text-surface-900">
               Key Metrics
             </h2>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -76,18 +77,18 @@ export function DashboardLayout({
                 <button
                   key={idx}
                   onClick={() => onStatClick?.(stat)}
-                  className="rounded-md border border-neutral-200 bg-surface-200 p-6 shadow-card transition-all hover:shadow-modal hover:border-brand-secondary"
+                  className="rounded-md border border-surface-300 bg-surface-200 p-6 shadow-card transition-all hover:shadow-modal hover:border-brand-secondary"
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-xs font-semibold uppercase text-neutral-600">
+                      <p className="text-xs font-semibold uppercase text-surface-600">
                         {stat.label}
                       </p>
-                      <p className="mt-3 text-2xl font-bold text-neutral-900">
+                      <div className="flex-1 text-start font-bold text-surface-900 text-lg tracking-tight">
                         {stat.value}
-                      </p>
+                      </div>
                       {stat.change && (
-                        <p className="mt-2 text-xs text-neutral-500">
+                        <p className="mt-2 text-xs text-surface-500">
                           {stat.change}
                         </p>
                       )}

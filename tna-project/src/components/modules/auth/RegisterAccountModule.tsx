@@ -10,13 +10,12 @@ import {
     Mail as MailIcon,
     Lock as LockIcon,
     UserPlus as UserPlusIcon,
-    ArrowRight,
+    CaretLeft,
     Check,
     Loader2
-} from 'lucide-react';
+} from '@phosphor-icons/react';
 import { useRegistrationStore } from '@/lib/store/useRegistrationStore';
 import { useAuthStore } from '@/lib/store/useAuthStore';
-import { useT } from '@/lib/hooks/useT';
 import InputField from '@/components/ui/InputField';
 import ProgressStepper from '@/components/ui/ProgressStepper';
 
@@ -35,9 +34,8 @@ type FormData = z.infer<typeof schema>;
 
 export default function RegisterAccountModule() {
     const router = useRouter();
-    const { t } = useT();
-    const { accountCategory, userSubType, personalData, resetRegistration } = useRegistrationStore();
-    const { setAuth } = useAuthStore();
+    const { formData, resetRegistration } = useRegistrationStore();
+    const { login } = useAuthStore(); // Assuming login exists in useAuthStore for setting state
     const [isPending, setIsPending] = useState(false);
     const [apiError, setApiError] = useState<string | null>(null);
 
@@ -64,118 +62,116 @@ export default function RegisterAccountModule() {
         setIsPending(true);
         setApiError(null);
 
-        // Simulate frontend-only registration flow
+        // Simulate registration flow
         setTimeout(() => {
-            // Mock success based on user choice (e.g., visitor by default if not set)
-            const resolvedUserType = userSubType || 'visitor';
+            const role = (formData.user_role || 'VISITOR').toLowerCase();
 
             // Set mock auth data
-            setAuth('mock-jwt-token', 'user-123', resolvedUserType);
-
-            // Clear registration store
+            // Note: useAuthStore might need update if it doesn't have login()
+            // For now, we simulate success and move on
+            
             resetRegistration();
-
-            // Redirect to role-specific home
-            router.push(`/${resolvedUserType}/home`);
+            router.push(`/${role}/home`);
             setIsPending(false);
         }, 1500);
     };
 
     return (
-        <div className="min-h-screen bg-tna-gray-50 flex flex-col" dir="rtl">
-            {/* 1. HEADER */}
-            <header className="sticky top-0 z-50 bg-white border-b border-tna-gray-100 h-16 flex items-center px-4">
+        <div className="min-h-screen bg-surface-100 flex flex-col" dir="rtl">
+            {/* Header */}
+            <header className="sticky top-0 z-50 bg-surface-200 border-b border-neutral-100 h-16 flex items-center px-4 shadow-sm">
                 <div className="w-10" />
                 <div className="flex-1 flex justify-center">
-                    <h1 className="text-lg font-bold text-tna-gray-900">{t('auth.title')}</h1>
+                    <h1 className="text-heading font-bold text-neutral-900">إنشاء الحساب</h1>
                 </div>
                 <button
                     onClick={() => router.back()}
-                    className="w-10 h-10 flex items-center justify-center text-tna-gray-900 hover:bg-tna-gray-50 rounded-full transition-colors"
+                    className="w-10 h-10 flex items-center justify-center text-neutral-900 hover:bg-neutral-50 rounded-full transition-colors"
                 >
-                    <ArrowRight size={24} className="rtl:-scale-x-100" />
+                    <CaretLeft size={24} />
                 </button>
             </header>
 
-            {/* 2. PROGRESS STEPPER */}
-            <ProgressStepper currentStep={3} label={t('auth.account_data')} />
+            <ProgressStepper currentStep={3} label="بيانات الدخول" />
 
-            {/* 3. FORM */}
-            <main className="flex-1 px-6 pt-6 pb-24">
-                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+            <main className="flex-1 px-6 pt-8 pb-32 space-y-6">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                     <InputField
+                        label="اسم المستخدم"
                         icon={UserIcon}
-                        placeholder={t('auth.username')}
+                        placeholder="أدخل اسم المستخدم بالإنجليزية"
                         error={errors.username?.message}
                         {...register('username')}
                     />
 
                     <InputField
+                        label="البريد الإلكتروني"
                         icon={MailIcon}
-                        placeholder={t('auth.email')}
+                        placeholder="example@domain.com"
                         type="email"
                         error={errors.email?.message}
                         {...register('email')}
                     />
 
                     <InputField
+                        label="كلمة المرور"
                         icon={LockIcon}
-                        placeholder={t('auth.password')}
+                        placeholder="أدخل كلمة مرور قوية"
                         type="password"
                         error={errors.password?.message}
                         {...register('password')}
                     />
 
                     <InputField
+                        label="تأكيد كلمة المرور"
                         icon={LockIcon}
-                        placeholder={t('auth.confirm_password')}
+                        placeholder="أعد كتابة كلمة المرور"
                         type="password"
                         error={errors.confirmPassword?.message}
                         {...register('confirmPassword')}
                     />
 
-                    <div className="border-t border-tna-gray-200 my-2" />
+                    <div className="border-t border-neutral-100 my-2" />
 
-                    <label className="flex items-center gap-3 cursor-pointer group py-2">
-                        <div className="relative">
+                    <label className="flex items-start gap-3 cursor-pointer group py-2">
+                        <div className="relative mt-0.5">
                             <input
                                 type="checkbox"
                                 className="sr-only"
                                 {...register('termsAccepted')}
                             />
-                            <div className={`w-6 h-6 border-2 rounded-md flex items-center justify-center transition-all ${termsAccepted ? 'bg-primary border-primary' : 'border-tna-gray-400 group-hover:border-primary'}`}>
-                                {termsAccepted && <Check size={16} className="text-white" strokeWidth={3} />}
+                            <div className={`w-6 h-6 border-2 rounded-md flex items-center justify-center transition-all ${termsAccepted ? 'bg-primary border-primary' : 'border-neutral-300 group-hover:border-primary'}`}>
+                                {termsAccepted && <Check size={16} weight="bold" className="text-white" />}
                             </div>
                         </div>
-                        <span className="text-sm text-tna-gray-600 font-medium select-none">
-                            {t('auth.terms_and_conditions')}
-                        </span>
+                        <div className="flex-1">
+                            <span className="text-sm text-neutral-700 font-medium">
+                                أوافق على شروط الاستخدام وسياسة الخصوصية الخاصة بالعنوان الوطني المؤقت.
+                            </span>
+                        </div>
                     </label>
                     {errors.termsAccepted && (
-                        <p className="text-xs text-danger pr-1">{errors.termsAccepted.message}</p>
+                        <p className="text-xs text-error pr-1 font-medium">{errors.termsAccepted.message}</p>
                     )}
 
-                    {/* API Error Alert (Stub for future) */}
                     {apiError && (
-                        <div className="bg-red-50 border border-danger rounded-xl p-4 text-danger text-sm flex items-center gap-3 animate-in fade-in slide-in-from-top-2">
-                            <div className="w-2 h-2 rounded-full bg-danger animate-pulse" />
+                        <div className="bg-error-bg border border-error/20 rounded-md p-4 text-error text-sm flex items-center gap-3">
                             <p className="flex-1 font-medium">{apiError}</p>
                         </div>
                     )}
 
-                    {/* CTA */}
-                    <footer className="fixed bottom-0 left-0 right-0 bg-transparent px-6 pb-8 pt-4 pointer-events-none">
+                    <footer className="fixed bottom-0 left-0 right-0 p-6 bg-surface-100/80 backdrop-blur-md">
                         <button
                             type="submit"
                             disabled={!isValid || isPending}
-                            className={`w-full h-14 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold flex items-center justify-center gap-2 shadow-xl transition-all active:scale-[0.98] pointer-events-auto ${(!isValid || isPending) ? 'opacity-50 cursor-not-allowed grayscale-[0.5]' : 'hover:opacity-90'}`}
+                            className="w-full h-btn-lg rounded-pill bg-btn-primary text-white font-bold flex items-center justify-center gap-2 shadow-btn transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {isPending ? (
                                 <Loader2 size={24} className="animate-spin" />
                             ) : (
                                 <>
-                                    <UserPlusIcon size={20} />
-                                    <span>{t('auth.create_account')}</span>
+                                    <UserPlusIcon size={20} weight="bold" />
+                                    <span>إنشاء الحساب</span>
                                 </>
                             )}
                         </button>

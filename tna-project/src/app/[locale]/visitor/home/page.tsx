@@ -3,54 +3,141 @@
 import React from 'react'
 import { AppShell } from '@/components/layout/AppShell'
 import { DashboardLayout } from '@/components/templates/DashboardLayout'
-import { Search, CreditCard } from 'lucide-react'
-import { useTNAContext } from '@/context/TNAContext'
-import { useRouter } from 'next/navigation'
-
-const t = (key: string) => key;
+import { 
+    MagnifyingGlass, 
+    Wallet, 
+    ArrowRight, 
+    Clock, 
+    CheckCircle, 
+    PlusCircle,
+    Package
+} from '@phosphor-icons/react'
+import { useBindingContext } from '@/context/BindingContext'
+import { useRouter, useParams } from 'next/navigation'
+import { cn } from '@/lib/utils/cn'
 
 export default function VisitorHomePage() {
   const router = useRouter();
-  const { tnaData } = useTNAContext();
+  const { locale } = useParams();
+  const { visitorTnas, ownerAccount } = useBindingContext();
 
-  const activeTnas = tnaData.filter(tna => tna.status === 'APPROVED');
-  const pendingRequests = tnaData.filter(tna => tna.status === 'PENDING');
+  const activeTnas = visitorTnas.filter(tna => tna.status === 'ACTIVE');
+  const pendingTnas = visitorTnas.filter(tna => tna.status === 'PENDING_OWNER_APPROVAL');
+
+  const stats = [
+    { 
+        label: 'عناوين نشطة', 
+        value: activeTnas.length, 
+        icon: <CheckCircle size={24} weight="fill" className="text-success" /> 
+    },
+    { 
+        label: 'بانتظار الموافقة', 
+        value: pendingTnas.length, 
+        icon: <Clock size={24} weight="fill" className="text-warning" /> 
+    },
+    { 
+        label: 'شحنات قادمة', 
+        value: 0, 
+        icon: <Package size={24} weight="fill" className="text-primary" /> 
+    },
+    { 
+        label: 'الرصيد المحفظة', 
+        value: `SAR ${ownerAccount.current_balance}`, 
+        icon: <Wallet size={24} weight="fill" className="text-primary" /> 
+    },
+  ];
+
+  const recentActivity = [
+    ...(activeTnas.map(tna => ({
+        id: tna.tna_id,
+        title: 'تم تفعيل العنوان الوطني',
+        description: `العنوان ${tna.tna_code} أصبح متاحاً للاستخدام الآن.`,
+        timestamp: 'منذ يومين',
+        status: 'success' as const
+    }))),
+    ...(pendingTnas.map(tna => ({
+        id: tna.tna_id,
+        title: 'طلب ربط قيد المراجعة',
+        description: 'بانتظار موافقة مالك العقار على طلب الربط.',
+        timestamp: 'منذ ساعة',
+        status: 'pending' as const
+    })))
+  ];
 
   return (
-    <AppShell 
-      role="Visitor"
-      header={<h1 className="text-xl font-bold">{t('dashboardTitle')}</h1>}
-    >
+    <AppShell role="Visitor" header="الرئيسية">
       <DashboardLayout
-        title={t('welcomeBack')}
-        subtitle={t('manageAddressesAndShipments')}
+        title="مرحباً بك، زائرنا العزيز"
+        subtitle="إدارة عناوينك الوطنية المؤقتة وتتبع شحناتك في مكان واحد."
+        stats={stats}
+        activity={recentActivity.slice(0, 5)}
       >
-        {/* Active TNA Widget */}
-        <div className="mb-8">
-            <h2 className="text-lg font-bold mb-4">{t('activeTnas')}</h2>
-            <div className="grid gap-4 md:grid-cols-3">
-                {activeTnas.map(tna => (
-                    <div key={tna.tna_id} className="p-4 border rounded-lg bg-white shadow-sm border-s-4 border-green-500">
-                        <p className="font-mono text-lg text-primary">{tna.tna_code}</p>
-                        <p className="text-sm text-gray-500">{t('expires')}: {tna.linked_until || 'N/A'}</p>
+        {/* Quick Actions Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+            <button 
+                onClick={() => router.push(`/${locale}/visitor/search`)}
+                className="group p-6 rounded-md border border-neutral-200 bg-surface-200 shadow-card hover:shadow-modal transition-all text-right flex items-center justify-between"
+            >
+                <div>
+                    <div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <PlusCircle size={28} weight="fill" />
                     </div>
-                ))}
-            </div>
+                    <h3 className="text-subheading font-bold text-neutral-900">طلب عنوان جديد</h3>
+                    <p className="text-caption text-neutral-500 mt-1">ابحث عن عقار متاح واربط عنوانك الوطني المؤقت به.</p>
+                </div>
+                <ArrowRight size={24} className="text-neutral-300 group-hover:text-primary transition-colors rotate-180" />
+            </button>
+
+            <button 
+                onClick={() => router.push(`/${locale}/visitor/wallet`)}
+                className="group p-6 rounded-md border border-neutral-200 bg-surface-200 shadow-card hover:shadow-modal transition-all text-right flex items-center justify-between"
+            >
+                <div>
+                    <div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <Wallet size={28} weight="fill" />
+                    </div>
+                    <h3 className="text-subheading font-bold text-neutral-900">رصيد المحفظة</h3>
+                    <p className="text-caption text-neutral-500 mt-1">اشحن رصيدك لسداد رسوم إصدار العناوين والخدمات.</p>
+                </div>
+                <ArrowRight size={24} className="text-neutral-300 group-hover:text-primary transition-colors rotate-180" />
+            </button>
         </div>
 
-        {/* Quick Actions */}
-        <div className="flex gap-4 mt-8">
-            <button 
-                onClick={() => router.push('/visitor/search')}
-                className="flex flex-1 items-center justify-center gap-2 rounded-pill bg-[linear-gradient(135deg,#02488D,#00B4C9)] py-3 font-bold text-white shadow-btn transition-opacity hover:opacity-95"
-            >
-                <Search size={20} />
-                {t('searchNewAddress')}
-            </button>
-            <button className="flex flex-1 items-center justify-center gap-2 rounded-pill border-[1.5px] border-[#00B4C9] py-3 font-bold text-[#02488D] transition-colors hover:bg-cyan-50">
-                <CreditCard size={20} />
-                {t('topUpWallet')}
-            </button>
+        {/* Status Breakdown Section */}
+        <div className="mt-12">
+            <h2 className="text-lg font-bold text-neutral-900 mb-6 px-1">عناوينك النشطة</h2>
+            {activeTnas.length === 0 ? (
+                <div className="p-12 text-center border-2 border-dashed border-neutral-200 rounded-lg bg-neutral-50/50">
+                    <Package size={48} className="mx-auto text-neutral-300 mb-4" weight="thin" />
+                    <p className="text-neutral-500 font-medium">ليس لديك أي عناوين نشطة حالياً.</p>
+                    <button 
+                        onClick={() => router.push(`/${locale}/visitor/search`)}
+                        className="mt-4 text-primary font-bold hover:underline inline-flex items-center gap-2"
+                    >
+                        ابدأ بالبحث عن عقار
+                        <ArrowRight size={18} className="rotate-180" />
+                    </button>
+                </div>
+            ) : (
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                    {activeTnas.map(tna => (
+                        <div key={tna.tna_id} className="p-5 border border-neutral-200 bg-surface-200 rounded-md shadow-card hover:border-primary/50 transition-colors cursor-pointer group" onClick={() => router.push(`/${locale}/visitor/tnas/${tna.tna_id}`)}>
+                            <div className="flex justify-between items-start mb-4">
+                                <span className="px-2 py-1 bg-success-bg text-success text-[10px] font-bold rounded uppercase tracking-wider">نشط</span>
+                                <CheckCircle size={20} className="text-success" weight="fill" />
+                            </div>
+                            <div className="space-y-1">
+                                <p className="text-xs text-neutral-400 font-medium">كود العنوان</p>
+                                <p className="text-xl font-mono font-bold text-neutral-900 tracking-wider transition-colors group-hover:text-primary">{tna.tna_code}</p>
+                            </div>
+                            <div className="mt-4 pt-4 border-t border-neutral-100 flex justify-between items-center">
+                                <span className="text-xs text-neutral-500">ينتهي في 2026/10/15</span>
+                                <ArrowRight size={16} className="text-neutral-400 group-hover:text-primary rotate-180" />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
       </DashboardLayout>
     </AppShell>

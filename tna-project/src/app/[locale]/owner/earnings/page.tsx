@@ -1,108 +1,145 @@
 'use client'
 
-import React, { useState } from 'react'
-import { Wallet, TrendingUp, Clock, Loader2, AlertCircle } from 'lucide-react'
-import EmptyState from '@/components/shared/EmptyState'
-import { useLocale } from '@/i18n/LocaleProvider'
+import React from 'react'
+import { AppShell } from '@/components/layout/AppShell'
+import { 
+    Wallet, 
+    TrendUp, 
+    ArrowDownLeft, 
+    ArrowUpRight, 
+    Bank,
+    Receipt,
+    Clock,
+    ChartLineUp
+} from '@phosphor-icons/react'
+import { useBindingContext } from '@/context/BindingContext'
+import DataTableLayout, { DataTableColumn } from '@/components/templates/DataTableLayout'
+import { useRouter, useParams } from 'next/navigation'
+
+interface IncomeRecord {
+    id: string;
+    source: string;
+    property: string;
+    amount: number;
+    date: string;
+    status: 'COMPLETED' | 'PENDING';
+}
+
+const mockIncome: IncomeRecord[] = [
+    { id: 'INC-1020', source: 'رسوم ربط: ص . ق', property: 'فيلا الملقا ١٢', amount: 135.00, date: '2025/11/15 10:00 AM', status: 'COMPLETED' },
+    { id: 'INC-1015', source: 'رسوم ربط: م . خ', property: 'عمارة النرجس', amount: 50.00, date: '2025/11/14 02:30 PM', status: 'COMPLETED' },
+    { id: 'INC-0994', source: 'رسوم ربط: ن . ط', property: 'فيلا الملقا ١٢', amount: 250.00, date: '2025/11/10 09:15 AM', status: 'COMPLETED' },
+];
 
 export default function OwnerEarningsPage() {
-  const { t } = useLocale()
-  const [isLoading, setIsLoading] = useState(false)
-  const [availableBalance, setAvailableBalance] = useState(0) // Start with 0 to show empty state
-  const minWithdrawal = 1000
+    const { ownerAccount } = useBindingContext();
+    const router = useRouter();
+    const { locale } = useParams();
 
-  if (availableBalance === 0) {
+    const columns: DataTableColumn<IncomeRecord>[] = [
+        {
+            key: 'source',
+            label: 'مصدر الدخل',
+            render: (val, row) => (
+                <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-success-bg text-success flex items-center justify-center">
+                        <ArrowDownLeft size={16} weight="bold" />
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="font-bold text-neutral-900">{val}</span>
+                        <span className="text-[10px] text-neutral-500">{row.property}</span>
+                    </div>
+                </div>
+            )
+        },
+        {
+            key: 'date',
+            label: 'التاريخ',
+            render: (val) => <span className="text-xs text-neutral-500">{val}</span>
+        },
+        {
+            key: 'amount',
+            label: 'المبلغ',
+            render: (val) => <span className="font-bold text-neutral-900">+{val.toFixed(2)} SAR</span>
+        },
+        {
+            key: 'status',
+            label: 'الحالة',
+            render: (val) => <span className="text-[10px] font-bold text-success uppercase tracking-widest">{val === 'COMPLETED' ? 'مكتملة' : 'معلقة'}</span>
+        }
+    ];
+
     return (
-      <div className="p-8 space-y-8 font-rubik">
-        <h1 className="text-3xl font-bold tracking-tight text-slate-900">{t('owner.earnings.title')}</h1>
-        <EmptyState 
-          icon={AlertCircle}
-          title={t('owner.earnings.empty_title')}
-          description={t('owner.earnings.empty_description')}
-          actionLabel={t('owner.earnings.empty_action')}
-          onAction={() => window.location.href = '/owner/properties'}
-        />
-      </div>
-    )
-  }
+        <AppShell role="Owner" header="الأرباح والمحفظة">
+            <div className="space-y-8">
+                {/* Balance & Stats Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="md:col-span-2 p-8 rounded-md bg-btn-primary text-white shadow-btn relative overflow-hidden flex flex-col justify-between min-h-[180px]">
+                        <div className="relative z-10">
+                            <p className="text-sm font-medium opacity-80 mb-1">الرصيد القابل للسحب</p>
+                            <h2 className="text-4xl font-bold">{ownerAccount.current_balance.toFixed(2)} SAR</h2>
+                        </div>
+                        <div className="relative z-10 flex gap-4 pt-6">
+                            <button className="h-10 px-6 rounded-pill bg-white text-primary font-bold text-xs flex items-center gap-2 hover:bg-neutral-50 transition-colors">
+                                <ArrowUpRight size={16} weight="bold" />
+                                طلب تحويل بنكي
+                            </button>
+                            <button 
+                                onClick={() => router.push(`/${locale}/owner/payouts`)}
+                                className="h-10 px-6 rounded-pill bg-white/20 text-white font-bold text-xs backdrop-blur-md hover:bg-white/30 transition-colors"
+                            >
+                                سجل التحويلات
+                            </button>
+                        </div>
+                        <Wallet size={120} weight="duotone" className="absolute -bottom-6 -left-6 text-white/10 -rotate-12" />
+                    </div>
 
-  const metrics = [
-    { label: t('owner.earnings.total_earned'), value: '124,500 SAR', icon: <TrendingUp className="text-emerald-500" /> },
-    { label: t('owner.earnings.available_balance'), value: `${availableBalance.toLocaleString()} SAR`, icon: <Wallet className="text-blue-500" /> },
-    { label: t('owner.earnings.pending_payouts'), value: '3,200 SAR', icon: <Clock className="text-amber-500" /> },
-  ]
+                    <div className="space-y-4">
+                        <div className="p-6 rounded-md border border-neutral-200 bg-surface-200">
+                            <div className="flex items-center gap-3 mb-2">
+                                <TrendUp size={20} className="text-success" />
+                                <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">إجمالي الأرباح</span>
+                            </div>
+                            <h4 className="text-2xl font-bold text-neutral-900">{ownerAccount.total_earned.toFixed(2)} SAR</h4>
+                            <p className="text-[10px] text-success mt-1 font-bold">+١٢٪ من الشهر الماضي</p>
+                        </div>
+                        <div className="p-6 rounded-md border border-neutral-200 bg-surface-200">
+                            <div className="flex items-center gap-3 mb-2">
+                                <Receipt size={20} className="text-primary" />
+                                <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">المدفوعات السابقة</span>
+                            </div>
+                            <h4 className="text-2xl font-bold text-neutral-900">{ownerAccount.total_paid_out.toFixed(2)} SAR</h4>
+                            <p className="text-[10px] text-neutral-400 mt-1">آخر عملية منذ ١٠ أيام</p>
+                        </div>
+                    </div>
+                </div>
 
-  const handleWithdraw = async () => {
-    setIsLoading(true)
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    setIsLoading(false)
-    alert(t('common.confirm')) // Placeholder for success
-  }
+                {/* Revenue Overview Placeholder */}
+                <div className="p-6 rounded-md border border-neutral-200 bg-surface-200">
+                    <div className="flex justify-between items-center mb-6">
+                        <h3 className="font-bold text-neutral-900 flex items-center gap-2">
+                            <ChartLineUp size={20} className="text-primary" weight="fill" />
+                            موجز الإيرادات
+                        </h3>
+                        <div className="flex gap-2">
+                            {['يوم', 'أسبوع', 'شهر', 'سنة'].map(v => (
+                                <button key={v} className={`px-3 py-1 rounded text-[10px] font-bold transition-all ${v === 'أسبوع' ? 'bg-primary text-white' : 'text-neutral-400 hover:text-neutral-600'}`}>{v}</button>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="h-48 w-full bg-surface-100 rounded border border-neutral-100 border-dashed flex items-center justify-center overflow-hidden relative">
+                         <div className="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-primary/5 to-transparent shadow-inner" />
+                         <p className="text-xs text-neutral-400 font-medium z-10 px-4 py-2 bg-white/50 backdrop-blur-md rounded-pill border border-neutral-200">الرسم البياني للتوزيع المالي سيظهر هنا</p>
+                    </div>
+                </div>
 
-  return (
-    <div className="p-8 font-rubik space-y-8">
-      {/* Wallet Header */}
-      <div className="relative overflow-hidden rounded-lg bg-[linear-gradient(135deg,#02488D,#00B4C9)] p-8 text-white shadow-lg">
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight">{t('owner.earnings.title')}</h1>
-            <p className="mt-2 text-cyan-50 opacity-90">{t('owner.earnings.subtitle')}</p>
-          </div>
-          <div className="flex flex-col items-start md:items-end gap-3">
-            <div className="text-right">
-              <p className="text-xs font-medium uppercase tracking-wider text-cyan-100 opacity-80">{t('owner.earnings.available_for_withdrawal')}</p>
-              <p className="text-4xl font-black">{availableBalance.toLocaleString()} <span className="text-xl font-normal">SAR</span></p>
+                {/* Recent Transactions List */}
+                <DataTableLayout
+                    title="سجل العمليات الأخيرة"
+                    columns={columns}
+                    data={mockIncome}
+                />
             </div>
-            <button
-              onClick={handleWithdraw}
-              disabled={availableBalance < minWithdrawal || isLoading}
-              className={`flex items-center gap-2 rounded-md px-6 py-3 text-sm font-bold shadow-sm transition-all
-                ${availableBalance < minWithdrawal || isLoading
-                  ? 'bg-white/20 cursor-not-allowed text-white/50'
-                  : 'bg-white text-primitive-navy hover:bg-cyan-50 active:scale-95'
-                }`}
-            >
-              {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Wallet className="h-4 w-4" />}
-              {isLoading ? t('owner.earnings.processing') : t('owner.earnings.withdraw_funds')}
-            </button>
-            {availableBalance < minWithdrawal && (
-              <p className="text-xs text-red-200">{t('owner.earnings.min_withdrawal').replace('{amount}', String(minWithdrawal))}</p>
-            )}
-          </div>
-        </div>
-        
-        {/* Decorative elements */}
-        <div className="absolute -bottom-12 -right-12 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
-        <div className="absolute -top-12 -left-12 h-64 w-64 rounded-full bg-cyan-400/10 blur-3xl" />
-      </div>
-
-      {/* Metrics Grid */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-        {metrics.map((metric, idx) => (
-          <div 
-            key={idx} 
-            className="flex items-center gap-4 rounded-lg border border-slate-200 bg-white p-6 shadow-sm transition-hover hover:shadow-md"
-          >
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-50 border border-slate-100">
-              {metric.icon}
-            </div>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">{metric.label}</p>
-              <p className="text-xl font-bold text-slate-900">{metric.value}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Recent Activity Placeholder */}
-      <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 className="mb-4 text-lg font-bold text-slate-900">{t('owner.earnings.recent_transactions')}</h2>
-        <div className="flex flex-col items-center justify-center py-12 text-slate-400">
-          <Clock size={48} className="mb-4 opacity-20" />
-          <p>{t('owner.earnings.no_transactions')}</p>
-        </div>
-      </div>
-    </div>
-  )
+        </AppShell>
+    );
 }

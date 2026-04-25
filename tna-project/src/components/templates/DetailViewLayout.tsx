@@ -1,7 +1,7 @@
 'use client'
 
 import React, { ReactNode } from 'react'
-import { ArrowLeft } from 'lucide-react'
+import { CaretLeft } from '@phosphor-icons/react'
 
 interface DetailSection {
   title: string
@@ -43,10 +43,10 @@ export function DetailViewLayout({
           {onBack && (
             <button
               onClick={onBack}
-              className="inline-flex items-center justify-center rounded-sm text-brand-primary hover:bg-neutral-100 p-2 transition-colors"
+              className="inline-flex items-center justify-center rounded-sm text-primary hover:bg-neutral-100 p-2 transition-colors"
               aria-label="Go back"
             >
-              <ArrowLeft size={20} className="rtl:-scale-x-100" />
+              <CaretLeft size={24} className="rtl:rotate-180" />
             </button>
           )}
           <div className="flex-1">

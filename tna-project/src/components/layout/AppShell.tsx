@@ -32,7 +32,7 @@ export function AppShell({
   const { isRTL, t } = useLocale()
 
   return (
-    <div suppressHydrationWarning className="flex h-screen w-full flex-col bg-slate-100 text-slate-900 font-rubik">
+    <div suppressHydrationWarning className="flex h-screen w-full flex-col bg-surface-100 text-neutral-900" dir={isRTL ? 'rtl' : 'ltr'}>
 
       {/* ── HEADER (TopBar) ────────────────────────────────────────── */}
       {header ? (

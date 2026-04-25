@@ -1,7 +1,7 @@
 'use client'
 
 import React, { ReactNode, useState } from 'react'
-import { Search, ChevronLeft, ChevronRight } from 'lucide-react'
+import { MagnifyingGlass, CaretLeft, CaretRight, ArrowsDownUp } from '@phosphor-icons/react'
 import { useLocale } from '@/i18n/LocaleProvider'
 
 export interface DataTableColumn<T> {
@@ -65,7 +65,7 @@ export default function DataTableLayout<T extends Record<string, any>>({
         {/* FILTER/SEARCH ROW */}
         <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="relative flex-1">
-            <Search
+            <MagnifyingGlass
               size={20}
               className="pointer-events-none absolute start-3 top-3 text-neutral-400"
             />
@@ -74,7 +74,7 @@ export default function DataTableLayout<T extends Record<string, any>>({
               placeholder={t('common.search_placeholder')}
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
-              className="w-full rounded-sm border border-slate-200 bg-surface-200 py-2 ps-10 pe-4 text-neutral-900 placeholder-neutral-400 focus:border-brand-secondary focus:outline-none"
+              className="w-full rounded-sm border border-neutral-200 bg-surface-200 py-2 ps-10 pe-4 text-neutral-900 placeholder-neutral-400 focus:border-primary focus:ring-2 focus:ring-primary/10 focus:outline-none transition-all"
             />
           </div>
           {children}
@@ -93,7 +93,7 @@ export default function DataTableLayout<T extends Record<string, any>>({
                   >
                     {col.label}
                     {col.sortable && (
-                      <span className="ms-2 inline opacity-50">↕</span>
+                      <ArrowsDownUp size={14} className="ms-2 inline opacity-50" />
                     )}
                   </th>
                 ))}
@@ -154,14 +154,14 @@ export default function DataTableLayout<T extends Record<string, any>>({
                 disabled={currentPage === 1}
                 className="inline-flex items-center justify-center rounded-sm border border-slate-200 bg-surface-200 p-2 hover:bg-neutral-100 disabled:opacity-50"
               >
-                <ChevronLeft size={18} />
+                <CaretLeft size={18} className="rtl:rotate-180" />
               </button>
               <button
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
-                className="inline-flex items-center justify-center rounded-sm border border-slate-200 bg-surface-200 p-2 hover:bg-neutral-100 disabled:opacity-50"
+                className="inline-flex items-center justify-center rounded-sm border border-neutral-200 bg-surface-200 p-2 hover:bg-neutral-100 disabled:opacity-50"
               >
-                <ChevronRight size={18} />
+                <CaretRight size={18} className="rtl:rotate-180" />
               </button>
             </div>
           </div>

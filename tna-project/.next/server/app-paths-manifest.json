@@ -1,8 +1,7 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
   "/[locale]/owner/home/page": "app/[locale]/owner/home/page.js",
+  "/[locale]/owner/properties/page": "app/[locale]/owner/properties/page.js",
   "/[locale]/owner/earnings/page": "app/[locale]/owner/earnings/page.js",
-  "/[locale]/visitor/search/page": "app/[locale]/visitor/search/page.js",
-  "/[locale]/visitor/tnas/page": "app/[locale]/visitor/tnas/page.js",
-  "/[locale]/visitor/home/page": "app/[locale]/visitor/home/page.js"
+  "/[locale]/owner/property/add/page": "app/[locale]/owner/property/add/page.js",
+  "/[locale]/owner/bindings/page": "app/[locale]/owner/bindings/page.js"
 }

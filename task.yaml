@@ -1,0 +1,20 @@
+frontend_implementation_task:
+  description: >
+    Analyze the codebase in the current directory. 
+    Implement the requested carrier management features.
+    Ensure the UI reflects the primary orange theme color.
+    Integrate the language toggle button (Arabic/English) in the navigation header.
+  expected_output: >
+    A fully functional frontend module with the language toggle and orange branding applied.
+  agent: senior_developer
+
+quality_assurance_task:
+  description: >
+    Review the code changes implemented by the senior_developer.
+    Verify that the orange theme is consistent across all pages.
+    Test the language toggle functionality to ensure it switches correctly between Arabic and English.
+  expected_output: >
+    A QA report confirming that the UI components meet the branding guidelines 
+    and the language switch is fully operational.
+  agent: qa_engineer
+  context: [frontend_implementation_task]
