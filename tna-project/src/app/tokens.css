@@ -54,6 +54,7 @@
   --surface-300: #FFFFFF; /* modals, sheets */
   --surface-dark-100: #02488D;
   --surface-dark-200: #013A70;
+  --surface-dark-300: #0A1E3D;
 
   /* ─── TYPOGRAPHY ─── */
   --font-en: 'Rubik', sans-serif;
@@ -97,6 +98,8 @@
   --layout-screen-padding: 20px;
   --layout-section-gap: 24px;
   --layout-card-padding: 16px;
+  --layout-content-max-width: 1280px;
+  --layout-mobile-max-width: 390px;
 
   /* ─── BORDER RADIUS ─── */
   --radius-xs: 6px;
@@ -109,6 +112,9 @@
   --shadow-card: 0 2px 8px rgba(246, 139, 30, 0.08);
   --shadow-modal: 0 8px 32px rgba(246, 139, 30, 0.16);
   --shadow-btn: 0 4px 16px rgba(246, 139, 30, 0.30);
+  --shadow-glow-primary: 0 0 12px rgba(246, 139, 30, 0.40);
+  --shadow-glow-cyan: 0 0 12px rgba(0, 180, 201, 0.35);
+  --shadow-navbar: 0 -1px 8px rgba(0, 0, 0, 0.06);
 
   /* ─── COMPONENT: PRIMARY BUTTON ─── */
   --btn-primary-height: 56px;
@@ -137,4 +143,10 @@
   --navbar-icon-active: #F68B1E;
   --navbar-icon-inactive: #B7B7B7;
   --navbar-active-bar: 3px solid #F5A623;
+
+  /* ─── BOTTOM NAV (Mobile) ─── */
+  --bottom-nav-height: 64px;
+  --bottom-nav-bg: rgba(255, 255, 255, 0.92);
+  --bottom-nav-active-dot: #F68B1E;
+  --bottom-nav-inactive: #B7B7B7;
 }

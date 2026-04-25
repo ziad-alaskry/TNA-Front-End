@@ -29,7 +29,7 @@
     --ring: var(--primitive-cyan-mid);
     --radius: var(--radius-md);
 
-    /* Sidebar legacy mapping (can be refined) */
+    /* Sidebar mapping */
     --sidebar: var(--neutral-50);
     --sidebar-foreground: var(--neutral-700);
     --sidebar-primary: var(--color-brand-primary);
@@ -52,13 +52,16 @@
 }
 
 @layer components {
-  /* System Backdrop Blur */
+  /* ── Top Navigation Bar ── */
   .ui-topbar {
-    @apply sticky top-0 z-50 border-b border-neutral-200 bg-white/80 backdrop-blur-md;
+    @apply sticky top-0 z-50 border-b border-neutral-200;
     height: var(--navbar-height);
+    background: var(--bottom-nav-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
 
-  /* UI DNA: All cards/containers must match SPATIAL spec */
+  /* ── SPATIAL Card Contract ── */
   .ui-contract-card {
     background: var(--surface-200);
     border: 1px solid var(--neutral-200);
@@ -66,41 +69,74 @@
     box-shadow: var(--shadow-card);
     padding: var(--layout-card-padding);
   }
+
+  /* ── Dark Surface Overlay (Nav headers, modals) ── */
+  .ui-dark-surface {
+    background: var(--surface-dark-100);
+    color: #FFFFFF;
+  }
+  .ui-dark-surface-deep {
+    background: var(--surface-dark-200);
+    color: #FFFFFF;
+  }
+
+  /* ── Content Max Width (Desktop 1280px) ── */
+  .ui-content-container {
+    max-width: var(--layout-content-max-width);
+    margin-inline: auto;
+    width: 100%;
+  }
+
+  /* ── Mobile Safe Area (Bottom Nav) ── */
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* ── Gradient Accent Elements ── */
+  .ui-gradient-primary {
+    background: var(--btn-primary-bg);
+  }
+  .ui-gradient-navy {
+    background: linear-gradient(135deg, var(--primitive-navy), var(--primitive-navy-dark));
+  }
+
+  /* ── Glow Shadows ── */
+  .shadow-glow-primary {
+    box-shadow: var(--shadow-glow-primary);
+  }
+  .shadow-glow-cyan {
+    box-shadow: var(--shadow-glow-cyan);
+  }
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+  --background: var(--surface-dark-300);
+  --foreground: #F4F5F6;
+  --card: var(--surface-dark-200);
+  --card-foreground: #F4F5F6;
+  --popover: var(--surface-dark-200);
+  --popover-foreground: #F4F5F6;
+  --primary: var(--color-brand-primary);
+  --primary-foreground: #FFFFFF;
+  --secondary: var(--color-brand-secondary);
+  --secondary-foreground: #FFFFFF;
+  --muted: var(--surface-dark-200);
+  --muted-foreground: var(--neutral-400);
+  --accent: var(--color-brand-accent);
+  --accent-foreground: #FFFFFF;
+  --destructive: var(--color-error);
+  --destructive-foreground: #FFFFFF;
+  --border: var(--neutral-600);
+  --input: var(--neutral-600);
+  --ring: var(--primitive-cyan-mid);
+  --sidebar: var(--surface-dark-200);
+  --sidebar-foreground: #F4F5F6;
+  --sidebar-primary: var(--color-brand-primary);
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: var(--surface-dark-100);
+  --sidebar-accent-foreground: var(--color-brand-primary);
+  --sidebar-border: var(--neutral-600);
+  --sidebar-ring: var(--primitive-cyan-mid);
 }
 
 @layer base {

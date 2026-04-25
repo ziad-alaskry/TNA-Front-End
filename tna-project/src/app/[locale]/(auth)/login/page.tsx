@@ -105,7 +105,7 @@ export default function LoginPage() {
                             </button>
                         </div>
                         <div className="flex justify-start">
-                            <Link href="#" className="text-xs font-semibold text-primary hover:underline transition-colors">
+                            <Link href={`/${locale}/auth/forgot-password`} className="text-xs font-semibold text-primary hover:underline transition-colors">
                                 نسيت كلمة المرور؟
                             </Link>
                         </div>

@@ -3,6 +3,10 @@
 import React, { ReactNode, useState } from 'react'
 import { MagnifyingGlass, CaretLeft, CaretRight, ArrowsDownUp } from '@phosphor-icons/react'
 import { useLocale } from '@/i18n/LocaleProvider'
+import MirrorIcon from '@/components/shared/MirrorIcon'
+import { SkeletonTableRow } from '@/components/ui/SkeletonCard'
+import EmptyState from '@/components/ui/EmptyState'
+import { cn } from '@/lib/utils/cn'
 
 export interface DataTableColumn<T> {
   key: keyof T
@@ -26,7 +30,7 @@ interface DataTableLayoutProps<T extends Record<string, any>> {
 
 /**
  * Data Table Template - Searchable/filterable high-density table
- * Usage: Audit logs, shipment lists, payout records, issuance queues
+ * SPATIAL spec: neutral palette, shadow-card, proper border tokens
  */
 export default function DataTableLayout<T extends Record<string, any>>({
   title,
@@ -54,68 +58,68 @@ export default function DataTableLayout<T extends Record<string, any>>({
   const paginatedData = data.slice(startIdx, startIdx + pageSize)
 
   return (
-    <div className="min-h-screen bg-surface-100 font-rubik">
-      {/* HEADER */}
-      <div className="border-b border-slate-200 bg-surface-200 ps-5 pe-5 py-8 shadow-card">
-        <h1 className="text-2xl font-bold text-neutral-900">{title}</h1>
+    <div className="flex flex-col gap-8">
+      {/* HEADER SECTION */}
+      <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <h1 className="text-display font-bold text-neutral-900 mb-1">{title}</h1>
+          <p className="text-body text-neutral-500">{t('common.total_records').replace('{count}', String(data.length))}</p>
+        </div>
+        
+        {/* Actions/Filters */}
+        <div className="flex flex-wrap items-center gap-3">
+            <div className="relative min-w-[240px]">
+                <MagnifyingGlass
+                    size={20}
+                    className="pointer-events-none absolute start-4 top-1/2 -translate-y-1/2 text-neutral-400"
+                />
+                <input
+                    type="text"
+                    placeholder={t('common.search_placeholder')}
+                    value={searchQuery}
+                    onChange={(e) => handleSearch(e.target.value)}
+                    className="w-full h-11 rounded-sm border border-neutral-200 bg-surface-200 ps-12 pe-4 text-body text-neutral-900 placeholder-neutral-400 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all outline-none"
+                />
+            </div>
+            {children}
+        </div>
       </div>
 
-      {/* CONTENT */}
-      <div className="ps-5 pe-5 py-8">
-        {/* FILTER/SEARCH ROW */}
-        <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="relative flex-1">
-            <MagnifyingGlass
-              size={20}
-              className="pointer-events-none absolute start-3 top-3 text-neutral-400"
-            />
-            <input
-              type="text"
-              placeholder={t('common.search_placeholder')}
-              value={searchQuery}
-              onChange={(e) => handleSearch(e.target.value)}
-              className="w-full rounded-sm border border-neutral-200 bg-surface-200 py-2 ps-10 pe-4 text-neutral-900 placeholder-neutral-400 focus:border-primary focus:ring-2 focus:ring-primary/10 focus:outline-none transition-all"
-            />
-          </div>
-          {children}
-        </div>
-
-        {/* TABLE */}
-        <div className="overflow-x-auto rounded-md border border-slate-200 bg-surface-200 shadow-card">
-          <table className="w-full">
+      {/* TABLE CONTAINER */}
+      <div className="overflow-hidden rounded-md border border-neutral-200 bg-surface-200 shadow-card">
+        <div className="overflow-x-auto no-scrollbar">
+          <table className="w-full text-start border-collapse">
             <thead>
-              <tr className="border-b border-slate-200 bg-neutral-100">
+              <tr className="border-b border-neutral-200 bg-neutral-50/50">
                 {columns.map((col) => (
                   <th
                     key={String(col.key)}
-                    className="ps-4 pe-4 py-3 text-start text-xs font-semibold uppercase text-neutral-600"
+                    className="whitespace-nowrap px-6 py-4 text-start text-caption font-bold uppercase text-neutral-500 tracking-wider"
                     style={{ width: col.width }}
                   >
-                    {col.label}
-                    {col.sortable && (
-                      <ArrowsDownUp size={14} className="ms-2 inline opacity-50" />
-                    )}
+                    <div className="flex items-center gap-2">
+                        {col.label}
+                        {col.sortable && (
+                        <ArrowsDownUp size={14} weight="bold" className="text-neutral-400" />
+                        )}
+                    </div>
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-neutral-100">
               {isLoading ? (
-                <tr>
-                  <td
-                    colSpan={columns.length}
-                    className="ps-4 pe-4 py-8 text-center text-neutral-500"
-                  >
-                    {t('common.loading')}
-                  </td>
-                </tr>
+                Array.from({ length: 5 }).map((_, i) => (
+                    <SkeletonTableRow key={i} cols={columns.length} />
+                ))
               ) : paginatedData.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan={columns.length}
-                    className="ps-4 pe-4 py-8 text-center text-neutral-500"
-                  >
-                    {t('common.no_data')}
+                  <td colSpan={columns.length} className="px-6 py-16">
+                    <EmptyState 
+                        compact 
+                        title={t('common.no_data')} 
+                        description={t('common.no_data_desc') ?? 'No records found matching your criteria.'}
+                    />
                   </td>
                 </tr>
               ) : (
@@ -123,12 +127,15 @@ export default function DataTableLayout<T extends Record<string, any>>({
                   <tr
                     key={idx}
                     onClick={() => onRowClick?.(row)}
-                    className="border-b border-neutral-100 transition-colors hover:bg-neutral-50"
+                    className={cn(
+                        "transition-all duration-200 hover:bg-neutral-50/80 group",
+                        onRowClick && 'cursor-pointer'
+                    )}
                   >
                     {columns.map((col) => (
                       <td
                         key={String(col.key)}
-                        className="ps-4 pe-4 py-3 text-sm text-neutral-700"
+                        className="px-6 py-4 text-body text-neutral-700 group-hover:text-neutral-900 whitespace-nowrap"
                       >
                         {col.render
                           ? col.render(row[col.key], row)
@@ -142,26 +149,43 @@ export default function DataTableLayout<T extends Record<string, any>>({
           </table>
         </div>
 
-        {/* PAGINATION */}
+        {/* PAGINATION FOOTER */}
         {totalPages > 1 && (
-          <div className="mt-6 flex items-center justify-between">
-            <p className="text-sm text-neutral-600">
-              {t('common.page_of').replace('{current}', String(currentPage)).replace('{total}', String(totalPages))} • {t('common.total_records').replace('{count}', String(data.length))}
+          <div className="flex items-center justify-between border-t border-neutral-100 px-6 py-4 bg-neutral-50/30">
+            <p className="text-caption text-neutral-400 font-medium font-mono">
+              {t('common.page_of').replace('{current}', String(currentPage)).replace('{total}', String(totalPages))}
             </p>
-            <div className="flex gap-2">
+            <div className="flex items-center gap-2">
               <button
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
-                className="inline-flex items-center justify-center rounded-sm border border-slate-200 bg-surface-200 p-2 hover:bg-neutral-100 disabled:opacity-50"
+                className="flex items-center justify-center h-10 w-10 rounded-sm border border-neutral-200 bg-white text-neutral-600 hover:bg-neutral-100 disabled:opacity-30 disabled:hover:bg-white transition-all shadow-sm"
               >
-                <CaretLeft size={18} className="rtl:rotate-180" />
+                <MirrorIcon>
+                    <CaretLeft size={18} weight="bold" />
+                </MirrorIcon>
               </button>
+              
+              <div className="flex px-1 gap-1">
+                  {[...Array(totalPages)].map((_, i) => (
+                      <div 
+                        key={i} 
+                        className={cn(
+                            "h-1.5 rounded-full transition-all duration-300",
+                            currentPage === i + 1 ? "w-4 bg-primary" : "w-1.5 bg-neutral-200"
+                        )}
+                      />
+                  ))}
+              </div>
+
               <button
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
-                className="inline-flex items-center justify-center rounded-sm border border-neutral-200 bg-surface-200 p-2 hover:bg-neutral-100 disabled:opacity-50"
+                className="flex items-center justify-center h-10 w-10 rounded-sm border border-neutral-200 bg-white text-neutral-600 hover:bg-neutral-100 disabled:opacity-30 disabled:hover:bg-white transition-all shadow-sm"
               >
-                <CaretRight size={18} className="rtl:rotate-180" />
+                <MirrorIcon>
+                    <CaretRight size={18} weight="bold" />
+                </MirrorIcon>
               </button>
             </div>
           </div>

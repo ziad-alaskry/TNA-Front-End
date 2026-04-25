@@ -87,6 +87,15 @@ module.exports = {
                     800: '#1E2228',
                     900: '#0A0D10',
                 },
+                // ── Surface aliases for Tailwind ──
+                'surface': {
+                    100: 'var(--surface-100)',
+                    200: 'var(--surface-200)',
+                    300: 'var(--surface-300)',
+                    'dark-100': 'var(--surface-dark-100)',
+                    'dark-200': 'var(--surface-dark-200)',
+                    'dark-300': 'var(--surface-dark-300)',
+                },
             },
             borderRadius: {
                 xs:   '6px',
@@ -126,16 +135,25 @@ module.exports = {
                 'card':  'var(--shadow-card)',
                 'modal': 'var(--shadow-modal)',
                 'btn':   'var(--shadow-btn)',
+                'glow-primary': 'var(--shadow-glow-primary)',
+                'glow-cyan': 'var(--shadow-glow-cyan)',
+                'navbar': 'var(--shadow-navbar)',
             },
             height: {
                 'btn-lg':    '56px',
                 'btn-md':    '52px',
                 'input':     '52px',
                 'navbar':    '72px',
+                'bottom-nav': '64px',
+            },
+            maxWidth: {
+                'content': 'var(--layout-content-max-width)',
+                'mobile':  '390px',
             },
             backgroundImage: {
                 'btn-primary': 'var(--btn-primary-bg)',
                 'splash-bg':   'linear-gradient(150deg, #F4F5F6 60%, var(--color-info-bg) 100%)',
+                'gradient-navy': 'linear-gradient(135deg, var(--primitive-navy), var(--primitive-navy-dark))',
             },
             keyframes: {
                 'fade-in': {
@@ -146,10 +164,15 @@ module.exports = {
                     '0%': { transform: 'translateY(1rem)', opacity: '0' },
                     '100%': { transform: 'translateY(0)', opacity: '1' },
                 },
+                'zoom-in': {
+                    '0%': { transform: 'scale(0.95)', opacity: '0' },
+                    '100%': { transform: 'scale(1)', opacity: '1' },
+                },
             },
             animation: {
                 'in': 'fade-in 0.5s ease-out',
                 'slide-in-from-bottom': 'slide-in-from-bottom 0.5s ease-out',
+                'zoom-in': 'zoom-in 0.3s ease-out',
             },
         },
     },
@@ -162,17 +185,17 @@ module.exports = {
                 },
                 '.translate-x-s-full': {
                     '--tw-translate-x': '100%',
-                    '[dir=\"rtl\"] &': { '--tw-translate-x': '-100%' },
+                    '[dir="rtl"] &': { '--tw-translate-x': '-100%' },
                     'transform': 'translateX(var(--tw-translate-x))',
                 },
                 '.-translate-x-s-full': {
                     '--tw-translate-x': '-100%',
-                    '[dir=\"rtl\"] &': { '--tw-translate-x': '100%' },
+                    '[dir="rtl"] &': { '--tw-translate-x': '100%' },
                     'transform': 'translateX(var(--tw-translate-x))',
                 },
             });
-            addVariant('rtl', '[dir=\"rtl\"] &');
-            addVariant('ltr', '[dir=\"ltr\"] &');
+            addVariant('rtl', '[dir="rtl"] &');
+            addVariant('ltr', '[dir="ltr"] &');
         }
     ],
 }

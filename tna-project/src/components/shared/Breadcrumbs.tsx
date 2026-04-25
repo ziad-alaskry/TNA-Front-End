@@ -2,13 +2,15 @@
 
 import React from 'react'
 import { usePathname } from 'next/navigation'
-import { ChevronRight, Home } from 'lucide-react'
+import { CaretRight, House } from '@phosphor-icons/react'
 import { useLocale } from '@/i18n/LocaleProvider'
 import { LocaleLink } from './LocaleLink'
+import MirrorIcon from './MirrorIcon'
+import { cn } from '@/lib/utils/cn'
 
 export default function Breadcrumbs() {
   const pathname = usePathname()
-  const { locale, t } = useLocale()
+  const { locale, t, isRTL } = useLocale()
   
   // Remove locale and split path
   const segments = pathname
@@ -17,6 +19,11 @@ export default function Breadcrumbs() {
 
   // Map segments to translation keys or readable labels
   const getLabel = (segment: string) => {
+    // Basic ID check (uuid or numeric)
+    if (segment.length > 20 || /^\d+$/.test(segment)) {
+        return `#${segment.slice(0, 8)}...`
+    }
+
     const roleKey = segment.charAt(0).toUpperCase() + segment.slice(1).toLowerCase()
     
     // Check if it's a known role
@@ -29,12 +36,15 @@ export default function Breadcrumbs() {
   }
 
   return (
-    <nav className="flex items-center space-x-2 text-xs font-medium text-slate-500 mb-6 font-rubik overflow-hidden whitespace-nowrap" aria-label="Breadcrumb">
+    <nav 
+        className="flex items-center gap-2 text-caption font-medium text-neutral-500 mb-6 font-rubik overflow-x-auto no-scrollbar whitespace-nowrap" 
+        aria-label="Breadcrumb"
+    >
       <LocaleLink 
-        href="/visitor/home" 
-        className="flex items-center hover:text-primitive-navy transition-colors shrink-0"
+        href="/" 
+        className="flex items-center hover:text-primary transition-colors shrink-0"
       >
-        <Home size={14} className="me-1" />
+        <House size={16} weight="fill" />
       </LocaleLink>
       
       {segments.map((segment, index) => {
@@ -44,13 +54,15 @@ export default function Breadcrumbs() {
 
         return (
           <React.Fragment key={path}>
-            <ChevronRight size={14} className="text-slate-300 rtl:rotate-180 shrink-0" />
+            <MirrorIcon>
+                <CaretRight size={14} weight="bold" className="text-neutral-300 shrink-0" />
+            </MirrorIcon>
             {isLast ? (
-              <span className="text-slate-900 font-bold truncate">{label}</span>
+              <span className="text-neutral-900 font-bold">{label}</span>
             ) : (
               <LocaleLink 
                 href={path}
-                className="hover:text-primitive-navy transition-colors truncate"
+                className="hover:text-primary transition-colors"
               >
                 {label}
               </LocaleLink>

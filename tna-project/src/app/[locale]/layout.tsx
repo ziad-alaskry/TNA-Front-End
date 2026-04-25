@@ -9,12 +9,29 @@ import { Rubik } from 'next/font/google'
 import { GovProvider } from '@/context/GovContext';
 import { FleetProvider } from '@/context/FleetContext';
 import { BindingProvider } from '@/context/BindingContext';
+import { ToastProvider } from '@/components/ui/Toast';
 
 const rubik = Rubik({ subsets: ['latin', 'arabic'], weight: ['300', '400', '500', '600', '700', '800'] })
 
 export const metadata: Metadata = {
-  title: 'TNA Project',
-  description: 'Total National Address Project',
+  title: {
+    template: '%s | TNA - العنوان الوطني المؤقت',
+    default: 'TNA - العنوان الوطني المؤقت | Temporary National Address',
+  },
+  description: 'النظام السعودي الشامل للعنوان الوطني المؤقت - إدارة وتوثيق وربط العناوين بأعلى المعايير.',
+  applicationName: 'TNA Platform',
+  authors: [{ name: 'SDAIA' }],
+  generator: 'Next.js',
+  keywords: ['TNA', 'National Address', 'Saudi Arabia', 'SDAIA', 'Logistics'],
+  creator: 'SDAIA Innovation',
+  publisher: 'SDAIA',
+  openGraph: {
+    title: 'TNA - Temporary National Address',
+    description: 'The Saudi comprehensive system for temporary national addresses.',
+    siteName: 'TNA Platform',
+    locale: 'ar_SA',
+    type: 'website',
+  },
 }
 
 export function generateStaticParams() {
@@ -40,13 +57,15 @@ export default async function LocaleLayout({
     <html lang={validLocale} dir={dir} suppressHydrationWarning>
       <body suppressHydrationWarning className={`${rubik.className} bg-surface-100 text-neutral-900`}>
         <LocaleProvider locale={validLocale} messages={messages}>
-          <GovProvider>
-            <FleetProvider>
-              <BindingProvider>
-                <Providers>{children}</Providers>
-              </BindingProvider>
-            </FleetProvider>
-          </GovProvider>
+          <ToastProvider>
+            <GovProvider>
+              <FleetProvider>
+                <BindingProvider>
+                  <Providers>{children}</Providers>
+                </BindingProvider>
+              </FleetProvider>
+            </GovProvider>
+          </ToastProvider>
         </LocaleProvider>
       </body>
     </html>

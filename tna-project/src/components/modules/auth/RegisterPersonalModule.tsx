@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -11,16 +11,14 @@ import {
     Calendar,
     Phone,
     CaretLeft,
-    CaretRight,
-    CaretDown,
-    Check,
-    CheckSquare
+    Check
 } from '@phosphor-icons/react';
 import { useRegistrationStore } from '@/lib/store/useRegistrationStore';
-import { useT } from '@/lib/hooks/useT';
+import { useLocale } from '@/i18n/LocaleProvider';
 import InputField from '@/components/ui/InputField';
 import ProgressStepper from '@/components/ui/ProgressStepper';
 import Select from '@/components/ui/Select';
+import MirrorIcon from '@/components/shared/MirrorIcon';
 import { cn } from '@/lib/utils/cn';
 
 const schema = z.object({
@@ -37,15 +35,13 @@ type FormData = z.infer<typeof schema>;
 
 export default function RegisterPersonalModule() {
     const router = useRouter();
-    const { t } = useT();
+    const { t, isRTL, locale } = useLocale();
     const { formData, updateFormData, setStep } = useRegistrationStore();
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const {
         register,
         handleSubmit,
         watch,
-        setValue,
         formState: { errors, isValid },
     } = useForm<FormData>({
         resolver: zodResolver(schema),
@@ -61,141 +57,150 @@ export default function RegisterPersonalModule() {
         },
     });
 
-    const selectedDocType = watch('document_type');
     const isConfirmed = watch('personalDataConfirmed');
 
     const onSubmit = (data: FormData) => {
         const { personalDataConfirmed, ...rest } = data;
         updateFormData(rest);
         setStep(3);
-        router.push('/auth/register/account');
-    };
-
-    const docTypeLabels: Record<string, string> = {
-        PASSPORT: 'جواز سفر',
-        VISA: 'تأشيرة',
-        IQAMA: 'إقامة',
+        router.push(`/${locale}/auth/register/account`);
     };
 
     return (
-        <div className="min-h-screen bg-surface-100 flex flex-col" dir="rtl">
-            {/* Header */}
+        <div className="min-h-screen bg-surface-100 flex flex-col" dir={isRTL ? 'rtl' : 'ltr'}>
+            {/* 1. STICKY HEADER */}
             <header className="sticky top-0 z-50 bg-surface-200 border-b border-neutral-100 h-16 flex items-center px-4 shadow-sm">
-                <div className="w-10" />
-                <div className="flex-1 flex justify-center">
-                    <h1 className="text-heading font-bold text-neutral-900">البيانات الشخصية</h1>
+                <div className="flex-1 flex items-center justify-between max-w-lg mx-auto w-full">
+                    <button
+                        onClick={() => router.back()}
+                        className="w-10 h-10 flex items-center justify-center text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 rounded-full transition-all"
+                        aria-label="Back"
+                    >
+                        <MirrorIcon reverse>
+                            <CaretLeft size={24} weight="bold" />
+                        </MirrorIcon>
+                    </button>
+                    
+                    <h1 className="text-base font-bold text-neutral-900">{t('auth.register.steps.personal')}</h1>
+                    
+                    <div className="w-10" /> {/* Spacer for centering */}
                 </div>
-                <button
-                    onClick={() => router.back()}
-                    className="w-10 h-10 flex items-center justify-center text-neutral-900 hover:bg-neutral-50 rounded-full transition-colors"
-                >
-                    <CaretLeft size={24} />
-                </button>
             </header>
 
-            <ProgressStepper currentStep={2} label="إكمال البيانات الأساسية" />
+            <div className="max-w-lg mx-auto w-full flex-1 flex flex-col">
+                <ProgressStepper currentStep={2} label={t('auth.register.steps.personal_label')} />
 
-            <main className="flex-1 px-6 pt-8 pb-24 space-y-6">
-                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
-                    <InputField
-                        label="الاسم بالكامل (كما في الهوية)"
-                        icon={UserIcon}
-                        placeholder="أدخل اسمك الثلاثي"
-                        error={errors.full_name?.message}
-                        {...register('full_name')}
-                    />
-
-                    <div className="flex flex-col gap-5 sm:flex-row">
-                        <div className="flex-1">
-                            <Select
-                                label="نوع الوثيقة"
-                                options={[
-                                    { value: 'PASSPORT', label: 'جواز سفر' },
-                                    { value: 'IQAMA', label: 'إقامة' },
-                                    { value: 'VISA', label: 'تأشيرة' },
-                                ]}
-                                {...register('document_type')}
-                                error={errors.document_type?.message}
-                            />
-                        </div>
-                        <div className="flex-[2]">
-                            <InputField
-                                label="رقم الوثيقة"
-                                icon={IdentificationCard}
-                                placeholder="أدخل رقم الهوية أو الجواز"
-                                error={errors.document_number?.message}
-                                {...register('document_number')}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <main className="flex-1 px-6 pt-8 pb-32">
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                         <InputField
-                            label="تاريخ الميلاد"
-                            icon={Calendar}
-                            type="date"
-                            error={errors.date_of_birth?.message}
-                            {...register('date_of_birth')}
+                            label={t('auth.register.labels.full_name')}
+                            icon={UserIcon}
+                            placeholder={t('auth.register.placeholders.full_name')}
+                            error={errors.full_name?.message}
+                            {...register('full_name')}
                         />
-                        <InputField
-                            label="الجنسية"
-                            placeholder="مثلاً: SA"
-                            error={errors.nationality?.message}
-                            {...register('nationality')}
-                        />
-                    </div>
 
-                    <InputField
-                        label="رقم الجوال"
-                        icon={Phone}
-                        placeholder="05XXXXXXXX"
-                        type="tel"
-                        error={errors.mobile?.message}
-                        {...register('mobile')}
-                    />
-
-                    <div className="border-t border-neutral-100 my-2" />
-
-                    <label className={cn(
-                        "flex items-start gap-3 p-4 rounded-md border-2 transition-all cursor-pointer group",
-                        isConfirmed ? "bg-success-bg border-success/30" : "bg-surface-200 border-neutral-200"
-                    )}>
-                        <div className="relative mt-1">
-                            <input
-                                type="checkbox"
-                                className="sr-only"
-                                {...register('personalDataConfirmed')}
-                            />
-                            <div className={cn(
-                                "w-6 h-6 border-2 rounded-md flex items-center justify-center transition-all",
-                                isConfirmed ? "bg-success border-success" : "border-neutral-300 group-hover:border-success"
-                            )}>
-                                {isConfirmed && <Check size={16} weight="bold" className="text-white" />}
+                        <div className="flex flex-col gap-5 sm:flex-row">
+                            <div className="flex-1">
+                                <Select
+                                    label={t('auth.register.labels.document_type')}
+                                    options={[
+                                        { value: 'PASSPORT', label: t('auth.register.document_types.passport') },
+                                        { value: 'IQAMA', label: t('auth.register.document_types.iqama') },
+                                        { value: 'VISA', label: t('auth.register.document_types.visa') },
+                                    ]}
+                                    {...register('document_type')}
+                                    error={errors.document_type?.message}
+                                />
+                            </div>
+                            <div className="flex-[2]">
+                                <InputField
+                                    label={t('auth.register.labels.document_number')}
+                                    icon={IdentificationCard}
+                                    placeholder={t('auth.register.placeholders.document_number')}
+                                    error={errors.document_number?.message}
+                                    {...register('document_number')}
+                                />
                             </div>
                         </div>
-                        <div className="flex-1">
-                            <span className="text-sm text-neutral-700 font-bold block mb-1">تأكيد صحة البيانات</span>
-                            <p className="text-xs text-neutral-500 leading-relaxed">
-                                أقر بأن جميع البيانات المدخلة أعلاه صحيحة وتخصني شخصياً، وأتحمل المسؤولية القانونية في حال ثبت خلاف ذلك.
-                            </p>
-                        </div>
-                    </label>
-                    {errors.personalDataConfirmed && (
-                        <p className="text-xs text-error pr-1 font-medium">{errors.personalDataConfirmed.message}</p>
-                    )}
 
-                    <footer className="p-6">
-                        <button
-                            type="submit"
-                            disabled={!isValid}
-                            className="w-full h-btn-lg rounded-pill bg-btn-primary text-white font-bold flex items-center justify-center gap-2 shadow-btn transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                            <span>التالي</span>
-                            <CaretRight size={20} className="rotate-180" />
-                        </button>
-                    </footer>
-                </form>
-            </main>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <InputField
+                                label={t('auth.register.labels.dob')}
+                                icon={Calendar}
+                                type="date"
+                                error={errors.date_of_birth?.message}
+                                {...register('date_of_birth')}
+                            />
+                            <InputField
+                                label={t('auth.register.labels.nationality')}
+                                placeholder="SA"
+                                error={errors.nationality?.message}
+                                {...register('nationality')}
+                            />
+                        </div>
+
+                        <InputField
+                            label={t('auth.register.labels.mobile')}
+                            icon={Phone}
+                            placeholder="05XXXXXXXX"
+                            type="tel"
+                            error={errors.mobile?.message}
+                            {...register('mobile')}
+                        />
+
+                        <div className="pt-2">
+                            <label className={cn(
+                                "flex items-start gap-4 p-5 rounded-md border-2 transition-all cursor-pointer group",
+                                isConfirmed 
+                                    ? "bg-success/5 border-success/30 ring-1 ring-success/10" 
+                                    : "bg-surface-200 border-neutral-200 hover:border-neutral-300"
+                            )}>
+                                <div className="shrink-0 mt-1">
+                                    <input
+                                        type="checkbox"
+                                        className="sr-only"
+                                        {...register('personalDataConfirmed')}
+                                    />
+                                    <div className={cn(
+                                        "w-6 h-6 border-2 rounded-sm flex items-center justify-center transition-all",
+                                        isConfirmed ? "bg-success border-success" : "border-neutral-300 bg-white group-hover:border-success"
+                                    )}>
+                                        {isConfirmed && <Check size={16} weight="bold" className="text-white" />}
+                                    </div>
+                                </div>
+                                <div className="flex-1">
+                                    <span className="text-label font-bold text-neutral-900 block mb-1">
+                                        {t('auth.register.labels.confirm_data')}
+                                    </span>
+                                    <p className="text-caption text-neutral-500 leading-relaxed font-medium">
+                                        {t('auth.register.descriptions.confirm_data_desc')}
+                                    </p>
+                                </div>
+                            </label>
+                            {errors.personalDataConfirmed && (
+                                <p className="text-caption text-error px-1 mt-1 font-medium italic">
+                                    {errors.personalDataConfirmed.message}
+                                </p>
+                            )}
+                        </div>
+
+                        {/* Floating Footer for Mobile / Static for Desktop */}
+                        <div className="fixed bottom-0 left-0 right-0 p-6 z-40 bg-gradient-to-t from-surface-100 via-surface-100/95 to-transparent pt-10 md:static md:p-0 md:bg-none">
+                            <button
+                                type="submit"
+                                disabled={!isValid}
+                                className="w-full max-w-lg mx-auto h-btn-lg rounded-pill bg-btn-primary text-white font-bold flex items-center justify-center gap-2 shadow-btn transition-all hover:opacity-95 active:scale-[0.98] disabled:opacity-50 disabled:grayscale-[0.5]"
+                            >
+                                <span className="text-sm">{t('common.next')}</span>
+                                <MirrorIcon>
+                                    <CaretLeft size={20} weight="bold" className="rotate-180" />
+                                </MirrorIcon>
+                            </button>
+                        </div>
+                    </form>
+                </main>
+            </div>
         </div>
     );
 }

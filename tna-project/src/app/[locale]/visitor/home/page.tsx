@@ -17,6 +17,7 @@ import { useRouter, useParams } from 'next/navigation'
 import { cn } from '@/lib/utils/cn'
 import { useLocale } from '@/i18n/LocaleProvider'
 import { RoleGuard } from '@/components/shared/RoleGuard'
+import EmptyState from '@/components/ui/EmptyState'
 
 export default function VisitorHomePage() {
   const router = useRouter();
@@ -111,17 +112,13 @@ export default function VisitorHomePage() {
           <div className="mt-12 text-start">
               <h2 className="text-lg font-bold text-neutral-900 mb-6 px-1">{t('visitor.home.addresses.linked_success')}</h2>
               {activeTnas.length === 0 ? (
-                  <div className="p-12 text-center border-2 border-dashed border-neutral-200 rounded-lg bg-neutral-50/50">
-                      <Package size={48} className="mx-auto text-neutral-300 mb-4" weight="thin" />
-                      <p className="text-neutral-500 font-medium">ليس لديك أي عناوين نشطة حالياً.</p>
-                      <button 
-                          onClick={() => router.push(`/${locale}/visitor/search`)}
-                          className="mt-4 text-primary font-bold hover:underline inline-flex items-center gap-2"
-                      >
-                          ابدأ بالبحث عن عقار
-                          <ArrowRight size={18} className={isRTL ? "rotate-180" : ""} />
-                      </button>
-                  </div>
+                  <EmptyState
+                    icon={Package}
+                    title="ليس لديك أي عناوين نشطة حالياً."
+                    description="اربط عنوانك الوطني المؤقت بعقار متاح لبدء استقبال الشحنات."
+                    actionLabel="ابدأ بالبحث عن عقار"
+                    onAction={() => router.push(`/${locale}/visitor/search`)}
+                  />
               ) : (
                   <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                       {activeTnas.map(tna => (

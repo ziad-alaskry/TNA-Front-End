@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -10,12 +10,14 @@ import {
     DotsThree,
     Check,
     Circle,
-    PlusCircle,
-    SquaresFour
+    PlusCircle
 } from '@phosphor-icons/react';
 import { TNA, TNAResponse } from '@/lib/types/tna';
 import { Delivery, DeliveryResponse } from '@/lib/types/deliveries';
-import { useT } from '@/lib/hooks/useT';
+import { useLocale } from '@/i18n/LocaleProvider';
+import { SkeletonCard, SkeletonStatCard } from '@/components/ui/SkeletonCard';
+import EmptyState from '@/components/ui/EmptyState';
+import ErrorAlert from '@/components/ui/ErrorAlert';
 
 // Mock Data Generators for Frontend-Only Phase
 const mockTnas: TNA[] = [
@@ -55,11 +57,11 @@ const mockDeliveries: Delivery[] = [
 
 export default function VisitorHomeModule() {
     const router = useRouter();
-    const { t } = useT();
+    const { t, locale, isRTL } = useLocale();
     const [activeSlide, setActiveSlide] = useState(0);
 
     // Queries with simulated delay
-    const { data: tnas, isLoading: tnasLoading } = useQuery<TNAResponse>({
+    const { data: tnas, isLoading: tnasLoading, error: tnasError, refetch: refetchTnas } = useQuery<TNAResponse>({
         queryKey: ['tna', 'me'],
         queryFn: async () => {
             await new Promise(r => setTimeout(r, 1000));
@@ -67,7 +69,7 @@ export default function VisitorHomeModule() {
         },
     });
 
-    const { data: deliveries, isLoading: deliveriesLoading } = useQuery<DeliveryResponse>({
+    const { data: deliveries, isLoading: deliveriesLoading, error: deliveriesError, refetch: refetchDeliveries } = useQuery<DeliveryResponse>({
         queryKey: ['deliveries', 'preview'],
         queryFn: async () => {
             await new Promise(r => setTimeout(r, 800));
@@ -77,11 +79,11 @@ export default function VisitorHomeModule() {
 
     const formatDate = (dateStr: string) => {
         const date = new Date(dateStr);
-        return date.toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-US', { day: 'numeric', month: 'numeric', year: 'numeric' });
+        return date.toLocaleDateString(locale === 'ar' ? 'ar-EG' : 'en-US', { day: 'numeric', month: 'numeric', year: 'numeric' });
     };
 
     return (
-        <div className="min-h-screen bg-surface-100 pb-44" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+        <div className="min-h-screen bg-surface-100 pb-44" dir={isRTL ? 'rtl' : 'ltr'}>
             {/* 1. STICKY HEADER */}
             <header className="sticky top-0 z-50 bg-surface-200 border-b border-neutral-100 py-3 flex flex-col items-center text-center">
                 <span className="text-base font-bold text-neutral-900">{t('visitor.home.title')}</span>
@@ -92,7 +94,7 @@ export default function VisitorHomeModule() {
             <div className="mx-4 mt-4 rounded-lg overflow-hidden h-44 relative group shadow-card">
                 <div className="absolute inset-0 bg-gradient-to-br from-brand-navy-dark via-neutral-800 to-neutral-700 transition-all duration-500" />
 
-                {/* Visual Decoration (abstract shapes) */}
+                {/* Visual Decoration */}
                 <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/5 rounded-full blur-3xl" />
                 <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-warning/10 rounded-full blur-3xl" />
 
@@ -125,19 +127,29 @@ export default function VisitorHomeModule() {
                         <h3 className="text-base font-bold text-neutral-900">{t('visitor.home.shipments.title')}</h3>
                     </div>
                     <button
-                        onClick={() => router.push('/visitor/shipments')}
+                        onClick={() => router.push(`/${locale}/visitor/shipments`)}
                         className="flex items-center text-primary text-xs font-bold gap-0.5 hover:underline"
                     >
                         {t('common.view_all')}
-                        <CaretLeft size={16} className={lang === 'en' ? 'rotate-180' : ''} />
+                        <CaretLeft size={16} className={!isRTL ? 'rotate-180' : ''} />
                     </button>
                 </div>
 
                 <div className="space-y-3 text-start">
                     {deliveriesLoading ? (
-                        [1, 2].map(i => (
-                            <div key={i} className="h-28 bg-neutral-50 animate-pulse rounded-md border border-neutral-100" />
-                        ))
+                        [1, 2].map(i => <SkeletonCard key={i} className="h-28" />)
+                    ) : deliveriesError ? (
+                        <ErrorAlert 
+                            message={t('common.errors.loading_failed')} 
+                            onRetry={() => refetchDeliveries()} 
+                        />
+                    ) : deliveries?.data.length === 0 ? (
+                        <EmptyState 
+                            compact 
+                            icon={PackageIcon} 
+                            title={t('visitor.home.shipments.empty_title')} 
+                            description={t('visitor.home.shipments.empty_desc')} 
+                        />
                     ) : (
                         deliveries?.data.slice(0, 2).map((delivery) => (
                             <div key={delivery.delivery_id} className="bg-surface-200 shadow-card rounded-md p-4 border border-neutral-100 hover:border-primary/30 transition-colors group">
@@ -175,25 +187,36 @@ export default function VisitorHomeModule() {
                         <h3 className="text-base font-bold text-neutral-900">{t('visitor.home.addresses.title')}</h3>
                     </div>
                     <button
-                        onClick={() => router.push('/visitor/addresses')}
+                        onClick={() => router.push(`/${locale}/visitor/tnas`)}
                         className="flex items-center text-primary text-xs font-bold gap-0.5 hover:underline"
                     >
                         {t('visitor.home.addresses.manage')}
-                        <CaretLeft size={16} className={lang === 'en' ? 'rotate-180' : ''} />
+                        <CaretLeft size={16} className={!isRTL ? 'rotate-180' : ''} />
                     </button>
                 </div>
 
                 <div className="flex gap-3 overflow-x-auto pb-4 -mx-4 px-4 no-scrollbar scroll-smooth">
                     {tnasLoading ? (
-                        [1, 2].map(i => (
-                            <div key={i} className="min-w-[176px] h-32 bg-neutral-50 animate-pulse rounded-md border border-neutral-100" />
-                        ))
+                        [1, 2].map(i => <SkeletonStatCard key={i} className="min-w-[200px] h-32" />)
+                    ) : tnasError ? (
+                        <ErrorAlert 
+                            className="w-full"
+                            message={t('common.errors.loading_failed')} 
+                            onRetry={() => refetchTnas()} 
+                        />
+                    ) : tnas?.data.length === 0 ? (
+                        <EmptyState 
+                            compact 
+                            icon={MapPin} 
+                            title={t('visitor.home.addresses.empty_title')} 
+                            description={t('visitor.home.addresses.empty_desc')} 
+                        />
                     ) : (
                         tnas?.data.map((tna) => (
                             <button
                                 key={tna.tna_id}
-                                onClick={() => router.push(`/visitor/addresses/${tna.tna_id}`)}
-                                className="bg-surface-200 shadow-card rounded-md p-4 min-w-[176px] flex-shrink-0 border border-neutral-100 flex flex-col justify-between items-start relative hover:border-primary/20 transition-all active:scale-95 text-start"
+                                onClick={() => router.push(`/${locale}/visitor/tnas/${tna.tna_id}`)}
+                                className="bg-surface-200 shadow-card rounded-md p-4 min-w-[200px] flex-shrink-0 border border-neutral-100 flex flex-col justify-between items-start relative hover:border-primary/20 transition-all active:scale-95 text-start"
                             >
                                 <div className="w-full flex justify-between items-start">
                                     <span className="font-mono text-sm font-bold tracking-[0.04em] text-neutral-900">{tna.tna_code}</span>
@@ -216,9 +239,6 @@ export default function VisitorHomeModule() {
                                             <span className="text-label font-bold">{t('visitor.home.addresses.not_linked')}</span>
                                         </div>
                                     )}
-                                    {tna.status === 'SUSPENDED' && (
-                                        <div className="text-error font-bold text-label ps-1">{t('common.statuses.SUSPENDED')}</div>
-                                    )}
                                 </div>
                             </button>
                         ))
@@ -229,7 +249,7 @@ export default function VisitorHomeModule() {
             {/* 5. CTA BUTTON */}
             <div className="fixed bottom-24 left-0 right-0 px-6 z-40 bg-gradient-to-t from-surface-100 via-surface-100/95 to-transparent pt-6 pb-2 pointer-events-none">
                 <button
-                    onClick={() => router.push('/visitor/addresses/create')}
+                    onClick={() => router.push(`/${locale}/visitor/search`)}
                     className="flex h-14 w-full items-center justify-center gap-3 rounded-pill bg-btn-primary text-white font-bold shadow-btn transition-all hover:opacity-95 active:scale-[0.98] pointer-events-auto"
                 >
                     <PlusCircle size={22} />

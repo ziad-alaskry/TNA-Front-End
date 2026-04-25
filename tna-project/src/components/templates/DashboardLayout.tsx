@@ -24,12 +24,18 @@ interface DashboardLayoutProps {
   activity?: ActivityItem[]
   children?: ReactNode
   onStatClick?: (stat: StatCard) => void
+  isLoading?: boolean
+  error?: string
+  onRetry?: () => void
 }
 
 /**
  * Dashboard Template - Role-based stats grid + activity timeline
- * Usage: Tracking hub for all roles (Visitor TNA progress, Owner earnings, Carrier fleet stats)
+ * SPATIAL spec: neutral palette, shadow-card, proper border tokens
  */
+import { SkeletonStatsGrid } from '@/components/ui/SkeletonCard'
+import ErrorAlert, { PageError } from '@/components/ui/ErrorAlert'
+
 export function DashboardLayout({
   title,
   subtitle,
@@ -37,7 +43,14 @@ export function DashboardLayout({
   activity = [],
   children,
   onStatClick,
+  isLoading = false,
+  error,
+  onRetry,
 }: DashboardLayoutProps) {
+  if (error) {
+    return <PageError message={error} onRetry={onRetry} />
+  }
+
   const getStatusColor = (status?: string) => {
     switch (status) {
       case 'success':
@@ -46,7 +59,6 @@ export function DashboardLayout({
         return 'bg-pending-bg border-s-4 border-pending'
       case 'error':
         return 'bg-error-bg border-s-4 border-error'
-        return 'bg-error-100 border-s-4 border-error-500'
       default:
         return 'bg-surface-200'
     }
@@ -55,61 +67,59 @@ export function DashboardLayout({
   return (
     <div className="min-h-screen bg-surface-100">
       {/* HEADER SECTION */}
-      <div className="border-b border-surface-300 bg-surface-200 px-5 py-8 shadow-card">
-        <h1 className="text-3xl font-bold text-surface-900">
+      <div className="border-b border-neutral-200 bg-surface-200 px-5 py-8 shadow-card">
+        <h1 className="text-display text-neutral-900">
           {title}
         </h1>
         {subtitle && (
-          <p className="mt-2 text-surface-600">{subtitle}</p>
+          <p className="mt-2 text-body text-neutral-500">{subtitle}</p>
         )}
       </div>
 
       {/* CONTENT */}
       <div className="px-5 py-8">
         {/* STATS GRID */}
-        {stats.length > 0 && (
+        {(isLoading || stats.length > 0) && (
           <div className="mb-12">
-            <h2 className="mb-6 text-lg font-semibold text-surface-900">
-              Key Metrics
-            </h2>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {stats.map((stat, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => onStatClick?.(stat)}
-                  className="rounded-md border border-surface-300 bg-surface-200 p-6 shadow-card transition-all hover:shadow-modal hover:border-brand-secondary"
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-xs font-semibold uppercase text-surface-600">
-                        {stat.label}
-                      </p>
-                      <div className="flex-1 text-start font-bold text-surface-900 text-lg tracking-tight">
-                        {stat.value}
-                      </div>
-                      {stat.change && (
-                        <p className="mt-2 text-xs text-surface-500">
-                          {stat.change}
+            {isLoading ? (
+              <SkeletonStatsGrid count={4} />
+            ) : (
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                {stats.map((stat, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => onStatClick?.(stat)}
+                    className="rounded-md border border-neutral-200 bg-surface-200 p-6 shadow-card transition-all hover:shadow-modal hover:border-primary/40 text-start group"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-caption font-bold uppercase text-neutral-500 tracking-wider">
+                          {stat.label}
                         </p>
+                        <p className="mt-2 text-heading text-neutral-900">
+                          {stat.value}
+                        </p>
+                        {stat.change && (
+                          <p className="mt-2 text-caption text-neutral-400">
+                            {stat.change}
+                          </p>
+                        )}
+                      </div>
+                      {stat.icon && (
+                        <div className="text-neutral-300 group-hover:text-primary transition-colors">{stat.icon}</div>
                       )}
                     </div>
-                    {stat.icon && (
-                      <div className="text-brand-secondary">{stat.icon}</div>
-                    )}
-                  </div>
-                </button>
-              ))}
-            </div>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
         {/* ACTIVITY SECTION */}
         {activity.length > 0 && (
           <div className="mb-12">
-            <h2 className="mb-6 text-lg font-semibold text-neutral-900">
-              Recent Activity
-            </h2>
-            <div className="space-y-4">
+            <div className="space-y-3">
               {activity.map((item) => (
                 <div
                   key={item.id}
@@ -117,17 +127,17 @@ export function DashboardLayout({
                 >
                   <div className="flex items-start justify-between">
                     <div>
-                      <h3 className="font-semibold text-neutral-900">
+                      <h3 className="font-bold text-neutral-900 text-body">
                         {item.title}
                       </h3>
                       {item.description && (
-                        <p className="mt-1 text-sm text-neutral-600">
+                        <p className="mt-1 text-caption text-neutral-600">
                           {item.description}
                         </p>
                       )}
                     </div>
                     {item.timestamp && (
-                      <p className="text-xs text-neutral-500">
+                      <p className="text-caption text-neutral-400 whitespace-nowrap ms-4">
                         {item.timestamp}
                       </p>
                     )}
