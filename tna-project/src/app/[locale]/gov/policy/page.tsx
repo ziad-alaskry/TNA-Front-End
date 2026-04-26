@@ -18,10 +18,12 @@ import {
 } from '@phosphor-icons/react'
 import InputField from '@/components/ui/InputField'
 import { useRouter, useParams } from 'next/navigation'
+import { useLocale } from '@/i18n/LocaleProvider'
 
 export default function GovPolicyPage() {
     const router = useRouter();
     const { locale } = useParams();
+    const { t } = useLocale();
 
     const [isAutomationEnabled, setIsAutomationEnabled] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
@@ -32,7 +34,7 @@ export default function GovPolicyPage() {
     };
 
     return (
-        <AppShell role="Gov" header="إعدادات السياسات والحوكمة">
+        <AppShell role="Gov" header={t('gov.policy.header')}>
             <div className="max-w-4xl space-y-8">
                 {/* Automation Toggle Header */}
                 <div className={`p-6 rounded-md border transition-all flex items-center justify-between ${
@@ -45,8 +47,8 @@ export default function GovPolicyPage() {
                             <Gear size={24} weight="fill" className={isAutomationEnabled ? 'animate-spin-slow' : ''} />
                         </div>
                         <div>
-                            <h3 className="text-lg font-bold text-neutral-900">المراجعة الآلية الذكية</h3>
-                            <p className="text-xs text-neutral-500">عند تفعيلها، سيقوم النظام بالبت في الطلبات السكنية المطابقة للمعايير تلقائياً.</p>
+                            <h3 className="text-lg font-bold text-neutral-900">{t('gov.policy.smart_automation')}</h3>
+                            <p className="text-xs text-neutral-500">{t('gov.policy.smart_automation_desc')}</p>
                         </div>
                     </div>
                     <button 
@@ -66,12 +68,12 @@ export default function GovPolicyPage() {
                     <div className="space-y-6">
                         <h4 className="font-bold text-neutral-900 flex items-center gap-2">
                             <CurrencyCircleDollar size={20} className="text-primary" weight="fill" />
-                            هيكلة الرسوم السيادية
+                            {t('gov.policy.fee_structure')}
                         </h4>
                         <div className="space-y-4">
-                            <InputField label="رسوم إصدار TNA سكني (SAR)" defaultValue="١٠٠.٠٠" />
-                            <InputField label="رسوم إصدار TNA تجاري (SAR)" defaultValue="٥٠٠.٠٠" />
-                            <InputField label="نسبة المنصة من رسوم الربط (٪)" defaultValue="١٥" />
+                            <InputField label={t('gov.policy.residential_fee')} defaultValue={t('gov.policy.residential_fee_val')} />
+                            <InputField label={t('gov.policy.commercial_fee')} defaultValue={t('gov.policy.commercial_fee_val')} />
+                            <InputField label={t('gov.policy.platform_percentage')} defaultValue={t('gov.policy.platform_percentage_val')} />
                         </div>
                     </div>
 
@@ -79,18 +81,18 @@ export default function GovPolicyPage() {
                     <div className="space-y-6">
                         <h4 className="font-bold text-neutral-900 flex items-center gap-2">
                             <Clock size={20} className="text-primary" weight="fill" />
-                            دورة حياة العنوان
+                            {t('gov.policy.lifecycle')}
                         </h4>
                         <div className="space-y-4">
-                            <InputField label="مدة صلاحية العنوان الافتراضية (أيام)" defaultValue="١٨٠" />
-                            <InputField label="فترة السماح قبل الإلغاء (أيام)" defaultValue="٧" />
+                            <InputField label={t('gov.policy.default_validity')} defaultValue={t('gov.policy.default_validity_val')} />
+                            <InputField label={t('gov.policy.grace_period')} defaultValue={t('gov.policy.grace_period_val')} />
                             <div className="p-4 bg-warning-bg border border-warning/10 rounded-md">
                                 <p className="text-[10px] text-warning font-bold flex items-center gap-2">
                                     <WarningCircle size={14} weight="fill" />
-                                    تنبيه أمني
+                                    {t('gov.policy.security_alert')}
                                 </p>
                                 <p className="text-[10px] text-neutral-600 mt-1 leading-relaxed">
-                                    تغيير هذه القيم سيؤثر على جميع العناوين الجديدة المصدرة من هذه اللحظة.
+                                    {t('gov.policy.security_alert_desc')}
                                 </p>
                             </div>
                         </div>
@@ -102,22 +104,22 @@ export default function GovPolicyPage() {
                     <div className="flex justify-between items-center mb-6">
                         <h4 className="font-bold text-neutral-900 flex items-center gap-2">
                             <SlidersHorizontal size={20} className="text-primary" weight="fill" />
-                            قواعد الأهلية المتقدمة
+                            {t('gov.policy.eligibility_rules')}
                         </h4>
                         <button className="text-[10px] font-bold text-primary flex items-center gap-1">
                             <PlusCircle size={16} />
-                            إضافة قاعدة جديدة
+                            {t('gov.policy.add_rule')}
                         </button>
                     </div>
                     <div className="space-y-3">
                         {[
-                            'يجب أن يكون العمر فوق ١٨ عاماً للطلبات الفردية',
-                            'يجب توفر هوية وطنية سارية المفعول وموثقة عبر النفاذ',
-                            'يمنع إصدار أكثر من عنوان TNA لنفس رقم الهوية في آن واحد'
+                            t('gov.policy.rule_1'),
+                            t('gov.policy.rule_2'),
+                            t('gov.policy.rule_3')
                         ].map((rule, i) => (
                             <div key={i} className="flex items-center justify-between p-3 bg-white rounded border border-neutral-100">
                                 <span className="text-xs font-semibold text-neutral-700">{rule}</span>
-                                <button className="text-[10px] font-bold text-error">حذف</button>
+                                <button className="text-[10px] font-bold text-error">{t('gov.policy.delete')}</button>
                             </div>
                         ))}
                     </div>
@@ -129,7 +131,7 @@ export default function GovPolicyPage() {
                         onClick={() => router.back()}
                         className="h-12 px-8 rounded-sm text-sm font-bold text-neutral-500 hover:bg-neutral-100 transition-colors"
                     >
-                        تجاهل التغييرات
+                        {t('gov.policy.discard_changes')}
                     </button>
                     <button 
                         onClick={handleSave}
@@ -137,11 +139,11 @@ export default function GovPolicyPage() {
                         className="h-12 px-12 rounded-pill bg-neutral-900 text-white text-sm font-bold shadow-btn hover:bg-black transition-all flex items-center gap-2 disabled:opacity-50"
                     >
                         {isSaving ? (
-                            <>جاري الحفظ...</>
+                            <>{t('gov.policy.saving')}</>
                         ) : (
                             <>
                                 <CheckCircle size={20} />
-                                حفظ ومزامنة السياسات
+                                {t('gov.policy.save_sync')}
                             </>
                         )}
                     </button>

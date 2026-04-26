@@ -1,8 +1,8 @@
 'use client';
 
 import { useLanguageStore } from '../store/useLanguageStore';
-import ar from '@/../public/locales/ar.json';
-import en from '@/../public/locales/en.json';
+import ar from '@/lib/i18n/ar.json';
+import en from '@/lib/i18n/en.json';
 
 const translations = { ar, en };
 

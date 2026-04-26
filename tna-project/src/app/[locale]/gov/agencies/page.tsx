@@ -13,6 +13,7 @@ import {
     DotsThreeVertical,
     IdentificationCard
 } from '@phosphor-icons/react'
+import { useLocale } from '@/i18n/LocaleProvider'
 
 interface GovStaff {
     id: string;
@@ -23,17 +24,18 @@ interface GovStaff {
     status: 'ACTIVE' | 'INACTIVE';
 }
 
-const mockStaff: GovStaff[] = [
-    { id: 'STF-501', name: 'محمد القحطاني', department: 'إدارة العناوين', permissions: ['VERIFY', 'AUDIT'], last_active: 'منذ ١٠ دقائق', status: 'ACTIVE' },
-    { id: 'STF-442', name: 'سارة العتيبي', department: 'السياسات والأنظمة', permissions: ['MANAGE_POLICY', 'AUDIT'], last_active: 'أمس ٠٥:٠٠ م', status: 'ACTIVE' },
-    { id: 'STF-330', name: 'خالد السبيعي', department: 'الدعم الفني', permissions: ['READ_ONLY'], last_active: 'منذ ٤ أيام', status: 'INACTIVE' },
-];
-
 export default function GovAgenciesPage() {
+    const { t } = useLocale();
+
+    const mockStaff: GovStaff[] = [
+        { id: 'STF-501', name: t('gov.agencies.mock_name_1'), department: t('gov.agencies.mock_dept_1'), permissions: ['VERIFY', 'AUDIT'], last_active: t('gov.agencies.mock_time_1'), status: 'ACTIVE' },
+        { id: 'STF-442', name: t('gov.agencies.mock_name_2'), department: t('gov.agencies.mock_dept_2'), permissions: ['MANAGE_POLICY', 'AUDIT'], last_active: t('gov.agencies.mock_time_2'), status: 'ACTIVE' },
+        { id: 'STF-330', name: t('gov.agencies.mock_name_3'), department: t('gov.agencies.mock_dept_3'), permissions: ['READ_ONLY'], last_active: t('gov.agencies.mock_time_3'), status: 'INACTIVE' },
+    ];
     const columns: DataTableColumn<GovStaff>[] = [
         {
             key: 'name',
-            label: 'الموظف / المسؤول',
+            label: t('gov.agencies.staff_member'),
             render: (val, row) => (
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-400 group-hover:bg-primary/10 group-hover:text-primary transition-colors">
@@ -48,12 +50,12 @@ export default function GovAgenciesPage() {
         },
         {
             key: 'department',
-            label: 'الإدارة / القسم',
+            label: t('gov.agencies.department'),
             render: (val) => <span className="text-xs font-semibold text-neutral-700">{val}</span>
         },
         {
             key: 'permissions',
-            label: 'الصلاحيات الممنوحة',
+            label: t('gov.agencies.granted_permissions'),
             render: (val) => (
                 <div className="flex flex-wrap gap-1">
                     {(val as string[]).map((p, i) => (
@@ -64,13 +66,13 @@ export default function GovAgenciesPage() {
         },
         {
             key: 'status',
-            label: 'حالة الحساب',
+            label: t('gov.agencies.account_status'),
             render: (val) => (
                 <div className="flex items-center gap-2">
                     <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
                         val === 'ACTIVE' ? 'bg-success-bg text-success' : 'bg-neutral-200 text-neutral-500'
                     }`}>
-                        {val === 'ACTIVE' ? 'نشط' : 'معطل'}
+                        {val === 'ACTIVE' ? t('gov.agencies.active') : t('gov.agencies.inactive')}
                     </span>
                     {val === 'ACTIVE' && <ShieldCheck size={14} weight="fill" className="text-success" />}
                 </div>
@@ -78,7 +80,7 @@ export default function GovAgenciesPage() {
         },
         {
             key: 'last_active',
-            label: 'آخر نشاط',
+            label: t('gov.agencies.last_active'),
             render: (val) => <span className="text-xs text-neutral-500">{val}</span>
         },
         {
@@ -98,15 +100,15 @@ export default function GovAgenciesPage() {
     ];
 
     return (
-        <AppShell role="Gov" header="إدارة الصلاحيات والموظفين">
+        <AppShell role="Gov" header={t('gov.agencies.header')}>
             <DataTableLayout
-                title="قائمة الفاعلين في النظام"
+                title={t('gov.agencies.title')}
                 columns={columns}
                 data={mockStaff}
             >
                 <button className="h-11 px-6 rounded-sm bg-primary text-white font-bold flex items-center gap-2 hover:bg-opacity-90 transition-all shadow-btn">
                     <UserPlus size={20} weight="bold" />
-                    إضافة مسؤول جديد
+                    {t('gov.agencies.add_admin')}
                 </button>
             </DataTableLayout>
         </AppShell>

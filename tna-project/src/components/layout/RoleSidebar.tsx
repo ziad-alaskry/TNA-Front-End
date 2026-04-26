@@ -69,11 +69,11 @@ export function SidebarContent({ role }: SidebarProps) {
       <div className="mb-10 px-2 py-4">
         <div className="flex items-center gap-3 rounded-md p-3 bg-btn-primary shadow-btn text-white">
           <div className="h-10 w-10 rounded-md bg-white/20 flex items-center justify-center font-bold text-lg shadow-inner">
-            {role[0]}
+            {t(`common.role_names.${role}`)[0]}
           </div>
           <div className="flex flex-col">
-            <span className="font-bold tracking-tight text-white leading-none">TNA {role}</span>
-            <span className="text-[10px] text-white/70 mt-1 uppercase font-bold tracking-widest">Portal</span>
+            <span className="font-bold tracking-tight text-white leading-none">TNA {t(`common.role_names.${role}`)}</span>
+            <span className="text-[10px] text-white/70 mt-1 uppercase font-bold tracking-widest">{t('common.portal')}</span>
           </div>
         </div>
       </div>
@@ -110,7 +110,7 @@ export function SidebarContent({ role }: SidebarProps) {
             <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">{t('common.support')}</p>
           </div>
           <p className="text-xs text-neutral-600 font-medium leading-relaxed">
-            {t('common.logged_in_as').replace('{role}', role)}
+            {t('common.logged_in_as').replace('{role}', t(`common.role_names.${role}`))}
           </p>
         </div>
       </div>

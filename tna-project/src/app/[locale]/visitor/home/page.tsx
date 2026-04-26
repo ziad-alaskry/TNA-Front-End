@@ -56,14 +56,14 @@ export default function VisitorHomePage() {
         id: tna.tna_id,
         title: t('visitor.home.addresses.linked_success'),
         description: `${t('visitor.home.addresses.title')} ${tna.tna_code} ${t('common.statuses.ACTIVE')}.`,
-        timestamp: 'منذ يومين',
+        timestamp: t('visitor.home.time_2_days'),
         status: 'success' as const
     }))),
     ...(pendingTnas.map(tna => ({
         id: tna.tna_id,
         title: t('common.statuses.PENDING'),
-        description: 'بانتظار موافقة مالك العقار على طلب الربط.',
-        timestamp: 'منذ ساعة',
+        description: t('visitor.home.pending_approval_desc'),
+        timestamp: t('visitor.home.time_1_hour'),
         status: 'pending' as const
     })))
   ];
@@ -88,7 +88,7 @@ export default function VisitorHomePage() {
                           <PlusCircle size={28} weight="fill" />
                       </div>
                       <h3 className="text-subheading font-bold text-neutral-900">{t('visitor.home.actions.create_new')}</h3>
-                      <p className="text-caption text-neutral-500 mt-1">ابحث عن عقار متاح واربط عنوانك الوطني المؤقت به.</p>
+                      <p className="text-caption text-neutral-500 mt-1">{t('visitor.home.actions.create_new_desc')}</p>
                   </div>
                   <ArrowRight size={24} className={cn("text-neutral-300 group-hover:text-primary transition-colors", isRTL && "rotate-180")} />
               </button>
@@ -102,7 +102,7 @@ export default function VisitorHomePage() {
                           <Wallet size={28} weight="fill" />
                       </div>
                       <h3 className="text-subheading font-bold text-neutral-900">{t('common.roles.Visitor.wallet')}</h3>
-                      <p className="text-caption text-neutral-500 mt-1">اشحن رصيدك لسداد رسوم إصدار العناوين والخدمات.</p>
+                      <p className="text-caption text-neutral-500 mt-1">{t('visitor.home.actions.wallet_desc')}</p>
                   </div>
                   <ArrowRight size={24} className={cn("text-neutral-300 group-hover:text-primary transition-colors", isRTL && "rotate-180")} />
               </button>
@@ -114,9 +114,9 @@ export default function VisitorHomePage() {
               {activeTnas.length === 0 ? (
                   <EmptyState
                     icon={Package}
-                    title="ليس لديك أي عناوين نشطة حالياً."
-                    description="اربط عنوانك الوطني المؤقت بعقار متاح لبدء استقبال الشحنات."
-                    actionLabel="ابدأ بالبحث عن عقار"
+                    title={t('visitor.home.empty_active.title')}
+                    description={t('visitor.home.empty_active.desc')}
+                    actionLabel={t('visitor.home.empty_active.action')}
                     onAction={() => router.push(`/${locale}/visitor/search`)}
                   />
               ) : (
@@ -128,7 +128,7 @@ export default function VisitorHomePage() {
                                   <CheckCircle size={20} className="text-success" weight="fill" />
                               </div>
                               <div className="space-y-1">
-                                  <p className="text-xs text-neutral-400 font-medium">كود العنوان</p>
+                                  <p className="text-xs text-neutral-400 font-medium">{t('visitor.home.addresses.code')}</p>
                                   <p className="text-xl font-mono font-bold text-neutral-900 tracking-wider transition-colors group-hover:text-primary">{tna.tna_code}</p>
                               </div>
                               <div className="mt-4 pt-4 border-t border-neutral-100 flex justify-between items-center">

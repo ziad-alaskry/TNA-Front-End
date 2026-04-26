@@ -1,9 +1,0 @@
-{
-  "/[locale]/gov/policy/page": "app/[locale]/gov/policy/page.js",
-  "/[locale]/owner/property/add/page": "app/[locale]/owner/property/add/page.js",
-  "/[locale]/owner/bindings/page": "app/[locale]/owner/bindings/page.js",
-  "/[locale]/gov/home/page": "app/[locale]/gov/home/page.js",
-  "/[locale]/gov/agencies/page": "app/[locale]/gov/agencies/page.js",
-  "/[locale]/gov/verification/queue/page": "app/[locale]/gov/verification/queue/page.js",
-  "/[locale]/gov/audit/page": "app/[locale]/gov/audit/page.js"
-}
