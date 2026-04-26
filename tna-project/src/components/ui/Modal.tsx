@@ -13,8 +13,8 @@ export default function Modal({ isOpen, onClose, title, children, footer, width 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 overflow-y-auto overflow-x-hidden p-4">
-      <div className={`relative bg-white rounded-lg shadow-xl w-full ${width}`}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md overflow-y-auto overflow-x-hidden p-4 animate-in fade-in duration-300">
+      <div className={`relative bg-white rounded-lg shadow-xl w-full ${width} animate-in zoom-in-95 duration-300`}>
         {/* Header */}
         <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
           <h3 className="text-xl font-semibold text-gray-900">

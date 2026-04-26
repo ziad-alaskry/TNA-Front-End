@@ -15,9 +15,10 @@ import {
     ArrowRight
 } from '@phosphor-icons/react'
 import { Property } from '@/lib/types'
+import { cn } from '@/lib/utils/cn'
 
 export default function OwnerPropertiesPage() {
-    const { realEstateObjects } = useBindingContext();
+    const { realEstateObjects, toggleAutoAccept } = useBindingContext();
     const router = useRouter();
     const { locale } = useParams();
 
@@ -65,6 +66,24 @@ export default function OwnerPropertiesPage() {
             }
         },
         {
+            key: 'auto_accept',
+            label: 'القبول التلقائي',
+            render: (val, row) => (
+                <button 
+                    onClick={(e) => { e.stopPropagation(); toggleAutoAccept(row.id); }}
+                    className={cn(
+                        "relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+                        val ? "bg-primary" : "bg-neutral-200"
+                    )}
+                >
+                    <span className={cn(
+                        "pointer-events-none block h-4 w-4 rounded-full bg-white shadow-lg ring-0 transition-transform",
+                        val ? "translate-x-4" : "translate-x-1"
+                    )} />
+                </button>
+            )
+        },
+        {
             key: 'id',
             label: 'الارتباطات',
             render: () => (
@@ -97,14 +116,16 @@ export default function OwnerPropertiesPage() {
                 columns={columns}
                 data={realEstateObjects}
                 onRowClick={(row) => router.push(`/${locale}/owner/property/detail?id=${row.id}`)}
+                actions={
+                    <button 
+                        onClick={() => router.push(`/${locale}/owner/property/add`)}
+                        className="h-11 px-6 rounded-md ui-gradient-primary text-white font-bold flex items-center gap-2 hover:opacity-90 transition-all shadow-glow-primary border-none"
+                    >
+                        <PlusCircle size={20} weight="bold" />
+                        تسجيل عقار جديد
+                    </button>
+                }
             >
-                <button 
-                    onClick={() => router.push(`/${locale}/owner/property/add`)}
-                    className="h-11 px-6 rounded-sm bg-primary text-white font-bold flex items-center gap-2 hover:bg-opacity-90 transition-all shadow-btn"
-                >
-                    <PlusCircle size={20} weight="bold" />
-                    تسجيل عقار جديد
-                </button>
             </DataTableLayout>
         </AppShell>
     );

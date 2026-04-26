@@ -23,6 +23,7 @@ interface DataTableLayoutProps<T extends Record<string, any>> {
   onSearch?: (query: string) => void
   onFilter?: (filters: Record<string, any>) => void
   onRowClick?: (row: T) => void
+  actions?: ReactNode
   pageSize?: number
   isLoading?: boolean
   children?: ReactNode
@@ -39,6 +40,7 @@ export default function DataTableLayout<T extends Record<string, any>>({
   onSearch,
   onFilter,
   onRowClick,
+  actions,
   pageSize = 10,
   isLoading = false,
   children,
@@ -63,11 +65,14 @@ export default function DataTableLayout<T extends Record<string, any>>({
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <h1 className="text-display font-bold text-neutral-900 mb-1">{title}</h1>
-          <p className="text-body text-neutral-500">{t('common.total_records').replace('{count}', String(data.length))}</p>
+          <p className="text-body text-neutral-500">
+            {t('common.total_records').replace('{count}', String(data.length))}
+          </p>
         </div>
         
         {/* Actions/Filters */}
         <div className="flex flex-wrap items-center gap-3">
+            {actions}
             <div className="relative min-w-[240px]">
                 <MagnifyingGlass
                     size={20}
@@ -153,7 +158,9 @@ export default function DataTableLayout<T extends Record<string, any>>({
         {totalPages > 1 && (
           <div className="flex items-center justify-between border-t border-neutral-100 px-6 py-4 bg-neutral-50/30">
             <p className="text-caption text-neutral-400 font-medium font-mono">
-              {t('common.page_of').replace('{current}', String(currentPage)).replace('{total}', String(totalPages))}
+              {t('common.page_of')
+                .replace('{current}', String(currentPage))
+                .replace('{total}', String(totalPages))}
             </p>
             <div className="flex items-center gap-2">
               <button

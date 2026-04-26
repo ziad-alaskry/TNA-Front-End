@@ -14,10 +14,24 @@ import {
     CaretRight,
     PlusCircle,
     SlidersHorizontal,
-    CheckCircle
+    CheckCircle,
+    Trash,
+    Globe,
+    UserCircle,
+    MapPin
 } from '@phosphor-icons/react'
 import InputField from '@/components/ui/InputField'
+import Select from '@/components/ui/Select'
+import Button from '@/components/ui/Button'
 import { useRouter, useParams } from 'next/navigation'
+import { cn } from '@/lib/utils/cn'
+
+interface Condition {
+    id: string;
+    parameter: string;
+    operator: string;
+    value: string;
+}
 
 export default function GovPolicyPage() {
     const router = useRouter();
@@ -25,6 +39,25 @@ export default function GovPolicyPage() {
 
     const [isAutomationEnabled, setIsAutomationEnabled] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
+    const [conditions, setConditions] = useState<Condition[]>([
+        { id: 'c1', parameter: 'age', operator: '>=', value: '18' },
+        { id: 'c2', parameter: 'nationality', operator: 'in', value: 'دول مجلس التعاون' },
+        { id: 'c3', parameter: 'active_tnas', operator: '<', value: '3' }
+    ]);
+
+    const handleAddCondition = () => {
+        const newCondition: Condition = {
+            id: Math.random().toString(36).substr(2, 9),
+            parameter: 'age',
+            operator: '==',
+            value: ''
+        };
+        setConditions([...conditions, newCondition]);
+    };
+
+    const removeCondition = (id: string) => {
+        setConditions(conditions.filter(c => c.id !== id));
+    };
 
     const handleSave = () => {
         setIsSaving(true);
@@ -72,6 +105,7 @@ export default function GovPolicyPage() {
                             <InputField label="رسوم إصدار TNA سكني (SAR)" defaultValue="١٠٠.٠٠" />
                             <InputField label="رسوم إصدار TNA تجاري (SAR)" defaultValue="٥٠٠.٠٠" />
                             <InputField label="نسبة المنصة من رسوم الربط (٪)" defaultValue="١٥" />
+                            <div className="h-[74px] hidden md:block" aria-hidden="true" /> {/* Spacer to align with Warning box in col 2 */}
                         </div>
                     </div>
 
@@ -97,29 +131,83 @@ export default function GovPolicyPage() {
                     </div>
                 </div>
 
-                {/* Eligibility Rules */}
+                {/* Eligibility Rules / Conditions Editor */}
                 <div className="p-6 rounded-md border border-neutral-200 bg-surface-200">
                     <div className="flex justify-between items-center mb-6">
-                        <h4 className="font-bold text-neutral-900 flex items-center gap-2">
-                            <SlidersHorizontal size={20} className="text-primary" weight="fill" />
-                            قواعد الأهلية المتقدمة
-                        </h4>
-                        <button className="text-[10px] font-bold text-primary flex items-center gap-1">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center text-primary">
+                                <SlidersHorizontal size={20} weight="bold" />
+                            </div>
+                            <div>
+                                <h4 className="font-bold text-neutral-900">محرك قواعد الأهلية</h4>
+                                <p className="text-[10px] text-neutral-500">تحديد شروط استحقاق العناوين الوطنية المؤقتة</p>
+                            </div>
+                        </div>
+                        <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="gap-2 h-9 border-primary/20 text-primary"
+                            onClick={handleAddCondition}
+                        >
                             <PlusCircle size={16} />
-                            إضافة قاعدة جديدة
-                        </button>
+                            إضافة شرط
+                        </Button>
                     </div>
+
                     <div className="space-y-3">
-                        {[
-                            'يجب أن يكون العمر فوق ١٨ عاماً للطلبات الفردية',
-                            'يجب توفر هوية وطنية سارية المفعول وموثقة عبر النفاذ',
-                            'يمنع إصدار أكثر من عنوان TNA لنفس رقم الهوية في آن واحد'
-                        ].map((rule, i) => (
-                            <div key={i} className="flex items-center justify-between p-3 bg-white rounded border border-neutral-100">
-                                <span className="text-xs font-semibold text-neutral-700">{rule}</span>
-                                <button className="text-[10px] font-bold text-error">حذف</button>
+                        {conditions.map((condition) => (
+                            <div key={condition.id} className="grid grid-cols-12 gap-3 items-center p-3 bg-white rounded border border-neutral-100 group animate-in fade-in slide-in-from-right-2 duration-300">
+                                <div className="col-span-4">
+                                    <Select 
+                                        options={[
+                                            { value: 'age', label: 'العمر' },
+                                            { value: 'nationality', label: 'الجنسية' },
+                                            { value: 'region', label: 'المنطقة الحالية' },
+                                            { value: 'active_tnas', label: 'عدد العناوين النشطة' },
+                                        ]}
+                                        defaultValue={condition.parameter}
+                                        className="h-9 text-xs"
+                                    />
+                                </div>
+                                <div className="col-span-2">
+                                    <Select 
+                                        options={[
+                                            { value: '>=', label: '>=' },
+                                            { value: '<=', label: '<=' },
+                                            { value: '==', label: '==' },
+                                            { value: 'in', label: 'في قائمة' },
+                                        ]}
+                                        defaultValue={condition.operator}
+                                        className="h-9 text-xs"
+                                    />
+                                </div>
+                                <div className="col-span-5">
+                                    <InputField 
+                                        placeholder="القيمة" 
+                                        defaultValue={condition.value}
+                                        className="h-9 text-xs"
+                                    />
+                                </div>
+                                <div className="col-span-1 flex justify-end">
+                                    <button 
+                                        onClick={() => removeCondition(condition.id)}
+                                        className="w-8 h-8 rounded-full flex items-center justify-center text-error hover:bg-error/10 transition-colors"
+                                    >
+                                        <Trash size={16} />
+                                    </button>
+                                </div>
                             </div>
                         ))}
+                    </div>
+
+                    <div className="mt-6 p-4 bg-primary/5 rounded border border-dashed border-primary/20">
+                        <div className="flex gap-3 text-right">
+                            <ShieldCheck size={20} className="text-primary" weight="fill" />
+                            <p className="text-[10px] text-neutral-600 leading-relaxed">
+                                <span className="font-bold block text-neutral-900 mb-1">التحقق من التداخل</span>
+                                يتم تطبيق هذه القواعد بالتسلسل (AND logic). أي طلب لا يستوفي كافة الشروط المذكورة أعلاه سيتم تحويله للمراجعة اليدوية أو الرفض التلقائي بناءً على إعدادات المراجعة الآلية.
+                            </p>
+                        </div>
                     </div>
                 </div>
 

@@ -7,7 +7,7 @@ import { useBindingContext } from '@/context/BindingContext'
 import { useRouter, useParams } from 'next/navigation'
 import Button from '@/components/ui/Button'
 import { TNA } from '@/lib/types/tna'
-import { Eye } from '@phosphor-icons/react'
+import { Eye, Plus } from '@phosphor-icons/react'
 
 export default function VisitorTnasPage() {
   const { visitorTnas } = useBindingContext();
@@ -72,6 +72,15 @@ export default function VisitorTnasPage() {
         columns={columns}
         data={visitorTnas}
         onRowClick={(row) => router.push(`/${locale}/visitor/tnas/${row.tna_id}`)}
+        actions={
+            <Button 
+                onClick={() => router.push(`/${locale}/visitor/request`)}
+                className="ui-gradient-primary text-white h-10 px-4 rounded-md font-bold flex items-center gap-2 border-none shadow-glow-primary hover:opacity-90 transition-opacity"
+            >
+                <Plus size={20} weight="bold" className="text-white" />
+                طلب كود TNA جديد
+            </Button>
+        }
       />
     </AppShell>
   )

@@ -1,137 +1,129 @@
 'use client'
 
-import React from 'react'
-import { AppShell } from '@/components/layout/AppShell'
-import DataTableLayout, { DataTableColumn } from '@/components/templates/DataTableLayout'
-import { 
-    Package, 
-    IdentificationCard, 
-    Clock, 
-    CheckCircle, 
-    MapPin,
-    MagnifyingGlass,
-    ArrowRight,
-    QrCode,
-    Funnel
-} from '@phosphor-icons/react'
-import { useRouter, useParams } from 'next/navigation'
+    const [selectedShipments, setSelectedShipments] = useState<string[]>([]);
+    const [isBulkDispatchModalOpen, setIsBulkDispatchModalOpen] = useState(false);
+    const [isAssignDriverModalOpen, setIsAssignDriverModalOpen] = useState(false);
+    const [drivers, setDrivers] = useState([
+        { id: 'DRV-101', name: 'سلطان القحطاني', status: 'ACTIVE' },
+        { id: 'DRV-102', name: 'فهد السبيعي', status: 'ON_TRIP' },
+        { id: 'DRV-103', name: 'محمد العلي', status: 'ACTIVE' },
+    ]);
 
-interface Shipment {
-    id: string;
-    tracking_number: string;
-    recipient: string;
-    tna_code: string;
-    status: 'DISPATCHED' | 'IN_TRANSIT' | 'DELIVERED' | 'DELAYED';
-    district: string;
-    eta: string;
-}
-
-const mockShipments: Shipment[] = [
-    { id: 'SHP-9901', tracking_number: 'TRK-88127391', recipient: 'سالم الدوسري', tna_code: 'TNA-667722', status: 'IN_TRANSIT', district: 'الملقا', eta: 'اليوم ٦ م' },
-    { id: 'SHP-9905', tracking_number: 'TRK-22319082', recipient: 'هند محمد', tna_code: 'TNA-102938', status: 'DELIVERED', district: 'النرجس', eta: 'أمس ٤ م' },
-    { id: 'SHP-9912', tracking_number: 'TRK-55612300', recipient: 'عبدالله الرشيد', tna_code: 'TNA-229911', status: 'DISPATCHED', district: 'الياسمين', eta: 'غداً ١٠ ص' },
-    { id: 'SHP-9920', tracking_number: 'TRK-00129381', recipient: 'فهد المطيري', tna_code: 'TNA-667722', status: 'DELAYED', district: 'الملقا', eta: 'معلق' },
-];
-
-export default function CarrierShipmentsPage() {
-    const router = useRouter();
-    const { locale } = useParams();
+    const toggleSelection = (shipmentId: string) => {
+        setSelectedShipments(prev => 
+            prev.includes(shipmentId) 
+            ? prev.filter(id => id !== shipmentId) 
+            : [...prev, shipmentId]
+        );
+    };
 
     const columns: DataTableColumn<Shipment>[] = [
         {
-            key: 'tracking_number',
-            label: 'رقم التتبع',
-            render: (val, row) => (
-                <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-sm bg-neutral-100 flex items-center justify-center text-neutral-400 group-hover:text-primary transition-colors">
-                        <Package size={20} weight="fill" />
-                    </div>
-                    <div className="flex flex-col">
-                        <span className="text-xs font-bold text-neutral-900 font-mono tracking-wider">{val}</span>
-                        <span className="text-[10px] text-neutral-500">{row.recipient}</span>
-                    </div>
-                </div>
-            )
-        },
-        {
-            key: 'tna_code',
-            label: 'عنوان TNA',
-            render: (val) => (
-                <div className="flex items-center gap-2">
-                    <IdentificationCard size={18} className="text-primary" weight="bold" />
-                    <span className="text-sm font-bold text-primary font-mono">{val}</span>
-                </div>
-            )
-        },
-        {
-            key: 'district',
-            label: 'الحي المستهدف',
-            render: (val) => (
-                <div className="flex items-center gap-1.5">
-                    <MapPin size={16} className="text-neutral-400" />
-                    <span className="text-xs font-semibold text-neutral-700">{val}</span>
-                </div>
-            )
-        },
-        {
-            key: 'status',
-            label: 'الحالة',
-            render: (val) => {
-                const configs: Record<Shipment['status'], { label: string; class: string }> = {
-                    DISPATCHED: { label: 'تم التجهيز', class: 'bg-neutral-100 text-neutral-600' },
-                    IN_TRANSIT: { label: 'في الطريق', class: 'bg-info-bg text-primary' },
-                    DELIVERED: { label: 'تم التوصيل', class: 'bg-success-bg text-success' },
-                    DELAYED: { label: 'متأخرة', class: 'bg-error-bg text-error' },
-                };
-                const config = configs[val as Shipment['status']];
-                return <span className={`px-2 py-0.5 rounded text-[10px] font-bold tracking-widest ${config.class}`}>{config.label}</span>
-            }
-        },
-        {
-            key: 'eta',
-            label: 'الموعد المتوقع',
-            render: (val) => (
-                <div className="flex items-center gap-1.5">
-                    <Clock size={16} className="text-neutral-400" />
-                    <span className="text-xs text-neutral-600 font-bold">{val}</span>
-                </div>
-            )
-        },
-        {
-            key: 'id',
+            key: 'id', // Use ID for selection logic
             label: '',
-            render: () => (
-                <div className="flex justify-end gap-1">
-                    <button className="p-2 rounded-sm hover:bg-neutral-100 text-neutral-400">
-                        <QrCode size={18} />
-                    </button>
-                    <button className="p-2 rounded-sm hover:bg-neutral-100 text-neutral-400">
-                        <ArrowRight size={18} className="rotate-180" />
-                    </button>
-                </div>
+            render: (id, row) => (
+                <input 
+                    type="checkbox" 
+                    checked={selectedShipments.includes(id)}
+                    onChange={() => toggleSelection(id)}
+                    className="w-4 h-4 rounded accent-primary"
+                />
             )
-        }
-    ];
-
-    return (
-        <AppShell role="Carrier" header="إدارة الشحنات">
-            <DataTableLayout
-                title="سجل الشحنات والطرود"
-                columns={columns}
-                data={mockShipments}
-                onRowClick={(row) => console.log('Viewing shipment:', row.id)}
+        },
+...
+                actions={
+                    <div className="flex gap-2">
+                        <Button 
+                            variant="outline" 
+                            className="h-11 px-6 font-bold flex items-center gap-2 border-neutral-200"
+                            onClick={() => setIsBulkDispatchModalOpen(true)}
+                        >
+                            <Stack size={20} />
+                            توزيع بالجملة
+                        </Button>
+                        <Button
+                            variant="outline"
+                            className="h-11 px-6 font-bold flex items-center gap-2 border-neutral-200"
+                            onClick={() => setIsAssignDriverModalOpen(true)}
+                            disabled={selectedShipments.length === 0}
+                        >
+                            <UserCircleGear size={20} />
+                            تعيين سائق
+                        </Button>
+                        <Button 
+                            className="ui-gradient-primary text-white h-11 px-6 font-bold flex items-center gap-2 border-none shadow-glow-primary"
+                        >
+                            <QrCode size={20} weight="bold" className="text-white" />
+                            مسح طرد جديد
+                        </Button>
+                    </div>
+                }
             >
-                <div className="flex gap-2">
-                    <button className="h-11 px-6 rounded-sm border border-neutral-200 bg-surface-200 font-bold text-xs flex items-center gap-2 hover:bg-neutral-100 transition-colors">
-                        <Funnel size={18} />
-                        تصفية متقدمة
-                    </button>
-                    <button className="h-11 px-6 rounded-sm bg-neutral-900 text-white font-bold text-xs flex items-center gap-2 hover:bg-black transition-all shadow-btn">
-                        <QrCode size={20} weight="bold" />
-                        مسح طرد جديد
-                    </button>
+                <div className="flex items-center gap-2 p-3 bg-primary/5 rounded-md border border-primary/10">
+                    <Info size={20} weight="fill" className="text-primary" />
+                    <p className="text-xs text-neutral-600">يمكنك تحديد شحنات متعددة لتطبيق إجراءات جماعية.</p>
                 </div>
             </DataTableLayout>
-        </AppShell>
-    );
-}
+        </div>
+
+        {/* Bulk Dispatch Modal */}
+        <Modal 
+            isOpen={isBulkDispatchModalOpen} 
+            onClose={() => setIsBulkDispatchModalOpen(false)}
+            title="توزيع الشحنات بالجملة"
+        >
+            <div className="space-y-4">
+                <p className="text-sm text-neutral-600">
+                    سيتم تحديث حالة الشحنات المحددة إلى "تم التجهيز" (Dispatched).
+                </p>
+                <div className="flex gap-3">
+                    <Button variant="ghost" className="flex-1" onClick={() => setIsBulkDispatchModalOpen(false)}>
+                        إلغاء
+                    </Button>
+                    <Button 
+                        className="flex-1 ui-gradient-primary border-none shadow-glow-primary"
+                        onClick={() => {
+                            console.log("Bulk Dispatching shipments:", selectedShipments);
+                            setIsBulkDispatchModalOpen(false);
+                            // TODO: Implement bulk dispatch logic
+                        }}
+                    >
+                        تأكيد التوزيع
+                    </button>
+                </div>
+            </div>
+        </Modal>
+
+        {/* Assign Driver Modal */}
+        <Modal 
+            isOpen={isAssignDriverModalOpen} 
+            onClose={() => setIsAssignDriverModalOpen(false)}
+            title="تعيين سائق للشحنات المحددة"
+        >
+            <div className="space-y-4">
+                <p className="text-sm text-neutral-600">
+                    سيتم تعيين السائق المحدد لجميع الشحنات المحددة.
+                </p>
+                <Select 
+                    label="السائق" 
+                    options={drivers.map(driver => ({ value: driver.id, label: `${driver.name} (${driver.role})` }))}
+                />
+                <div className="flex gap-3">
+                    <Button variant="ghost" className="flex-1" onClick={() => setIsAssignDriverModalOpen(false)}>
+                        إلغاء
+                    </Button>
+                    <Button 
+                        className="flex-1 ui-gradient-primary border-none shadow-glow-primary"
+                        onClick={() => {
+                            console.log("Assigning driver to shipments:", selectedShipments);
+                            setIsAssignDriverModalOpen(false);
+                            // TODO: Implement driver assignment logic
+                        }}
+                    >
+                        تأكيد التعيين
+                    </button>
+                </div>
+            </div>
+        </Modal>
+    </AppShell>
+);

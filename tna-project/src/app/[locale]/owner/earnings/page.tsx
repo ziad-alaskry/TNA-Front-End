@@ -15,6 +15,7 @@ import {
 import { useBindingContext } from '@/context/BindingContext'
 import DataTableLayout, { DataTableColumn } from '@/components/templates/DataTableLayout'
 import { useRouter, useParams } from 'next/navigation'
+import WithdrawalWizard from '@/components/modules/owner/WithdrawalWizard'
 
 interface IncomeRecord {
     id: string;
@@ -35,6 +36,8 @@ export default function OwnerEarningsPage() {
     const { ownerAccount } = useBindingContext();
     const router = useRouter();
     const { locale } = useParams();
+
+    const [isWithdrawalOpen, setIsWithdrawalOpen] = React.useState(false);
 
     const columns: DataTableColumn<IncomeRecord>[] = [
         {
@@ -80,7 +83,10 @@ export default function OwnerEarningsPage() {
                             <h2 className="text-4xl font-bold">{ownerAccount.current_balance.toFixed(2)} SAR</h2>
                         </div>
                         <div className="relative z-10 flex gap-4 pt-6">
-                            <button className="h-10 px-6 rounded-pill bg-white text-primary font-bold text-xs flex items-center gap-2 hover:bg-neutral-50 transition-colors">
+                            <button 
+                                onClick={() => setIsWithdrawalOpen(true)}
+                                className="h-10 px-6 rounded-pill bg-white text-primary font-bold text-xs flex items-center gap-2 hover:bg-neutral-50 transition-colors"
+                            >
                                 <ArrowUpRight size={16} weight="bold" />
                                 طلب تحويل بنكي
                             </button>
@@ -138,6 +144,12 @@ export default function OwnerEarningsPage() {
                     title="سجل العمليات الأخيرة"
                     columns={columns}
                     data={mockIncome}
+                />
+
+                <WithdrawalWizard 
+                    isOpen={isWithdrawalOpen} 
+                    onClose={() => setIsWithdrawalOpen(false)} 
+                    balance={ownerAccount.current_balance} 
                 />
             </div>
         </AppShell>

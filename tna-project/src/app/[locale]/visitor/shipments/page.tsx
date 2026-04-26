@@ -10,6 +10,8 @@ import {
     MapPin as MapPinIcon, 
     Info as InfoIcon 
 } from '@phosphor-icons/react'
+import { useRouter, useParams } from 'next/navigation'
+import Button from '@/components/ui/Button'
 
 interface Shipment {
     id: string;
@@ -52,6 +54,8 @@ const mockShipments: Shipment[] = [
 ];
 
 export default function VisitorShipmentsPage() {
+    const router = useRouter();
+    const { locale } = useParams();
     const columns: DataTableColumn<Shipment>[] = [
         {
             key: 'tracking_number',
@@ -108,6 +112,15 @@ export default function VisitorShipmentsPage() {
                 columns={columns}
                 data={mockShipments}
                 onRowClick={(row) => console.log('Viewing shipment:', row.id)}
+                actions={
+                    <Button 
+                        onClick={() => router.push(`/${locale}/visitor/shipments/new`)}
+                        className="ui-gradient-primary text-white h-10 px-4 rounded-md font-bold flex items-center gap-2 border-none shadow-glow-primary hover:opacity-90 transition-opacity"
+                    >
+                        <PackageIcon size={20} className="text-white" />
+                        طلب شحن جديد
+                    </Button>
+                }
             >
                 <div className="flex items-center gap-2 p-3 bg-primary/5 rounded-md border border-primary/10">
                     <InfoIcon size={20} weight="fill" className="text-primary" />

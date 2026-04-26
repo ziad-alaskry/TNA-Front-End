@@ -10,6 +10,7 @@ interface BindingContextType {
   visitorTnas: TNA[];
   addVisitorTna: (tna: Partial<TNA>) => void;
   acceptBindingRequest: (id: string, fee: number) => void;
+  toggleAutoAccept: (propertyId: string) => void;
   ownerAccount: OwnerAccount;
   realEstateObjects: Property[];
 }
@@ -57,6 +58,7 @@ export const BindingProvider = ({ children }: { children: ReactNode }) => {
       building_number: '1029',
       sector_id: 'ML-04',
       is_verified: true,
+      auto_accept: false,
     },
     {
       id: 'prop-02',
@@ -64,6 +66,7 @@ export const BindingProvider = ({ children }: { children: ReactNode }) => {
       building_number: '5566',
       sector_id: 'NR-01',
       is_verified: true,
+      auto_accept: true,
     }
   ]);
 
@@ -127,11 +130,18 @@ export const BindingProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
+  const toggleAutoAccept = (propertyId: string) => {
+    setRealEstateObjects(prev => prev.map(prop => 
+      prop.id === propertyId ? { ...prop, auto_accept: !prop.auto_accept } : prop
+    ));
+  };
+
   return (
     <BindingContext.Provider value={{ 
         visitorTnas,
         addVisitorTna,
         acceptBindingRequest,
+        toggleAutoAccept,
         ownerAccount,
         realEstateObjects
     }}>

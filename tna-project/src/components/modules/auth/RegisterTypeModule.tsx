@@ -12,6 +12,8 @@ export default function RegisterTypeModule() {
     const router = useRouter();
     const { formData, updateFormData, setStep } = useRegistrationStore();
     const [selectedRole, setSelectedRole] = useState<UserRole | null>(formData.user_role || null);
+    const [ownerType, setOwnerType] = useState<'INDIVIDUAL' | 'ENTITY'>('INDIVIDUAL');
+    const [carrierType, setCarrierType] = useState<'STAFF' | 'COMPANY'>('STAFF');
 
     const roles: { id: UserRole; label: string; subLabel: string; icon: any }[] = [
         { 
@@ -36,7 +38,10 @@ export default function RegisterTypeModule() {
 
     const handleNext = () => {
         if (selectedRole) {
-            updateFormData({ user_role: selectedRole });
+            updateFormData({ 
+                user_role: selectedRole,
+                is_entity: (selectedRole === 'OWNER' && ownerType === 'ENTITY') || (selectedRole === 'CARRIER_STAFF' && carrierType === 'COMPANY')
+            } as any);
             setStep(2);
             router.push('/auth/register/personal');
         }
@@ -101,6 +106,57 @@ export default function RegisterTypeModule() {
                         </button>
                     ))}
                 </div>
+
+                {selectedRole === 'OWNER' && (
+                    <div className="p-6 bg-surface-200 border border-neutral-200 rounded-md space-y-4 animate-in slide-in-from-bottom duration-300">
+                        <p className="text-sm font-bold text-neutral-900">نوع ملكية العقارات</p>
+                        <div className="grid grid-cols-2 gap-3">
+                            <button 
+                                onClick={() => setOwnerType('INDIVIDUAL')}
+                                className={cn(
+                                    "p-3 rounded-sm border-2 text-xs font-bold transition-all",
+                                    ownerType === 'INDIVIDUAL' ? "border-primary bg-primary/5 text-primary" : "border-neutral-100 text-neutral-400 hover:border-neutral-200"
+                                )}
+                            >
+                                فرد / مواطن
+                            </button>
+                            <button 
+                                onClick={() => setOwnerType('ENTITY')}
+                                className={cn(
+                                    "p-3 rounded-sm border-2 text-xs font-bold transition-all",
+                                    ownerType === 'ENTITY' ? "border-primary bg-primary/5 text-primary" : "border-neutral-100 text-neutral-400 hover:border-neutral-200"
+                                )}
+                            >
+                                فندق / وكالة سياحية
+                            </button>
+                        </div>
+                    </div>
+                )}
+                {selectedRole === 'CARRIER_STAFF' && (
+                    <div className="p-6 bg-surface-200 border border-neutral-200 rounded-md space-y-4 animate-in slide-in-from-bottom duration-300">
+                        <p className="text-sm font-bold text-neutral-900">نوع التسجيل في قطاع النقل</p>
+                        <div className="grid grid-cols-2 gap-3">
+                            <button 
+                                onClick={() => setCarrierType('STAFF')}
+                                className={cn(
+                                    "p-3 rounded-sm border-2 text-xs font-bold transition-all",
+                                    carrierType === 'STAFF' ? "border-primary bg-primary/5 text-primary" : "border-neutral-100 text-neutral-400 hover:border-neutral-200"
+                                )}
+                            >
+                                مندوب / فرد
+                            </button>
+                            <button 
+                                onClick={() => setCarrierType('COMPANY')}
+                                className={cn(
+                                    "p-3 rounded-sm border-2 text-xs font-bold transition-all",
+                                    carrierType === 'COMPANY' ? "border-primary bg-primary/5 text-primary" : "border-neutral-100 text-neutral-400 hover:border-neutral-200"
+                                )}
+                            >
+                                شركة خدمات لوجستية
+                            </button>
+                        </div>
+                    </div>
+                )}
             </main>
 
             <footer className="p-6 pb-10">

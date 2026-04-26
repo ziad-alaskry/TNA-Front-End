@@ -12,6 +12,11 @@
         "menu": "Menu",
         "support": "Support",
         "logged_in_as": "Logged in as {role}",
+        "total_records": "Total: {count} records",
+        "search_placeholder": "Search...",
+        "page_of": "Page {current} of {total}",
+        "no_data": "No data found",
+        "no_data_desc": "We couldn't find any records matching your criteria.",
         "roles": {
             "Visitor": {
                 "overview": "Overview",

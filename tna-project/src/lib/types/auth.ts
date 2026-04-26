@@ -34,4 +34,9 @@ export interface SignupRequest {
     date_of_birth: string;
     document_type: 'PASSPORT' | 'VISA' | 'IQAMA';
     document_number: string;
+    // B2B Support
+    is_entity?: boolean;
+    entity_name?: string;
+    license_number?: string;
+    agency_type?: 'HOTEL' | 'TOURISM' | 'OTHER';
 }

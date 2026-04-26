@@ -11,7 +11,8 @@ import {
     Calendar,
     Phone,
     CaretLeft,
-    Check
+    Check,
+    Buildings
 } from '@phosphor-icons/react';
 import { useRegistrationStore } from '@/lib/store/useRegistrationStore';
 import { useLocale } from '@/i18n/LocaleProvider';
@@ -37,13 +38,14 @@ export default function RegisterPersonalModule() {
     const router = useRouter();
     const { t, isRTL, locale } = useLocale();
     const { formData, updateFormData, setStep } = useRegistrationStore();
+    const isEntity = formData.is_entity;
 
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors, isValid },
-    } = useForm<FormData>({
+    } = useForm<any>({
         resolver: zodResolver(schema),
         mode: 'onChange',
         defaultValues: {
@@ -54,6 +56,9 @@ export default function RegisterPersonalModule() {
             mobile: formData.mobile || '',
             nationality: formData.nationality || 'SA',
             personalDataConfirmed: false,
+            // B2B
+            license_number: (formData as any).license_number || '',
+            agency_type: (formData as any).agency_type || 'HOTEL',
         },
     });
 
@@ -92,10 +97,33 @@ export default function RegisterPersonalModule() {
 
                 <main className="flex-1 px-6 pt-8 pb-32">
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                        {isEntity && (
+                            <div className="p-5 bg-primary/5 border border-primary/20 rounded-md mb-8 space-y-5">
+                                <div className="flex items-center gap-2 text-primary">
+                                    <Buildings size={20} weight="fill" />
+                                    <p className="text-xs font-bold uppercase tracking-wider">بيانات المنشأة (B2B)</p>
+                                </div>
+                                <Select 
+                                    label="نوع المنشأة"
+                                    options={[
+                                        { value: 'HOTEL', label: 'فندق / شقق مفروشة' },
+                                        { value: 'TOURISM', label: 'وكالة سياحة وسفر' },
+                                        { value: 'OTHER', label: 'أخرى' },
+                                    ]}
+                                    {...register('agency_type')}
+                                />
+                                <InputField 
+                                    label="رقم السجل التجاري / الترخيص"
+                                    placeholder="700XXXXXXXX"
+                                    {...register('license_number')}
+                                />
+                            </div>
+                        )}
+
                         <InputField
-                            label={t('auth.register.labels.full_name')}
-                            icon={UserIcon}
-                            placeholder={t('auth.register.placeholders.full_name')}
+                            label={isEntity ? "اسم المنشأة الرسمي" : t('auth.register.labels.full_name')}
+                            icon={isEntity ? Buildings : UserIcon}
+                            placeholder={isEntity ? "مثلاً: فندق الرياض ان" : t('auth.register.placeholders.full_name')}
                             error={errors.full_name?.message}
                             {...register('full_name')}
                         />

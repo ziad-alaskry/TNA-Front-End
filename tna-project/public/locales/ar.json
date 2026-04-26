@@ -12,6 +12,11 @@
         "menu": "القائمة",
         "support": "الدعم الفني",
         "logged_in_as": "مسجل الدخول بصفتك {role}",
+        "total_records": "الإجمالي: {count} سجلات",
+        "search_placeholder": "بحث...",
+        "page_of": "صفحة {current} من {total}",
+        "no_data": "لا توجد بيانات",
+        "no_data_desc": "لم نتمكن من العثور على أي سجلات تطابق معاييرك.",
         "roles": {
             "Visitor": {
                 "overview": "الرئيسية",

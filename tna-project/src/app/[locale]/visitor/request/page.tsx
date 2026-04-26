@@ -1,25 +1,30 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FormWizardLayout from '@/components/templates/FormWizardLayout';
 import { AppShell } from '@/components/layout/AppShell';
 import Select from '@/components/ui/Select';
+import { Button } from '@/components/ui/button';
+import EmptyState from '@/components/ui/EmptyState';
 import { 
     MapPin, 
     Calendar, 
     Wallet, 
     ArrowRight, 
     CheckCircle,
-    Info
+    Info,
+    WarningCircle,
+    XCircle,
+    ArrowLeft
 } from '@phosphor-icons/react';
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useRouter, useParams } from 'next/navigation';
 import { useBindingContext } from '@/context/BindingContext';
+import Link from 'next/link';
 
 const visitorTnaSchema = z.object({
-  selectedAddress: z.string().min(1, { message: 'يجب اختيار العقار المراد الربط به' }),
   selectedDuration: z.string().min(1, { message: 'يجب اختيار مدة الاشتراك' }),
   paymentConfirmed: z.boolean().refine((val) => val === true, { message: 'يجب تأكيد الدفع للمتابعة' }),
 });
@@ -29,19 +34,28 @@ type VisitorTnaInputs = z.infer<typeof visitorTnaSchema>;
 export default function RequestTnaPage() {
   const router = useRouter();
   const { locale } = useParams();
-  const { realEstateObjects } = useBindingContext();
+  const { visitorTnas, addVisitorTna } = useBindingContext();
   
+  const [currentStep, setCurrentStep] = useState(0);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [generatedTna, setGeneratedTna] = useState('');
+  const [isEligible, setIsEligible] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    // Basic eligibility check: Max 3 active/pending TNAs
+    const activeTnas = visitorTnas.filter(t => t.status === 'ACTIVE' || t.status === 'PENDING');
+    setIsEligible(activeTnas.length < 3);
+  }, [visitorTnas]);
+
   const methods = useForm<VisitorTnaInputs>({
     resolver: zodResolver(visitorTnaSchema),
     defaultValues: {
-      selectedAddress: '',
       selectedDuration: '',
       paymentConfirmed: false,
     },
   });
 
   const { handleSubmit, watch, formState: { errors } } = methods;
-  const [currentStep, setCurrentStep] = useState(0);
 
   const durations = [
     { value: '1_month', label: 'شهر واحد (50 SAR)' },
@@ -53,31 +67,9 @@ export default function RequestTnaPage() {
   const steps = [
     {
       id: 'step1',
-      label: 'اختيار العقار',
-      title: 'حدد العقار',
-      description: 'اختر العقار الذي ترغب في ربط عنوانك الوطني المؤقت به.',
-      content: (
-        <div className="space-y-6">
-          <Select
-            label="العقارات المتاحة"
-            options={realEstateObjects.map(obj => ({ value: obj.id, label: obj.name }))}
-            {...methods.register('selectedAddress')}
-            error={errors.selectedAddress?.message}
-          />
-          <div className="p-4 bg-info-bg rounded-md flex gap-3 text-right">
-            <Info size={24} className="text-primary shrink-0" weight="fill" />
-            <p className="text-xs text-neutral-600 leading-relaxed">
-              تظهر هنا العقارات الموثقة فقط والتي وافق ملاكها على قبول طلبات الربط.
-            </p>
-          </div>
-        </div>
-      ),
-    },
-    {
-      id: 'step2',
       label: 'مدة الاشتراك',
       title: 'اختر المدة',
-      description: 'حدد الفترة الزمنية التي ترغب في تفعيل العنوان خلالها.',
+      description: 'حدد الفترة الزمنية التي ترغب في تفعيل الكود خلالها.',
       content: (
         <div className="space-y-6">
           <Select
@@ -86,6 +78,12 @@ export default function RequestTnaPage() {
             {...methods.register('selectedDuration')}
             error={errors.selectedDuration?.message}
           />
+          <div className="p-4 bg-info-bg rounded-md flex gap-3 text-right">
+            <Info size={24} className="text-primary shrink-0" weight="fill" />
+            <p className="text-xs text-neutral-600 leading-relaxed">
+              بمجرد إصدار الكود، ستحتاج لموافقة الجهات الحكومية قبل أن تتمكن من ربطه بأي عنوان.
+            </p>
+          </div>
           <div className="grid grid-cols-2 gap-4">
              <div className="p-4 border border-neutral-200 rounded-md bg-white">
                 <p className="text-[10px] text-neutral-400 mb-1">الرصيد الحالي</p>
@@ -100,19 +98,13 @@ export default function RequestTnaPage() {
       ),
     },
     {
-      id: 'step3',
+      id: 'step2',
       label: 'تأكيد الطلب',
       title: 'مراجعة وسداد',
       description: 'يرجى مراجعة تفاصيل الطلب قبل إتمام عملية السداد.',
       content: (
         <div className="space-y-6">
           <div className="bg-surface-200 border border-neutral-200 rounded-md divide-y divide-neutral-100 overflow-hidden">
-            <div className="p-4 flex justify-between items-center">
-                <span className="text-sm text-neutral-500 font-medium">العقار المختار</span>
-                <span className="text-sm font-bold text-neutral-900">
-                    {watch('selectedAddress') ? realEstateObjects.find(a => a.id === watch('selectedAddress'))?.name : 'لم يتم الاختيار'}
-                </span>
-            </div>
             <div className="p-4 flex justify-between items-center">
                 <span className="text-sm text-neutral-500 font-medium">المدة المختارة</span>
                 <span className="text-sm font-bold text-neutral-900">
@@ -138,7 +130,7 @@ export default function RequestTnaPage() {
             </div>
             <div className="flex-1">
                 <span className="text-sm text-neutral-700 font-bold">أوافق على خصم الرسوم من المحفظة</span>
-                <p className="text-xs text-neutral-400 mt-1">سيتم حسم المبلغ مباشرة وتفعيل العنوان بمجرد موافقة المالك.</p>
+                <p className="text-xs text-neutral-400 mt-1">سيتم حسم المبلغ مباشرة وإصدار كود TNA قيد المراجعة.</p>
             </div>
           </label>
           {errors.paymentConfirmed && <p className="text-xs text-error font-medium">{errors.paymentConfirmed.message}</p>}
@@ -148,9 +140,69 @@ export default function RequestTnaPage() {
   ];
 
   const onSubmit: SubmitHandler<VisitorTnaInputs> = (data) => {
-    console.log('Wizard Submitted:', data);
-    router.push(`/${locale}/visitor/home`);
+    const tnaCode = `TNA-${Math.floor(100000 + Math.random() * 900000)}`;
+    addVisitorTna({
+      tna_code: tnaCode,
+      status: 'PENDING',
+      visitor_id: 'visitor-01', // Mocked
+    });
+    setGeneratedTna(tnaCode);
+    setIsSubmitted(true);
   };
+
+  if (isEligible === false) {
+    return (
+      <AppShell role="Visitor" header="طلب عنوان وطني">
+        <div className="max-w-2xl mx-auto py-12">
+            <EmptyState
+                title="لقد تجاوزت الحد المسموح"
+                description="عذراً، لا يمكنك طلب أكثر من 3 عناوين وطنية مؤقتة نشطة في نفس الوقت. يرجى إلغاء أحد العناوين الحالية لتتمكن من طلب عنوان جديد."
+                actionLabel="العودة للرئيسية"
+                onAction={() => router.push(`/${locale}/visitor/home`)}
+            />
+        </div>
+      </AppShell>
+    );
+  }
+
+  if (isSubmitted) {
+    return (
+        <AppShell role="Visitor" header="طلب عنوان وطني">
+            <div className="max-w-xl mx-auto py-12 px-4">
+                <div className="bg-white border border-neutral-200 rounded-lg shadow-card p-8 text-center space-y-6">
+                    <div className="w-20 h-20 bg-success-bg rounded-full flex items-center justify-center mx-auto">
+                        <CheckCircle size={48} weight="fill" className="text-success" />
+                    </div>
+                    <div>
+                        <h2 className="text-2xl font-bold text-neutral-900">تم تقديم الطلب بنجاح!</h2>
+                        <p className="text-neutral-500 mt-2">طلبك الآن قيد المراجعة من قبل مالك العقار.</p>
+                    </div>
+                    
+                    <div className="p-6 bg-neutral-50 rounded-md border border-dashed border-neutral-300">
+                        <p className="text-xs text-neutral-400 mb-2 uppercase tracking-wider font-bold">كود العنوان المتوقع</p>
+                        <p className="text-3xl font-mono font-extrabold text-primary">{generatedTna}</p>
+                    </div>
+
+                    <div className="flex flex-col gap-3 pt-4">
+                        <Button 
+                            className="w-full h-12 rounded-md font-bold ui-gradient-primary text-white border-none shadow-glow-primary"
+                            onClick={() => router.push(`/${locale}/visitor/tnas`)}
+                        >
+                            متابعة حالة العناوين
+                        </Button>
+                        <Button 
+                            variant="outline" 
+                            className="w-full h-12 rounded-md font-bold border-neutral-200 text-neutral-600"
+                            onClick={() => router.push(`/${locale}/visitor/home`)}
+                        >
+                            العودة للرئيسية
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        </AppShell>
+    );
+  }
 
   return (
     <FormProvider {...methods}>

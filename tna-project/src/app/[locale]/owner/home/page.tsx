@@ -17,12 +17,15 @@ import { useBindingContext } from '@/context/BindingContext'
 import { useRouter, useParams } from 'next/navigation'
 import { useLocale } from '@/i18n/LocaleProvider'
 import { RoleGuard } from '@/components/shared/RoleGuard'
+import WithdrawalWizard from '@/components/modules/owner/WithdrawalWizard'
 
 export default function OwnerHomePage() {
   const { ownerAccount, realEstateObjects } = useBindingContext();
   const router = useRouter();
   const { locale } = useParams();
   const { t, isRTL } = useLocale();
+
+  const [isWithdrawalOpen, setIsWithdrawalOpen] = React.useState(false);
 
   const stats = [
     { 
@@ -111,7 +114,10 @@ export default function OwnerHomePage() {
                       >
                           {t('owner.home.withdraw.statement')}
                       </button>
-                      <button className="flex-1 h-10 text-xs font-bold bg-neutral-900 text-white rounded-sm hover:bg-black transition-colors">
+                      <button 
+                        onClick={() => setIsWithdrawalOpen(true)}
+                        className="flex-1 h-10 text-xs font-bold bg-neutral-900 text-white rounded-sm hover:bg-black transition-colors"
+                      >
                           {t('owner.home.withdraw.transfer')}
                       </button>
                   </div>
@@ -147,6 +153,12 @@ export default function OwnerHomePage() {
                   <p className="text-xs text-neutral-400 font-medium z-10 px-6 py-2 bg-white/50 backdrop-blur-sm rounded-pill border border-neutral-200">{t('owner.home.analytics.placeholder')}</p>
               </div>
           </div>
+
+          <WithdrawalWizard 
+            isOpen={isWithdrawalOpen} 
+            onClose={() => setIsWithdrawalOpen(false)} 
+            balance={ownerAccount.current_balance} 
+          />
         </DashboardLayout>
       </AppShell>
     </RoleGuard>

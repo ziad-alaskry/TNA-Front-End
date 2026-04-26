@@ -56,9 +56,9 @@ export function LocaleProvider({ locale, messages, children }: LocaleProviderPro
 
   const t = (path: string) => {
     const keys = path.split('.')
-    let current = messages
+    let current: any = messages
     for (const key of keys) {
-      if (current && current[key]) {
+      if (current && typeof current === 'object' && current[key] !== undefined) {
         current = current[key]
       } else {
         return path
