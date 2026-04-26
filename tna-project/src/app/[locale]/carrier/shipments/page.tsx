@@ -15,6 +15,7 @@ import {
     Funnel
 } from '@phosphor-icons/react'
 import { useRouter, useParams } from 'next/navigation'
+import { useLocale } from '@/i18n/LocaleProvider'
 
 interface Shipment {
     id: string;
@@ -26,21 +27,22 @@ interface Shipment {
     eta: string;
 }
 
-const mockShipments: Shipment[] = [
-    { id: 'SHP-9901', tracking_number: 'TRK-88127391', recipient: 'سالم الدوسري', tna_code: 'TNA-667722', status: 'IN_TRANSIT', district: 'الملقا', eta: 'اليوم ٦ م' },
-    { id: 'SHP-9905', tracking_number: 'TRK-22319082', recipient: 'هند محمد', tna_code: 'TNA-102938', status: 'DELIVERED', district: 'النرجس', eta: 'أمس ٤ م' },
-    { id: 'SHP-9912', tracking_number: 'TRK-55612300', recipient: 'عبدالله الرشيد', tna_code: 'TNA-229911', status: 'DISPATCHED', district: 'الياسمين', eta: 'غداً ١٠ ص' },
-    { id: 'SHP-9920', tracking_number: 'TRK-00129381', recipient: 'فهد المطيري', tna_code: 'TNA-667722', status: 'DELAYED', district: 'الملقا', eta: 'معلق' },
-];
-
 export default function CarrierShipmentsPage() {
     const router = useRouter();
     const { locale } = useParams();
+    const { t } = useLocale();
+
+    const mockShipments: Shipment[] = [
+        { id: 'SHP-9901', tracking_number: 'TRK-88127391', recipient: t('carrier.shipments.mock_recipient_1'), tna_code: 'TNA-667722', status: 'IN_TRANSIT', district: t('carrier.shipments.mock_district_1'), eta: t('carrier.shipments.mock_eta_1') },
+        { id: 'SHP-9905', tracking_number: 'TRK-22319082', recipient: t('carrier.shipments.mock_recipient_2'), tna_code: 'TNA-102938', status: 'DELIVERED', district: t('carrier.shipments.mock_district_2'), eta: t('carrier.shipments.mock_eta_2') },
+        { id: 'SHP-9912', tracking_number: 'TRK-55612300', recipient: t('carrier.shipments.mock_recipient_3'), tna_code: 'TNA-229911', status: 'DISPATCHED', district: t('carrier.shipments.mock_district_3'), eta: t('carrier.shipments.mock_eta_3') },
+        { id: 'SHP-9920', tracking_number: 'TRK-00129381', recipient: t('carrier.shipments.mock_recipient_4'), tna_code: 'TNA-667722', status: 'DELAYED', district: t('carrier.shipments.mock_district_1'), eta: t('carrier.shipments.mock_eta_delayed') },
+    ];
 
     const columns: DataTableColumn<Shipment>[] = [
         {
             key: 'tracking_number',
-            label: 'رقم التتبع',
+            label: t('carrier.shipments.tracking_number'),
             render: (val, row) => (
                 <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-sm bg-neutral-100 flex items-center justify-center text-neutral-400 group-hover:text-primary transition-colors">
@@ -55,7 +57,7 @@ export default function CarrierShipmentsPage() {
         },
         {
             key: 'tna_code',
-            label: 'عنوان TNA',
+            label: t('carrier.shipments.tna_address'),
             render: (val) => (
                 <div className="flex items-center gap-2">
                     <IdentificationCard size={18} className="text-primary" weight="bold" />
@@ -65,7 +67,7 @@ export default function CarrierShipmentsPage() {
         },
         {
             key: 'district',
-            label: 'الحي المستهدف',
+            label: t('carrier.shipments.target_district'),
             render: (val) => (
                 <div className="flex items-center gap-1.5">
                     <MapPin size={16} className="text-neutral-400" />
@@ -75,13 +77,13 @@ export default function CarrierShipmentsPage() {
         },
         {
             key: 'status',
-            label: 'الحالة',
+            label: t('carrier.shipments.status'),
             render: (val) => {
                 const configs: Record<Shipment['status'], { label: string; class: string }> = {
-                    DISPATCHED: { label: 'تم التجهيز', class: 'bg-neutral-100 text-neutral-600' },
-                    IN_TRANSIT: { label: 'في الطريق', class: 'bg-info-bg text-primary' },
-                    DELIVERED: { label: 'تم التوصيل', class: 'bg-success-bg text-success' },
-                    DELAYED: { label: 'متأخرة', class: 'bg-error-bg text-error' },
+                    DISPATCHED: { label: t('carrier.shipments.status_dispatched'), class: 'bg-neutral-100 text-neutral-600' },
+                    IN_TRANSIT: { label: t('carrier.shipments.status_in_transit'), class: 'bg-info-bg text-primary' },
+                    DELIVERED: { label: t('carrier.shipments.status_delivered'), class: 'bg-success-bg text-success' },
+                    DELAYED: { label: t('carrier.shipments.status_delayed'), class: 'bg-error-bg text-error' },
                 };
                 const config = configs[val as Shipment['status']];
                 return <span className={`px-2 py-0.5 rounded text-[10px] font-bold tracking-widest ${config.class}`}>{config.label}</span>
@@ -89,7 +91,7 @@ export default function CarrierShipmentsPage() {
         },
         {
             key: 'eta',
-            label: 'الموعد المتوقع',
+            label: t('carrier.shipments.eta'),
             render: (val) => (
                 <div className="flex items-center gap-1.5">
                     <Clock size={16} className="text-neutral-400" />
@@ -114,9 +116,9 @@ export default function CarrierShipmentsPage() {
     ];
 
     return (
-        <AppShell role="Carrier" header="إدارة الشحنات">
+        <AppShell role="Carrier" header={t('carrier.shipments.header')}>
             <DataTableLayout
-                title="سجل الشحنات والطرود"
+                title={t('carrier.shipments.title')}
                 columns={columns}
                 data={mockShipments}
                 onRowClick={(row) => console.log('Viewing shipment:', row.id)}
@@ -124,11 +126,11 @@ export default function CarrierShipmentsPage() {
                 <div className="flex gap-2">
                     <button className="h-11 px-6 rounded-sm border border-neutral-200 bg-surface-200 font-bold text-xs flex items-center gap-2 hover:bg-neutral-100 transition-colors">
                         <Funnel size={18} />
-                        تصفية متقدمة
+                        {t('carrier.shipments.advanced_filter')}
                     </button>
                     <button className="h-11 px-6 rounded-sm bg-neutral-900 text-white font-bold text-xs flex items-center gap-2 hover:bg-black transition-all shadow-btn">
                         <QrCode size={20} weight="bold" />
-                        مسح طرد جديد
+                        {t('carrier.shipments.scan_new')}
                     </button>
                 </div>
             </DataTableLayout>

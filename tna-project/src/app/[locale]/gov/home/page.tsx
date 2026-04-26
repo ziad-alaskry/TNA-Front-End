@@ -26,22 +26,22 @@ export default function GovHomePage() {
   const stats = [
     { 
       label: t('gov.home.stats.pending_verification'), 
-      value: '١٤٢', 
+      value: t('gov.home.stats.pending_verification_val'), 
       icon: <ShieldCheck size={24} weight="fill" className="text-primary" /> 
     },
     { 
       label: t('common.roles.Owner.properties'), 
-      value: '٢٢', 
+      value: t('gov.home.stats.properties_val'), 
       icon: <MapPin size={24} weight="fill" className="text-secondary" /> 
     },
     { 
       label: t('gov.home.stats.daily_issuance'), 
-      value: '٩٩.٢٪', 
+      value: t('gov.home.stats.daily_issuance_val'), 
       icon: <ListChecks size={24} weight="fill" className="text-success" /> 
     },
     { 
       label: t('gov.home.stats.critical_alerts'), 
-      value: '٤.٢ ساعة', 
+      value: t('gov.home.stats.critical_alerts_val'), 
       icon: <Clock size={24} weight="fill" className="text-warning" /> 
     },
   ];
@@ -49,23 +49,23 @@ export default function GovHomePage() {
   const activity = [
     {
       id: '1',
-      title: 'تدقيق: اعتماد TNA #٩٩١',
-      description: 'قام المشرف رقم ٨٨٢ بمراجعة الصك العقاري للعنوان الملقا.',
-      timestamp: 'منذ دقيقتين',
+      title: t('gov.home.activity1_title'),
+      description: t('gov.home.activity1_desc'),
+      timestamp: t('gov.home.time_2m'),
       status: 'success' as const,
     },
     {
       id: '2',
-      title: 'رفض عنوان: منطقة نجد',
-      description: 'رقم السجل العقاري المدخل من المالك غير مطابق للبيانات الوطنية.',
-      timestamp: 'منذ ساعة',
+      title: t('gov.home.activity2_title'),
+      description: t('gov.home.activity2_desc'),
+      timestamp: t('gov.home.time_1h'),
       status: 'error' as const,
     },
     {
       id: '3',
-      title: 'تحديث السياسة: الإصدار الذاتي',
-      description: 'تفعيل المراجعة الآلية للطلبات السكنية في مدينة الرياض.',
-      timestamp: 'منذ ٣ ساعات',
+      title: t('gov.home.activity3_title'),
+      description: t('gov.home.activity3_desc'),
+      timestamp: t('gov.home.time_3h'),
       status: 'pending' as const,
     },
   ];
@@ -93,9 +93,9 @@ export default function GovHomePage() {
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {[
-                          { label: 'زمن استجابة API', value: '٤٥ مللي ثانية', status: 'optimal' },
-                          { label: 'معدل الخطأ', value: '٠.٠١٪', status: 'optimal' },
-                          { label: 'الطلبات المتزامنة', value: '١.٢ ألف', status: 'normal' }
+                          { label: t('gov.home.health.api_response'), value: t('gov.home.health.api_response_val'), status: 'optimal' },
+                          { label: t('gov.home.health.error_rate'), value: t('gov.home.health.error_rate_val'), status: 'optimal' },
+                          { label: t('gov.home.health.concurrent_requests'), value: t('gov.home.health.concurrent_requests_val'), status: 'normal' }
                       ].map((item, i) => (
                           <div key={i} className="p-4 bg-surface-100 rounded border border-neutral-100 shadow-sm text-start">
                               <p className="text-[10px] font-bold text-neutral-400 uppercase mb-2">{item.label}</p>
@@ -110,7 +110,7 @@ export default function GovHomePage() {
                   <div>
                       <h4 className="text-lg font-bold mb-2">{t('gov.actions.title')}</h4>
                       <p className="text-xs opacity-60 leading-relaxed">
-                          تعديل قواعد الأهلية، تحديث الرسوم السيادية، أو تغيير أنماط المراجعة.
+                          {t('gov.actions.desc')}
                       </p>
                   </div>
                   <div className="space-y-2 mt-6">
@@ -137,13 +137,13 @@ export default function GovHomePage() {
               <div className="flex justify-between items-center mb-6">
                   <h3 className="font-bold text-neutral-900 flex items-center gap-2">
                       <ChartLineUp size={20} className="text-primary" weight="fill" />
-                      تحليل حجم الطلبات (أسبوعي)
+                      {t('gov.home.queue_preview.title')}
                   </h3>
                   <button 
                       onClick={() => router.push(`/${locale}/gov/verification/queue`)}
                       className="text-xs font-bold text-primary flex items-center gap-1 hover:underline"
                   >
-                      الانتقال لغرفة المعالجة
+                      {t('gov.home.queue_preview.goto')}
                       <ArrowRight size={14} className={isRTL ? 'rotate-180' : ''} />
                   </button>
               </div>
@@ -151,7 +151,7 @@ export default function GovHomePage() {
               {/* Mock Chart Area */}
               <div className="h-[180px] w-full bg-surface-100 rounded border border-neutral-100 border-dashed flex items-center justify-center relative overflow-hidden">
                   <div className="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-primary/5 to-transparent" />
-                  <p className="text-xs text-neutral-400 font-medium z-10 px-6 py-2 bg-white/50 backdrop-blur-md rounded-pill border border-neutral-200">إحصاءات النظام المتقدمة</p>
+                  <p className="text-xs text-neutral-400 font-medium z-10 px-6 py-2 bg-white/50 backdrop-blur-md rounded-pill border border-neutral-200">{t('gov.home.queue_preview.advanced_stats')}</p>
               </div>
           </div>
         </DashboardLayout>

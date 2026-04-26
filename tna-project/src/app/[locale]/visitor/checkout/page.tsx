@@ -2,11 +2,10 @@
 
 import React, { Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import FormWizardLayout from '@/components/templates/FormWizardLayout'; // Corrected import path
-import { useBindingContext } from '@/context/BindingContext'; // Import BindingContext
+import FormWizardLayout from '@/components/templates/FormWizardLayout';
+import { useBindingContext } from '@/context/BindingContext';
 import Button from '@/components/ui/Button';
-
-const t = (key: string) => key; // Placeholder for translation
+import { useLocale } from '@/i18n/LocaleProvider';
 
 function CheckoutPageFallback() {
     return (
@@ -25,6 +24,7 @@ function VisitorCheckoutContent() {
     const searchParams = useSearchParams();
     const na_id = searchParams.get('na_id');
     const { addVisitorTna } = useBindingContext();
+    const { t, locale } = useLocale();
 
     const fee = 140; // Number for issuance_fee
 
@@ -36,13 +36,13 @@ function VisitorCheckoutContent() {
             });
         }
         
-        alert(t('paymentSuccessful'));
-        router.push('/visitor/home');
+        alert(t('visitor.checkout.paymentSuccessful'));
+        router.push(`/${locale}/visitor/home`);
     };
 
     const steps = [
-        { id: 'summary', label: t('paymentSummary') },
-        { id: 'confirm', label: t('confirmPayment') }
+        { id: 'summary', label: t('visitor.checkout.paymentSummary') },
+        { id: 'confirm', label: t('visitor.checkout.confirmPayment') }
     ];
 
     return (
@@ -53,14 +53,14 @@ function VisitorCheckoutContent() {
             onCancel={() => router.back()}
         >
             <div className="space-y-4">
-                <h2 className="text-lg font-bold">{t('checkoutSummary')}</h2>
+                <h2 className="text-lg font-bold">{t('visitor.checkout.checkoutSummary')}</h2>
                 <div className="p-4 border rounded-lg">
-                    <p>{t('addressId')}: {na_id}</p>
-                    <p>{t('fee')}: {fee}</p>
+                    <p>{t('visitor.checkout.addressId')}: {na_id}</p>
+                    <p>{t('visitor.checkout.fee')}: {fee}</p>
                 </div>
-                <p className="text-sm text-gray-500">{t('paymentGatewayMock')}</p>
+                <p className="text-sm text-gray-500">{t('visitor.checkout.paymentGatewayMock')}</p>
                 <Button onClick={handleConfirm} className="w-full bg-btn-primary text-white font-bold">
-                    {t('confirm')}
+                    {t('visitor.checkout.confirm')}
                 </Button>
             </div>
         </FormWizardLayout>

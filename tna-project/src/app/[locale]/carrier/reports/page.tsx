@@ -13,6 +13,8 @@ import {
     FileText,
     DownloadSimple
 } from '@phosphor-icons/react'
+import { useRouter, useParams } from 'next/navigation'
+import { useLocale } from '@/i18n/LocaleProvider'
 import DataTableLayout, { DataTableColumn } from '@/components/templates/DataTableLayout'
 
 interface PerformanceMetric {
@@ -23,17 +25,19 @@ interface PerformanceMetric {
     percentage: string;
 }
 
-const metrics: PerformanceMetric[] = [
-    { id: '1', label: 'نسبة التوصيل الناجح', value: '٩٨.٢٪', trend: 'UP', percentage: '+٢.٤٪' },
-    { id: '2', label: 'متوسط وقت التوصيل', value: '٣٤ دقيقة', trend: 'DOWN', percentage: '-٥.١٪' },
-    { id: '3', label: 'البلاغات المفتوحة', value: '٤ بلاغات', trend: 'DOWN', percentage: '-١٠٪' },
-];
-
 export default function CarrierReportsPage() {
+    const { t } = useLocale();
+
+    const metrics: PerformanceMetric[] = [
+        { id: '1', label: t('carrier.reports.metrics_success_rate'), value: t('carrier.reports.mock_metric_1_val'), trend: 'UP', percentage: t('carrier.reports.mock_metric_1_perc') },
+        { id: '2', label: t('carrier.reports.metrics_avg_time'), value: t('carrier.reports.mock_metric_2_val'), trend: 'DOWN', percentage: t('carrier.reports.mock_metric_2_perc') },
+        { id: '3', label: t('carrier.reports.metrics_open_reports'), value: t('carrier.reports.mock_metric_3_val'), trend: 'DOWN', percentage: t('carrier.reports.mock_metric_3_perc') },
+    ];
+
     const columns: DataTableColumn<any>[] = [
         {
             key: 'title',
-            label: 'عنوان التقرير',
+            label: t('carrier.reports.report_title'),
             render: (val) => (
                 <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded bg-primary/10 flex items-center justify-center text-primary">
@@ -45,12 +49,12 @@ export default function CarrierReportsPage() {
         },
         {
             key: 'type',
-            label: 'النوع',
+            label: t('carrier.reports.report_type'),
             render: (val) => <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">{val}</span>
         },
         {
             key: 'date',
-            label: 'تاريخ الإصدار',
+            label: t('carrier.reports.issue_date'),
             render: (val) => <span className="text-xs text-neutral-500">{val}</span>
         },
         {
@@ -60,7 +64,7 @@ export default function CarrierReportsPage() {
                 <div className="flex justify-end">
                     <button className="h-8 px-4 rounded-sm bg-neutral-100 text-neutral-600 text-[10px] font-bold flex items-center gap-2 hover:bg-neutral-200 transition-colors">
                         <DownloadSimple size={16} />
-                        تحميل PDF
+                        {t('carrier.reports.download_pdf')}
                     </button>
                 </div>
             )
@@ -68,13 +72,13 @@ export default function CarrierReportsPage() {
     ];
 
     const reports = [
-        { id: 'R-01', title: 'تقرير أداء السائقين الأسبوعي', type: 'PERFORMANCE', date: '٢٠٢٦/٠٤/٢٠' },
-        { id: 'R-02', title: 'تحليل استهلاك الوقود - أبريل', type: 'OPERATIONAL', date: '٢٠٢٦/٠٤/١٥' },
-        { id: 'R-03', title: 'إحصاءات وصول الشحنات للملقا', type: 'GEOGRAPHICAL', date: '٢٠٢٦/٠٤/١٠' },
+        { id: 'R-01', title: t('carrier.reports.mock_report_1'), type: 'PERFORMANCE', date: '٢٠٢٦/٠٤/٢٠' },
+        { id: 'R-02', title: t('carrier.reports.mock_report_2'), type: 'OPERATIONAL', date: '٢٠٢٦/٠٤/١٥' },
+        { id: 'R-03', title: t('carrier.reports.mock_report_3'), type: 'GEOGRAPHICAL', date: '٢٠٢٦/٠٤/١٠' },
     ];
 
     return (
-        <AppShell role="Carrier" header="التقارير والتحليلات">
+        <AppShell role="Carrier" header={t('carrier.reports.header')}>
             <div className="space-y-8">
                 {/* Key Metrics Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -97,26 +101,26 @@ export default function CarrierReportsPage() {
                     <div className="p-6 rounded-md border border-neutral-200 bg-surface-200 h-[300px] flex flex-col">
                         <h3 className="font-bold text-neutral-900 flex items-center gap-2 mb-6">
                             <ChartPie size={20} className="text-primary" weight="fill" />
-                            توزيع الحالات اللوجستية
+                            {t('carrier.reports.logistics_distribution')}
                         </h3>
                         <div className="flex-1 rounded border border-neutral-100 border-dashed flex items-center justify-center bg-surface-100">
-                            <p className="text-xs text-neutral-400 font-medium">سيتم عرض توزيع الشحنات (تم التوصيل، قيد التنفيذ، تأخير)</p>
+                            <p className="text-xs text-neutral-400 font-medium">{t('carrier.reports.logistics_placeholder')}</p>
                         </div>
                     </div>
                     <div className="p-6 rounded-md border border-neutral-200 bg-surface-200 h-[300px] flex flex-col">
                         <h3 className="font-bold text-neutral-900 flex items-center gap-2 mb-6">
                             <ChartLine size={20} className="text-primary" weight="fill" />
-                            حجم العمليات الشهري
+                            {t('carrier.reports.monthly_volume')}
                         </h3>
                         <div className="flex-1 rounded border border-neutral-100 border-dashed flex items-center justify-center bg-surface-100">
-                            <p className="text-xs text-neutral-400 font-medium">رسم بياني يوضح نمو الشحنات خلال الـ ٦ أشهر الماضية</p>
+                            <p className="text-xs text-neutral-400 font-medium">{t('carrier.reports.volume_placeholder')}</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Reports Table */}
                 <DataTableLayout
-                    title="التقارير الجاهزة"
+                    title={t('carrier.reports.available_reports')}
                     columns={columns}
                     data={reports}
                 />

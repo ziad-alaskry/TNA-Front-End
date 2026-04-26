@@ -50,16 +50,16 @@ export default function OwnerHomePage() {
   const recentRequests = [
     {
         id: 'req-101',
-        title: 'طلب ربط جديد',
-        description: 'فيصل القحطاني يرغب بالربط بعقار "فيلا الملقا 12"',
-        timestamp: 'منذ ١٥ دقيقة',
+        title: t('owner.home.activity1_title'),
+        description: t('owner.home.activity1_desc'),
+        timestamp: t('owner.home.time_15m'),
         status: 'pending' as const
     },
     {
         id: 'req-99',
-        title: 'تم قبول الربط',
-        description: 'اكتملت عملية السداد وربط العنوان لـ سارة محمد',
-        timestamp: 'منذ ساعتين',
+        title: t('owner.home.activity2_title'),
+        description: t('owner.home.activity2_desc'),
+        timestamp: t('owner.home.time_2h'),
         status: 'success' as const
     }
   ];

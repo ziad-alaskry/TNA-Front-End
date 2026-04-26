@@ -31,6 +31,12 @@ export default function Breadcrumbs() {
       return t(`common.roles.${roleKey}.overview`)
     }
 
+    // Check if there is a known route translation for this segment
+    const translatedRoute = t(`common.routes.${segment}`)
+    if (translatedRoute && !translatedRoute.includes('common.routes')) {
+      return translatedRoute
+    }
+
     // Default formatting for other segments
     return segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ')
   }
