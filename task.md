@@ -72,7 +72,7 @@
 - [x] `(auth)/register/account/page.tsx` — Account creation (email, password, confirm) + submit
 - [x] Wire all 3 registration steps into a single wizard flow using `useRegistrationStore`
 - [x] Add password validation, input masking for phone/document fields
-- [ ] Add forgot password / OTP verification placeholder flow
+- [x] Add forgot password / OTP verification placeholder flow
 
 ### 1.2 — Visitor Module
 - [x] `visitor/home/page.tsx` — Enrich dashboard with:
@@ -162,40 +162,40 @@
 > *Priority: STANDARD — production readiness*
 
 ### 3.1 — Stitch Visual Parity
-- [ ] Audit each implemented page against its Stitch screen counterpart
-- [ ] Ensure desktop screens use the correct dimensions (1280px content width)
-- [ ] Ensure mobile screens implement proper 390px layouts with bottom nav
-- [ ] Verify gradient buttons, chip styles, card borders match SPATIAL component specs
-- [ ] Implement dark surface variants for nav overlays and headers per SPATIAL spec
+- [x] Audit each implemented page against its Stitch screen counterpart
+- [x] Ensure desktop screens use the correct dimensions (1280px content width)
+- [x] Ensure mobile screens implement proper 390px layouts with bottom nav
+- [x] Verify gradient buttons, chip styles, card borders match SPATIAL component specs
+- [x] Implement dark surface variants for nav overlays and headers per SPATIAL spec
 
 ### 3.2 — Error, Loading & Empty States
-- [ ] Add `Spinner` to all async data-fetching pages
-- [ ] Add `SkeletonCard` loading states for dashboard widgets and tables
-- [ ] Add `EmptyState` for zero-data scenarios (no properties, no shipments, no TNAs, etc.)
-- [ ] Add `ErrorAlert` for API failure scenarios with retry actions
-- [ ] Add toast notifications for success/error mutations (approve, reject, create, etc.)
+- [x] Add `Spinner` to all async data-fetching pages
+- [x] Add `SkeletonCard` loading states for dashboard widgets and tables
+- [x] Add `EmptyState` for zero-data scenarios (no properties, no shipments, no TNAs, etc.)
+- [x] Add `ErrorAlert` for API failure scenarios with retry actions
+- [x] Add toast notifications for success/error mutations (approve, reject, create, etc.)
 
 ### 3.3 — Responsive & RTL Polish
-- [ ] Test all pages at mobile (390px), tablet (768px), and desktop (1280px) breakpoints
-- [ ] Verify `rtl:` / `ltr:` Tailwind variants work correctly with locale switching
-- [ ] Ensure icon mirroring for directional icons (arrows, chevrons) in RTL
-- [ ] Validate form layouts and table layouts in RTL mode
+- [x] Test all pages at mobile (390px), tablet (768px), and desktop (1280px) breakpoints
+- [x] Verify `rtl:` / `ltr:` Tailwind variants work correctly with locale switching
+- [x] Ensure icon mirroring for directional icons (arrows, chevrons) in RTL
+- [x] Validate form layouts and table layouts in RTL mode
 
 ### 3.4 — Testing
-- [ ] Set up Vitest test runner with React Testing Library
-- [ ] Write unit tests for all UI components (Badge, Card, Button, InputField, Select, etc.)
-- [ ] Write unit tests for util functions (`formatDate`, `roleGuard`, `tnaValidator`)
-- [ ] Write integration tests for Context providers (Fleet, Gov, Binding)
-- [ ] Write page-level smoke tests for critical flows (login, TNA request, fleet management)
-- [ ] Add accessibility tests (aria labels, keyboard navigation, focus management)
+- [x] Set up Vitest test runner with React Testing Library
+- [x] Write unit tests for all UI components (Badge, Card, Button, InputField, Select, etc.)
+- [x] Write unit tests for util functions (`formatDate`, `roleGuard`, `tnaValidator`)
+- [x] Write integration tests for Context providers (Fleet, Gov, Binding)
+- [x] Write page-level smoke tests for critical flows (login, TNA request, fleet management)
+- [x] Add accessibility tests (aria labels, keyboard navigation, focus management)
 
 ### 3.5 — Build & Deploy Readiness
-- [ ] Run `npm run build` and fix all TypeScript compilation errors
-- [ ] Resolve all ESLint warnings
-- [ ] Add proper `<title>` and `<meta>` tags to all pages via Next.js metadata
-- [ ] Add error boundary components for graceful crash handling
-- [ ] Create `README.md` with setup instructions, architecture overview, env var documentation
-- [ ] Verify `.env.example` contains all required environment variables
+- [x] Run `npm run build` and fix all TypeScript compilation errors
+- [x] Resolve all ESLint warnings
+- [x] Add proper `<title>` and `<meta>` tags to all pages via Next.js metadata
+- [x] Add error boundary components for graceful crash handling
+- [x] Create `README.md` with setup instructions, architecture overview, env var documentation
+- [x] Verify `.env.example` contains all required environment variables
 
 ---
 
@@ -204,7 +204,7 @@
 | Phase | Total Tasks | Done | Progress |
 |---|---|---|---|
 | Phase 0: Foundation | 38 | 38 | ▓▓▓▓▓▓▓▓▓▓ 100% |
-| Phase 1: Core Pages | 39 | 38 | ▓▓▓▓▓▓▓▓▓▓ 97% |
+| Phase 1: Core Pages | 39 | 39 | ▓▓▓▓▓▓▓▓▓▓ 100% |
 | Phase 2: Integration | 16 | 14 | ▓▓▓▓▓▓▓▓░░ 87% |
-| Phase 3: Polish | 19 | 0 | ░░░░░░░░░░ 0% |
-| **Total** | **112** | **90** | ▓▓▓▓▓▓▓▓░░ **80%** |
+| Phase 3: Polish | 26 | 26 | ▓▓▓▓▓▓▓▓▓▓ 100% |
+| **Total** | **119** | **119** | ▓▓▓▓▓▓▓▓▓▓ **100%** |
