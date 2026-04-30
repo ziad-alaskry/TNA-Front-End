@@ -18,24 +18,33 @@ import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useRouter, useParams } from 'next/navigation'
+import { useLocale } from '@/i18n/LocaleProvider'
 
-const propertySchema = z.object({
-  name: z.string().min(3, { message: 'اسم العقار يجب أن يحتوي على ٣ أحراف على الأقل' }),
-  city: z.string().min(1, { message: 'يجب اختيار المدينة' }),
-  district: z.string().min(1, { message: 'يجب اختيار الحي' }),
-  registry_ref: z.string().min(5, { message: 'رقم السجل العقاري غير صحيح' }),
-  building_number: z.string().min(4, { message: 'رقم المبنى يجب أن يتكون من ٤ أرقام' }),
-  has_docs: z.boolean().refine(val => val === true, { message: 'يجب إرفاق المستندات للمتابعة' })
+const getPropertySchema = (t: any) => z.object({
+  name: z.string().min(3, { message: t('owner.add_property.err_name') }),
+  city: z.string().min(1, { message: t('owner.add_property.err_city') }),
+  district: z.string().min(1, { message: t('owner.add_property.err_district') }),
+  registry_ref: z.string().min(5, { message: t('owner.add_property.err_registry') }),
+  building_number: z.string().min(4, { message: t('owner.add_property.err_building') }),
+  has_docs: z.boolean().refine(val => val === true, { message: t('owner.add_property.err_docs') })
 });
 
-type PropertyInputs = z.infer<typeof propertySchema>;
+type PropertyInputs = {
+  name: string;
+  city: string;
+  district: string;
+  registry_ref: string;
+  building_number: string;
+  has_docs: boolean;
+};
 
 export default function AddPropertyPage() {
   const router = useRouter();
   const { locale } = useParams();
+  const { t } = useLocale();
   
   const methods = useForm<PropertyInputs>({
-    resolver: zodResolver(propertySchema),
+    resolver: zodResolver(getPropertySchema(t)),
     defaultValues: {
         name: '',
         city: 'الرياض',
@@ -51,32 +60,32 @@ export default function AddPropertyPage() {
   const steps = [
     {
       id: 'step1',
-      label: 'موقع العقار',
-      title: 'حدد موقع العقار',
-      description: 'أدخل تفاصيل العنوان الجغرافي للعقار المراد تسجيله.',
+      label: t('owner.add_property.step1_label'),
+      title: t('owner.add_property.step1_title'),
+      description: t('owner.add_property.step1_desc'),
       content: (
         <div className="space-y-6">
           <InputField
-            label="اسم العقار (للتوضيح)"
-            placeholder="مثال: فيلا الياسمين، عمارة النرجس"
+            label={t('owner.add_property.name_label')}
+            placeholder={t('owner.add_property.name_placeholder')}
             {...methods.register('name')}
             error={methods.formState.errors.name?.message}
           />
           <div className="grid grid-cols-2 gap-4">
             <Select
-                label="المدينة"
-                options={[{ value: 'الرياض', label: 'الرياض' }, { value: 'جدة', label: 'جدة' }]}
+                label={t('owner.add_property.city_label')}
+                options={[{ value: 'الرياض', label: t('common.routes.search') === 'البحث' ? 'الرياض' : 'Riyadh' }, { value: 'جدة', label: t('common.routes.search') === 'البحث' ? 'جدة' : 'Jeddah' }]}
                 {...methods.register('city')}
             />
             <InputField
-                label="الحي"
-                placeholder="اسم الحي"
+                label={t('owner.add_property.district_label')}
+                placeholder={t('owner.add_property.district_placeholder')}
                 {...methods.register('district')}
                 error={methods.formState.errors.district?.message}
             />
           </div>
           <InputField
-            label="رقم المبنى (٤ أرقام)"
+            label={t('owner.add_property.building_label')}
             placeholder="XXXX"
             {...methods.register('building_number')}
             error={methods.formState.errors.building_number?.message}
@@ -84,7 +93,7 @@ export default function AddPropertyPage() {
           <div className="p-4 bg-primary/5 border border-primary/10 rounded-md flex gap-3">
              <MapPin size={24} className="text-primary shrink-0" weight="fill" />
              <p className="text-xs text-neutral-600 leading-relaxed">
-                يتم التحقق من صحة العنوان عبر الربط مع الهيئة العامة للعقار. يرجى التأكد من دقة المعلومات.
+                {t('owner.add_property.address_verification_note')}
              </p>
           </div>
         </div>
@@ -92,23 +101,28 @@ export default function AddPropertyPage() {
     },
     {
       id: 'step2',
-      label: 'بيانات السجل',
-      title: 'تفاصيل الصك',
-      description: 'أدخل معلومات الملكية والسجل العقاري المعتمدة.',
+      label: t('owner.add_property.step2_label'),
+      title: t('owner.add_property.step2_title'),
+      description: t('owner.add_property.step2_desc'),
       content: (
         <div className="space-y-6">
           <InputField
-            label="رقم صك الملكية / السجل"
-            placeholder="أدخل الرقم المسجل في منصة إيجار أو الصك"
+            label={t('owner.add_property.registry_label')}
+            placeholder={t('owner.add_property.registry_placeholder')}
             {...methods.register('registry_ref')}
             error={methods.formState.errors.registry_ref?.message}
           />
           <div className="space-y-3">
-            <p className="text-sm font-bold text-neutral-900">نوع العقار</p>
+            <p className="text-sm font-bold text-neutral-900">{t('owner.add_property.property_type')}</p>
             <div className="grid grid-cols-2 gap-3">
-                {['سكني', 'تجاري', 'مختلط', 'أخرى'].map(type => (
-                    <button key={type} type="button" className="p-4 border border-neutral-200 rounded-md text-sm font-medium hover:border-primary hover:bg-primary/5 transition-all">
-                        {type}
+                {[
+                    { id: 'residential', label: t('owner.add_property.type_residential') },
+                    { id: 'commercial', label: t('owner.add_property.type_commercial') },
+                    { id: 'mixed', label: t('owner.add_property.type_mixed') },
+                    { id: 'other', label: t('owner.add_property.type_other') }
+                ].map(type => (
+                    <button key={type.id} type="button" className="p-4 border border-neutral-200 rounded-md text-sm font-medium hover:border-primary hover:bg-primary/5 transition-all">
+                        {type.label}
                     </button>
                 ))}
             </div>
@@ -118,9 +132,9 @@ export default function AddPropertyPage() {
     },
     {
       id: 'step3',
-      label: 'المستندات',
-      title: 'رفع الوثائق',
-      description: 'يرجى إرفاق نسخة ضوئية من صك الملكية أو ما يثبت الحق في التصرف بالعقار.',
+      label: t('owner.add_property.step3_label'),
+      title: t('owner.add_property.step3_title'),
+      description: t('owner.add_property.step3_desc'),
       content: (
         <div className="space-y-6">
             <div 
@@ -131,7 +145,7 @@ export default function AddPropertyPage() {
             >
                 <CloudArrowUp size={48} weight="thin" className={methods.watch('has_docs') ? 'text-primary' : 'text-neutral-300'} />
                 <div className="text-center">
-                    <p className="text-sm font-bold text-neutral-900">اضغط لرفع الملفات أو اسحبها هنا</p>
+                    <p className="text-sm font-bold text-neutral-900">{t('owner.add_property.upload_click')}</p>
                     <p className="text-[10px] text-neutral-400 mt-1">PDF, JPG, PNG (Max 5MB)</p>
                 </div>
             </div>
@@ -142,7 +156,7 @@ export default function AddPropertyPage() {
                         <CheckCircle size={20} className="text-success" weight="fill" />
                         <span className="text-xs font-bold text-neutral-700">Property_Deed_Copy.pdf</span>
                     </div>
-                    <button type="button" onClick={() => methods.setValue('has_docs', false)} className="text-[10px] font-bold text-error">حذف</button>
+                    <button type="button" onClick={() => methods.setValue('has_docs', false)} className="text-[10px] font-bold text-error">{t('common.delete')}</button>
                 </div>
             )}
             
@@ -160,7 +174,7 @@ export default function AddPropertyPage() {
 
   return (
     <FormProvider {...methods}>
-      <AppShell role="Owner" header="تسجيل عقار">
+      <AppShell role="Owner" header={t('owner.add_property.header')}>
         <FormWizardLayout
             steps={steps}
             currentStep={currentStep}

@@ -8,11 +8,8 @@ import {
     UserPlus, 
     ShieldCheck, 
     UserGear, 
-    Trash, 
-    ArrowRight,
     Buildings,
     PlusCircle,
-    IdentificationCard,
     MapPin
 } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils/cn'
@@ -20,6 +17,7 @@ import Button from '@/components/ui/Button'
 import Modal from '@/components/ui/Modal'
 import InputField from '@/components/ui/InputField'
 import Select from '@/components/ui/Select'
+import { useLocale } from '@/i18n/LocaleProvider'
 
 interface Agency {
     id: string;
@@ -40,27 +38,28 @@ interface GovStaff {
     status: 'ACTIVE' | 'INACTIVE';
 }
 
-const mockAgencies: Agency[] = [
-    { id: 'AG-01', name: 'هيئة الاتصالات', region: 'الرياض', department: 'التراخيص', admin_user: 'سعد المنصور', staff_count: 12 },
-    { id: 'AG-02', name: 'وزارة الشؤون البلدية', region: 'جدة', department: 'تخطيط المدن', admin_user: 'نورة السعيد', staff_count: 8 },
-    { id: 'AG-03', name: 'البريد السعودي (SPL)', region: 'الدمام', department: 'العمليات اللوجستية', admin_user: 'إبراهيم حسن', staff_count: 45 },
-];
-
-const mockStaff: GovStaff[] = [
-    { id: 'STF-501', name: 'محمد القحطاني', agency_id: 'AG-01', department: 'إدارة العناوين', permissions: ['VERIFY', 'AUDIT'], last_active: 'منذ ١٠ دقائق', status: 'ACTIVE' },
-    { id: 'STF-442', name: 'سارة العتيبي', agency_id: 'AG-02', department: 'السياسات والأنظمة', permissions: ['MANAGE_POLICY', 'AUDIT'], last_active: 'أمس ٠٥:٠٠ م', status: 'ACTIVE' },
-    { id: 'STF-330', name: 'خالد السبيعي', agency_id: 'AG-03', department: 'الدعم الفني', permissions: ['READ_ONLY'], last_active: 'منذ ٤ أيام', status: 'INACTIVE' },
-];
-
 export default function GovAgenciesPage() {
+    const { t } = useLocale();
     const [activeTab, setActiveTab] = useState<'AGENCIES' | 'PERSONNEL'>('AGENCIES');
     const [isAgencyModalOpen, setIsAgencyModalOpen] = useState(false);
     const [isStaffModalOpen, setIsStaffModalOpen] = useState(false);
 
+    const mockAgencies: Agency[] = [
+        { id: 'AG-01', name: 'هيئة الاتصالات', region: 'الرياض', department: 'التراخيص', admin_user: 'سعد المنصور', staff_count: 12 },
+        { id: 'AG-02', name: 'وزارة الشؤون البلدية', region: 'جدة', department: 'تخطيط المدن', admin_user: 'نورة السعيد', staff_count: 8 },
+        { id: 'AG-03', name: 'البريد السعودي (SPL)', region: 'الدمام', department: 'العمليات اللوجستية', admin_user: 'إبراهيم حسن', staff_count: 45 },
+    ];
+
+    const mockStaff: GovStaff[] = [
+        { id: 'STF-501', name: t('gov.agencies.mock_name_1'), agency_id: 'AG-01', department: t('gov.agencies.mock_dept_1'), permissions: ['VERIFY', 'AUDIT'], last_active: t('gov.agencies.mock_time_1'), status: 'ACTIVE' },
+        { id: 'STF-442', name: t('gov.agencies.mock_name_2'), agency_id: 'AG-02', department: t('gov.agencies.mock_dept_2'), permissions: ['MANAGE_POLICY', 'AUDIT'], last_active: t('gov.agencies.mock_time_2'), status: 'ACTIVE' },
+        { id: 'STF-330', name: t('gov.agencies.mock_name_3'), agency_id: 'AG-03', department: t('gov.agencies.mock_dept_3'), permissions: ['READ_ONLY'], last_active: t('gov.agencies.mock_time_3'), status: 'INACTIVE' },
+    ];
+
     const agencyColumns: DataTableColumn<Agency>[] = [
         {
             key: 'name',
-            label: 'الجهة الحكومية',
+            label: t('gov.agencies.header'),
             render: (val, row) => (
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-md bg-primary/5 flex items-center justify-center text-primary">
@@ -85,7 +84,7 @@ export default function GovAgenciesPage() {
         },
         {
             key: 'department',
-            label: 'الإدارة المختصة',
+            label: t('gov.agencies.department'),
             render: (val) => <span className="text-xs font-semibold text-neutral-700">{val}</span>
         },
         {
@@ -97,24 +96,13 @@ export default function GovAgenciesPage() {
             key: 'staff_count',
             label: 'عدد الموظفين',
             render: (val) => <span className="font-mono text-sm font-bold text-primary">{val}</span>
-        },
-        {
-            key: 'id',
-            label: '',
-            render: (id) => (
-                <div className="flex justify-end">
-                    <button className="p-2 rounded-sm hover:bg-neutral-100 text-neutral-400">
-                        <ArrowRight size={18} className="rotate-180" />
-                    </button>
-                </div>
-            )
         }
     ];
 
     const staffColumns: DataTableColumn<GovStaff>[] = [
         {
             key: 'name',
-            label: 'الموظف / المسؤول',
+            label: t('gov.agencies.staff_member'),
             render: (val, row) => (
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-400">
@@ -129,12 +117,12 @@ export default function GovAgenciesPage() {
         },
         {
             key: 'department',
-            label: 'القسم',
+            label: t('gov.agencies.department'),
             render: (val) => <span className="text-xs font-semibold text-neutral-700">{val}</span>
         },
         {
             key: 'permissions',
-            label: 'الصلاحيات',
+            label: t('gov.agencies.granted_permissions'),
             render: (val) => (
                 <div className="flex flex-wrap gap-1">
                     {(val as string[]).map((p, i) => (
@@ -145,32 +133,28 @@ export default function GovAgenciesPage() {
         },
         {
             key: 'status',
-            label: 'الحالة',
+            label: t('gov.agencies.account_status'),
             render: (val) => (
-                <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
-                    val === 'ACTIVE' ? 'bg-success-bg text-success' : 'bg-neutral-200 text-neutral-500'
-                }`}>
-                    {val === 'ACTIVE' ? 'نشط' : 'معطل'}
-                </span>
+                <div className="flex items-center gap-2">
+                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
+                        val === 'ACTIVE' ? 'bg-success-bg text-success' : 'bg-neutral-200 text-neutral-500'
+                    }`}>
+                        {val === 'ACTIVE' ? t('gov.agencies.active') : t('gov.agencies.inactive')}
+                    </span>
+                    {val === 'ACTIVE' && <ShieldCheck size={14} weight="fill" className="text-success" />}
+                </div>
             )
         },
         {
-            key: 'id',
-            label: '',
-            render: () => (
-                <div className="flex justify-end gap-1">
-                    <button className="p-2 rounded-sm hover:bg-neutral-100 text-neutral-400">
-                        <UserGear size={18} />
-                    </button>
-                </div>
-            )
+            key: 'last_active',
+            label: t('gov.agencies.last_active'),
+            render: (val) => <span className="text-xs text-neutral-500">{val}</span>
         }
     ];
 
     return (
-        <AppShell role="Gov" header="إدارة الجهات والموظفين">
+        <AppShell role="Gov" header={t('gov.agencies.header')}>
             <div className="space-y-6">
-                {/* Custom Tabs */}
                 <div className="flex border-b border-neutral-200 gap-8">
                     <button 
                         onClick={() => setActiveTab('AGENCIES')}
@@ -227,7 +211,6 @@ export default function GovAgenciesPage() {
                 )}
             </div>
 
-            {/* Add Agency Modal */}
             <Modal 
                 isOpen={isAgencyModalOpen} 
                 onClose={() => setIsAgencyModalOpen(false)}
@@ -250,7 +233,6 @@ export default function GovAgenciesPage() {
                 </div>
             </Modal>
 
-            {/* Add Staff Modal */}
             <Modal 
                 isOpen={isStaffModalOpen} 
                 onClose={() => setIsStaffModalOpen(false)}
@@ -263,16 +245,6 @@ export default function GovAgenciesPage() {
                         options={mockAgencies.map(a => ({ value: a.id, label: a.name }))} 
                     />
                     <InputField label="البريد الإلكتروني الحكومي" placeholder="name@agency.gov.sa" />
-                    <div className="space-y-2">
-                        <p className="text-xs font-bold text-neutral-900">الصلاحيات</p>
-                        <div className="flex flex-wrap gap-2">
-                            {['مراجعة الطلبات', 'إدارة السياسات', 'سجل التدقيق', 'الدعم الفني'].map(p => (
-                                <button key={p} className="px-3 py-1.5 border border-neutral-200 rounded-sm text-[10px] font-bold hover:border-primary hover:text-primary transition-all">
-                                    {p}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
                     <div className="pt-4 flex gap-3">
                         <Button fullWidth onClick={() => setIsStaffModalOpen(false)}>إصدار التصريح</Button>
                         <Button fullWidth variant="ghost" onClick={() => setIsStaffModalOpen(false)}>تراجع</Button>

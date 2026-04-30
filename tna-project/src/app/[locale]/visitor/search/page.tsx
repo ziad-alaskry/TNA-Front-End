@@ -1,7 +1,8 @@
 'use client'
 
 import React, { useMemo, useState } from 'react'
-import { useRouter, useParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
+import { useLocale } from '@/i18n/LocaleProvider'
 import { DetailViewLayout } from '@/components/templates/DetailViewLayout'
 import { AppShell } from '@/components/layout/AppShell'
 import { 
@@ -18,7 +19,7 @@ import { cn } from '@/lib/utils/cn'
 
 export default function VisitorSearchPage() {
   const router = useRouter()
-  const { locale } = useParams()
+  const { locale, t } = useLocale()
   const { realEstateObjects } = useBindingContext()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedObjId, setSelectedObjId] = useState<string | null>(null)
@@ -44,13 +45,13 @@ export default function VisitorSearchPage() {
       <div>
         <h3 className="text-sm font-bold text-neutral-900 mb-4 flex items-center gap-2">
             <Funnel size={18} />
-            تصفية النتائج
+            {t('visitor.search.filter')}
         </h3>
         <div className="relative group">
             <MagnifyingGlass size={20} className="absolute right-3 top-3 text-neutral-400 group-focus-within:text-primary transition-colors" />
             <input
             type="text"
-            placeholder="ابحث بالحي، الشارع، أو اسم المبنى"
+            placeholder={t('visitor.search.placeholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full rounded-sm border border-neutral-200 bg-surface-100 py-2.5 pr-10 pl-4 text-sm text-neutral-900 placeholder-neutral-400 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all outline-none"
@@ -61,17 +62,17 @@ export default function VisitorSearchPage() {
       <div className="pt-4 border-t border-neutral-100">
         <p className="text-[10px] text-neutral-500 leading-relaxed font-medium">
             <WarningCircle size={14} className="inline-block ml-1 text-warning" weight="fill" />
-            ملاحظة: يمكنك فقط ربط عنوانك بالعقارات التي تحمل ملصق "متاح للربط".
+            {t('visitor.search.note')}
         </p>
       </div>
     </div>
   )
 
   return (
-    <AppShell role="Visitor" header="اكتشاف العناوين">
+    <AppShell role="Visitor" header={t('visitor.search.header')}>
       <DetailViewLayout
-        title="البحث عن عقار متاح"
-        breadcrumb={['الرئيسية', 'البحث']}
+        title={t('visitor.search.title')}
+        breadcrumb={[t('common.roles.Visitor.overview'), t('common.routes.search')]}
         mainContent={[]}
         sidebar={sidebar}
         actions={
@@ -81,7 +82,7 @@ export default function VisitorSearchPage() {
             onClick={handleProceedToRequest}
             className="rounded-pill bg-btn-primary px-6 h-10 text-sm font-bold text-white shadow-btn flex items-center gap-2 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
           >
-            متابعة الطلب
+            {t('visitor.search.proceed')}
             <ArrowRight size={18} className="rotate-180" />
           </button>
         }
@@ -90,7 +91,7 @@ export default function VisitorSearchPage() {
           <div className="border-b border-neutral-200 px-6 py-4 flex items-center justify-between">
             <h2 className="text-lg font-bold text-neutral-900 flex items-center gap-2">
                 <MapPin size={22} className="text-primary" weight="fill" />
-                العقارات المتاحة ({filteredObjects.length})
+                {t('visitor.search.available_properties').replace('{count}', filteredObjects.length.toString())}
             </h2>
             <div className="flex gap-2">
                 <button className="p-2 bg-neutral-100 rounded-sm text-neutral-500 hover:text-primary transition-colors">
@@ -102,7 +103,7 @@ export default function VisitorSearchPage() {
           <ul className="divide-y divide-neutral-100">
             {filteredObjects.length === 0 ? (
                 <li className="p-12 text-center text-neutral-500">
-                    لا توجد نتائج تطابق بحثك.
+                    {t('visitor.search.no_results')}
                 </li>
             ) : (
                 filteredObjects.map((obj) => {
@@ -124,15 +125,15 @@ export default function VisitorSearchPage() {
                             <h3 className="font-bold text-neutral-900 group-hover:text-primary transition-colors">
                                 {obj.name}
                             </h3>
-                            <span className="px-2 py-0.5 bg-success-bg text-success text-[10px] font-bold rounded">متاح</span>
+                            <span className="px-2 py-0.5 bg-success-bg text-success text-[10px] font-bold rounded">{t('visitor.search.available')}</span>
                         </div>
                         <p className="text-xs text-neutral-600 flex items-center gap-1">
                             <MapPin size={14} className="text-neutral-400" />
-                            القطاع {obj.sector_id} · الرياض · حي الملقا
+                            {t('visitor.search.location_mock').replace('{sector}', obj.sector_id?.toString() || '')}
                         </p>
                         <div className="mt-3 flex gap-4">
                             <div className="flex flex-col">
-                                <span className="text-[10px] text-neutral-400">رقم المبنى</span>
+                                <span className="text-[10px] text-neutral-400">{t('visitor.search.building_number')}</span>
                                 <span className="text-xs font-mono font-bold text-neutral-700">{obj.building_number}</span>
                             </div>
                         </div>

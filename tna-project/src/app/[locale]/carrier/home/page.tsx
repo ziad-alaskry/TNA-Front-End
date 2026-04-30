@@ -26,22 +26,22 @@ export default function CarrierHomePage() {
   const stats = [
     { 
         label: t('carrier.home.stats.fleet_size'), 
-        value: t('common.loading') !== 'Loading...' ? '٢٤ مركبة' : '24 Vehicles', 
+        value: t('carrier.home.mock_fleet_size'), 
         icon: <TruckIcon size={24} weight="fill" className="text-primary" /> 
     },
     { 
         label: t('carrier.home.stats.active_shipments'), 
-        value: '١٤٢', 
+        value: t('carrier.home.mock_active_shipments'), 
         icon: <PackageIcon size={24} weight="fill" className="text-success" /> 
     },
     { 
         label: t('carrier.home.stats.available_drivers'), 
-        value: t('common.loading') !== 'Loading...' ? '١٨ سائق' : '18 Drivers', 
+        value: t('carrier.home.mock_drivers'), 
         icon: <UsersIcon size={24} weight="fill" className="text-secondary" /> 
     },
     { 
         label: t('carrier.home.stats.pending_distribution'), 
-        value: '١٢', 
+        value: t('carrier.home.mock_pending'), 
         icon: <ClockIcon size={24} weight="fill" className="text-warning" /> 
     },
   ];
@@ -49,23 +49,23 @@ export default function CarrierHomePage() {
   const activity = [
     {
       id: '1',
-      title: 'توزيع شحنات رقم #٩٩٢٨١',
-      description: 'تم تعيين ٤٥ شحنة لمسار حي الملك فهد.',
-      timestamp: 'منذ ١٥ دقيقة',
+      title: t('carrier.home.activity1_title'),
+      description: t('carrier.home.activity1_desc'),
+      timestamp: t('carrier.home.time_15m'),
       status: 'success' as const,
     },
     {
       id: '2',
-      title: 'تنبيه صيانة: TRK-011',
-      description: 'تغيير زيت دوري مطلوب لشاحنة هينو خفيفة.',
-      timestamp: 'منذ ساعتين',
+      title: t('carrier.home.activity2_title'),
+      description: t('carrier.home.activity2_desc'),
+      timestamp: t('carrier.home.time_2h'),
       status: 'pending' as const,
     },
     {
       id: '3',
-      title: 'مزامنة ترخيص الناقل',
-      description: 'اكتمل التحقق من وزارة النقل لعمليات أسطول ٢٠٢٦.',
-      timestamp: 'بالأمس',
+      title: t('carrier.home.activity3_title'),
+      description: t('carrier.home.activity3_desc'),
+      timestamp: t('carrier.home.time_yesterday'),
       status: 'success' as const,
     },
   ];
@@ -138,7 +138,7 @@ export default function CarrierHomePage() {
                   </div>
                   <div>
                       <p className="text-sm font-bold text-neutral-900">{t('carrier.home.tracking.title')}</p>
-                      <p className="text-xs text-neutral-500">{t('carrier.home.tracking.description').replace('{count}', '١٢')}</p>
+                      <p className="text-xs text-neutral-500">{t('carrier.home.tracking.description').replace('{count}', t('carrier.home.mock_pending'))}</p>
                   </div>
               </div>
               <button className="h-9 px-6 bg-neutral-900 text-white text-xs font-bold rounded-pill hover:bg-black transition-colors flex items-center gap-2">

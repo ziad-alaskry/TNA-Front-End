@@ -4,7 +4,8 @@ import React from 'react'
 import { AppShell } from '@/components/layout/AppShell'
 import DataTableLayout, { DataTableColumn } from '@/components/templates/DataTableLayout'
 import { useBindingContext } from '@/context/BindingContext'
-import { useRouter, useParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
+import { useLocale } from '@/i18n/LocaleProvider'
 import Button from '@/components/ui/Button'
 import { TNA } from '@/lib/types/tna'
 import { Eye, Plus } from '@phosphor-icons/react'
@@ -12,18 +13,18 @@ import { Eye, Plus } from '@phosphor-icons/react'
 export default function VisitorTnasPage() {
   const { visitorTnas } = useBindingContext();
   const router = useRouter();
-  const { locale } = useParams();
+  const { locale, t } = useLocale();
 
   const columns: DataTableColumn<TNA>[] = [
     { 
       key: 'tna_code', 
-      label: 'كود العنوان', 
+      label: t('visitor.tnas.code'), 
       width: '30%',
       render: (val) => <span className="font-mono font-bold text-primary">{val}</span>
     },
     { 
         key: 'status', 
-        label: 'الحالة', 
+        label: t('visitor.tnas.status'), 
         width: '20%',
         render: (val) => {
             const isSuccess = val === 'ACTIVE';
@@ -31,14 +32,14 @@ export default function VisitorTnasPage() {
                 <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider ${
                     isSuccess ? 'bg-success-bg text-success' : 'bg-warning-bg text-warning'
                 }`}>
-                    {val === 'ACTIVE' ? 'نشط' : 'قيد المراجعة'}
+                    {val === 'ACTIVE' ? t('common.statuses.ACTIVE') : t('common.statuses.PENDING')}
                 </span>
             )
         }
     },
     { 
         key: 'issued_at', 
-        label: 'تاريخ الربط', 
+        label: t('visitor.tnas.link_date'), 
         width: '25%',
         render: (val) => <span className="text-xs text-neutral-500 font-medium">{val ? new Date(val).toLocaleDateString() : '---'}</span>
     },
@@ -58,7 +59,7 @@ export default function VisitorTnasPage() {
                 className="gap-2 h-9"
             >
                 <Eye size={16} />
-                عرض التفاصيل
+                {t('visitor.tnas.view_details')}
             </Button>
         </div>
       )
@@ -66,9 +67,9 @@ export default function VisitorTnasPage() {
   ]
 
   return (
-    <AppShell role="Visitor" header="عناويني الوطنية">
+    <AppShell role="Visitor" header={t('visitor.tnas.header')}>
       <DataTableLayout
-        title="قائمة العناوين المرتبطة"
+        title={t('visitor.tnas.list_title')}
         columns={columns}
         data={visitorTnas}
         onRowClick={(row) => router.push(`/${locale}/visitor/tnas/${row.tna_id}`)}

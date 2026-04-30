@@ -8,13 +8,13 @@ import { useLocale } from '@/i18n/LocaleProvider';
 export default function LoginPage() {
     const [role, setRole] = useState('owner');
     const router = useRouter();
-    const { locale } = useLocale();
+    const { locale, t } = useLocale();
 
     const roles = [
-        { id: 'owner', label: 'مالك', icon: 'home' },
-        { id: 'carrier', label: 'ناقل', icon: 'local_shipping' },
-        { id: 'gov', label: 'جهة حكومية', icon: 'account_balance' },
-        { id: 'visitor', label: 'زائر', icon: 'person_outline' },
+        { id: 'owner', label: t('common.role_names.Owner'), icon: 'home' },
+        { id: 'carrier', label: t('common.role_names.Carrier'), icon: 'local_shipping' },
+        { id: 'gov', label: t('common.role_names.Gov'), icon: 'account_balance' },
+        { id: 'visitor', label: t('common.role_names.Visitor'), icon: 'person_outline' },
     ];
 
     const currentRoleLabel = roles.find(r => r.id === role)?.label || '';
@@ -31,7 +31,6 @@ export default function LoginPage() {
                 backgroundImage: 'linear-gradient(45deg, #f8fafc 25%, transparent 25%, transparent 50%, #f8fafc 50%, #f8fafc 75%, transparent 75%, transparent)',
                 backgroundSize: '20px 20px'
             }}
-            dir="rtl"
         >
             <div className="w-full max-w-[480px] bg-surface-200 rounded-md shadow-modal border border-neutral-100 overflow-hidden relative z-10 transition-all duration-300 transform scale-100">
                 {/* Top Section */}
@@ -42,10 +41,10 @@ export default function LoginPage() {
                         </div>
                     </div>
                     <h1 className="text-display font-bold leading-tight tracking-tight mb-1 bg-btn-primary bg-clip-text text-transparent">
-                        العنوان الوطني المؤقت
+                        {t('auth.login.title')}
                     </h1>
                     <p className="text-sm font-semibold opacity-90 bg-btn-primary bg-clip-text text-transparent">
-                        Temporary National Address
+                        {t('auth.login.subtitle')}
                     </p>
                 </div>
 
@@ -75,14 +74,14 @@ export default function LoginPage() {
                 <div className="px-6 pb-10 flex flex-col gap-4 animate-in fade-in slide-in- duration-500">
                     {/* Input 1: Username */}
                     <div className="flex flex-col gap-2">
-                        <label className="text-sm font-medium text-neutral-700 pr-1">اسم المستخدم أو البريد الإلكتروني</label>
+                        <label className="text-sm font-medium text-neutral-700 pr-1">{t('auth.login.username_label')}</label>
                         <div className="relative group">
                             <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-neutral-400 group-focus-within:text-brand-cyan transition-colors">
                                 <span className="material-symbols-outlined">person</span>
                             </div>
                             <input 
                                 className="w-full h-input pr-12 pl-4 rounded-sm border border-neutral-200 outline-none focus:ring-2 focus:ring-brand-cyan/20 focus:border-brand-cyan transition-all bg-neutral-50/50 text-neutral-900 placeholder:text-neutral-400" 
-                                placeholder="أدخل اسم المستخدم" 
+                                placeholder={t('auth.login.username_placeholder')} 
                                 type="text"
                             />
                         </div>
@@ -90,14 +89,14 @@ export default function LoginPage() {
 
                     {/* Input 2: Password */}
                     <div className="flex flex-col gap-2">
-                        <label className="text-sm font-medium text-neutral-700 pr-1">كلمة المرور</label>
+                        <label className="text-sm font-medium text-neutral-700 pr-1">{t('auth.login.password_label')}</label>
                         <div className="relative group">
                             <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-neutral-400 group-focus-within:text-brand-cyan transition-colors">
                                 <span className="material-symbols-outlined">lock</span>
                             </div>
                             <input 
                                 className="w-full h-input pr-12 pl-12 rounded-sm border border-neutral-200 outline-none focus:ring-2 focus:ring-brand-cyan/20 focus:border-brand-cyan transition-all bg-neutral-50/50 text-neutral-900 placeholder:text-neutral-400" 
-                                placeholder="أدخل كلمة المرور" 
+                                placeholder={t('auth.login.password_placeholder')} 
                                 type="password"
                             />
                             <button className="absolute inset-y-0 left-0 pl-4 flex items-center text-neutral-400 hover:text-neutral-600 transition-colors">
@@ -106,7 +105,7 @@ export default function LoginPage() {
                         </div>
                         <div className="flex justify-start">
                             <Link href={`/${locale}/auth/forgot-password`} className="text-xs font-semibold text-primary hover:underline transition-colors">
-                                نسيت كلمة المرور؟
+                                {t('auth.login.forgot_password')}
                             </Link>
                         </div>
                     </div>
@@ -119,13 +118,13 @@ export default function LoginPage() {
                             className="w-full h-btn-lg rounded-pill bg-btn-primary text-white font-bold text-base shadow-btn hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 transition-all duration-200"
                         >
                             <span className="material-symbols-outlined">login</span>
-                            <span>تسجيل الدخول كـ {currentRoleLabel}</span>
+                            <span>{t('auth.login.submit_button').replace('{role}', currentRoleLabel)}</span>
                         </button>
 
                         {/* Divider */}
                         <div className="relative flex items-center py-2">
                             <div className="flex-grow border-t border-neutral-200"></div>
-                            <span className="flex-shrink mx-4 text-neutral-400 text-xs font-medium">أو عبر الهوية الوطنية</span>
+                            <span className="flex-shrink mx-4 text-neutral-400 text-xs font-medium">{t('auth.login.or_nafath')}</span>
                             <div className="flex-grow border-t border-neutral-200"></div>
                         </div>
 
@@ -134,16 +133,16 @@ export default function LoginPage() {
                             <div className="h-6 w-6 bg-primary rounded-sm flex items-center justify-center text-white">
                                 <span className="material-symbols-outlined text-[16px] group-hover:animate-pulse">verified_user</span>
                             </div>
-                            <span>تسجيل الدخول عبر نفاذ</span>
+                            <span>{t('auth.login.nafath_login')}</span>
                         </button>
                     </div>
 
                     {/* Footer Links */}
                     <div className="mt-6 text-center pt-5 border-t border-neutral-100">
                         <p className="text-sm text-neutral-500 font-medium">
-                            ليس لديك حساب كـ {currentRoleLabel}؟ 
+                            {t('auth.login.no_account').replace('{role}', currentRoleLabel)} 
                             <Link href={`/${locale}/register/type`} className="text-primary font-bold hover:underline mx-1 transition-colors">
-                                إنشاء حساب جديد
+                                {t('auth.login.create_account')}
                             </Link>
                         </p>
                     </div>
@@ -164,4 +163,4 @@ export default function LoginPage() {
             </div>
         </div>
     );
-    }
+}

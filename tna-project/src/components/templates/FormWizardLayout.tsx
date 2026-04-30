@@ -2,6 +2,7 @@
 
 import React, { ReactNode } from 'react'
 import { Check } from '@phosphor-icons/react'
+import { useLocale } from '@/i18n/LocaleProvider'
 
 interface StepConfig {
   id: string
@@ -36,6 +37,7 @@ export default function FormWizardLayout({
   canProceed = true,
   showProgress = true,
 }: FormWizardLayoutProps) {
+  const { t } = useLocale()
   const isLastStep = currentStep === steps.length - 1
   const isFirstStep = currentStep === 0
 
@@ -44,7 +46,7 @@ export default function FormWizardLayout({
       {/* HEADER */}
       <div className="border-b border-neutral-200 bg-surface-200 px-5 py-8 shadow-card">
         <h1 className="text-2xl font-bold text-neutral-900">
-          {steps[currentStep]?.label || 'Form'}
+          {steps[currentStep]?.label || t('common.form')}
         </h1>
         {steps[currentStep]?.description && (
           <p className="mt-2 text-neutral-600">
@@ -119,7 +121,7 @@ export default function FormWizardLayout({
               onClick={onCancel}
               className="flex-1 rounded-pill border-2 border-brand-secondary bg-transparent px-6 py-3 font-semibold text-brand-primary transition-colors hover:bg-neutral-50"
             >
-              Cancel
+              {t('common.cancel')}
             </button>
 
             {!isLastStep && (
@@ -128,7 +130,7 @@ export default function FormWizardLayout({
                 disabled={!canProceed}
                 className="flex-1 rounded-pill border-0 bg-brand-primary px-6 py-3 font-semibold text-white shadow-btn transition-all hover:shadow-modal hover:opacity-90 disabled:opacity-50"
               >
-                Continue
+                {t('common.continue')}
               </button>
             )}
 
@@ -138,7 +140,7 @@ export default function FormWizardLayout({
                 disabled={isSubmitting || !canProceed}
                 className="flex-1 rounded-pill border-0 bg-brand-primary px-6 py-3 font-semibold text-white shadow-btn transition-all hover:shadow-modal hover:opacity-90 disabled:opacity-50"
               >
-                {isSubmitting ? 'Submitting...' : 'Submit'}
+                {isSubmitting ? t('common.submitting') : t('common.submit')}
               </button>
             )}
           </div>
