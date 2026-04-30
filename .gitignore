@@ -60,3 +60,12 @@ desktop.ini
 .aider.chat.history.md
 .aider.input.history
 .aider.tags.cache.v4/
+
+# Gemini / Agent specific
+GEMINI.md
+task.md
+design-assets/
+tna-fix-and-build-plan.md
+*.next_*
+.next/
+
