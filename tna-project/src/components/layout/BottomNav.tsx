@@ -16,7 +16,9 @@ import {
   ClipboardText,
   ShieldCheck,
   Fingerprint,
-  Gear
+  Gear,
+  PlusCircle,
+  DotsThree
 } from '@phosphor-icons/react'
 import { useLocale } from '@/i18n/LocaleProvider'
 
@@ -42,10 +44,10 @@ export function BottomNav({ role }: BottomNavProps) {
 
   const visitorItems = [
     { id: 'home', icon: House, href: '/visitor/home', label: t('common.roles.Visitor.overview') },
-    { id: 'search', icon: MagnifyingGlass, href: '/visitor/search', label: t('common.roles.Visitor.address_search') },
-    { id: 'wallet', icon: Wallet, href: '/visitor/wallet', label: t('common.roles.Visitor.wallet') },
     { id: 'tnas', icon: IdentificationCard, href: '/visitor/tnas', label: t('common.roles.Visitor.codes') },
-    { id: 'profile', icon: User, href: '/visitor/profile', label: t('common.roles.Visitor.profile') }
+    { id: 'shipments', icon: Package, href: '/visitor/shipments', label: t('common.roles.Visitor.shipments') },
+    { id: 'order', icon: PlusCircle, href: '/visitor/shipments/order', label: t('visitor.home.actions.order_shipment') },
+    { id: 'menu', icon: DotsThree, href: '/visitor/menu', label: t('common.menu') }
   ]
 
   const ownerItems = [
@@ -73,8 +75,12 @@ export function BottomNav({ role }: BottomNavProps) {
     Visitor: visitorItems,
     Owner: ownerItems,
     Carrier: carrierItems,
-    Gov: govItems
-  }[role]
+    Gov: govItems,
+    VISITOR: visitorItems,
+    OWNER: ownerItems,
+    CARRIER_STAFF: carrierItems,
+    GOV_USER: govItems
+  }[role as string] || visitorItems
 
   return (
     <nav 

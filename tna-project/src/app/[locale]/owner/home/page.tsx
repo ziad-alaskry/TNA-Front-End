@@ -53,16 +53,16 @@ export default function OwnerHomePage() {
   const recentRequests = [
     {
         id: 'req-101',
-        title: t('owner.home.activity1_title'),
-        description: t('owner.home.activity1_desc'),
-        timestamp: t('owner.home.time_15m'),
+        title: 'طلب ربط جديد',
+        description: 'فيصل القحطاني يرغب بالربط بعقار "فيلا الملقا 12"',
+        timestamp: 'منذ ١٥ دقيقة',
         status: 'pending' as const
     },
     {
         id: 'req-99',
-        title: t('owner.home.activity2_title'),
-        description: t('owner.home.activity2_desc'),
-        timestamp: t('owner.home.time_2h'),
+        title: 'تم قبول الربط',
+        description: 'اكتملت عملية السداد وربط العنوان لـ سارة محمد',
+        timestamp: 'منذ ساعتين',
         status: 'success' as const
     }
   ];
@@ -78,18 +78,18 @@ export default function OwnerHomePage() {
         >
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
               {/* Main Action Card */}
-              <div className="lg:col-span-2 p-8 rounded-md bg-btn-primary text-white relative overflow-hidden flex flex-col justify-between min-h-[240px]">
+               <div className="lg:col-span-2 p-8 rounded-md bg-primary-dark text-white relative overflow-hidden flex flex-col justify-between min-h-[240px]">
                   <div className="relative z-10 text-start">
                       <h3 className="text-2xl font-bold mb-2">{t('owner.home.cta.title')}</h3>
-                      <p className="opacity-80 text-sm max-w-md leading-relaxed">
+                       <p className="text-sm max-w-md leading-relaxed">
                           {t('owner.home.cta.description')}
                       </p>
                   </div>
                   <div className="relative z-10 pt-6 flex justify-start">
-                      <button 
-                          onClick={() => router.push(`/${locale}/owner/property/add`)}
-                          className="h-12 px-8 rounded-pill bg-white text-primary font-bold flex items-center gap-2 hover:bg-neutral-50 transition-colors shadow-lg"
-                      >
+                        <button 
+                            onClick={() => router.push(`/${locale}/owner/property/add`)}
+                            className="h-12 px-8 rounded-pill bg-white text-primary-dark font-bold flex items-center gap-2 hover:bg-neutral-50 transition-colors shadow-lg"
+                        >
                           <PlusCircle size={20} weight="fill" />
                           {t('owner.home.cta.button')}
                       </button>
@@ -99,27 +99,27 @@ export default function OwnerHomePage() {
 
               {/* Quick Balance Card */}
               <div className="p-6 rounded-md border border-neutral-200 bg-surface-200 flex flex-col justify-between text-start">
-                  <div>
-                      <div className="flex justify-between items-center mb-4">
-                          <span className="text-[10px] uppercase font-bold text-neutral-400 tracking-wider font-mono">{t('owner.home.withdraw.title')}</span>
-                          <ArrowUpRight size={18} className="text-neutral-300" />
-                      </div>
+                   <div>
+                       <div className="flex justify-between items-center mb-4">
+                           <span className="text-[10px] uppercase font-bold text-neutral-600 tracking-wider font-mono">{t('owner.home.withdraw.title')}</span>
+                           <ArrowUpRight size={18} className="text-neutral-600" />
+                       </div>
                       <p className="text-sm text-neutral-500 font-medium mb-1">{t('owner.home.withdraw.current_balance')}</p>
                       <h4 className="text-2xl font-bold text-neutral-900">{ownerAccount.current_balance.toFixed(2)} SAR</h4>
                   </div>
                   <div className="pt-4 mt-4 border-t border-neutral-100 flex gap-2">
-                      <button 
-                          onClick={() => router.push(`/${locale}/owner/earnings`)}
-                          className="flex-1 h-10 text-xs font-bold text-primary hover:bg-primary/5 rounded-sm transition-colors border border-primary/20"
-                      >
+                       <button 
+                           onClick={() => router.push(`/${locale}/owner/earnings`)}
+                           className="flex-1 h-10 text-xs font-bold text-neutral-800 hover:text-neutral-900 hover:bg-neutral-50 rounded-sm transition-colors border border-neutral-200"
+                       >
                           {t('owner.home.withdraw.statement')}
                       </button>
-                      <button 
-                        onClick={() => setIsWithdrawalOpen(true)}
-                        className="flex-1 h-10 text-xs font-bold bg-neutral-900 text-white rounded-sm hover:bg-black transition-colors"
-                      >
-                          {t('owner.home.withdraw.transfer')}
-                      </button>
+                       <button 
+                         onClick={() => setIsWithdrawalOpen(true)}
+                         className="flex-1 h-10 text-xs font-bold bg-primary text-white rounded-sm hover:bg-primary-dark transition-colors"
+                       >
+                           {t('owner.home.withdraw.transfer')}
+                       </button>
                   </div>
               </div>
           </div>
@@ -133,7 +133,7 @@ export default function OwnerHomePage() {
                       </div>
                       <h3 className="font-bold text-neutral-900">{t('owner.home.analytics.title')}</h3>
                   </div>
-                  <button className="text-xs font-bold text-neutral-400 hover:text-primary flex items-center gap-1 transition-colors">
+                  <button className="text-xs font-bold text-neutral-600 hover:text-primary flex items-center gap-1 transition-colors">
                       {t('owner.home.analytics.view_details')}
                       <CaretRight size={14} className={isRTL ? 'rotate-180' : ''} />
                   </button>
@@ -150,7 +150,7 @@ export default function OwnerHomePage() {
                           </div>
                       ))}
                   </div>
-                  <p className="text-xs text-neutral-400 font-medium z-10 px-6 py-2 bg-white/50 backdrop-blur-sm rounded-pill border border-neutral-200">{t('owner.home.analytics.placeholder')}</p>
+                   <p className="text-xs text-neutral-600 font-medium z-10 px-6 py-2 bg-white/50 backdrop-blur-sm rounded-pill border border-neutral-200">{t('owner.home.analytics.placeholder')}</p>
               </div>
           </div>
 

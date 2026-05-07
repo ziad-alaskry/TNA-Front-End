@@ -15,7 +15,6 @@ import {
 } from '@phosphor-icons/react'
 import { useBindingContext } from '@/context/BindingContext'
 import { useRouter, useParams } from 'next/navigation'
-import { useLocale } from '@/i18n/LocaleProvider'
 
 interface BindingRequest {
     id: string;
@@ -27,37 +26,36 @@ interface BindingRequest {
     status: 'PENDING' | 'ACTIVE' | 'REJECTED';
 }
 
+const mockRequests: BindingRequest[] = [
+    {
+        id: 'BND-771',
+        visitor_name: 'أحمد العتيبي',
+        property_name: 'فيلا الملقا ١٢',
+        start_date: '2025/11/20',
+        duration: '٣ أشهر',
+        fee: 135.00,
+        status: 'PENDING'
+    },
+    {
+        id: 'BND-650',
+        visitor_name: 'سارة محمد',
+        property_name: 'عمارة النرجس',
+        start_date: '2025/11/15',
+        duration: 'شهر واحد',
+        fee: 50.00,
+        status: 'ACTIVE'
+    }
+];
+
 export default function OwnerBindingsPage() {
     const { acceptBindingRequest } = useBindingContext();
     const router = useRouter();
     const { locale } = useParams();
-    const { t } = useLocale();
-
-    const mockRequests: BindingRequest[] = [
-        {
-            id: 'BND-771',
-            visitor_name: t('owner.bindings.mock_visitor_1'),
-            property_name: t('owner.bindings.mock_property_1'),
-            start_date: '2025/11/20',
-            duration: t('owner.bindings.mock_duration_1'),
-            fee: 135.00,
-            status: 'PENDING'
-        },
-        {
-            id: 'BND-650',
-            visitor_name: t('owner.bindings.mock_visitor_2'),
-            property_name: t('owner.bindings.mock_property_2'),
-            start_date: '2025/11/15',
-            duration: t('owner.bindings.mock_duration_2'),
-            fee: 50.00,
-            status: 'ACTIVE'
-        }
-    ];
 
     const columns: DataTableColumn<BindingRequest>[] = [
         {
             key: 'visitor_name',
-            label: t('owner.bindings.visitor_beneficiary'),
+            label: 'الزائر / المستفيد',
             render: (val, row) => (
                 <div className="flex items-center gap-3">
                     <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary">
@@ -72,7 +70,7 @@ export default function OwnerBindingsPage() {
         },
         {
             key: 'property_name',
-            label: t('owner.bindings.target_property'),
+            label: 'العقار المستهدف',
             render: (val) => (
                 <div className="flex items-center gap-2">
                     <Building size={16} className="text-neutral-400" />
@@ -82,17 +80,17 @@ export default function OwnerBindingsPage() {
         },
         {
             key: 'fee',
-            label: t('owner.bindings.expected_fees'),
+            label: 'الرسوم المتوقعة',
             render: (val) => <span className="font-bold text-primary">{val.toFixed(2)} SAR</span>
         },
         {
             key: 'status',
-            label: t('common.status'),
+            label: 'الحالة',
             render: (val) => {
                 const configs: Record<BindingRequest['status'], { label: string; class: string; icon: React.ReactNode }> = {
-                    PENDING: { label: t('owner.bindings.status_pending'), class: 'bg-warning-bg text-warning', icon: <Clock size={14} /> },
-                    ACTIVE: { label: t('owner.bindings.status_active'), class: 'bg-success-bg text-success', icon: <CheckCircle size={14} /> },
-                    REJECTED: { label: t('owner.bindings.status_rejected'), class: 'bg-error-bg text-error', icon: <XCircle size={14} /> },
+                    PENDING: { label: 'بانتظار موافقتك', class: 'bg-warning-bg text-warning', icon: <Clock size={14} /> },
+                    ACTIVE: { label: 'نشط', class: 'bg-success-bg text-success', icon: <CheckCircle size={14} /> },
+                    REJECTED: { label: 'مرفوض', class: 'bg-error-bg text-error', icon: <XCircle size={14} /> },
                 };
                 const config = configs[val as BindingRequest['status']];
                 return (
@@ -105,7 +103,7 @@ export default function OwnerBindingsPage() {
         },
         {
             key: 'id',
-            label: t('owner.bindings.actions'),
+            label: 'الإجراءات',
             render: (id, row) => (
                 <div className="flex gap-2">
                     {row.status === 'PENDING' ? (
@@ -114,13 +112,13 @@ export default function OwnerBindingsPage() {
                                 onClick={(e) => { e.stopPropagation(); acceptBindingRequest(id, row.fee); }}
                                 className="h-8 px-4 bg-success text-white text-[10px] font-bold rounded-sm hover:opacity-90 transition-opacity"
                             >
-                                {t('owner.bindings.accept')}
+                                قبول
                             </button>
                             <button 
                                 onClick={(e) => { e.stopPropagation(); console.log('Rejected', id); }}
                                 className="h-8 px-4 bg-neutral-100 text-neutral-600 text-[10px] font-bold rounded-sm hover:bg-neutral-200 transition-colors"
                             >
-                                {t('owner.bindings.reject')}
+                                رفض
                             </button>
                         </>
                     ) : (
@@ -134,9 +132,9 @@ export default function OwnerBindingsPage() {
     ];
 
     return (
-        <AppShell role="Owner" header={t('owner.bindings.header')}>
+        <AppShell role="Owner" header="طلبات الارتباط">
             <DataTableLayout
-                title={t('owner.bindings.title')}
+                title="إدارة طلبات ربط العناوين"
                 columns={columns}
                 data={mockRequests}
                 onRowClick={(row) => console.log('Viewing binding details:', row.id)}
@@ -144,8 +142,8 @@ export default function OwnerBindingsPage() {
                 <div className="flex items-center gap-3 p-4 bg-primary/5 rounded-md border border-primary/10">
                     <Handshake size={24} weight="fill" className="text-primary" />
                     <div>
-                        <p className="text-xs font-bold text-neutral-900">{t('owner.bindings.auto_bind_policy')}</p>
-                        <p className="text-[10px] text-neutral-500">{t('owner.bindings.auto_bind_policy_desc')}</p>
+                        <p className="text-xs font-bold text-neutral-900">سياسة الربط التلقائي</p>
+                        <p className="text-[10px] text-neutral-500">العقارات السكنية تتطلب موافقة يدوية، بينما التجارية يمكن برمجتها للقبول التلقائي.</p>
                     </div>
                 </div>
             </DataTableLayout>

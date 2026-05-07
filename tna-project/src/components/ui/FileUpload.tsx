@@ -8,17 +8,17 @@ export interface FileUploadProps extends InputHTMLAttributes<HTMLInputElement> {
 const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
   ({ label, error, className, ...props }, ref) => {
     return (
-      <div className={`flex flex-col ${className || ''}`}>
-        {label && <label className="mb-1 text-sm font-medium text-gray-700 rtl:text-right">{label}</label>}
+      <div className={`flex flex-col space-y-1.5 ${className || ''}`}>
+        {label && <label className="text-sm font-bold text-text-primary ps-1">{label}</label>}
         <input
           type="file"
           ref={ref}
-          className={`px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-opacity-50 ${
-            error ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
+          className={`w-full px-4 py-3 border rounded-md bg-card transition-all duration-fast focus:outline-none focus:ring-2 focus:ring-primary/10 ${
+            error ? 'border-error ring-1 ring-error/20' : 'border-divider focus:border-primary'
           }`}
           {...props}
         />
-        {error && <p className="mt-1 text-sm text-red-500 rtl:text-right">{error}</p>}
+        {error && <p className="text-xs text-error ps-1 font-medium">{error}</p>}
       </div>
     );
   }

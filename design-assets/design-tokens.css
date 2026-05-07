@@ -1,0 +1,319 @@
+/*
+ * ============================================================
+ *  TNA — Temporary National Address Design Tokens
+ *  Extracted from 14 Figma screenshots (RTL Arabic mobile app)
+ * ============================================================
+ */
+
+:root {
+
+  /* ──────────────────────────────────────
+     COLORS — Primary
+  ────────────────────────────────────── */
+  --color-primary:            #2196C9;
+  --color-primary-dark:       #1565A8;
+  --color-primary-light:      #E8F4FB;
+  --color-primary-gradient:   linear-gradient(to left, #2196C9, #1565A8);
+
+  /* ──────────────────────────────────────
+     COLORS — Secondary / Accent
+  ────────────────────────────────────── */
+  --color-orange:             #F5A623;
+  --color-orange-light:       #FFF3DC;
+  --color-teal:               #26C6DA;
+
+  /* ──────────────────────────────────────
+     COLORS — Semantic
+  ────────────────────────────────────── */
+  --color-success:            #4CAF50;
+  --color-success-light:      #E8F5E9;
+  --color-error:              #C62828;
+  --color-error-border:       #D32F2F;
+  --color-error-light:        #FFEBEE;
+  --color-warning:            #F5A623;
+  --color-info:               #2196C9;
+
+  /* ──────────────────────────────────────
+     COLORS — Neutrals
+  ────────────────────────────────────── */
+  --color-white:              #FFFFFF;
+  --color-background:         #F2F2F7;
+  --color-surface:            #FFFFFF;
+  --color-divider:            #E0E0E0;
+  --color-border-light:       #EEEEEE;
+  --color-overlay:            rgba(0, 0, 0, 0.04);
+
+  /* ──────────────────────────────────────
+     COLORS — Text
+  ────────────────────────────────────── */
+  --text-primary:             #1A1A1A;
+  --text-secondary:           #555555;
+  --text-placeholder:         #AAAAAA;
+  --text-link:                #2196C9;
+  --text-on-primary:          #FFFFFF;
+  --text-on-error:            #FFFFFF;
+  --text-disabled:            #9E9E9E;
+  --text-caption:             #777777;
+
+  /* ──────────────────────────────────────
+     COLORS — Navigation Bar
+  ────────────────────────────────────── */
+  --navbar-bg:                #FFFFFF;
+  --navbar-active:            #2196C9;
+  --navbar-inactive:          #9E9E9E;
+  --navbar-indicator:         #F5A623;
+
+  /* ──────────────────────────────────────
+     COLORS — Header
+  ────────────────────────────────────── */
+  --header-bg:                #FFFFFF;
+  --header-title:             #1A1A1A;
+  --header-icon:              #1A1A1A;
+
+  /* ──────────────────────────────────────
+     TYPOGRAPHY — Font Families
+  ────────────────────────────────────── */
+  --font-arabic:    'IBM Plex Sans Arabic', 'Noto Sans Arabic', sans-serif;
+  --font-english:   'IBM Plex Sans', 'Roboto', sans-serif;
+  --font-mono:      'IBM Plex Mono', monospace;
+
+  /* ──────────────────────────────────────
+     TYPOGRAPHY — Font Sizes
+  ────────────────────────────────────── */
+  --text-xs:        11px;   /* tab labels, tiny captions */
+  --text-sm:        13px;   /* helper text, footnotes */
+  --text-base:      15px;   /* body text, list items, input values */
+  --text-md:        17px;   /* labels, header titles, button text */
+  --text-lg:        20px;   /* sub-headings */
+  --text-xl:        24px;   /* section headers */
+  --text-2xl:       28px;   /* splash English subtitle */
+  --text-3xl:       34px;   /* splash Arabic headline */
+
+  /* ──────────────────────────────────────
+     TYPOGRAPHY — Font Weights
+  ────────────────────────────────────── */
+  --font-regular:   400;
+  --font-medium:    500;
+  --font-semibold:  600;
+  --font-bold:      700;
+  --font-extrabold: 800;
+
+  /* ──────────────────────────────────────
+     TYPOGRAPHY — Line Heights
+  ────────────────────────────────────── */
+  --leading-tight:   1.2;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.7;
+
+  /* ──────────────────────────────────────
+     TYPOGRAPHY — Letter Spacing
+  ────────────────────────────────────── */
+  --tracking-normal: 0em;
+  --tracking-wide:   0.02em;
+  --tracking-wider:  0.05em;
+
+  /* ──────────────────────────────────────
+     SPACING
+  ────────────────────────────────────── */
+  --space-0:    0px;
+  --space-1:    4px;
+  --space-2:    8px;
+  --space-3:    12px;
+  --space-4:    16px;
+  --space-5:    20px;
+  --space-6:    24px;
+  --space-7:    28px;
+  --space-8:    32px;
+  --space-10:   40px;
+  --space-12:   48px;
+
+  --screen-margin:       20px;   /* horizontal page padding */
+  --card-padding:        16px;
+  --input-padding-v:     14px;
+  --input-padding-h:     16px;
+  --section-gap:         24px;
+  --navbar-height:       83px;
+  --header-height:       44px;
+
+  /* ──────────────────────────────────────
+     BORDER RADIUS
+  ────────────────────────────────────── */
+  --radius-none:   0px;
+  --radius-sm:     6px;    /* inner nested inputs */
+  --radius-md:     10px;   /* inputs, dropdowns */
+  --radius-lg:     14px;   /* cards, panels */
+  --radius-xl:     18px;   /* outer container cards */
+  --radius-2xl:    24px;   /* large CTA buttons */
+  --radius-full:   9999px; /* pill buttons */
+  --radius-circle: 50%;    /* radio, circular icons */
+
+  /* ──────────────────────────────────────
+     SHADOWS
+  ────────────────────────────────────── */
+  --shadow-none:        none;
+  --shadow-card:        0px 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-card-hover:  0px 4px 16px rgba(0, 0, 0, 0.10);
+  --shadow-button:      0px 4px 12px rgba(33, 150, 201, 0.35);
+  --shadow-button-red:  0px 4px 12px rgba(198, 40, 40, 0.30);
+  --shadow-navbar:      0px -1px 4px rgba(0, 0, 0, 0.08);
+  --shadow-header:      0px 1px 4px rgba(0, 0, 0, 0.06);
+  --shadow-input:       inset 0px 1px 3px rgba(0, 0, 0, 0.04);
+
+  /* ──────────────────────────────────────
+     BORDERS
+  ────────────────────────────────────── */
+  --border-width-thin:   1px;
+  --border-width-medium: 1.5px;
+  --border-width-thick:  2px;
+
+  --border-default:      1px solid #E0E0E0;
+  --border-active:       1.5px solid #2196C9;
+  --border-error:        2px solid #D32F2F;
+  --border-success:      1.5px solid #4CAF50;
+  --border-disabled:     1px solid #EEEEEE;
+
+  /* ──────────────────────────────────────
+     OPACITY
+  ────────────────────────────────────── */
+  --opacity-disabled:    0.45;
+  --opacity-placeholder: 0.55;
+  --opacity-overlay:     0.04;
+
+  /* ──────────────────────────────────────
+     ICON SIZES
+  ────────────────────────────────────── */
+  --icon-xs:   16px;
+  --icon-sm:   20px;
+  --icon-md:   24px;
+  --icon-lg:   32px;
+  --icon-xl:   48px;
+
+  /* ──────────────────────────────────────
+     COMPONENT — Button Primary
+  ────────────────────────────────────── */
+  --btn-primary-height:       52px;
+  --btn-primary-radius:       9999px;
+  --btn-primary-bg:           linear-gradient(to left, #2196C9, #1565A8);
+  --btn-primary-color:        #FFFFFF;
+  --btn-primary-font-size:    17px;
+  --btn-primary-font-weight:  700;
+  --btn-primary-shadow:       0px 4px 12px rgba(33, 150, 201, 0.35);
+  --btn-primary-padding-h:    24px;
+
+  --btn-disabled-bg:          #9E9E9E;
+  --btn-disabled-shadow:      none;
+
+  /* ──────────────────────────────────────
+     COMPONENT — Button Destructive
+  ────────────────────────────────────── */
+  --btn-destructive-bg:       #C62828;
+  --btn-destructive-shadow:   0px 4px 12px rgba(198, 40, 40, 0.30);
+
+  /* ──────────────────────────────────────
+     COMPONENT — Button Outline
+  ────────────────────────────────────── */
+  --btn-outline-border:       1.5px solid #2196C9;
+  --btn-outline-color:        #2196C9;
+  --btn-outline-bg:           transparent;
+
+  /* ──────────────────────────────────────
+     COMPONENT — Input Field
+  ────────────────────────────────────── */
+  --input-height:             52px;
+  --input-radius:             10px;
+  --input-bg:                 #F5F5F5;
+  --input-bg-active:          #FFFFFF;
+  --input-border:             1px solid #E0E0E0;
+  --input-border-active:      1.5px solid #2196C9;
+  --input-color:              #1A1A1A;
+  --input-placeholder:        #AAAAAA;
+  --input-font-size:          15px;
+  --input-icon-color:         #AAAAAA;
+  --input-value-link-color:   #2196C9;
+
+  /* Dark input variant (linked address field) */
+  --input-dark-bg:            #4A4A4A;
+  --input-dark-color:         #FFFFFF;
+
+  /* ──────────────────────────────────────
+     COMPONENT — Card
+  ────────────────────────────────────── */
+  --card-bg:                  #FFFFFF;
+  --card-radius:              14px;
+  --card-border:              1px solid #EEEEEE;
+  --card-shadow:              0px 2px 8px rgba(0, 0, 0, 0.06);
+  --card-padding:             16px;
+
+  --card-selected-border:     2px solid #2196C9;
+  --card-selected-shadow:     0px 4px 16px rgba(33, 150, 201, 0.15);
+  --card-error-border:        2px solid #D32F2F;
+
+  /* ──────────────────────────────────────
+     COMPONENT — Navigation Bar
+  ────────────────────────────────────── */
+  --navbar-height:            83px;
+  --navbar-bg:                #FFFFFF;
+  --navbar-shadow:            0px -1px 4px rgba(0, 0, 0, 0.08);
+  --navbar-icon-active:       #2196C9;
+  --navbar-icon-inactive:     #9E9E9E;
+  --navbar-label-size:        11px;
+  --navbar-indicator-color:   #F5A623;
+  --navbar-indicator-height:  3px;
+
+  /* ──────────────────────────────────────
+     COMPONENT — Address Code
+  ────────────────────────────────────── */
+  --address-code-color:       #2196C9;
+  --address-code-font:        'IBM Plex Mono', monospace;
+  --address-code-size:        15px;
+  --address-code-weight:      600;
+  --address-code-spacing:     0.03em;
+
+  /* ──────────────────────────────────────
+     COMPONENT — Error Banner
+  ────────────────────────────────────── */
+  --error-banner-bg:          #C62828;
+  --error-banner-color:       #FFFFFF;
+  --error-banner-radius:      10px;
+  --error-banner-font-size:   15px;
+  --error-banner-font-weight: 600;
+
+  /* ──────────────────────────────────────
+     COMPONENT — Progress Stepper
+  ────────────────────────────────────── */
+  --stepper-track:            #CCCCCC;
+  --stepper-active:           #2196C9;
+  --stepper-dot-size:         10px;
+  --stepper-track-height:     2px;
+
+  /* ──────────────────────────────────────
+     MOTION
+  ────────────────────────────────────── */
+  --duration-fast:    150ms;
+  --duration-normal:  250ms;
+  --duration-slow:    400ms;
+  --ease-default:     cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in:          cubic-bezier(0.4, 0, 1, 1);
+  --ease-out:         cubic-bezier(0, 0, 0.2, 1);
+
+  /* ──────────────────────────────────────
+     Z-INDEX
+  ────────────────────────────────────── */
+  --z-base:    0;
+  --z-card:    1;
+  --z-header:  100;
+  --z-navbar:  100;
+  --z-modal:   200;
+  --z-toast:   300;
+}
+
+/* ──────────────────────────────────────
+   RTL DIRECTION GLOBAL
+   Apply to root for Arabic RTL support
+────────────────────────────────────── */
+[dir="rtl"],
+.rtl {
+  direction: rtl;
+  text-align: right;
+  font-family: var(--font-arabic);
+}

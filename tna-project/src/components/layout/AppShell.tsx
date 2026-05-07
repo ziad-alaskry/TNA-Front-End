@@ -9,6 +9,7 @@ import Breadcrumbs from '@/components/shared/Breadcrumbs'
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher'
 import { BottomNav } from './BottomNav'
 import { cn } from '@/lib/utils/cn'
+import Header from '@/components/shell/Header'
 
 type UserRole = 'Visitor' | 'Owner' | 'Gov' | 'Carrier'
 
@@ -37,33 +38,14 @@ export function AppShell({
   return (
     <div suppressHydrationWarning className="flex h-screen w-full flex-col bg-surface-100 text-neutral-900" dir={isRTL ? 'rtl' : 'ltr'}>
 
-      {/* ── HEADER (TopBar — frosted glass per SPATIAL) ────────────── */}
-      <header
-          suppressHydrationWarning
-          className="ui-topbar ps-5 pe-5 py-4 shrink-0"
-      >
-          <div className="flex items-center justify-between gap-3 ui-content-container mx-auto">
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setSidebarOpen(true)}
-                className="md:hidden p-1.5 rounded-sm hover:bg-neutral-100 text-neutral-600 hover:text-neutral-900 transition-all"
-                aria-label="Open menu"
-              >
-                <List size={22} weight="bold" />
-              </button>
-              <div className="text-start font-bold text-neutral-900 text-lg tracking-tight">
-                {header || 'TNA Platform'}
-              </div>
-            </div>
-            <LanguageSwitcher />
-          </div>
-      </header>
+      {/* ── HEADER (Enterprise Header with Bell, Search, Avatar) ────────────── */}
+      <Header title={header} onMenuClick={() => setSidebarOpen(true)} />
 
       {/* ── BODY ─────────────────────────────────────────────── */}
       <div className="flex flex-1 overflow-hidden">
 
         {/* DESKTOP SIDEBAR */}
-        <aside className="hidden w-64 shrink-0 border-e border-neutral-200 bg-surface-200 md:flex flex-col">
+        <aside className="hidden w-64 shrink-0 md:flex flex-col bg-primary-gradient border-e border-white/10 h-[calc(100vh-var(--navbar-height))] sticky top-navbar">
           <nav className="flex-1 overflow-y-auto px-4 py-8 text-start no-scrollbar">
             <SidebarContent role={role} />
           </nav>
@@ -88,7 +70,7 @@ export function AppShell({
           {/* Overlay */}
           <div
             className={cn(
-                "absolute inset-0 bg-neutral-900/40 backdrop-blur-sm transition-opacity duration-300",
+                "absolute inset-0 bg-primary-dark/60 backdrop-blur-sm transition-opacity duration-300",
                 sidebarOpen ? "opacity-100" : "opacity-0"
             )}
             onClick={() => setSidebarOpen(false)}
@@ -97,22 +79,22 @@ export function AppShell({
           {/* Drawer */}
           <aside
             className={cn(
-                "absolute inset-y-0 w-72 bg-surface-200 shadow-modal transition-transform duration-300 ease-out flex flex-col",
+                "absolute inset-y-0 w-72 bg-primary-gradient shadow-modal transition-transform duration-300 ease-out flex flex-col",
                 isRTL 
                     ? (sidebarOpen ? "translate-x-0" : "translate-x-full") 
                     : (sidebarOpen ? "translate-x-0" : "-translate-x-full"),
                 isRTL ? "right-0" : "left-0"
             )}
           >
-            <div className="flex items-center justify-between p-5 border-b border-neutral-100 bg-surface-300">
-               <span className="font-bold text-neutral-900 tracking-tight">{t('common.menu')}</span>
-               <button 
-                    onClick={() => setSidebarOpen(false)} 
-                    className="p-1.5 rounded-sm hover:bg-neutral-100 text-neutral-400 hover:text-neutral-700 transition-all"
+             <div className="flex items-center justify-between p-5 border-b border-white/10 bg-black/10">
+                <span className="font-bold text-white tracking-tight">{t('common.menu')}</span>
+                <button 
+                  className="lg:hidden p-2 -ms-2 text-white/70 hover:text-white hover:bg-white/10 rounded-md transition-colors"
+                  onClick={() => setSidebarOpen(false)}
                 >
-                  <X size={20} weight="bold" />
-               </button>
-            </div>
+                  <X size={22} weight="bold" />
+                </button>
+             </div>
             <nav className="flex-1 overflow-y-auto px-4 py-8 text-start">
               <SidebarContent role={role} />
             </nav>

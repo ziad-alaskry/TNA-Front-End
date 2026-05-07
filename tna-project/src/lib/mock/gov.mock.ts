@@ -1,0 +1,50 @@
+export const mockGovQueue = [
+  {
+    request_id: 'req-pending-1',
+    visitor_name: 'Abdullah Al-Ghamdi',
+    nationality: 'Saudi Arabia',
+    submitted_at: '2024-05-01T10:00:00Z',
+    mode: 'MODERATED',
+    status: 'PENDING_REVIEW',
+  },
+  {
+    request_id: 'req-auto-1',
+    visitor_name: 'John Doe',
+    nationality: 'USA',
+    submitted_at: '2024-05-02T11:00:00Z',
+    mode: 'AUTONOMOUS',
+    status: 'AUTO_APPROVED',
+  },
+  {
+    request_id: 'req-pending-2',
+    visitor_name: 'Sara Ahmed',
+    nationality: 'Egypt',
+    submitted_at: '2024-05-03T09:30:00Z',
+    mode: 'MODERATED',
+    status: 'PENDING_REVIEW',
+  },
+  {
+    request_id: 'req-pending-3',
+    visitor_name: 'Michael Smith',
+    nationality: 'UK',
+    submitted_at: '2024-05-04T15:20:00Z',
+    mode: 'MODERATED',
+    status: 'PENDING_REVIEW',
+  },
+  {
+    request_id: 'req-pending-4',
+    visitor_name: 'Fatima Zahra',
+    nationality: 'Morocco',
+    submitted_at: '2024-05-05T08:15:00Z',
+    mode: 'MODERATED',
+    status: 'PENDING_REVIEW',
+  },
+];
+
+export const issuancePolicyConfig = {
+    issuance_mode: 'MODERATED',
+    max_active_tnas_per_visitor: 3,
+    auto_approve_if_visa_valid: true,
+    auto_approve_if_iqama_valid: true,
+    route_to_review_if_max_exceeded: true,
+};

@@ -98,7 +98,8 @@
                 "suspended": "Suspended"
             },
             "actions": {
-                "create_new": "Create New Temporary National Address"
+                "create_new": "Create New Temporary National Address",
+                "order_shipment": "Order Shipment"
             }
         }
     },

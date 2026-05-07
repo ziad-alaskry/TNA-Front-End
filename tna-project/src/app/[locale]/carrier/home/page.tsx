@@ -26,22 +26,22 @@ export default function CarrierHomePage() {
   const stats = [
     { 
         label: t('carrier.home.stats.fleet_size'), 
-        value: t('carrier.home.mock_fleet_size'), 
+        value: t('common.loading') !== 'Loading...' ? '٢٤ مركبة' : '24 Vehicles', 
         icon: <TruckIcon size={24} weight="fill" className="text-primary" /> 
     },
     { 
         label: t('carrier.home.stats.active_shipments'), 
-        value: t('carrier.home.mock_active_shipments'), 
+        value: '١٤٢', 
         icon: <PackageIcon size={24} weight="fill" className="text-success" /> 
     },
     { 
         label: t('carrier.home.stats.available_drivers'), 
-        value: t('carrier.home.mock_drivers'), 
+        value: t('common.loading') !== 'Loading...' ? '١٨ سائق' : '18 Drivers', 
         icon: <UsersIcon size={24} weight="fill" className="text-secondary" /> 
     },
     { 
         label: t('carrier.home.stats.pending_distribution'), 
-        value: t('carrier.home.mock_pending'), 
+        value: '١٢', 
         icon: <ClockIcon size={24} weight="fill" className="text-warning" /> 
     },
   ];
@@ -49,23 +49,23 @@ export default function CarrierHomePage() {
   const activity = [
     {
       id: '1',
-      title: t('carrier.home.activity1_title'),
-      description: t('carrier.home.activity1_desc'),
-      timestamp: t('carrier.home.time_15m'),
+      title: 'توزيع شحنات رقم #٩٩٢٨١',
+      description: 'تم تعيين ٤٥ شحنة لمسار حي الملك فهد.',
+      timestamp: 'منذ ١٥ دقيقة',
       status: 'success' as const,
     },
     {
       id: '2',
-      title: t('carrier.home.activity2_title'),
-      description: t('carrier.home.activity2_desc'),
-      timestamp: t('carrier.home.time_2h'),
+      title: 'تنبيه صيانة: TRK-011',
+      description: 'تغيير زيت دوري مطلوب لشاحنة هينو خفيفة.',
+      timestamp: 'منذ ساعتين',
       status: 'pending' as const,
     },
     {
       id: '3',
-      title: t('carrier.home.activity3_title'),
-      description: t('carrier.home.activity3_desc'),
-      timestamp: t('carrier.home.time_yesterday'),
+      title: 'مزامنة ترخيص الناقل',
+      description: 'اكتمل التحقق من وزارة النقل لعمليات أسطول ٢٠٢٦.',
+      timestamp: 'بالأمس',
       status: 'success' as const,
     },
   ];
@@ -103,30 +103,30 @@ export default function CarrierHomePage() {
                   </div>
               </div>
 
-              {/* Tasks Quick Access */}
-              <div className="p-6 rounded-md bg-btn-primary text-white flex flex-col justify-between text-start">
-                  <div>
-                      <h4 className="text-lg font-bold mb-2">{t('carrier.home.tasks.title')}</h4>
-                      <p className="text-xs opacity-70 leading-relaxed">
-                          {t('carrier.home.tasks.description')}
-                      </p>
-                  </div>
-                  <div className="space-y-2 mt-6">
-                      <button 
-                          onClick={() => router.push(`/${locale}/carrier/shipments`)}
-                          className="w-full h-10 bg-white text-primary rounded-sm font-bold text-xs flex items-center justify-center gap-2 shadow-sm hover:bg-neutral-50 transition-colors"
-                      >
-                          <MapPinIcon size={16} weight="fill" />
-                          {t('carrier.home.tasks.map_button')}
-                      </button>
-                      <button 
-                          onClick={() => router.push(`/${locale}/carrier/fleet`)}
-                          className="w-full h-10 bg-white/20 text-white rounded-sm font-bold text-xs hover:bg-white/30 transition-colors"
-                      >
-                          {t('carrier.home.tasks.manage_fleet')}
-                      </button>
-                  </div>
-              </div>
+               {/* Tasks Quick Access */}
+               <div className="p-6 rounded-md bg-primary-dark text-white flex flex-col justify-between text-start">
+                   <div>
+                       <h4 className="text-lg font-bold mb-2">{t('carrier.home.tasks.title')}</h4>
+                       <p className="text-sm leading-relaxed">
+                           {t('carrier.home.tasks.description')}
+                       </p>
+                   </div>
+                   <div className="space-y-2 mt-6">
+                       <button 
+                           onClick={() => router.push(`/${locale}/carrier/shipments`)}
+                           className="w-full h-10 bg-white text-primary-dark rounded-sm font-bold text-xs flex items-center justify-center gap-2 shadow-sm hover:bg-neutral-50 transition-colors"
+                       >
+                           <MapPinIcon size={16} weight="fill" />
+                           {t('carrier.home.tasks.map_button')}
+                       </button>
+                       <button 
+                           onClick={() => router.push(`/${locale}/carrier/fleet`)}
+                           className="w-full h-10 bg-white/20 text-white rounded-sm font-bold text-xs hover:bg-white/30 transition-colors"
+                       >
+                           {t('carrier.home.tasks.manage_fleet')}
+                       </button>
+                   </div>
+               </div>
           </div>
 
           {/* Live Tracking Banner */}
@@ -138,13 +138,13 @@ export default function CarrierHomePage() {
                   </div>
                   <div>
                       <p className="text-sm font-bold text-neutral-900">{t('carrier.home.tracking.title')}</p>
-                      <p className="text-xs text-neutral-500">{t('carrier.home.tracking.description').replace('{count}', t('carrier.home.mock_pending'))}</p>
+                      <p className="text-xs text-neutral-500">{t('carrier.home.tracking.description').replace('{count}', '١٢')}</p>
                   </div>
               </div>
-              <button className="h-9 px-6 bg-neutral-900 text-white text-xs font-bold rounded-pill hover:bg-black transition-colors flex items-center gap-2">
-                  {t('carrier.home.tracking.button')}
-                  <ArrowRightIcon size={14} className={isRTL ? 'rotate-180' : ''} />
-              </button>
+               <button className="h-9 px-6 bg-primary text-white text-xs font-bold rounded-md hover:bg-primary-dark transition-colors flex items-center gap-2">
+                   {t('carrier.home.tracking.button')}
+                   <ArrowRightIcon size={14} className={isRTL ? 'rotate-180' : ''} />
+               </button>
           </div>
         </DashboardLayout>
       </AppShell>

@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { AppShell } from '@/components/layout/AppShell'
-import { useLocale } from '@/i18n/LocaleProvider'
 import { 
     Wallet, 
     ArrowUpRight, 
@@ -25,41 +24,40 @@ interface Transaction {
     method: string;
 }
 
+const mockTransactions: Transaction[] = [
+    {
+        id: 'TX-9901',
+        type: 'PAYMENT',
+        amount: -50.00,
+        description: 'رسوم إصدار عنوان وطني مؤقت - TNA-667722',
+        date: '2025/11/10 02:30 PM',
+        method: 'Wallet Balance'
+    },
+    {
+        id: 'TX-9855',
+        type: 'TOP_UP',
+        amount: 200.00,
+        description: 'شحن رصيد المحفظة',
+        date: '2025/11/10 10:15 AM',
+        method: 'Mada (**** 1234)'
+    },
+    {
+        id: 'TX-9721',
+        type: 'PAYMENT',
+        amount: -30.00,
+        description: 'تمديد فترة السكن - TNA-102938',
+        date: '2025/11/05 09:00 AM',
+        method: 'Wallet Balance'
+    }
+];
+
 export default function VisitorWalletPage() {
     const { ownerAccount } = useBindingContext();
-    const { t } = useLocale();
-
-    const mockTransactions: Transaction[] = [
-        {
-            id: 'TX-9901',
-            type: 'PAYMENT',
-            amount: -50.00,
-            description: t('visitor.wallet.mock_tx_1'),
-            date: '2025/11/10 02:30 PM',
-            method: 'Wallet Balance'
-        },
-        {
-            id: 'TX-9855',
-            type: 'TOP_UP',
-            amount: 200.00,
-            description: t('visitor.wallet.mock_tx_2'),
-            date: '2025/11/10 10:15 AM',
-            method: 'Mada (**** 1234)'
-        },
-        {
-            id: 'TX-9721',
-            type: 'PAYMENT',
-            amount: -30.00,
-            description: t('visitor.wallet.mock_tx_3'),
-            date: '2025/11/05 09:00 AM',
-            method: 'Wallet Balance'
-        }
-    ];
 
     const columns: DataTableColumn<Transaction>[] = [
         {
             key: 'type',
-            label: t('visitor.wallet.operation'),
+            label: 'العملية',
             render: (val, row) => (
                 <div className="flex items-center gap-3">
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
@@ -76,12 +74,12 @@ export default function VisitorWalletPage() {
         },
         {
             key: 'date',
-            label: t('visitor.wallet.date'),
+            label: 'التاريخ',
             render: (val) => <span className="text-xs text-neutral-500">{val}</span>
         },
         {
             key: 'amount',
-            label: t('visitor.wallet.amount'),
+            label: 'المبلغ',
             render: (val) => (
                 <span className={`font-bold ${val > 0 ? 'text-success' : 'text-neutral-900'}`}>
                     {val > 0 ? `+${val.toFixed(2)}` : val.toFixed(2)} SAR
@@ -91,25 +89,25 @@ export default function VisitorWalletPage() {
     ];
 
     return (
-        <AppShell role="Visitor" header={t('visitor.wallet.header')}>
+        <AppShell role="Visitor" header="المحفظة الإلكترونية">
             <div className="space-y-8">
                 {/* Balance Card */}
-                <div className="relative overflow-hidden p-8 rounded-md bg-btn-primary text-white shadow-btn flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div className="relative overflow-hidden p-8 rounded-md bg-primary-dark text-white shadow-card flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div className="relative z-10">
-                        <p className="text-sm font-medium opacity-80 mb-2">{t('visitor.wallet.available_balance')}</p>
+                        <p className="text-sm font-medium mb-2">الرصيد المتاح</p>
                         <h2 className="text-4xl font-bold flex items-baseline gap-2">
                             {ownerAccount.current_balance.toFixed(2)}
-                            <span className="text-lg opacity-80">SAR</span>
+                            <span className="text-lg opacity-90">SAR</span>
                         </h2>
                     </div>
                     <div className="relative z-10 flex gap-4">
-                        <button className="h-12 px-6 rounded-pill bg-white text-primary font-bold flex items-center gap-2 shadow-sm hover:bg-neutral-50 transition-colors">
+                        <button className="h-12 px-6 rounded-md bg-white text-primary-dark font-bold flex items-center gap-2 shadow-sm hover:bg-neutral-50 transition-colors">
                             <PlusCircle size={20} weight="fill" />
-                            {t('visitor.wallet.top_up')}
+                            شحن الرصيد
                         </button>
                         <button className="h-12 px-6 rounded-pill bg-white/20 text-white font-bold flex items-center gap-2 backdrop-blur-md hover:bg-white/30 transition-colors">
                             <Receipt size={20} weight="fill" />
-                            {t('visitor.wallet.statement')}
+                            كشف حساب
                         </button>
                     </div>
                     
@@ -120,8 +118,8 @@ export default function VisitorWalletPage() {
                 {/* Quick Shortcuts */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {[
-                        { label: t('visitor.wallet.mada'), icon: <CreditCard size={24} />, color: 'text-primary bg-primary/5' },
-                        { label: t('visitor.wallet.bank_transfer'), icon: <Bank size={24} />, color: 'text-neutral-600 bg-neutral-100' },
+                        { label: 'بطاقة مدى', icon: <CreditCard size={24} />, color: 'text-primary bg-primary/5' },
+                        { label: 'تحويل بنكي', icon: <Bank size={24} />, color: 'text-neutral-600 bg-neutral-100' },
                         { label: 'Apple Pay', icon: <div className="font-bold"></div>, color: 'text-neutral-900 bg-neutral-100' },
                         { label: 'STC Pay', icon: <div className="font-bold text-xs">STC</div>, color: 'text-error bg-error/5' },
                     ].map((m, i) => (
@@ -136,7 +134,7 @@ export default function VisitorWalletPage() {
 
                 {/* Transaction History */}
                 <DataTableLayout
-                    title={t('visitor.wallet.recent_transactions')}
+                    title="العمليات الأخيرة"
                     columns={columns}
                     data={mockTransactions}
                     pageSize={5}

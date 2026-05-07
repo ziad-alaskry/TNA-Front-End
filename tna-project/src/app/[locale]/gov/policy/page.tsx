@@ -8,16 +8,23 @@ import {
     CurrencyCircleDollar, 
     Clock, 
     WarningCircle,
+    ArrowRight,
+    ToggleLeft,
+    ToggleRight,
+    CaretRight,
     PlusCircle,
     SlidersHorizontal,
     CheckCircle,
-    Trash
+    Trash,
+    Globe,
+    UserCircle,
+    MapPin
 } from '@phosphor-icons/react'
 import InputField from '@/components/ui/InputField'
 import Select from '@/components/ui/Select'
 import Button from '@/components/ui/Button'
 import { useRouter, useParams } from 'next/navigation'
-import { useLocale } from '@/i18n/LocaleProvider'
+import { cn } from '@/lib/utils/cn'
 
 interface Condition {
     id: string;
@@ -29,7 +36,6 @@ interface Condition {
 export default function GovPolicyPage() {
     const router = useRouter();
     const { locale } = useParams();
-    const { t } = useLocale();
 
     const [isAutomationEnabled, setIsAutomationEnabled] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
@@ -59,7 +65,7 @@ export default function GovPolicyPage() {
     };
 
     return (
-        <AppShell role="Gov" header={t('gov.policy.header')}>
+        <AppShell role="Gov" header="إعدادات السياسات والحوكمة">
             <div className="max-w-4xl space-y-8">
                 {/* Automation Toggle Header */}
                 <div className={`p-6 rounded-md border transition-all flex items-center justify-between ${
@@ -72,13 +78,13 @@ export default function GovPolicyPage() {
                             <Gear size={24} weight="fill" className={isAutomationEnabled ? 'animate-spin-slow' : ''} />
                         </div>
                         <div>
-                            <h3 className="text-lg font-bold text-neutral-900">{t('gov.policy.smart_automation')}</h3>
-                            <p className="text-xs text-neutral-500">{t('gov.policy.smart_automation_desc')}</p>
+                            <h3 className="text-lg font-bold text-neutral-900">المراجعة الآلية الذكية</h3>
+                            <p className="text-xs text-neutral-500">عند تفعيلها، سيقوم النظام بالبت في الطلبات السكنية المطابقة للمعايير تلقائياً.</p>
                         </div>
                     </div>
                     <button 
                         onClick={() => setIsAutomationEnabled(!isAutomationEnabled)}
-                        className={`w-16 h-8 rounded-pill relative transition-colors ${
+                        className={`w-16 h-8 rounded-full relative transition-colors ${
                             isAutomationEnabled ? 'bg-primary' : 'bg-neutral-300'
                         }`}
                     >
@@ -93,12 +99,13 @@ export default function GovPolicyPage() {
                     <div className="space-y-6">
                         <h4 className="font-bold text-neutral-900 flex items-center gap-2">
                             <CurrencyCircleDollar size={20} className="text-primary" weight="fill" />
-                            {t('gov.policy.fee_structure')}
+                            هيكلة الرسوم السيادية
                         </h4>
                         <div className="space-y-4">
-                            <InputField label={t('gov.policy.residential_fee')} defaultValue={t('gov.policy.residential_fee_val')} />
-                            <InputField label={t('gov.policy.commercial_fee')} defaultValue={t('gov.policy.commercial_fee_val')} />
-                            <InputField label={t('gov.policy.platform_percentage')} defaultValue={t('gov.policy.platform_percentage_val')} />
+                            <InputField label="رسوم إصدار TNA سكني (SAR)" defaultValue="١٠٠.٠٠" />
+                            <InputField label="رسوم إصدار TNA تجاري (SAR)" defaultValue="٥٠٠.٠٠" />
+                            <InputField label="نسبة المنصة من رسوم الربط (٪)" defaultValue="١٥" />
+                            <div className="h-[74px] hidden md:block" aria-hidden="true" /> {/* Spacer to align with Warning box in col 2 */}
                         </div>
                     </div>
 
@@ -106,18 +113,18 @@ export default function GovPolicyPage() {
                     <div className="space-y-6">
                         <h4 className="font-bold text-neutral-900 flex items-center gap-2">
                             <Clock size={20} className="text-primary" weight="fill" />
-                            {t('gov.policy.lifecycle')}
+                            دورة حياة العنوان
                         </h4>
                         <div className="space-y-4">
-                            <InputField label={t('gov.policy.default_validity')} defaultValue={t('gov.policy.default_validity_val')} />
-                            <InputField label={t('gov.policy.grace_period')} defaultValue={t('gov.policy.grace_period_val')} />
+                            <InputField label="مدة صلاحية العنوان الافتراضية (أيام)" defaultValue="١٨٠" />
+                            <InputField label="فترة السماح قبل الإلغاء (أيام)" defaultValue="٧" />
                             <div className="p-4 bg-warning-bg border border-warning/10 rounded-md">
                                 <p className="text-[10px] text-warning font-bold flex items-center gap-2">
                                     <WarningCircle size={14} weight="fill" />
-                                    {t('gov.policy.security_alert')}
+                                    تنبيه أمني
                                 </p>
                                 <p className="text-[10px] text-neutral-600 mt-1 leading-relaxed">
-                                    {t('gov.policy.security_alert_desc')}
+                                    تغيير هذه القيم سيؤثر على جميع العناوين الجديدة المصدرة من هذه اللحظة.
                                 </p>
                             </div>
                         </div>
@@ -132,7 +139,7 @@ export default function GovPolicyPage() {
                                 <SlidersHorizontal size={20} weight="bold" />
                             </div>
                             <div>
-                                <h4 className="font-bold text-neutral-900">{t('gov.policy.eligibility_rules')}</h4>
+                                <h4 className="font-bold text-neutral-900">محرك قواعد الأهلية</h4>
                                 <p className="text-[10px] text-neutral-500">تحديد شروط استحقاق العناوين الوطنية المؤقتة</p>
                             </div>
                         </div>
@@ -143,7 +150,7 @@ export default function GovPolicyPage() {
                             onClick={handleAddCondition}
                         >
                             <PlusCircle size={16} />
-                            {t('gov.policy.add_rule')}
+                            إضافة شرط
                         </Button>
                     </div>
 
@@ -210,19 +217,19 @@ export default function GovPolicyPage() {
                         onClick={() => router.back()}
                         className="h-12 px-8 rounded-sm text-sm font-bold text-neutral-500 hover:bg-neutral-100 transition-colors"
                     >
-                        {t('gov.policy.discard_changes')}
+                        تجاهل التغييرات
                     </button>
                     <button 
                         onClick={handleSave}
                         disabled={isSaving}
-                        className="h-12 px-12 rounded-pill bg-neutral-900 text-white text-sm font-bold shadow-btn hover:bg-black transition-all flex items-center gap-2 disabled:opacity-50"
+                        className="h-12 px-12 rounded-md bg-primary text-white text-sm font-bold shadow-btn hover:bg-primary-dark transition-all flex items-center gap-2 disabled:opacity-50"
                     >
                         {isSaving ? (
-                            <>{t('gov.policy.saving')}</>
+                            <>جاري الحفظ...</>
                         ) : (
                             <>
                                 <CheckCircle size={20} />
-                                {t('gov.policy.save_sync')}
+                                حفظ ومزامنة السياسات
                             </>
                         )}
                     </button>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -10,16 +10,23 @@ import {
     DotsThree,
     Check,
     Circle,
-    PlusCircle
+    PlusCircle,
+    Clock as ClockIcon,
+    ArrowRight,
+    ShieldWarning,
+    IdentificationCard as IdentificationCardIcon,
+    CheckCircle
 } from '@phosphor-icons/react';
 import { TNA, TNAResponse } from '@/lib/types/tna';
 import { Delivery, DeliveryResponse } from '@/lib/types/deliveries';
+import { Binding } from '@/lib/types/bindings';
 import { useLocale } from '@/i18n/LocaleProvider';
 import { SkeletonCard, SkeletonStatCard } from '@/components/ui/SkeletonCard';
 import EmptyState from '@/components/ui/EmptyState';
 import ErrorAlert from '@/components/ui/ErrorAlert';
+import { useBindingContext } from '@/context/BindingContext';
+import './VisitorHomeModule.css';
 
-// Mock Data Generators for Frontend-Only Phase
 const mockTnas: TNA[] = [
     { 
         tna_id: '1', 
@@ -55,12 +62,32 @@ const mockDeliveries: Delivery[] = [
     { delivery_id: 'd2', tracking_no: '15486633698', carrier: 'DHL', tna_code: 'TNA-JKLM9278', expected_at: '2024-10-23' },
 ];
 
+const mockBindings: Binding[] = [
+    { 
+        binding_id: 'bind-101',
+        tna_id: '1', 
+        sub_address_id: 'sub-01', 
+        rent_contract_id: 'rc-01',
+        status: 'PENDING', 
+        start_at: '2024-10-01', 
+        end_at: '2025-01-01',
+        approved_by_owner_id: undefined,
+        approved_at: undefined,
+        termination_reason: undefined,
+        created_at: '2024-10-01',
+        updated_at: '2024-10-01',
+        tna_code: 'TNA-EMAA5083',
+        na_id: 'na-01',
+        visitor_id: 'v-01',
+    },
+];
+
 export default function VisitorHomeModule() {
     const router = useRouter();
-    const { t, locale, isRTL } = useLocale();
+    const { locale, isRTL } = useLocale();
+    const { pendingBindings, terminateBinding, getActiveShipmentsForTNA } = useBindingContext();
     const [activeSlide, setActiveSlide] = useState(0);
 
-    // Queries with simulated delay
     const { data: tnas, isLoading: tnasLoading, error: tnasError, refetch: refetchTnas } = useQuery<TNAResponse>({
         queryKey: ['tna', 'me'],
         queryFn: async () => {
@@ -82,180 +109,257 @@ export default function VisitorHomeModule() {
         return date.toLocaleDateString(locale === 'ar' ? 'ar-EG' : 'en-US', { day: 'numeric', month: 'numeric', year: 'numeric' });
     };
 
+    const pendingApprovals = (pendingBindings || []).filter(b => b.status === 'PENDING');
+    const activeTnas = tnas?.data.filter(t => t.status === 'ACTIVE') || [];
+    const expiringSoon = activeTnas.filter(t => {
+        const expiry = new Date(t.expires_at);
+        const daysLeft = Math.ceil((expiry.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+        return daysLeft <= 2 && daysLeft > 0;
+    });
+    const inTransitDeliveries = deliveries?.data.filter(d => d.expected_at && new Date(d.expected_at) > new Date()) || [];
+
+    const urgentItems = [
+        ...pendingApprovals.map(b => ({
+            type: 'pending_binding' as const,
+            title: 'Pending Binding Request',
+            description: `${b.tna_code}: Awaiting owner approval`,
+            action: () => router.push(`/${locale}/visitor/tnas/${b.tna_id}`),
+            priority: 'high',
+        })),
+        ...expiringSoon.map(item => ({
+            type: 'expiring_tna' as const,
+            title: 'Expiring Soon',
+            description: `${item.tna_code}: Expires ${formatDate(item.expires_at)}`,
+            action: () => router.push(`/${locale}/visitor/tnas/${item.tna_id}`),
+            priority: 'high',
+        })),
+    ];
+
+    const formatTimeLeft = (dateStr: string) => {
+        const expiry = new Date(dateStr);
+        const diff = expiry.getTime() - Date.now();
+        const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+        return 'Until date ' + formatDate(dateStr);
+    };
+
     return (
-        <div className="min-h-screen bg-surface-100 pb-44" dir={isRTL ? 'rtl' : 'ltr'}>
-            {/* 1. STICKY HEADER */}
-            <header className="sticky top-0 z-50 bg-surface-200 border-b border-neutral-100 py-3 flex flex-col items-center text-center">
-                <span className="text-base font-bold text-neutral-900">{t('visitor.home.title')}</span>
-                <span className="text-caption text-neutral-400 font-medium tracking-tight">Temporary National Address</span>
-            </header>
-
-            {/* 2. HERO BANNER CAROUSEL */}
-            <div className="mx-4 mt-4 rounded-lg overflow-hidden h-44 relative group shadow-card">
-                <div className="absolute inset-0 bg-gradient-to-br from-brand-navy-dark via-neutral-800 to-neutral-700 transition-all duration-500" />
-
-                {/* Visual Decoration */}
-                <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/5 rounded-full blur-3xl" />
-                <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-warning/10 rounded-full blur-3xl" />
-
-                <div className="absolute inset-0 flex flex-col justify-center px-6 text-start">
-                    <h2 className="text-warning font-bold text-lg mb-1 drop-shadow-sm">{t('visitor.home.hero.title')}</h2>
-                    <p className="text-white text-caption leading-relaxed max-w-[200px] opacity-90 font-medium">
-                        {t('visitor.home.hero.description')}
-                    </p>
-                </div>
-
-                {/* Dot Indicators */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-black/10 backdrop-blur-sm px-2 py-1 rounded-full">
-                    {[0, 1, 2, 3].map((i) => (
-                        <button
-                            key={i}
-                            onClick={() => setActiveSlide(i)}
-                            className={`h-2 rounded-full transition-all duration-300 ${activeSlide === i ? 'w-5 bg-warning shadow-sm' : 'w-2 bg-white/40 hover:bg-white/60'}`}
-                        />
-                    ))}
-                </div>
-            </div>
-
-            {/* 3. SHIPMENTS SECTION */}
-            <section className="px-4 mt-8">
-                <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-md bg-neutral-900 flex items-center justify-center text-white shadow-card">
-                            <PackageIcon size={20} />
-                        </div>
-                        <h3 className="text-base font-bold text-neutral-900">{t('visitor.home.shipments.title')}</h3>
-                    </div>
-                    <button
-                        onClick={() => router.push(`/${locale}/visitor/shipments`)}
-                        className="flex items-center text-primary text-xs font-bold gap-0.5 hover:underline"
-                    >
-                        {t('common.view_all')}
-                        <CaretLeft size={16} className={!isRTL ? 'rotate-180' : ''} />
-                    </button>
-                </div>
-
-                <div className="space-y-3 text-start">
-                    {deliveriesLoading ? (
-                        [1, 2].map(i => <SkeletonCard key={i} className="h-28" />)
-                    ) : deliveriesError ? (
-                        <ErrorAlert 
-                            message={t('common.errors.loading_failed')} 
-                            onRetry={() => refetchDeliveries()} 
-                        />
-                    ) : deliveries?.data.length === 0 ? (
-                        <EmptyState 
-                            compact 
-                            icon={PackageIcon} 
-                            title={t('visitor.home.shipments.empty_title')} 
-                            description={t('visitor.home.shipments.empty_desc')} 
-                        />
-                    ) : (
-                        deliveries?.data.slice(0, 2).map((delivery) => (
-                            <div key={delivery.delivery_id} className="bg-surface-200 shadow-card rounded-md p-4 border border-neutral-100 hover:border-primary/30 transition-colors group">
-                                <div className="flex justify-between items-start mb-2">
-                                    <h4 className="text-sm font-bold text-neutral-800">
-                                        {t('visitor.home.shipments.from')}: <span className="text-neutral-900">{delivery.carrier}-{delivery.tracking_no}</span>
-                                    </h4>
-                                    <button className="text-neutral-300 hover:text-neutral-600 transition-colors">
-                                        <DotsThree size={20} />
+        <div className="min-h-screen bg-surface-100" dir={isRTL ? 'rtl' : 'ltr'}>
+            {/* 1. TOP TIER: Urgent Widgets (40% height) */}
+            {(urgentItems.length > 0 || activeTnas.length > 0) && (
+                <section className="px-4 pt-6 pb-4">
+                    <div className="bg-surface-200 rounded-md border border-neutral-200 shadow-card p-4">
+                        <h2 className="text-body font-bold text-neutral-900 mb-3">
+                            Urgent Alerts
+                        </h2>
+                        <div className="space-y-2">
+                            {/* Active Proxy - High Visibility */}
+                            {activeTnas.length > 0 && (
+                                <div className="flex items-center justify-between p-3 rounded-sm bg-primary/10 border border-primary/20">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-10 h-10 rounded-md bg-primary flex items-center justify-center text-white shadow-card">
+                                            <IdentificationCardIcon size={20} />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-bold text-neutral-900">
+                                                Active Proxy
+                                            </p>
+                                            <p className="text-lg font-mono font-bold text-primary">
+                                                {activeTnas[0].tna_code}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <button
+                                        onClick={() => router.push(`/${locale}/visitor/tnas/${activeTnas[0].tna_id}`)}
+                                        className="p-2 hover:bg-primary/20 rounded-sm transition-colors"
+                                    >
+                                        <ArrowRight size={20} className={`text-neutral-400 ${isRTL ? 'rotate-180' : ''}`} />
                                     </button>
                                 </div>
-                                <div className="space-y-1">
-                                    <p className="text-caption text-neutral-500 font-medium">
-                                        {t('visitor.home.shipments.arrival_date')}: <span className="text-neutral-700">{formatDate(delivery.expected_at)}</span>
-                                    </p>
-                                    <p className="text-caption text-neutral-500 font-medium">
-                                        {t('visitor.home.shipments.to_tna')}: <span className="font-mono text-primary font-bold tracking-[0.04em]">{delivery.tna_code}</span>
-                                    </p>
+                            )}
+                            {/* Critical Alerts */}
+                            {expiringSoon.length > 0 && (
+                                <div className="flex items-start gap-3 p-3 rounded-sm bg-warning/10 border border-warning/30">
+                                    <ShieldWarning size={20} className="text-warning mt-0.5 flex-shrink-0" />
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-sm font-bold text-warning">
+                                            Warning
+                                        </p>
+                                        <p className="text-caption text-neutral-600 mt-0.5">
+                                            {expiringSoon.map(t => t.tna_code).join(', ')} Expires soon
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                        ))
-                    )}
+                            )}
+                            {/* Pending Bindings */}
+                            {pendingApprovals.length > 0 && (
+                                <div className="flex items-start gap-3 p-3 rounded-sm bg-info/10 border border-info/30">
+                                    <ClockIcon size={20} className="text-info mt-0.5 flex-shrink-0" />
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-sm font-bold text-info">
+                                            {pendingApprovals.length} Pending Requests
+                                        </p>
+                                        <p className="text-caption text-neutral-600 mt-0.5">
+                                            Awaiting owner approval
+                                        </p>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {/* 2. MIDDLE TIER: Operational Summary & Shipment Feed (40% height) */}
+            <section className="px-4 py-4">
+                {/* Status Cards */}
+                <div className="grid grid-cols-2 gap-3 mb-4">
+                    <div className="bg-surface-200 rounded-md border border-neutral-200 p-3 shadow-card">
+                        <div className="flex items-center gap-2 mb-1">
+                            <IdentificationCardIcon size={16} className="text-primary" />
+                            <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">
+                                Addresses
+                            </span>
+                        </div>
+                        <p className="text-2xl font-bold text-neutral-900">{activeTnas.length}</p>
+                        <p className="text-[10px] text-neutral-400">Active</p>
+                    </div>
+                    <div className="bg-surface-200 rounded-md border border-neutral-200 p-3 shadow-card">
+                        <div className="flex items-center gap-2 mb-1">
+                            <PackageIcon size={16} className="text-primary" />
+                            <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">
+                                Shipments
+                            </span>
+                        </div>
+                        <p className="text-2xl font-bold text-neutral-900">
+                            {inTransitDeliveries.length}
+                        </p>
+                        <p className="text-[10px] text-neutral-400">In Transit</p>
+                    </div>
+                    <div className="bg-surface-200 rounded-md border border-neutral-200 p-3 shadow-card">
+                        <div className="flex items-center gap-2 mb-1">
+                            <Check size={16} className="text-success" />
+                            <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">
+                                Linked
+                            </span>
+                        </div>
+                        <p className="text-2xl font-bold text-neutral-900">
+                            {activeTnas.filter(t => t.status === 'ACTIVE').length}
+                        </p>
+                        <p className="text-[10px] text-neutral-400">Active</p>
+                    </div>
+                    <div className="bg-surface-200 rounded-md border border-neutral-200 p-3 shadow-card">
+                        <div className="flex items-center gap-2 mb-1">
+                            <ClockIcon size={16} className="text-pending" />
+                            <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">
+                                Pending
+                            </span>
+                        </div>
+                        <p className="text-2xl font-bold text-neutral-900">
+                            {pendingApprovals.length}
+                        </p>
+                        <p className="text-[10px] text-neutral-400">Pending</p>
+                    </div>
                 </div>
 
-                <div className="border-t border-neutral-100 my-6" />
+                {/* Shipment Feed */}
+                <div className="text-start">
+                    <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                            <div className="w-6 h-6 rounded-md bg-primary flex items-center justify-center text-white">
+                                <PackageIcon size={14} />
+                            </div>
+                            <h3 className="text-sm font-bold text-neutral-900">
+                                Shipments
+                            </h3>
+                        </div>
+                        {deliveries?.data && deliveries?.data.length > 2 && (
+                            <button
+                                onClick={() => router.push(`/${locale}/visitor/shipments`)}
+                                className="text-xs font-bold text-primary flex items-center gap-0.5 hover:underline"
+                            >
+                                View All
+                                <CaretLeft size={14} className={!isRTL ? 'rotate-180' : ''} />
+                            </button>
+                        )}
+                    </div>
+
+                    <div className="space-y-2">
+                        {deliveriesLoading ? (
+                            [1, 2].map(i => <SkeletonCard key={i} className="h-20" />)
+                        ) : deliveriesError ? (
+                            <ErrorAlert 
+                                message="Loading failed" 
+                                onRetry={() => refetchDeliveries()} 
+                            />
+                        ) : (!deliveries?.data || deliveries?.data.length === 0) ? (
+                            <EmptyState 
+                                compact 
+                                icon={PackageIcon} 
+                                title="No shipments"
+                                description="No shipments to track at the moment"
+                            />
+                        ) : (
+                            deliveries?.data.slice(0, 3).map((delivery) => (
+                                <div 
+                                    key={delivery.delivery_id} 
+                                    className="bg-surface-200 border border-neutral-100 rounded-md p-3 flex items-center gap-3 hover:border-primary/30 transition-colors cursor-pointer"
+                                    onClick={() => router.push(`/${locale}/visitor/shipments`)}
+                                >
+                                    <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center text-primary">
+                                        <PackageIcon size={16} />
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <div className="flex justify-between items-start">
+                                            <p className="text-[11px] font-bold text-neutral-400 uppercase">
+                                                {delivery.carrier}
+                                            </p>
+                                            <span className="text-[10px] text-neutral-400 ml-2 flex-shrink-0">
+                                                {formatDate(delivery.expected_at)}
+                                            </span>
+                                        </div>
+                                        <p className="text-sm font-mono font-bold text-neutral-900">
+                                            {delivery.tracking_no}
+                                        </p>
+                                        <p className="text-[10px] text-neutral-400 truncate">
+                                            To TNA: <span className="text-primary font-bold">{delivery.tna_code}</span>
+                                        </p>
+                                    </div>
+                                    <ArrowRight size={16} className={`text-neutral-300 flex-shrink-0 ${!isRTL ? 'rotate-180' : ''}`} />
+                                </div>
+                            ))
+                        )}
+                    </div>
+                </div>
             </section>
 
-            {/* 4. ADDRESSES SECTION */}
-            <section className="px-4">
-                <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center text-primary shadow-card">
-                            <MapPin size={20} />
-                        </div>
-                        <h3 className="text-base font-bold text-neutral-900">{t('visitor.home.addresses.title')}</h3>
-                    </div>
+            {/* 3. BOTTOM TIER: Quick Actions (20% height area) */}
+            <div className="px-4 pb-6">
+                <div className="grid grid-cols-2 gap-3">
                     <button
-                        onClick={() => router.push(`/${locale}/visitor/tnas`)}
-                        className="flex items-center text-primary text-xs font-bold gap-0.5 hover:underline"
+                        onClick={() => router.push(`/${locale}/visitor/search`)}
+                        className="flex flex-col items-center gap-2 p-4 rounded-md bg-surface-200 border border-neutral-200 shadow-card hover:border-primary/30 hover:bg-primary/5 transition-all group"
                     >
-                        {t('visitor.home.addresses.manage')}
-                        <CaretLeft size={16} className={!isRTL ? 'rotate-180' : ''} />
+                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                            <PlusCircle size={22} weight="fill" />
+                        </div>
+                        <span className="text-[11px] font-bold text-neutral-700 text-center leading-tight">
+                            Create New TNA
+                        </span>
+                    </button>
+                    <button
+                        onClick={() => router.push(`/${locale}/visitor/wallet`)}
+                        className="flex flex-col items-center gap-2 p-4 rounded-md bg-surface-200 border border-neutral-200 shadow-card hover:border-primary/30 hover:bg-primary/5 transition-all group"
+                    >
+                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                            <CheckCircle size={20} weight="fill" />
+                        </div>
+                        <span className="text-[11px] font-bold text-neutral-700 text-center leading-tight">
+                            Check Balance
+                        </span>
                     </button>
                 </div>
-
-                <div className="flex gap-3 overflow-x-auto pb-4 -mx-4 px-4 no-scrollbar scroll-smooth">
-                    {tnasLoading ? (
-                        [1, 2].map(i => <SkeletonStatCard key={i} className="min-w-[200px] h-32" />)
-                    ) : tnasError ? (
-                        <ErrorAlert 
-                            className="w-full"
-                            message={t('common.errors.loading_failed')} 
-                            onRetry={() => refetchTnas()} 
-                        />
-                    ) : tnas?.data.length === 0 ? (
-                        <EmptyState 
-                            compact 
-                            icon={MapPin} 
-                            title={t('visitor.home.addresses.empty_title')} 
-                            description={t('visitor.home.addresses.empty_desc')} 
-                        />
-                    ) : (
-                        tnas?.data.map((tna) => (
-                            <button
-                                key={tna.tna_id}
-                                onClick={() => router.push(`/${locale}/visitor/tnas/${tna.tna_id}`)}
-                                className="bg-surface-200 shadow-card rounded-md p-4 min-w-[200px] flex-shrink-0 border border-neutral-100 flex flex-col justify-between items-start relative hover:border-primary/20 transition-all active:scale-95 text-start"
-                            >
-                                <div className="w-full flex justify-between items-start">
-                                    <span className="font-mono text-sm font-bold tracking-[0.04em] text-neutral-900">{tna.tna_code}</span>
-                                    <DotsThree size={18} className="text-neutral-300" />
-                                </div>
-
-                                <div className="mt-4 w-full flex flex-col gap-1">
-                                    {tna.status === 'ACTIVE' && (
-                                        <>
-                                            <div className="flex items-center gap-1.5 text-success">
-                                                <Check size={14} strokeWidth={3} />
-                                                <span className="text-label font-bold">{t('visitor.home.addresses.linked_success')}</span>
-                                            </div>
-                                            <span className="text-caption text-neutral-400 font-medium ps-5">{t('visitor.home.addresses.until_date')}: {tna.expires_at}</span>
-                                        </>
-                                    )}
-                                    {tna.status === 'UNLINKED' && (
-                                        <div className="flex items-center gap-1.5 text-primary">
-                                            <Circle size={14} strokeWidth={3} />
-                                            <span className="text-label font-bold">{t('visitor.home.addresses.not_linked')}</span>
-                                        </div>
-                                    )}
-                                </div>
-                            </button>
-                        ))
-                    )}
-                </div>
-            </section>
-
-            {/* 5. CTA BUTTON */}
-            <div className="fixed bottom-24 left-0 right-0 px-6 z-40 bg-gradient-to-t from-surface-100 via-surface-100/95 to-transparent pt-6 pb-2 pointer-events-none">
-                <button
-                    onClick={() => router.push(`/${locale}/visitor/search`)}
-                    className="flex h-14 w-full items-center justify-center gap-3 rounded-pill bg-btn-primary text-white font-bold shadow-btn transition-all hover:opacity-95 active:scale-[0.98] pointer-events-auto"
-                >
-                    <PlusCircle size={22} />
-                    <span className="text-sm">{t('visitor.home.actions.create_new')}</span>
-                </button>
             </div>
         </div>
     );
 }
+

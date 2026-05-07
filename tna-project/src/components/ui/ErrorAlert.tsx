@@ -25,24 +25,24 @@ export default function ErrorAlert({
         <div
             role="alert"
             className={cn(
-                'flex items-start gap-3 p-4 rounded-md border',
-                'bg-error-bg border-error-border text-error',
+                'flex items-start gap-4 p-5 rounded-lg border animate-in fade-in slide-in-from-top-1 duration-fast',
+                'bg-error-light border-error/20 text-error',
                 'shadow-sm',
                 className
             )}
             {...props}
         >
-            <WarningCircle className="shrink-0 mt-0.5" size={20} weight="fill" />
+            <WarningCircle className="shrink-0 mt-0.5" size={22} weight="fill" />
             <div className="flex-1 min-w-0">
                 {title && (
-                    <p className="text-label font-bold mb-0.5">{title}</p>
+                    <p className="text-sm font-bold mb-1">{title}</p>
                 )}
-                <p className="text-label font-medium leading-relaxed">{message}</p>
+                <p className="text-sm font-medium leading-relaxed">{message}</p>
             </div>
             {onRetry && (
                 <button
                     onClick={onRetry}
-                    className="shrink-0 text-label font-bold border border-error rounded-xs px-3 py-1 hover:bg-error hover:text-white transition-colors duration-200"
+                    className="shrink-0 text-xs font-bold border border-error rounded-md px-4 py-1.5 hover:bg-error hover:text-white transition-all duration-fast active:scale-95"
                 >
                     {retryLabel}
                 </button>
@@ -60,16 +60,16 @@ export function PageError({
     onRetry?: () => void;
 }) {
     return (
-        <div className="flex flex-col items-center justify-center min-h-[50vh] p-8 text-center">
-            <div className="mb-4 p-5 rounded-full bg-error-bg">
-                <WarningCircle size={48} className="text-error" weight="fill" />
+        <div className="flex flex-col items-center justify-center min-h-[50vh] p-8 text-center animate-in fade-in duration-standard">
+            <div className="mb-6 p-6 rounded-full bg-error-light shadow-inner">
+                <WarningCircle size={56} className="text-error" weight="fill" />
             </div>
-            <h3 className="text-heading font-bold text-neutral-900 mb-2">خطأ في التحميل</h3>
-            <p className="text-body text-neutral-500 max-w-xs mb-6">{message}</p>
+            <h3 className="text-2xl font-bold text-text-primary mb-3">خطأ في التحميل</h3>
+            <p className="text-base text-text-secondary max-w-sm mb-8 leading-relaxed">{message}</p>
             {onRetry && (
                 <button
                     onClick={onRetry}
-                    className="px-6 h-btn-md bg-btn-primary text-white font-bold rounded-pill shadow-btn hover:opacity-95 transition-all"
+                    className="px-8 h-12 bg-primary-gradient text-white font-bold rounded-full shadow-button hover:brightness-110 transition-all active:scale-95"
                 >
                     إعادة المحاولة
                 </button>

@@ -98,7 +98,8 @@
                 "suspended": "موقوف"
             },
             "actions": {
-                "create_new": "إنشاء عنوان وطني مؤقت جديد"
+                "create_new": "إنشاء عنوان وطني مؤقت جديد",
+                "order_shipment": "طلب شحنة"
             }
         }
     },

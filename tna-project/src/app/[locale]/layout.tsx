@@ -1,17 +1,15 @@
 import type { Metadata } from 'next'
+import '@/styles/fonts.css'
 import '@/app/globals.css'
 import Providers from '@/components/shell/Providers'
 import { LocaleProvider } from '@/i18n/LocaleProvider'
 import { isValidLocale, getDirection, type Locale } from '@/i18n/config'
 import { getMessages } from '@/i18n/request'
 import { notFound } from 'next/navigation'
-import { Rubik } from 'next/font/google'
 import { GovProvider } from '@/context/GovContext';
 import { FleetProvider } from '@/context/FleetContext';
 import { BindingProvider } from '@/context/BindingContext';
 import { ToastProvider } from '@/components/ui/Toast';
-
-const rubik = Rubik({ subsets: ['latin', 'arabic'], weight: ['300', '400', '500', '600', '700', '800'] })
 
 export const metadata: Metadata = {
   title: {
@@ -25,6 +23,12 @@ export const metadata: Metadata = {
   keywords: ['TNA', 'National Address', 'Saudi Arabia', 'SDAIA', 'Logistics'],
   creator: 'SDAIA Innovation',
   publisher: 'SDAIA',
+  icons: {
+    icon: '/brand/logo.svg',
+    shortcut: '/brand/logo.svg',
+    apple: '/brand/logo.svg',
+  },
+  themeColor: '#02488D',
   openGraph: {
     title: 'TNA - Temporary National Address',
     description: 'The Saudi comprehensive system for temporary national addresses.',
@@ -55,7 +59,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={validLocale} dir={dir} suppressHydrationWarning>
-      <body suppressHydrationWarning className={`${rubik.className} bg-surface-100 text-neutral-900`}>
+      <body suppressHydrationWarning className="bg-background text-foreground selection:bg-primary selection:text-white">
         <LocaleProvider locale={validLocale} messages={messages}>
           <ToastProvider>
             <GovProvider>

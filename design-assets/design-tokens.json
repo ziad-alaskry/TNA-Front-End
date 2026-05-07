@@ -1,0 +1,388 @@
+{
+  "$schema": "https://design-tokens.org/schema.json",
+  "meta": {
+    "project": "Temporary National Address (TNA) — العنوان الوطني المؤقت",
+    "extractedFrom": "14 Figma screenshots",
+    "direction": "RTL (Arabic)",
+    "platform": "iOS Mobile App"
+  },
+
+  "color": {
+    "primary": {
+      "default":        { "value": "#2196C9", "comment": "Main blue — used in active nav, links, dropdown text, progress dots" },
+      "gradient-start": { "value": "#2196C9", "comment": "CTA button gradient left" },
+      "gradient-end":   { "value": "#1565A8", "comment": "CTA button gradient right / darker blue" },
+      "light":          { "value": "#E8F4FB", "comment": "Light blue tint for selected card borders" }
+    },
+    "secondary": {
+      "orange":         { "value": "#F5A623", "comment": "Warning/visitor badge, info icon, location pin icon" },
+      "orange-light":   { "value": "#FFF3DC", "comment": "Orange tint background on badge" }
+    },
+    "semantic": {
+      "success":        { "value": "#4CAF50", "comment": "Green checkmark — مرتبط بنجاح (linked successfully)" },
+      "success-light":  { "value": "#E8F5E9", "comment": "Light green background for success state" },
+      "error":          { "value": "#C62828", "comment": "Red — error banner background, error button fill" },
+      "error-border":   { "value": "#D32F2F", "comment": "Red border on error card" },
+      "error-light":    { "value": "#FFEBEE", "comment": "Light red tint" },
+      "warning":        { "value": "#F5A623", "comment": "Orange — processing/pending spinner color" },
+      "info":           { "value": "#2196C9", "comment": "Blue — active link text, TNA codes" }
+    },
+    "neutral": {
+      "white":          { "value": "#FFFFFF", "comment": "Card backgrounds, input backgrounds, button text" },
+      "background":     { "value": "#F2F2F7", "comment": "App background — light grey (iOS system background)" },
+      "surface":        { "value": "#FFFFFF", "comment": "Card / panel surface color" },
+      "divider":        { "value": "#E0E0E0", "comment": "Horizontal rule / separator lines" },
+      "border-light":   { "value": "#EEEEEE", "comment": "Input field borders, card borders default" },
+      "overlay":        { "value": "rgba(0,0,0,0.04)", "comment": "Subtle shadow overlay on cards" }
+    },
+    "text": {
+      "primary":        { "value": "#1A1A1A", "comment": "Main body text, headings, labels — near black" },
+      "secondary":      { "value": "#555555", "comment": "Subtext, helper text, meta info" },
+      "placeholder":    { "value": "#AAAAAA", "comment": "Input placeholder text, icon color in empty state" },
+      "link":           { "value": "#2196C9", "comment": "Clickable links, TNA code values, dropdown selected" },
+      "on-primary":     { "value": "#FFFFFF", "comment": "Text on primary blue buttons" },
+      "on-error":       { "value": "#FFFFFF", "comment": "Text on red error buttons" },
+      "disabled":       { "value": "#9E9E9E", "comment": "Disabled button text, inactive nav label" },
+      "caption":        { "value": "#777777", "comment": "Small caption text under buttons, footnotes" }
+    },
+    "navbar": {
+      "background":     { "value": "#FFFFFF", "comment": "Bottom navigation bar background" },
+      "active-icon":    { "value": "#2196C9", "comment": "Active tab icon and label color" },
+      "inactive-icon":  { "value": "#9E9E9E", "comment": "Inactive tab icon and label color" },
+      "active-indicator":{ "value": "#F5A623", "comment": "Orange underline indicator on active nav item" }
+    },
+    "header": {
+      "background":     { "value": "#FFFFFF", "comment": "Top navigation/header bar background" },
+      "title":          { "value": "#1A1A1A", "comment": "Header title text color" },
+      "icon":           { "value": "#1A1A1A", "comment": "Back arrow and header icon color" }
+    },
+    "splash": {
+      "background":     { "value": "#F0F4F8", "comment": "Splash screen diagonal stripe background — light grey-blue" },
+      "title-arabic":   { "value": "#2196C9", "comment": "Arabic title on splash — bold blue" },
+      "title-english":  { "value": "#1565A8", "comment": "English subtitle on splash — darker blue" }
+    }
+  },
+
+  "gradient": {
+    "button-primary": {
+      "value": "linear-gradient(to right, #2196C9, #1565A8)",
+      "comment": "Main CTA button gradient — used on all primary action buttons"
+    },
+    "button-secondary-teal": {
+      "value": "linear-gradient(to right, #26C6DA, #1E88E5)",
+      "comment": "Secondary teal-to-blue gradient on some action buttons (e.g. تواصل مع المستلم)"
+    },
+    "splash-bg": {
+      "value": "repeating-linear-gradient(-45deg, #E8EDF2 0px, #E8EDF2 2px, #F0F4F8 2px, #F0F4F8 12px)",
+      "comment": "Diagonal stripe pattern on splash screen background"
+    }
+  },
+
+  "typography": {
+    "fontFamily": {
+      "arabic":   { "value": "'IBM Plex Sans Arabic', 'Noto Sans Arabic', sans-serif", "comment": "Primary Arabic typeface used throughout the app" },
+      "english":  { "value": "'IBM Plex Sans', 'Roboto', sans-serif", "comment": "English text, codes, numeric values" },
+      "monospace":{ "value": "'IBM Plex Mono', monospace", "comment": "Address codes like TNA-EMAA5083, RDEC8736" }
+    },
+    "size": {
+      "xs":      { "value": "11px", "comment": "Tab bar labels, tiny captions" },
+      "sm":      { "value": "13px", "comment": "Helper text under buttons, footnotes" },
+      "base":    { "value": "15px", "comment": "Body text, list items, form field values" },
+      "md":      { "value": "17px", "comment": "Section labels, card titles, input labels" },
+      "lg":      { "value": "20px", "comment": "Screen/page headings (header bar title)" },
+      "xl":      { "value": "24px", "comment": "Section headers like الشحنات, عناويني المؤقتة" },
+      "2xl":     { "value": "28px", "comment": "Splash screen English subtitle" },
+      "3xl":     { "value": "34px", "comment": "Splash screen Arabic headline" }
+    },
+    "weight": {
+      "regular":    { "value": "400", "comment": "Body text, placeholder text, captions" },
+      "medium":     { "value": "500", "comment": "Form labels, secondary headings" },
+      "semibold":   { "value": "600", "comment": "Card titles, section headers, nav labels" },
+      "bold":       { "value": "700", "comment": "Page titles, CTA button text, primary headings" },
+      "extrabold":  { "value": "800", "comment": "Splash screen Arabic title" }
+    },
+    "lineHeight": {
+      "tight":   { "value": "1.2", "comment": "Headings and titles" },
+      "normal":  { "value": "1.5", "comment": "Body text and labels" },
+      "relaxed": { "value": "1.7", "comment": "Helper/caption text" }
+    },
+    "letterSpacing": {
+      "normal":  { "value": "0em",    "comment": "Arabic body text" },
+      "wide":    { "value": "0.02em", "comment": "English codes and monospace values" },
+      "wider":   { "value": "0.05em", "comment": "Button text uppercase if any" }
+    }
+  },
+
+  "spacing": {
+    "0":   { "value": "0px" },
+    "1":   { "value": "4px",  "comment": "Micro gap between icon and text" },
+    "2":   { "value": "8px",  "comment": "Inner padding of small chips/badges" },
+    "3":   { "value": "12px", "comment": "Input field inner padding vertical" },
+    "4":   { "value": "16px", "comment": "Standard horizontal screen margin / card padding" },
+    "5":   { "value": "20px", "comment": "Section gap, vertical spacing between form groups" },
+    "6":   { "value": "24px", "comment": "Between major sections" },
+    "7":   { "value": "28px", "comment": "Top padding below header" },
+    "8":   { "value": "32px", "comment": "Large section spacing" },
+    "10":  { "value": "40px", "comment": "Bottom padding / safe area buffer" },
+    "12":  { "value": "48px", "comment": "CTA button height" },
+    "screen-horizontal": { "value": "20px", "comment": "Consistent left/right screen margin" },
+    "card-padding":      { "value": "16px", "comment": "Internal padding of white cards" },
+    "input-padding-v":   { "value": "14px", "comment": "Input field top/bottom padding" },
+    "input-padding-h":   { "value": "16px", "comment": "Input field left/right padding" },
+    "section-gap":       { "value": "24px", "comment": "Space between card sections" },
+    "navbar-height":     { "value": "83px", "comment": "Bottom navigation bar total height incl safe area" },
+    "header-height":     { "value": "44px", "comment": "Top navigation bar height" }
+  },
+
+  "borderRadius": {
+    "none":   { "value": "0px" },
+    "sm":     { "value": "6px",  "comment": "Subtle rounding — inner nested inputs" },
+    "md":     { "value": "10px", "comment": "Input fields, dropdown selectors" },
+    "lg":     { "value": "14px", "comment": "Cards, white panels, address cards" },
+    "xl":     { "value": "18px", "comment": "Outer container cards" },
+    "2xl":    { "value": "24px", "comment": "CTA buttons — highly rounded pill-like" },
+    "full":   { "value": "9999px", "comment": "Fully pill-shaped buttons (primary CTA)" },
+    "circle": { "value": "50%",  "comment": "Radio buttons, circular icons" }
+  },
+
+  "shadow": {
+    "none":   { "value": "none" },
+    "card":   { "value": "0px 2px 8px rgba(0, 0, 0, 0.06)", "comment": "Default card shadow — subtle lift" },
+    "card-hover": { "value": "0px 4px 16px rgba(0, 0, 0, 0.10)", "comment": "Elevated card state" },
+    "button": { "value": "0px 4px 12px rgba(33, 150, 201, 0.35)", "comment": "Blue glow shadow under primary CTA buttons" },
+    "button-red": { "value": "0px 4px 12px rgba(198, 40, 40, 0.30)", "comment": "Red glow under destructive buttons" },
+    "navbar": { "value": "0px -1px 4px rgba(0, 0, 0, 0.08)", "comment": "Top shadow on bottom navigation bar" },
+    "header": { "value": "0px 1px 4px rgba(0, 0, 0, 0.06)", "comment": "Bottom shadow on top header bar" },
+    "input":  { "value": "inset 0px 1px 3px rgba(0,0,0,0.04)", "comment": "Subtle inner shadow on input fields" }
+  },
+
+  "border": {
+    "width": {
+      "none":   { "value": "0px" },
+      "thin":   { "value": "1px", "comment": "Default card and input border" },
+      "medium": { "value": "1.5px", "comment": "Active/selected state borders" },
+      "thick":  { "value": "2px", "comment": "Error state card border, selected card outline" }
+    },
+    "color": {
+      "default":  { "value": "#E0E0E0", "comment": "Default border on inputs and cards" },
+      "active":   { "value": "#2196C9", "comment": "Blue border on focused/selected input or card" },
+      "error":    { "value": "#D32F2F", "comment": "Red border on error state card" },
+      "success":  { "value": "#4CAF50", "comment": "Green border on success state" },
+      "disabled": { "value": "#EEEEEE", "comment": "Very light border on disabled elements" }
+    }
+  },
+
+  "opacity": {
+    "disabled":    { "value": "0.45", "comment": "Disabled button / element opacity" },
+    "placeholder": { "value": "0.55", "comment": "Input placeholder text opacity" },
+    "overlay":     { "value": "0.04", "comment": "Background overlay tint" },
+    "full":        { "value": "1.0" }
+  },
+
+  "iconSize": {
+    "xs":   { "value": "16px", "comment": "Tiny inline icons (chevron in dropdown)" },
+    "sm":   { "value": "20px", "comment": "Input field icons, nav bar icons" },
+    "md":   { "value": "24px", "comment": "Header icons, card icons" },
+    "lg":   { "value": "32px", "comment": "Section header icons (box, location pin)" },
+    "xl":   { "value": "48px", "comment": "Large illustrative icons on stat cards" }
+  },
+
+  "component": {
+    "button": {
+      "primary": {
+        "height":           { "value": "52px" },
+        "borderRadius":     { "value": "9999px", "comment": "Full pill shape" },
+        "background":       { "value": "linear-gradient(to right, #2196C9, #1565A8)" },
+        "textColor":        { "value": "#FFFFFF" },
+        "fontSize":         { "value": "17px" },
+        "fontWeight":       { "value": "700" },
+        "paddingH":         { "value": "24px" },
+        "shadow":           { "value": "0px 4px 12px rgba(33, 150, 201, 0.35)" }
+      },
+      "primaryDisabled": {
+        "background":       { "value": "#9E9E9E" },
+        "shadow":           { "value": "none" },
+        "opacity":          { "value": "1.0", "comment": "Color change instead of opacity for disabled" }
+      },
+      "destructive": {
+        "height":           { "value": "52px" },
+        "borderRadius":     { "value": "9999px" },
+        "background":       { "value": "#C62828" },
+        "textColor":        { "value": "#FFFFFF" },
+        "fontSize":         { "value": "17px" },
+        "fontWeight":       { "value": "700" },
+        "shadow":           { "value": "0px 4px 12px rgba(198, 40, 40, 0.30)" }
+      },
+      "outline": {
+        "height":           { "value": "52px" },
+        "borderRadius":     { "value": "9999px" },
+        "background":       { "value": "transparent" },
+        "borderWidth":      { "value": "1.5px" },
+        "borderColor":      { "value": "#2196C9" },
+        "textColor":        { "value": "#2196C9" },
+        "fontSize":         { "value": "17px" },
+        "fontWeight":       { "value": "600" }
+      },
+      "small": {
+        "height":           { "value": "40px" },
+        "borderRadius":     { "value": "9999px" },
+        "background":       { "value": "linear-gradient(to right, #26C6DA, #1E88E5)" },
+        "textColor":        { "value": "#FFFFFF" },
+        "fontSize":         { "value": "14px" },
+        "fontWeight":       { "value": "600" }
+      }
+    },
+    "input": {
+      "height":             { "value": "52px" },
+      "borderRadius":       { "value": "10px" },
+      "background":         { "value": "#F5F5F5" },
+      "backgroundActive":   { "value": "#FFFFFF" },
+      "borderColor":        { "value": "#E0E0E0" },
+      "borderColorActive":  { "value": "#2196C9" },
+      "borderWidth":        { "value": "1px" },
+      "textColor":          { "value": "#1A1A1A" },
+      "placeholderColor":   { "value": "#AAAAAA" },
+      "fontSize":           { "value": "15px" },
+      "paddingH":           { "value": "16px" },
+      "iconColor":          { "value": "#AAAAAA" },
+      "valueColorLink":     { "value": "#2196C9", "comment": "When input has a TNA code / link value" }
+    },
+    "inputDark": {
+      "background":         { "value": "#4A4A4A" },
+      "borderRadius":       { "value": "10px" },
+      "textColor":          { "value": "#FFFFFF" },
+      "iconColor":          { "value": "#AAAAAA" },
+      "comment":            "Dark input variant used for linked national address field"
+    },
+    "card": {
+      "background":         { "value": "#FFFFFF" },
+      "borderRadius":       { "value": "14px" },
+      "borderWidth":        { "value": "1px" },
+      "borderColor":        { "value": "#EEEEEE" },
+      "shadow":             { "value": "0px 2px 8px rgba(0, 0, 0, 0.06)" },
+      "padding":            { "value": "16px" }
+    },
+    "cardSelected": {
+      "borderColor":        { "value": "#2196C9" },
+      "borderWidth":        { "value": "2px" },
+      "shadow":             { "value": "0px 4px 16px rgba(33, 150, 201, 0.15)" }
+    },
+    "cardError": {
+      "borderColor":        { "value": "#D32F2F" },
+      "borderWidth":        { "value": "2px" }
+    },
+    "statCard": {
+      "background":         { "value": "#FFFFFF" },
+      "borderRadius":       { "value": "14px" },
+      "shadow":             { "value": "0px 2px 8px rgba(0, 0, 0, 0.06)" },
+      "iconColor":          { "value": "#2196C9" },
+      "valueSize":          { "value": "22px" },
+      "valueFontWeight":    { "value": "700" },
+      "labelSize":          { "value": "13px" },
+      "labelColor":         { "value": "#555555" }
+    },
+    "navbar": {
+      "height":             { "value": "83px" },
+      "background":         { "value": "#FFFFFF" },
+      "shadow":             { "value": "0px -1px 4px rgba(0, 0, 0, 0.08)" },
+      "iconSizeActive":     { "value": "24px" },
+      "iconSizeInactive":   { "value": "22px" },
+      "labelSize":          { "value": "11px" },
+      "activeColor":        { "value": "#2196C9" },
+      "inactiveColor":      { "value": "#9E9E9E" },
+      "activeIndicator":    { "value": "#F5A623", "comment": "Orange bar above active tab" },
+      "indicatorHeight":    { "value": "3px" }
+    },
+    "header": {
+      "height":             { "value": "44px" },
+      "background":         { "value": "#FFFFFF" },
+      "titleSize":          { "value": "17px" },
+      "titleWeight":        { "value": "600" },
+      "titleColor":         { "value": "#1A1A1A" },
+      "iconSize":           { "value": "22px" },
+      "iconColor":          { "value": "#1A1A1A" },
+      "shadow":             { "value": "0px 1px 4px rgba(0, 0, 0, 0.06)" }
+    },
+    "badge": {
+      "orangeBackground":   { "value": "#F5A623" },
+      "orangeText":         { "value": "#FFFFFF" },
+      "borderRadius":       { "value": "6px" },
+      "paddingH":           { "value": "8px" },
+      "paddingV":           { "value": "4px" },
+      "fontSize":           { "value": "12px" },
+      "fontWeight":         { "value": "600" }
+    },
+    "progressStepper": {
+      "trackColor":         { "value": "#CCCCCC" },
+      "activeColor":        { "value": "#2196C9" },
+      "dotInactive":        { "value": "#CCCCCC" },
+      "dotActive":          { "value": "#2196C9" },
+      "dotSize":            { "value": "10px" },
+      "trackHeight":        { "value": "2px" }
+    },
+    "divider": {
+      "color":              { "value": "#E0E0E0" },
+      "thickness":          { "value": "1px" },
+      "marginV":            { "value": "16px" }
+    },
+    "checkbox": {
+      "size":               { "value": "20px" },
+      "borderRadius":       { "value": "4px" },
+      "borderColor":        { "value": "#AAAAAA" },
+      "checkedBackground":  { "value": "#2196C9" },
+      "checkmarkColor":     { "value": "#FFFFFF" }
+    },
+    "radioButton": {
+      "size":               { "value": "22px" },
+      "borderColor":        { "value": "#AAAAAA" },
+      "selectedColor":      { "value": "#2196C9" },
+      "selectedFill":       { "value": "#2196C9" }
+    },
+    "errorBanner": {
+      "background":         { "value": "#C62828" },
+      "borderRadius":       { "value": "10px" },
+      "textColor":          { "value": "#FFFFFF" },
+      "fontSize":           { "value": "15px" },
+      "fontWeight":         { "value": "600" },
+      "iconColor":          { "value": "#FFFFFF" },
+      "padding":            { "value": "14px 16px" }
+    },
+    "sectionHeader": {
+      "fontSize":           { "value": "18px" },
+      "fontWeight":         { "value": "700" },
+      "color":              { "value": "#1A1A1A" },
+      "iconColor":          { "value": "#2196C9" },
+      "actionLinkColor":    { "value": "#2196C9" },
+      "actionLinkSize":     { "value": "14px" }
+    },
+    "addressCode": {
+      "color":              { "value": "#2196C9" },
+      "fontFamily":         { "value": "'IBM Plex Mono', monospace" },
+      "fontSize":           { "value": "15px" },
+      "fontWeight":         { "value": "600" },
+      "letterSpacing":      { "value": "0.03em" }
+    }
+  },
+
+  "motion": {
+    "duration": {
+      "fast":     { "value": "150ms" },
+      "normal":   { "value": "250ms" },
+      "slow":     { "value": "400ms" }
+    },
+    "easing": {
+      "default":  { "value": "cubic-bezier(0.4, 0, 0.2, 1)", "comment": "Material standard easing" },
+      "in":       { "value": "cubic-bezier(0.4, 0, 1, 1)" },
+      "out":      { "value": "cubic-bezier(0, 0, 0.2, 1)" }
+    }
+  },
+
+  "zIndex": {
+    "base":     { "value": "0" },
+    "card":     { "value": "1" },
+    "header":   { "value": "100" },
+    "navbar":   { "value": "100" },
+    "modal":    { "value": "200" },
+    "toast":    { "value": "300" }
+  }
+}

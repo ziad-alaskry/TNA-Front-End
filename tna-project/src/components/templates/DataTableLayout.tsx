@@ -90,69 +90,69 @@ export default function DataTableLayout<T extends Record<string, any>>({
         </div>
       </div>
 
-      {/* TABLE CONTAINER */}
-      <div className="overflow-hidden rounded-md border border-neutral-200 bg-surface-200 shadow-card">
-        <div className="overflow-x-auto no-scrollbar">
-          <table className="w-full text-start border-collapse">
-            <thead>
-              <tr className="border-b border-neutral-200 bg-neutral-50/50">
-                {columns.map((col) => (
-                  <th
-                    key={String(col.key)}
-                    className="whitespace-nowrap px-6 py-4 text-start text-caption font-bold uppercase text-neutral-500 tracking-wider"
-                    style={{ width: col.width }}
-                  >
-                    <div className="flex items-center gap-2">
-                        {col.label}
-                        {col.sortable && (
-                        <ArrowsDownUp size={14} weight="bold" className="text-neutral-400" />
-                        )}
-                    </div>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-neutral-100">
-              {isLoading ? (
-                Array.from({ length: 5 }).map((_, i) => (
-                    <SkeletonTableRow key={i} cols={columns.length} />
-                ))
-              ) : paginatedData.length === 0 ? (
-                <tr>
-                  <td colSpan={columns.length} className="px-6 py-16">
-                    <EmptyState 
-                        compact 
-                        title={t('common.no_data')} 
-                        description={t('common.no_data_desc') ?? 'No records found matching your criteria.'}
-                    />
-                  </td>
-                </tr>
-              ) : (
-                paginatedData.map((row, idx) => (
-                  <tr
-                    key={idx}
-                    onClick={() => onRowClick?.(row)}
-                    className={cn(
-                        "transition-all duration-200 hover:bg-neutral-50/80 group",
-                        onRowClick && 'cursor-pointer'
-                    )}
-                  >
-                    {columns.map((col) => (
-                      <td
-                        key={String(col.key)}
-                        className="px-6 py-4 text-body text-neutral-700 group-hover:text-neutral-900 whitespace-nowrap"
-                      >
-                        {col.render
-                          ? col.render(row[col.key], row)
-                          : row[col.key]}
-                      </td>
-                    ))}
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+       {/* TABLE CONTAINER */}
+       <div className="overflow-hidden rounded-md border border-neutral-200 bg-surface-200 shadow-card">
+         <div className="w-full overflow-x-auto no-scrollbar">
+           <table className="w-full text-start border-collapse table-fixed">
+             <thead>
+               <tr className="border-b border-neutral-200 bg-neutral-50/50">
+                 {columns.map((col) => (
+                   <th
+                     key={String(col.key)}
+                     className="px-3 py-2 text-start text-[10px] font-bold uppercase text-neutral-500 tracking-wider whitespace-nowrap"
+                     style={{ width: col.width }}
+                   >
+                     <div className="flex items-center gap-1.5">
+                         {col.label}
+                         {col.sortable && (
+                         <ArrowsDownUp size={12} weight="bold" className="text-neutral-400" />
+                         )}
+                     </div>
+                   </th>
+                 ))}
+               </tr>
+             </thead>
+             <tbody className="divide-y divide-neutral-100">
+               {isLoading ? (
+                 Array.from({ length: 5 }).map((_, i) => (
+                     <SkeletonTableRow key={i} cols={columns.length} />
+                 ))
+               ) : paginatedData.length === 0 ? (
+                 <tr>
+                   <td colSpan={columns.length} className="px-6 py-16">
+                     <EmptyState 
+                         compact 
+                         title={t('common.no_data')} 
+                         description={t('common.no_data_desc') ?? 'No records found matching your criteria.'}
+                     />
+                   </td>
+                 </tr>
+               ) : (
+                 paginatedData.map((row, idx) => (
+                   <tr
+                     key={idx}
+                     onClick={() => onRowClick?.(row)}
+                     className={cn(
+                         "transition-all duration-200 hover:bg-neutral-50/80 group",
+                         onRowClick && 'cursor-pointer'
+                     )}
+                   >
+                     {columns.map((col) => (
+                       <td
+                         key={String(col.key)}
+                         className="px-3 py-2 text-sm text-neutral-700 group-hover:text-neutral-900"
+                       >
+                         {col.render
+                           ? col.render(row[col.key], row)
+                           : row[col.key]}
+                       </td>
+                     ))}
+                   </tr>
+                 ))
+               )}
+             </tbody>
+           </table>
+         </div>
 
         {/* PAGINATION FOOTER */}
         {totalPages > 1 && (

@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPATIAL — Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,700;0,800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:        #02488D;
+      --navy-dark:   #01336A;
+      --navy-mid:    #015B9E;
+      --navy-light:  #E8F0F8;
+      --cyan:        #18CCE5;
+      --cyan-dark:   #00B4C9;
+      --cyan-light:  #E0F9FC;
+      --gray:        #B7B7B7;
+      --bg:          #F0F4F8;
+      --surface:     #FFFFFF;
+      --text-1:      #0A1B2E;
+      --text-2:      #3D5066;
+      --text-3:      #6B7E93;
+      --border:      #C8D5E8;
+      --divider:     #DDE5EF;
+    }
+
+    html {
+      font-family: 'Rubik', sans-serif;
+      background: var(--bg);
+      color: var(--text-1);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Layout ── */
+    .page { max-width: 960px; margin: 0 auto; padding: 60px 24px 120px; }
+
+    /* ── Section ── */
+    .section { margin-bottom: 72px; }
+    .section-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--divider);
+    }
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-3);
+      margin-bottom: 16px;
+      margin-top: 32px;
+    }
+
+    /* ── Hero Banner ── */
+    .hero {
+      background: linear-gradient(145deg, #02488D 0%, #015B9E 60%, #18CCE5 130%);
+      border-radius: 24px;
+      padding: 48px 40px;
+      margin-bottom: 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 280px; height: 280px;
+      background: radial-gradient(circle, rgba(24,204,229,0.2) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -30px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-inner { position: relative; z-index: 1; }
+    .hero-logo { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+    .hero p {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.72);
+      margin-top: 12px;
+      max-width: 480px;
+      line-height: 1.6;
+    }
+    .hero-version {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 24px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 9999px;
+      padding: 4px 14px;
+      font-size: 11px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.8);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── Logo Showcase ── */
+    .logo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+    .logo-card {
+      border-radius: 16px;
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-card svg { width: 100%; max-width: 200px; height: auto; }
+    .logo-card.light  { background: var(--surface); border: 1.5px solid var(--divider); }
+    .logo-card.dark   { background: linear-gradient(135deg, #02488D, #01336A); }
+    .logo-card.bg-light { background: var(--navy-light); }
+    .logo-card-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+    .logo-card.dark .logo-card-label { color: rgba(255,255,255,0.45); }
+    .logo-card.bg-light .logo-card-label { color: var(--navy); }
+
+    /* Icon-only row */
+    .icon-row {
+      display: flex;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .icon-swatch {
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+    }
+    .icon-swatch svg { width: 48px; height: 48px; }
+    .icon-swatch.light { background: var(--surface); border: 1.5px solid var(--divider); }
+    .icon-swatch.dark  { background: linear-gradient(135deg, #02488D, #01336A); }
+    .icon-swatch.cyan  { background: linear-gradient(135deg, #18CCE5, #00B4C9); }
+
+    /* ── Color Palette ── */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 12px;
+    }
+    .color-chip {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(2,72,141,0.08);
+    }
+    .color-chip-swatch { height: 64px; }
+    .color-chip-info {
+      background: white;
+      padding: 10px 12px;
+    }
+    .color-chip-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-1);
+      display: block;
+    }
+    .color-chip-hex {
+      font-size: 10px;
+      color: var(--text-3);
+      font-family: 'IBM Plex Mono', monospace;
+      margin-top: 2px;
+      display: block;
+    }
+
+    /* ── Typography ── */
+    .type-sample { margin-bottom: 20px; }
+    .type-meta {
+      font-size: 10px;
+      color: var(--text-3);
+      font-family: monospace;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    /* ── Buttons ── */
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 52px;
+      padding: 0 24px;
+      border-radius: 14px;
+      font-family: 'Rubik', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      border: none;
+      cursor: pointer;
+      transition: all 150ms cubic-bezier(0.4,0,0.2,1);
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary {
+      background: linear-gradient(135deg, #02488D, #01336A);
+      color: white;
+      box-shadow: 0px 4px 14px rgba(2,72,141,0.35);
+    }
+    .btn-accent {
+      background: linear-gradient(135deg, #18CCE5, #00B4C9);
+      color: white;
+      box-shadow: 0px 4px 14px rgba(24,204,229,0.40);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--navy);
+      border: 2px solid var(--navy);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-2);
+      box-shadow: none;
+    }
+    .btn-sm {
+      height: 40px;
+      padding: 0 16px;
+      font-size: 13px;
+      border-radius: 10px;
+    }
+
+    /* ── Inputs ── */
+    .input-demo {
+      height: 52px;
+      width: 100%;
+      max-width: 360px;
+      padding: 0 16px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      font-family: 'Rubik', sans-serif;
+      font-size: 15px;
+      color: var(--text-1);
+      outline: none;
+      transition: border-color 150ms, box-shadow 150ms;
+      margin-bottom: 12px;
+      display: block;
+      box-shadow: inset 0px 1px 3px rgba(2,72,141,0.06);
+    }
+    .input-demo:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 3px rgba(24,204,229,0.18);
+    }
+
+    /* ── Cards ── */
+    .card-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .ds-card {
+      border-radius: 18px;
+      padding: 24px;
+      transition: box-shadow 250ms;
+    }
+    .ds-card:hover { box-shadow: 0px 6px 24px rgba(2,72,141,0.14); }
+    .ds-card.light {
+      background: white;
+      box-shadow: 0px 2px 8px rgba(2,72,141,0.08);
+    }
+    .ds-card.navy {
+      background: linear-gradient(135deg, #02488D 0%, #01336A 100%);
+      color: white;
+    }
+    .ds-card.accent {
+      background: linear-gradient(135deg, #18CCE5 0%, #00B4C9 100%);
+      color: white;
+    }
+    .ds-card.bordered {
+      background: white;
+      border: 1.5px solid var(--border);
+    }
+    .ds-card-icon { font-size: 24px; margin-bottom: 12px; }
+    .ds-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .ds-card.light .ds-card-title,
+    .ds-card.bordered .ds-card-title { color: var(--text-1); }
+    .ds-card-text {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+    .ds-card.light .ds-card-text,
+    .ds-card.bordered .ds-card-text { color: var(--text-3); }
+    .ds-card.navy .ds-card-text,
+    .ds-card.accent .ds-card-text { color: rgba(255,255,255,0.72); }
+
+    /* ── Badges ── */
+    .badge-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+    .badge-primary { background: var(--navy-light); color: var(--navy); }
+    .badge-accent  { background: var(--cyan-light);  color: var(--cyan-dark); }
+    .badge-success { background: #E8F5E9; color: #2E7D32; }
+    .badge-warning { background: #FFF3DC; color: #A0621A; }
+    .badge-error   { background: #FFEBEE; color: #C62828; }
+
+    /* ── Gradients showcase ── */
+    .gradient-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .gradient-chip {
+      height: 80px;
+      border-radius: 14px;
+      display: flex;
+      align-items: flex-end;
+      padding: 10px 14px;
+      font-size: 10px;
+      font-weight: 500;
+      color: white;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ── Motion tokens ── */
+    .motion-grid { display: flex; flex-direction: column; gap: 12px; }
+    .motion-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: white;
+      border-radius: 12px;
+      padding: 14px 16px;
+      border: 1px solid var(--divider);
+    }
+    .motion-dot {
+      width: 12px; height: 12px;
+      background: var(--cyan);
+      border-radius: 50%;
+    }
+    .motion-label { font-size: 12px; font-weight: 500; color: var(--text-2); width: 80px; }
+    .motion-val { font-size: 11px; color: var(--text-3); font-family: monospace; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .logo-grid { grid-template-columns: 1fr; }
+      .card-grid { grid-template-columns: 1fr 1fr; }
+      .gradient-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="52" height="52">
+          <defs>
+            <clipPath id="pinH">
+              <path d="M24 2C15 2 8 9 8 18C8 29.5 24 46 24 46C24 46 40 29.5 40 18C40 9 33 2 24 2Z"/>
+            </clipPath>
+          </defs>
+          <path d="M24 2C15 2 8 9 8 18C8 29.5 24 46 24 46C24 46 40 29.5 40 18C40 9 33 2 24 2Z" fill="rgba(255,255,255,0.18)"/>
+          <g clip-path="url(#pinH)">
+            <path d="M24 2 L8 11 L14 18 L24 13 Z" fill="#18CCE5"/>
+            <path d="M24 2 L40 11 L34 18 L24 13 Z" fill="#00B4C9"/>
+            <path d="M8 11 L8 24 L17 22 L14 18 Z" fill="#00B4C9" opacity="0.85"/>
+            <path d="M40 11 L40 24 L31 22 L34 18 Z" fill="#18CCE5" opacity="0.80"/>
+            <path d="M14 18 L17 22 L24 31 L24 22 Z" fill="rgba(1,51,106,0.7)"/>
+            <path d="M34 18 L31 22 L24 31 L24 22 Z" fill="rgba(1,91,158,0.6)"/>
+            <circle cx="24" cy="18" r="6"   fill="white" opacity="0.95"/>
+            <circle cx="24" cy="18" r="3.5" fill="#02488D"/>
+            <circle cx="24" cy="18" r="1.4" fill="white"/>
+          </g>
+        </svg>
+        <div>
+          <div style="font-size:28px;font-weight:800;color:white;letter-spacing:1.5px;">SPATIAL</div>
+        </div>
+      </div>
+      <h1>Design System<br>v2.0</h1>
+      <p>Brand tokens, components, and guidelines for building the SPATIAL digital ecosystem — bilingual, precise, and built for scale.</p>
+      <div class="hero-version">BRAND · 2025 · RUBIK · #02488D · #18CCE5</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">01 — Logo & Mark</div>
+
+    <div class="logo-grid">
+      <div class="logo-card light">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 80">
+          <defs>
+            <clipPath id="p1"><path d="M40 4C26.7 4 16 14.7 16 28C16 43.5 40 76 40 76C40 76 64 43.5 64 28C64 14.7 53.3 4 40 4Z"/></clipPath>
+          </defs>
+          <path d="M40 4C26.7 4 16 14.7 16 28C16 43.5 40 76 40 76C40 76 64 43.5 64 28C64 14.7 53.3 4 40 4Z" fill="#02488D"/>
+          <g clip-path="url(#p1)">
+            <path d="M40 4 L16 18 L24 28 L40 20 Z" fill="#18CCE5"/>
+            <path d="M40 4 L64 18 L56 28 L40 20 Z" fill="#00B4C9"/>
+            <path d="M16 18 L16 38 L28 36 L24 28 Z" fill="#00B4C9" opacity="0.85"/>
+            <path d="M64 18 L64 38 L52 36 L56 28 Z" fill="#18CCE5" opacity="0.80"/>
+            <path d="M24 28 L28 36 L40 50 L40 36 Z" fill="#01336A" opacity="0.9"/>
+            <path d="M56 28 L52 36 L40 50 L40 36 Z" fill="#015B9E" opacity="0.8"/>
+            <circle cx="40" cy="28" r="8"   fill="white" opacity="0.95"/>
+            <circle cx="40" cy="28" r="4.5" fill="#02488D"/>
+            <circle cx="40" cy="28" r="1.8" fill="white"/>
+          </g>
+          <text x="76" y="44" font-family="'Rubik',sans-serif" font-weight="800" font-size="26" letter-spacing="1.5" fill="#02488D">SPATIAL</text>
+        </svg>
+        <div class="logo-card-label">On Light</div>
+      </div>
+
+      <div class="logo-card dark">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 80">
+          <defs>
+            <clipPath id="p2"><path d="M40 4C26.7 4 16 14.7 16 28C16 43.5 40 76 40 76C40 76 64 43.5 64 28C64 14.7 53.3 4 40 4Z"/></clipPath>
+          </defs>
+          <path d="M40 4C26.7 4 16 14.7 16 28C16 43.5 40 76 40 76C40 76 64 43.5 64 28C64 14.7 53.3 4 40 4Z" fill="rgba(255,255,255,0.15)"/>
+          <g clip-path="url(#p2)">
+            <path d="M40 4 L16 18 L24 28 L40 20 Z" fill="#18CCE5"/>
+            <path d="M40 4 L64 18 L56 28 L40 20 Z" fill="#00B4C9"/>
+            <path d="M16 18 L16 38 L28 36 L24 28 Z" fill="#00B4C9" opacity="0.8"/>
+            <path d="M64 18 L64 38 L52 36 L56 28 Z" fill="#18CCE5" opacity="0.75"/>
+            <path d="M24 28 L28 36 L40 50 L40 36 Z" fill="rgba(1,51,106,0.7)"/>
+            <path d="M56 28 L52 36 L40 50 L40 36 Z" fill="rgba(255,255,255,0.12)"/>
+            <circle cx="40" cy="28" r="8"   fill="white" opacity="0.95"/>
+            <circle cx="40" cy="28" r="4.5" fill="#02488D"/>
+            <circle cx="40" cy="28" r="1.8" fill="white"/>
+          </g>
+          <text x="76" y="44" font-family="'Rubik',sans-serif" font-weight="800" font-size="26" letter-spacing="1.5" fill="white">SPATIAL</text>
+        </svg>
+        <div class="logo-card-label">On Dark</div>
+      </div>
+
+      <div class="logo-card bg-light">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 80">
+          <defs>
+            <clipPath id="p3"><path d="M40 4C26.7 4 16 14.7 16 28C16 43.5 40 76 40 76C40 76 64 43.5 64 28C64 14.7 53.3 4 40 4Z"/></clipPath>
+          </defs>
+          <path d="M40 4C26.7 4 16 14.7 16 28C16 43.5 40 76 40 76C40 76 64 43.5 64 28C64 14.7 53.3 4 40 4Z" fill="#02488D"/>
+          <g clip-path="url(#p3)">
+            <path d="M40 4 L16 18 L24 28 L40 20 Z" fill="#18CCE5"/>
+            <path d="M40 4 L64 18 L56 28 L40 20 Z" fill="#00B4C9"/>
+            <path d="M16 18 L16 38 L28 36 L24 28 Z" fill="#00B4C9" opacity="0.85"/>
+            <path d="M64 18 L64 38 L52 36 L56 28 Z" fill="#18CCE5" opacity="0.80"/>
+            <path d="M24 28 L28 36 L40 50 L40 36 Z" fill="#01336A" opacity="0.9"/>
+            <path d="M56 28 L52 36 L40 50 L40 36 Z" fill="#015B9E" opacity="0.8"/>
+            <circle cx="40" cy="28" r="8"   fill="white" opacity="0.95"/>
+            <circle cx="40" cy="28" r="4.5" fill="#02488D"/>
+            <circle cx="40" cy="28" r="1.8" fill="white"/>
+          </g>
+          <text x="76" y="44" font-family="'Rubik',sans-serif" font-weight="800" font-size="26" letter-spacing="1.5" fill="#02488D">SPATIAL</text>
+        </svg>
+        <div class="logo-card-label">On Brand Surface</div>
+      </div>
+    </div>
+
+    <div class="section-title">Icon Mark</div>
+    <div class="icon-row">
+      <div class="icon-swatch light">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+          <defs><clipPath id="ic1"><path d="M24 2C15 2 8 9 8 18C8 29.5 24 46 24 46C24 46 40 29.5 40 18C40 9 33 2 24 2Z"/></clipPath></defs>
+          <path d="M24 2C15 2 8 9 8 18C8 29.5 24 46 24 46C24 46 40 29.5 40 18C40 9 33 2 24 2Z" fill="#02488D"/>
+          <g clip-path="url(#ic1)">
+            <path d="M24 2 L8 11 L14 18 L24 13 Z" fill="#18CCE5"/>
+            <path d="M24 2 L40 11 L34 18 L24 13 Z" fill="#00B4C9"/>
+            <path d="M8 11 L8 24 L17 22 L14 18 Z" fill="#00B4C9" opacity="0.85"/>
+            <path d="M40 11 L40 24 L31 22 L34 18 Z" fill="#18CCE5" opacity="0.80"/>
+            <path d="M14 18 L17 22 L24 31 L24 22 Z" fill="#01336A"/>
+            <path d="M34 18 L31 22 L24 31 L24 22 Z" fill="#015B9E" opacity="0.9"/>
+            <circle cx="24" cy="18" r="6"   fill="white" opacity="0.95"/>
+            <circle cx="24" cy="18" r="3.5" fill="#02488D"/>
+            <circle cx="24" cy="18" r="1.4" fill="white"/>
+          </g>
+        </svg>
+      </div>
+      <div class="icon-swatch dark">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+          <defs><clipPath id="ic2"><path d="M24 2C15 2 8 9 8 18C8 29.5 24 46 24 46C24 46 40 29.5 40 18C40 9 33 2 24 2Z"/></clipPath></defs>
+          <path d="M24 2C15 2 8 9 8 18C8 29.5 24 46 24 46C24 46 40 29.5 40 18C40 9 33 2 24 2Z" fill="rgba(255,255,255,0.15)"/>
+          <g clip-path="url(#ic2)">
+            <path d="M24 2 L8 11 L14 18 L24 13 Z" fill="#18CCE5"/>
+            <path d="M24 2 L40 11 L34 18 L24 13 Z" fill="#00B4C9"/>
+            <path d="M8 11 L8 24 L17 22 L14 18 Z" fill="#00B4C9" opacity="0.8"/>
+            <path d="M40 11 L40 24 L31 22 L34 18 Z" fill="#18CCE5" opacity="0.75"/>
+            <path d="M14 18 L17 22 L24 31 L24 22 Z" fill="rgba(255,255,255,0.1)"/>
+            <path d="M34 18 L31 22 L24 31 L24 22 Z" fill="rgba(255,255,255,0.08)"/>
+            <circle cx="24" cy="18" r="6"   fill="white" opacity="0.95"/>
+            <circle cx="24" cy="18" r="3.5" fill="#02488D"/>
+            <circle cx="24" cy="18" r="1.4" fill="white"/>
+          </g>
+        </svg>
+      </div>
+      <div class="icon-swatch cyan">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+          <defs><clipPath id="ic3"><path d="M24 2C15 2 8 9 8 18C8 29.5 24 46 24 46C24 46 40 29.5 40 18C40 9 33 2 24 2Z"/></clipPath></defs>
+          <path d="M24 2C15 2 8 9 8 18C8 29.5 24 46 24 46C24 46 40 29.5 40 18C40 9 33 2 24 2Z" fill="rgba(2,72,141,0.7)"/>
+          <g clip-path="url(#ic3)">
+            <path d="M24 2 L8 11 L14 18 L24 13 Z" fill="white" opacity="0.9"/>
+            <path d="M24 2 L40 11 L34 18 L24 13 Z" fill="white" opacity="0.7"/>
+            <path d="M8 11 L8 24 L17 22 L14 18 Z" fill="white" opacity="0.6"/>
+            <path d="M40 11 L40 24 L31 22 L34 18 Z" fill="white" opacity="0.5"/>
+            <path d="M14 18 L17 22 L24 31 L24 22 Z" fill="rgba(2,72,141,0.5)"/>
+            <path d="M34 18 L31 22 L24 31 L24 22 Z" fill="rgba(2,72,141,0.4)"/>
+            <circle cx="24" cy="18" r="6"   fill="white"/>
+            <circle cx="24" cy="18" r="3.5" fill="#02488D"/>
+            <circle cx="24" cy="18" r="1.4" fill="white"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">02 — Color Palette</div>
+
+    <div class="section-title">Brand Primary</div>
+    <div class="color-grid">
+      <div class="color-chip"><div class="color-chip-swatch" style="background:#02488D"></div><div class="color-chip-info"><span class="color-chip-name">Navy</span><span class="color-chip-hex">#02488D</span></div></div>
+      <div class="color-chip"><div class="color-chip-swatch" style="background:#01336A"></div><div class="color-chip-info"><span class="color-chip-name">Navy Dark</span><span class="color-chip-hex">#01336A</span></div></div>
+      <div class="color-chip"><div class="color-chip-swatch" style="background:#015B9E"></div><div class="color-chip-info"><span class="color-chip-name">Navy Mid</span><span class="color-chip-hex">#015B9E</span></div></div>
+      <div class="color-chip"><div class="color-chip-swatch" style="background:#E8F0F8"></div><div class="color-chip-info"><span class="color-chip-name">Navy Light</span><span class="color-chip-hex">#E8F0F8</span></div></div>
+    </div>
+
+    <div class="section-title">Accent</div>
+    <div class="color-grid">
+      <div class="color-chip"><div class="color-chip-swatch" style="background:#18CCE5"></div><div class="color-chip-info"><span class="color-chip-name">Cyan</span><span class="color-chip-hex">#18CCE5</span></div></div>
+      <div class="color-chip"><div class="color-chip-swatch" style="background:#00B4C9"></div><div class="color-chip-info"><span class="color-chip-name">Cyan Dark</span><span class="color-chip-hex">#00B4C9</span></div></div>
+      <div class="color-chip"><div class="color-chip-swatch" style="background:#E0F9FC"></div><div class="color-chip-info"><span class="color-chip-name">Cyan Light</span><span class="color-chip-hex">#E0F9FC</span></div></div>
+      <div class="color-chip"><div class="color-chip-swatch" style="background:#B7B7B7"></div><div class="color-chip-info"><span class="color-chip-name">Gray</span><span class="color-chip-hex">#B7B7B7</span></div></div>
+    </div>
+
+    <div class="section-title">Semantic</div>
+    <div class="color-grid">
+      <div class="color-chip"><div class="color-chip-swatch" style="background:#4CAF50"></div><div class="color-chip-info"><span class="color-chip-name">Success</span><span class="color-chip-hex">#4CAF50</span></div></div>
+      <div class="color-chip"><div class="color-chip-swatch" style="background:#F5A623"></div><div class="color-chip-info"><span class="color-chip-name">Warning</span><span class="color-chip-hex">#F5A623</span></div></div>
+      <div class="color-chip"><div class="color-chip-swatch" style="background:#C62828"></div><div class="color-chip-info"><span class="color-chip-name">Error</span><span class="color-chip-hex">#C62828</span></div></div>
+      <div class="color-chip"><div class="color-chip-swatch" style="background:#F0F4F8; border: 1px solid #DDE5EF;"></div><div class="color-chip-info"><span class="color-chip-name">Background</span><span class="color-chip-hex">#F0F4F8</span></div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">03 — Typography · Rubik</div>
+
+    <div class="type-sample">
+      <div class="type-meta">52px · ExtraBold 800 · tracking -0.02em</div>
+      <div style="font-size:52px;font-weight:800;letter-spacing:-0.02em;color:#0A1B2E;line-height:1.1;">Precision.</div>
+    </div>
+    <div class="type-sample">
+      <div class="type-meta">34px · Bold 700</div>
+      <div style="font-size:34px;font-weight:700;color:#0A1B2E;line-height:1.2;">Smart Address Solutions</div>
+    </div>
+    <div class="type-sample">
+      <div class="type-meta">24px · SemiBold 600</div>
+      <div style="font-size:24px;font-weight:600;color:#0A1B2E;">National Address System</div>
+    </div>
+    <div class="type-sample">
+      <div class="type-meta">17px · Medium 500</div>
+      <div style="font-size:17px;font-weight:500;color:#3D5066;">Generating flexible and temporary addresses for individuals and entities</div>
+    </div>
+    <div class="type-sample">
+      <div class="type-meta">15px · Regular 400</div>
+      <div style="font-size:15px;font-weight:400;color:#3D5066;line-height:1.6;">Spatial Navigation Company (SPATIAL) is a Saudi tech-logistics company established to develop innovative digital solutions that facilitate access to temporary and unnumbered locations through smart addressing systems.</div>
+    </div>
+    <div class="type-sample">
+      <div class="type-meta">11px · Light 300 · tracking 0.16em — LABELS</div>
+      <div style="font-size:11px;font-weight:300;letter-spacing:0.16em;text-transform:uppercase;color:#6B7E93;">Kingdom of Saudi Arabia · Riyadh</div>
+    </div>
+
+    <div class="section-title">Arabic (RTL) — Rubik</div>
+    <div dir="rtl" style="text-align:right;">
+      <div class="type-sample">
+        <div class="type-meta" dir="ltr">34px · ExtraBold 800</div>
+        <div style="font-size:34px;font-weight:800;color:#0A1B2E;line-height:1.3;font-family:'Rubik',sans-serif;">استدلال</div>
+      </div>
+      <div class="type-sample">
+        <div class="type-meta" dir="ltr">17px · Regular 400</div>
+        <div style="font-size:17px;font-weight:400;color:#3D5066;line-height:1.8;font-family:'Rubik',sans-serif;">الاستدلال بدقة... للوصول بثقة</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">04 — Buttons</div>
+    <div class="btn-row">
+      <button class="btn btn-primary">Primary Action</button>
+      <button class="btn btn-accent">Accent CTA</button>
+      <button class="btn btn-outline">Outline</button>
+      <button class="btn btn-ghost">Ghost</button>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary btn-sm">Small Primary</button>
+      <button class="btn btn-accent btn-sm">Small Accent</button>
+      <button class="btn btn-outline btn-sm">Small Outline</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">05 — Form Inputs</div>
+    <input class="input-demo" type="text" placeholder="Enter temporary address code…">
+    <input class="input-demo" type="text" placeholder="Building number or coordinates" style="border-color:#18CCE5;box-shadow:0 0 0 3px rgba(24,204,229,0.18);">
+    <input class="input-demo" type="text" placeholder="Error state" style="border-color:#C62828;box-shadow:0 0 0 3px rgba(198,40,40,0.12);">
+  </div>
+
+  <div class="section">
+    <div class="section-label">06 — Cards</div>
+    <div class="card-grid">
+      <div class="ds-card light">
+        <div class="ds-card-icon">📍</div>
+        <div class="ds-card-title">Address Lookup</div>
+        <div class="ds-card-text">Find any temporary or unnumbered location precisely.</div>
+      </div>
+      <div class="ds-card navy">
+        <div class="ds-card-icon">🗺️</div>
+        <div class="ds-card-title" style="color:white;">Smart Routing</div>
+        <div class="ds-card-text">Integrate logistics systems with smart addressing platforms.</div>
+      </div>
+      <div class="ds-card accent">
+        <div class="ds-card-icon">📡</div>
+        <div class="ds-card-title" style="color:white;">Coordinate API</div>
+        <div class="ds-card-text">Coordinate-based solutions to enhance accessibility.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">07 — Badges</div>
+    <div class="badge-row">
+      <span class="badge badge-primary">Primary</span>
+      <span class="badge badge-accent">Accent</span>
+      <span class="badge badge-success">Verified</span>
+      <span class="badge badge-warning">Pending</span>
+      <span class="badge badge-error">Error</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">08 — Gradients</div>
+    <div class="gradient-grid">
+      <div class="gradient-chip" style="background:linear-gradient(135deg,#02488D,#01336A)">Brand Primary</div>
+      <div class="gradient-chip" style="background:linear-gradient(135deg,#18CCE5,#00B4C9)">Brand Accent</div>
+      <div class="gradient-chip" style="background:linear-gradient(145deg,#02488D 0%,#015B9E 50%,#18CCE5 100%)">Brand Hero</div>
+      <div class="gradient-chip" style="background:linear-gradient(to bottom right,#02488D,#00B4C9)">Diagonal</div>
+      <div class="gradient-chip" style="background:linear-gradient(180deg,#fff 0%,#F0F4F8 100%);color:#6B7E93;">Surface Subtle</div>
+      <div class="gradient-chip" style="background:repeating-linear-gradient(-45deg,#E4EDF5 0px,#E4EDF5 2px,#F0F4F8 2px,#F0F4F8 12px);color:#6B7E93;">Splash Stripes</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">09 — Motion Tokens</div>
+    <div class="motion-grid">
+      <div class="motion-row"><div class="motion-dot"></div><div class="motion-label">Instant</div><div class="motion-val">80ms · ease-default</div></div>
+      <div class="motion-row"><div class="motion-dot"></div><div class="motion-label">Fast</div><div class="motion-val">150ms · ease-default</div></div>
+      <div class="motion-row"><div class="motion-dot"></div><div class="motion-label">Normal</div><div class="motion-val">250ms · ease-default</div></div>
+      <div class="motion-row"><div class="motion-dot"></div><div class="motion-label">Slow</div><div class="motion-val">400ms · ease-default</div></div>
+      <div class="motion-row"><div class="motion-dot" style="background:#02488D"></div><div class="motion-label">Spring</div><div class="motion-val">250ms · cubic-bezier(0.34,1.56,0.64,1)</div></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

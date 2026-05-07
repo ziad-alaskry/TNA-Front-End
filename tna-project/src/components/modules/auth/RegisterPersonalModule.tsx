@@ -124,7 +124,7 @@ export default function RegisterPersonalModule() {
                             label={isEntity ? "اسم المنشأة الرسمي" : t('auth.register.labels.full_name')}
                             icon={isEntity ? Buildings : UserIcon}
                             placeholder={isEntity ? "مثلاً: فندق الرياض ان" : t('auth.register.placeholders.full_name')}
-                            error={errors.full_name?.message}
+                            error={errors.full_name?.message as string}
                             {...register('full_name')}
                         />
 
@@ -138,7 +138,7 @@ export default function RegisterPersonalModule() {
                                         { value: 'VISA', label: t('auth.register.document_types.visa') },
                                     ]}
                                     {...register('document_type')}
-                                    error={errors.document_type?.message}
+                                    error={errors.document_type?.message as string}
                                 />
                             </div>
                             <div className="flex-[2]">
@@ -146,7 +146,7 @@ export default function RegisterPersonalModule() {
                                     label={t('auth.register.labels.document_number')}
                                     icon={IdentificationCard}
                                     placeholder={t('auth.register.placeholders.document_number')}
-                                    error={errors.document_number?.message}
+                                    error={errors.document_number?.message as string}
                                     {...register('document_number')}
                                 />
                             </div>
@@ -157,13 +157,13 @@ export default function RegisterPersonalModule() {
                                 label={t('auth.register.labels.dob')}
                                 icon={Calendar}
                                 type="date"
-                                error={errors.date_of_birth?.message}
+                                error={errors.date_of_birth?.message as string}
                                 {...register('date_of_birth')}
                             />
                             <InputField
                                 label={t('auth.register.labels.nationality')}
                                 placeholder="SA"
-                                error={errors.nationality?.message}
+                                error={errors.nationality?.message as string}
                                 {...register('nationality')}
                             />
                         </div>
@@ -173,7 +173,7 @@ export default function RegisterPersonalModule() {
                             icon={Phone}
                             placeholder="05XXXXXXXX"
                             type="tel"
-                            error={errors.mobile?.message}
+                            error={errors.mobile?.message as string}
                             {...register('mobile')}
                         />
 
@@ -208,7 +208,7 @@ export default function RegisterPersonalModule() {
                             </label>
                             {errors.personalDataConfirmed && (
                                 <p className="text-caption text-error px-1 mt-1 font-medium italic">
-                                    {errors.personalDataConfirmed.message}
+                                    {errors.personalDataConfirmed.message as string}
                                 </p>
                             )}
                         </div>
