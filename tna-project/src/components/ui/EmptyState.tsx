@@ -9,13 +9,11 @@ export interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {
     description: string;
     actionLabel?: string;
     onAction?: () => void;
+    cta?: string;
+    onCtaClick?: () => void;
     compact?: boolean;
 }
 
-/**
- * SPATIAL EmptyState — illustration placeholder + title + subtitle + optional CTA.
- * compact=true for inline table/section zero-data scenarios.
- */
 export default function EmptyState({
     className,
     icon: IconComponent,
@@ -23,9 +21,14 @@ export default function EmptyState({
     description,
     actionLabel,
     onAction,
+    cta,
+    onCtaClick,
     compact = false,
     ...props
 }: EmptyStateProps) {
+    const finalLabel = cta || actionLabel;
+    const finalAction = onCtaClick || onAction;
+
     return (
         <div
             className={cn(
@@ -53,9 +56,9 @@ export default function EmptyState({
             <p className="text-sm text-text-secondary max-w-[320px] leading-relaxed mb-8">
                 {description}
             </p>
-            {actionLabel && onAction && (
-                <Button variant="primary" size="md" onClick={onAction}>
-                    {actionLabel}
+            {finalLabel && finalAction && (
+                <Button variant="primary" size="md" onClick={finalAction}>
+                    {finalLabel}
                 </Button>
             )}
         </div>

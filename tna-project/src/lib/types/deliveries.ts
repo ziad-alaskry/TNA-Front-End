@@ -19,8 +19,16 @@ export interface Shipment {
         contents?: string;
     };
     failure_reason?: string;
+    sender_name?: string;
+    recipient_name?: string;
+    carrier?: string;
+    tracking_no?: string;
+    expected_at?: string;
+    tna_code?: string;
+    dimensions?: string;
+    weight?: string;
     created_at: string;
-    updated_at: string;
+    updated_at?: string;
 }
 
 export interface ShipmentStatusLog {

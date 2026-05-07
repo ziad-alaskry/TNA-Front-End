@@ -5,6 +5,7 @@ export const mockGovQueue = [
     nationality: 'Saudi Arabia',
     submitted_at: '2024-05-01T10:00:00Z',
     mode: 'MODERATED',
+    visitor_id_number: '1092837465',
     status: 'PENDING_REVIEW',
   },
   {
@@ -13,6 +14,7 @@ export const mockGovQueue = [
     nationality: 'USA',
     submitted_at: '2024-05-02T11:00:00Z',
     mode: 'AUTONOMOUS',
+    visitor_id_number: '2093847561',
     status: 'AUTO_APPROVED',
   },
   {
@@ -21,6 +23,7 @@ export const mockGovQueue = [
     nationality: 'Egypt',
     submitted_at: '2024-05-03T09:30:00Z',
     mode: 'MODERATED',
+    visitor_id_number: '1092837465',
     status: 'PENDING_REVIEW',
   },
   {
@@ -29,6 +32,7 @@ export const mockGovQueue = [
     nationality: 'UK',
     submitted_at: '2024-05-04T15:20:00Z',
     mode: 'MODERATED',
+    visitor_id_number: '1092837465',
     status: 'PENDING_REVIEW',
   },
   {
@@ -37,6 +41,7 @@ export const mockGovQueue = [
     nationality: 'Morocco',
     submitted_at: '2024-05-05T08:15:00Z',
     mode: 'MODERATED',
+    visitor_id_number: '1092837465',
     status: 'PENDING_REVIEW',
   },
 ];

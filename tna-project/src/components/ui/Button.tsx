@@ -34,16 +34,29 @@ const buttonVariants = cva(
 
 export interface ButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-        VariantProps<typeof buttonVariants> {}
+        VariantProps<typeof buttonVariants> {
+    isLoading?: boolean;
+}
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, variant, size, fullWidth, ...props }, ref) => {
+    ({ className, variant, size, fullWidth, isLoading, children, ...props }, ref) => {
         return (
             <button
                 ref={ref}
-                className={cn(buttonVariants({ variant, size, fullWidth, className }))}
+                disabled={isLoading || props.disabled}
+                className={cn(
+                    buttonVariants({ variant, size, fullWidth, className }),
+                    isLoading && "relative text-transparent transition-none hover:text-transparent"
+                )}
                 {...props}
-            />
+            >
+                {isLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                    </div>
+                )}
+                {children}
+            </button>
         );
     }
 );

@@ -10,6 +10,7 @@ import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher'
 import { BottomNav } from './BottomNav'
 import { cn } from '@/lib/utils/cn'
 import Header from '@/components/shell/Header'
+import { useMounted } from '@/lib/hooks/useMounted'
 
 type UserRole = 'Visitor' | 'Owner' | 'Gov' | 'Carrier'
 
@@ -34,6 +35,9 @@ export function AppShell({
 }: AppShellProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const { isRTL, t } = useLocale()
+  const mounted = useMounted()
+
+  if (!mounted) return null
 
   return (
     <div suppressHydrationWarning className="flex h-screen w-full flex-col bg-surface-100 text-neutral-900" dir={isRTL ? 'rtl' : 'ltr'}>

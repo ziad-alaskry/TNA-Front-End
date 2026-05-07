@@ -27,6 +27,12 @@ interface DataTableLayoutProps<T extends Record<string, any>> {
   pageSize?: number
   isLoading?: boolean
   children?: ReactNode
+  emptyState?: {
+    title: string
+    description: string
+    cta?: string
+    onCtaClick?: () => void
+  }
 }
 
 /**
@@ -44,6 +50,7 @@ export default function DataTableLayout<T extends Record<string, any>>({
   pageSize = 10,
   isLoading = false,
   children,
+  emptyState,
 }: DataTableLayoutProps<T>) {
   const { t } = useLocale()
   const [searchQuery, setSearchQuery] = useState('')
@@ -122,8 +129,10 @@ export default function DataTableLayout<T extends Record<string, any>>({
                    <td colSpan={columns.length} className="px-6 py-16">
                      <EmptyState 
                          compact 
-                         title={t('common.no_data')} 
-                         description={t('common.no_data_desc') ?? 'No records found matching your criteria.'}
+                         title={emptyState?.title || t('common.no_data')} 
+                         description={emptyState?.description || t('common.no_data_desc') || 'No records found matching your criteria.'}
+                         cta={emptyState?.cta}
+                         onCtaClick={emptyState?.onCtaClick}
                      />
                    </td>
                  </tr>

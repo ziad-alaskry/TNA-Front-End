@@ -61,7 +61,13 @@ export function SidebarContent({ role }: SidebarProps) {
     ],
   }
 
-  const menuItems = (menuConfigs as any)[role] || (menuConfigs as any)[{
+  interface MenuItem {
+    labelKey: string;
+    icon: React.ReactNode;
+    href: string;
+  }
+
+  const menuItems: MenuItem[] = (menuConfigs as any)[role] || (menuConfigs as any)[{
     VISITOR: 'Visitor',
     OWNER: 'Owner',
     CARRIER_STAFF: 'Carrier',

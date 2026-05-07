@@ -28,7 +28,6 @@ export const metadata: Metadata = {
     shortcut: '/brand/logo.svg',
     apple: '/brand/logo.svg',
   },
-  themeColor: '#02488D',
   openGraph: {
     title: 'TNA - Temporary National Address',
     description: 'The Saudi comprehensive system for temporary national addresses.',
@@ -36,6 +35,10 @@ export const metadata: Metadata = {
     locale: 'ar_SA',
     type: 'website',
   },
+}
+
+export const viewport = {
+  themeColor: '#02488D',
 }
 
 export function generateStaticParams() {

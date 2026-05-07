@@ -10,102 +10,112 @@ import {
     Calendar, 
     Receipt,
     CheckCircle,
-    Info
+    Info,
+    Link as LinkIcon,
+    ShieldCheck,
+    DotsThree
 } from '@phosphor-icons/react'
 import { useParams, useRouter } from 'next/navigation'
-import { useBindingContext } from '@/context/BindingContext'
+import { mockTNAs } from '@/lib/mock/tnas.mock'
+import { mockProperties, mockSubAddresses } from '@/lib/mock/properties.mock'
+import { useLocale } from '@/i18n/LocaleProvider'
+import { useMock } from '@/lib/hooks/useMock'
+import Button from '@/components/ui/Button'
+import { cn } from '@/lib/utils/cn'
 
 export default function VisitorTnaDetailPage() {
-    const { id, locale } = useParams();
+    const { id } = useParams();
     const router = useRouter();
-    const { visitorTnas, realEstateObjects } = useBindingContext();
+    const { locale, isRTL } = useLocale();
 
-    const tna = visitorTnas.find(t => t.tna_id === id);
-    const mockTnaCode = tna?.tna_code || 'TNA-102938485';
-    
-    // Find linked property (mocking logic)
-    const property = realEstateObjects[0]; 
+    const { data: tnas, isLoading } = useMock(mockTNAs);
+    const tna = tnas?.find(t => t.tna_id === id);
+
+    if (isLoading) return <div>Loading...</div>;
+    if (!tna) return <div>TNA not found</div>;
+
+    const isUnlinked = tna.status === 'UNLINKED';
 
     const sections = [
         {
-            title: 'معلومات العنوان',
-            description: 'البيانات الأساسية لعنوانك الوطني المؤقت.',
-            items: [
-                { label: 'كود العنوان', value: <span className="font-mono font-bold text-primary">{mockTnaCode}</span> },
-                { label: 'حالة التفعيل', value: <span className="px-2 py-0.5 bg-success-bg text-success text-xs font-bold rounded">نشط</span> },
-                { label: 'تاريخ الإصدار', value: '2025/10/16' },
-                { label: 'تاريخ الانتهاء', value: '2026/10/15' },
-            ]
-        },
-        {
-            title: 'العقار المرتبط',
-            description: 'تفاصيل العقار الذي تم ربط العنوان به.',
-            items: [
-                { label: 'اسم العقار', value: property?.name || 'برج النخبة 1' },
-                { label: 'العنوان الجغرافي', value: 'الرياض، حي الملقا، طريق الملك فهد' },
-                { label: 'رقم الوحدة', value: '101' },
-                { label: 'نوع العقار', value: 'سكني' },
-            ]
-        },
-        {
-            title: 'سجل العمليات',
-            description: 'تتبع دورة حياة العنوان والعمليات التي تمت عليه.',
+            title: isRTL ? 'معلومات العنوان' : 'TNA Information',
+            description: isRTL ? 'البيانات الأساسية لعنوانك الوطني المؤقت.' : 'Core identity data for your temporary national address.',
             items: [
                 { 
-                    label: 'إصدار العنوان', 
-                    value: (
-                        <div className="flex flex-col items-end">
-                            <span className="text-sm font-medium">تم سداد الرسوم بنجاح</span>
-                            <span className="text-xs text-neutral-400">2025/10/16 - 10:30 AM</span>
-                        </div>
-                    )
+                  label: isRTL ? 'كود TNA' : 'TNA Code', 
+                  value: <span className="font-mono font-bold text-primary">{tna.tna_code}</span> 
                 },
                 { 
-                    label: 'ربط بالعقار', 
-                    value: (
-                        <div className="flex flex-col items-end">
-                            <span className="text-sm font-medium">تمت موافقة المالك</span>
-                            <span className="text-xs text-neutral-400">2025/10/16 - 11:15 AM</span>
-                        </div>
-                    )
-                }
+                  label: isRTL ? 'الحالة' : 'Status', 
+                  value: (
+                    <span className={cn(
+                      "px-2 py-0.5 text-[10px] font-bold rounded uppercase tracking-widest",
+                      tna.status === 'ACTIVE' ? "bg-success/10 text-success" : 
+                      tna.status === 'UNLINKED' ? "bg-warning/10 text-warning" : "bg-neutral-100 text-neutral-400"
+                    )}>
+                      {tna.status}
+                    </span>
+                  ) 
+                },
+                { label: isRTL ? 'تاريخ الإصدار' : 'Issued At', value: new Date(tna.issued_at).toLocaleDateString() },
+                { label: isRTL ? 'تاريخ الانتهاء' : 'Expires At', value: new Date(tna.expires_at).toLocaleDateString() },
             ]
-        }
-    ];
+        },
+        !isUnlinked && {
+            title: isRTL ? 'العقار المرتبط' : 'Linked Property',
+            description: isRTL ? 'تفاصيل العقار الذي تم ربط العنوان به.' : 'Details of the physical property bound to this TNA.',
+            items: [
+                { label: isRTL ? 'العنوان' : 'Address', value: mockProperties[0].full_address },
+                { label: isRTL ? 'المدينة' : 'City', value: mockProperties[0].city },
+                { label: isRTL ? 'رقم الوحدة' : 'Unit', value: mockSubAddresses[1].suffix_code },
+            ]
+        },
+    ].filter(Boolean) as any[];
 
     const sidebar = (
-        <div className="space-y-6 text-right">
+        <div className="space-y-6">
             <div>
-                <h3 className="text-sm font-bold text-neutral-900 mb-2">إجراءات سريعة</h3>
-                <div className="grid gap-3">
-                    <button className="w-full py-2 px-4 bg-primary text-white text-sm font-bold rounded-sm flex items-center justify-center gap-2 shadow-btn">
-                        <IdentificationCard size={18} />
-                        عرض البطاقة الرقمية
-                    </button>
-                    <button className="w-full py-2 px-4 border border-neutral-300 text-neutral-600 text-sm font-bold rounded-sm flex items-center justify-center gap-2 hover:bg-neutral-50 transition-colors">
-                        <Calendar size={18} />
-                        تجديد العنوان
-                    </button>
-                </div>
+              <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest mb-4">Quick Actions</h3>
+              <div className="space-y-3">
+                {isUnlinked ? (
+                  <Button 
+                    className="w-full py-4 shadow-glow-primary"
+                    onClick={() => router.push(`/${locale}/visitor/tnas/${id}/bind`)}
+                  >
+                    <LinkIcon size={20} weight="bold" />
+                    Bind to Address
+                  </Button>
+                ) : (
+                  <Button className="w-full py-4 shadow-glow-primary">
+                    <IdentificationCard size={20} weight="bold" />
+                    Digital Card
+                  </Button>
+                )}
+                <Button variant="outline" className="w-full py-4">
+                  <DotsThree size={20} weight="bold" />
+                  View History
+                </Button>
+              </div>
             </div>
 
-            <div className="pt-6 border-t border-neutral-100">
-                <div className="p-4 bg-info-bg rounded-md flex gap-3 text-right">
-                    <Info size={24} className="text-primary shrink-0" weight="fill" />
-                    <div>
-                        <p className="text-xs font-bold text-primary mb-1">تلميح</p>
-                        <p className="text-xs text-neutral-600 leading-relaxed">تأكد من تجديد العنوان قبل 15 يوماً من انتهائه لتجنب انقطاع الخدمة.</p>
-                    </div>
+            <div className="p-4 bg-info/5 rounded-2xl border border-info/10 space-y-2">
+                <div className="flex items-center gap-2 text-info">
+                  <Info size={20} weight="fill" />
+                  <p className="text-xs font-bold uppercase tracking-wider">Note</p>
                 </div>
+                <p className="text-xs text-neutral-600 leading-relaxed">
+                  {isUnlinked 
+                    ? "This TNA is issued but not yet bound to a physical address. You must bind it to start receiving shipments."
+                    : "To unbind this address, ensure no shipments are currently in transit."}
+                </p>
             </div>
         </div>
     );
 
     return (
-        <AppShell role="Visitor" header="تفاصيل العنوان">
+        <AppShell role="Visitor" header={isRTL ? 'تفاصيل TNA' : 'TNA Details'}>
             <DetailViewLayout
-                title={`تفاصيل العنوان ${mockTnaCode}`}
-                breadcrumb={['الرئيسية', 'عناويني', mockTnaCode]}
+                title={`TNA: ${tna.tna_code}`}
                 mainContent={sections}
                 sidebar={sidebar}
                 onBack={() => router.push(`/${locale}/visitor/tnas`)}
