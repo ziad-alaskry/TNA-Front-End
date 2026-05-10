@@ -1,191 +1,196 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import { AppShell } from '@/components/layout/AppShell'
-import FormWizardLayout from '@/components/templates/FormWizardLayout'
-import InputField from '@/components/ui/InputField'
-import Select from '@/components/ui/Select'
-import { 
-    User, 
-    IdentificationCard, 
-    Phone, 
-    Buildings, 
-    Trash, 
-    CheckCircle, 
-    Info, 
-    Key,
-    ShieldCheck
+import DataTableLayout, { DataTableColumn } from '@/components/templates/DataTableLayout'
+import {
+  User,
+  Phone,
+  ShieldCheck,
+  IdentificationCard,
+  CheckCircle,
+  WarningCircle,
+  PlusCircle,
+  Shield,
+  ArrowsDownUp
 } from '@phosphor-icons/react'
-import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
 import { useRouter, useParams } from 'next/navigation'
 
-const staffSchema = z.object({
-  full_name: z.string().min(3, 'الاسم يجب أن يحتوي على ٣ أحرف على الأقل'),
-  role: z.enum(['DRIVER', 'DISPATCHER', 'MANAGER']),
-  mobile: z.string().regex(/^05\d{8}$/, 'رقم الجوال يجب أن يبدأ بـ 05 ويتكون من 10 أرقام'),
-  license_number: z.string().optional(), // Optional for non-drivers
-  agency_type: z.string().optional(), // Placeholder for future agency type if needed
-  personalDataConfirmed: z.boolean().refine(v => v === true, 'يجب الموافقة على صحة البيانات'),
-});
+// Aligned with carrier_staff table from data model v2.1
+interface StaffMember {
+  staff_id: string;
+  full_name: string;
+  employee_id: string;
+  position: 'DRIVER' | 'DISPATCHER' | 'MANAGER';
+  mobile: string;
+  is_active: boolean;
+  national_id?: string;
+  license_number?: string; // For drivers
+  last_login_at?: string;
+}
 
-type StaffInputs = z.infer<typeof staffSchema>;
+const mockStaff: StaffMember[] = [
+  {
+    staff_id: 'STF-001',
+    full_name: 'محمد علي River',
+    employee_id: 'EMP-1001',
+    position: 'DRIVER',
+    mobile: '0501234567',
+    is_active: true,
+    national_id: '1234567890',
+    license_number: 'DL-9876543',
+    last_login_at: '2026-05-09T08:30:00Z'
+  },
+  {
+    staff_id: 'STF-002',
+    full_name: 'إبراهيم حسن',
+    employee_id: 'EMP-1002',
+    position: 'DISPATCHER',
+    mobile: '0509876543',
+    is_active: true,
+    last_login_at: '2026-05-10T06:15:00Z'
+  },
+  {
+    staff_id: 'STF-003',
+    full_name: 'خالد صالح',
+    employee_id: 'EMP-1003',
+    position: 'MANAGER',
+    mobile: '0505551234',
+    is_active: true,
+    last_login_at: '2026-05-10T07:00:00Z'
+  },
+  {
+    staff_id: 'STF-004',
+    full_name: 'فهد السبيعي',
+    employee_id: 'EMP-1004',
+    position: 'DRIVER',
+    mobile: '0507778888',
+    is_active: false,
+    national_id: '0987654321',
+    license_number: 'DL-1234567',
+    last_login_at: '2026-05-08T12:45:00Z'
+  },
+];
 
-export default function AddStaffPage() {
+export default function CarrierStaffPage() {
   const router = useRouter();
   const { locale } = useParams();
-  
-  const methods = useForm<StaffInputs>({
-    resolver: zodResolver(staffSchema),
-    mode: 'onChange',
-    defaultValues: {
-      full_name: '',
-      role: 'DRIVER',
-      mobile: '',
-      license_number: '',
-      personalDataConfirmed: false,
-    }
-  });
 
-  const [currentStep, setCurrentStep] = useState(0);
-  const { handleSubmit, watch, formState: { errors } } = methods;
-  const selectedRole = watch('role');
-  const isConfirmed = watch('personalDataConfirmed');
-
-  const steps = [
+  const columns: DataTableColumn<StaffMember>[] = [
     {
-      id: 'step1',
-      label: 'بيانات الموظف',
-      title: 'تفاصيل الموظف',
-      description: 'أدخل معلومات الموظف أو السائق الذي ستضيفه إلى فريق عملك.',
-      content: (
-        <div className="space-y-6">
-          <InputField
-            label="الاسم الكامل"
-            icon={User}
-            placeholder="اسم الموظف"
-            error={errors.full_name?.message}
-            {...methods.register('full_name')}
-          />
-          <Select
-            label="الدور الوظيفي"
-            options={[
-              { value: 'DRIVER', label: 'سائق / مندوب' },
-              { value: 'DISPATCHER', label: 'موزع عمليات' },
-              { value: 'MANAGER', label: 'مدير عمليات' },
-            ]}
-            {...methods.register('role')}
-            error={errors.role?.message}
-          />
-          <InputField
-            label="رقم الجوال"
-            icon={Phone}
-            placeholder="05XXXXXXXX"
-            type="tel"
-            error={errors.mobile?.message}
-            {...methods.register('mobile')}
-          />
-          {selectedRole === 'DRIVER' && (
-            <InputField
-              label="رقم رخصة القيادة"
-              icon={IdentificationCard}
-              placeholder="XXXXXXXXXX"
-              error={errors.license_number?.message}
-              {...methods.register('license_number')}
-            />
-          )}
-        </div>
-      ),
-    },
-    {
-      id: 'step2',
-      label: 'تأكيد البيانات',
-      title: 'مراجعة وتأكيد',
-      description: 'تأكد من صحة المعلومات المدخلة قبل إرسالها.',
-      content: (
-        <div className="space-y-6">
-          <div className="bg-surface-200 border border-neutral-200 rounded-md divide-y divide-neutral-100 overflow-hidden">
-            <div className="p-4 flex justify-between items-center">
-              <span className="text-sm text-neutral-500">الاسم</span>
-              <span className="text-sm font-bold text-neutral-900">{watch('full_name')}</span>
-            </div>
-            <div className="p-4 flex justify-between items-center">
-              <span className="text-sm text-neutral-500">الدور الوظيفي</span>
-              <span className="text-sm font-bold text-neutral-900">
-                {/* Map role value to label */}
-                {
-                  (() => {
-                    switch(watch('role')) {
-                      case 'DRIVER': return 'سائق / مندوب';
-                      case 'DISPATCHER': return 'موزع عمليات';
-                      case 'MANAGER': return 'مدير عمليات';
-                      default: return '';
-                    }
-                  })()
-                }
-              </span>
-            </div>
-            {watch('role') === 'DRIVER' && (
-              <div className="p-4 flex justify-between items-center">
-                <span className="text-sm text-neutral-500">رقم الرخصة</span>
-                <span className="text-sm font-bold text-neutral-900">{watch('license_number') || 'غير متوفر'}</span>
-              </div>
-            )}
-            <div className="p-4 flex justify-between items-center">
-              <span className="text-sm text-neutral-500">رقم الجوال</span>
-              <span className="text-sm font-bold text-neutral-900">{watch('mobile')}</span>
-            </div>
-            <div className="p-4 bg-neutral-50 flex justify-between items-center">
-              <span className="text-sm font-bold text-neutral-900">تأكيد صحة البيانات</span>
-              <span className="text-lg font-bold text-primary">مؤكد</span>
-            </div>
+      key: 'full_name',
+      label: 'اسم الموظف',
+      render: (val, row) => (
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
+            <User size={20} weight="bold" />
           </div>
-
-          <label className="flex items-start gap-3 p-4 rounded-md border border-neutral-200 cursor-pointer hover:bg-neutral-50 transition-colors">
-            <div className="relative mt-1">
-                <input
-                    type="checkbox"
-                    className="sr-only"
-                    {...methods.register('personalDataConfirmed')}
-                />
-                <div className={`w-6 h-6 border-2 rounded-md flex items-center justify-center transition-all ${
-                    isConfirmed ? 'bg-primary border-primary' : 'border-neutral-300'
-                }`}>
-                    {isConfirmed && <CheckCircle size={16} weight="bold" className="text-white" />}
-                </div>
-            </div>
-            <div className="flex-1">
-                <span className="text-sm text-neutral-700 font-bold">أقر بصحة البيانات المقدمة</span>
-                <p className="text-xs text-neutral-400 mt-1">جميع المعلومات المدخلة صحيحة ودقيقة.</p>
-            </div>
-          </label>
-          {errors.personalDataConfirmed && <p className="text-xs text-error font-medium">{errors.personalDataConfirmed.message}</p>}
+          <div className="flex flex-col min-w-0">
+            <span className="font-bold text-neutral-900 truncate">{val}</span>
+            <span className="text-[10px] text-neutral-400 truncate">ID: {row.staff_id}</span>
+          </div>
         </div>
-      ),
+      )
     },
+    {
+      key: 'position',
+      label: 'الدور الوظيفي',
+      width: '120px',
+      render: (val) => {
+        const position = val as StaffMember['position'];
+        const labels: Record<StaffMember['position'], string> = {
+          DRIVER: 'سائق',
+          DISPATCHER: 'موزع عمليات',
+          MANAGER: 'مدير عمليات',
+        };
+        const icons: Record<StaffMember['position'], React.ReactNode> = {
+          DRIVER: <ShieldCheck size={14} className="text-primary" />,
+          DISPATCHER: <Phone size={14} className="text-secondary" />,
+          MANAGER: <IdentificationCard size={14} className="text-success" />,
+        };
+        return (
+          <div className="flex items-center gap-2">
+            {icons[position]}
+            <span className="text-sm font-semibold text-neutral-700">{labels[position]}</span>
+          </div>
+        );
+      }
+    },
+    {
+      key: 'mobile',
+      label: 'رقم الجوال',
+      width: '120px',
+      render: (val) => (
+        <div className="flex items-center gap-2">
+          <Phone size={14} className="text-neutral-400 shrink-0" />
+          <span className="text-xs text-neutral-600 font-mono">{val}</span>
+        </div>
+      )
+    },
+    {
+      key: 'employee_id',
+      label: 'الرقم الوظيفي',
+      width: '110px',
+      render: (val) => (
+        <span className="text-xs text-neutral-500 font-mono">{val}</span>
+      )
+    },
+    {
+      key: 'is_active',
+      label: 'الحالة',
+      width: '100px',
+      render: (val) => {
+        const status = val
+          ? { label: 'نشط', class: 'bg-success-bg text-success', icon: <CheckCircle size={12} /> }
+          : { label: 'متوقف', class: 'bg-neutral-100 text-neutral-500', icon: <WarningCircle size={12} /> };
+        return (
+          <div className={`flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider ${status.class}`}>
+            {status.icon}
+            {status.label}
+          </div>
+        );
+      }
+    },
+    {
+      key: 'last_login_at',
+      label: 'آخر دخول',
+      width: '120px',
+      render: (val) => (
+        <span className="text-xs text-neutral-400">{val ? new Date(val).toLocaleDateString('ar-SA') : '—'}</span>
+      )
+    },
+    {
+      key: 'staff_id',
+      label: '',
+      width: '80px',
+      render: () => (
+        <div className="flex justify-end gap-1">
+          <button className="p-2 rounded-sm hover:bg-neutral-100 text-neutral-400 transition-colors" title="عرض التفاصيل">
+            <ArrowsDownUp size={18} />
+          </button>
+          <button className="p-2 rounded-sm hover:bg-neutral-100 text-neutral-400 transition-colors" title="المزيد">
+            <Shield size={18} />
+          </button>
+        </div>
+      )
+    }
   ];
 
-  const onSubmit: SubmitHandler<StaffInputs> = (data) => {
-    console.log('Adding Staff:', data);
-    // TODO: Implement API call to add staff
-    router.push(`/${locale}/carrier/staff`); // Redirect back to staff list
-  };
-
   return (
-    <FormProvider {...methods}>
-      <AppShell role="Carrier" header="إضافة موظف جديد">
-        <FormWizardLayout
-            steps={steps}
-            currentStep={currentStep}
-            onStepChange={setCurrentStep}
-            onSubmit={handleSubmit(onSubmit)}
-            onCancel={() => router.back()}
-            canProceed={true}
+    <AppShell role="Carrier" header="إدارة الموظفين">
+      <DataTableLayout
+        title="قائمة فريق النقل"
+        columns={columns}
+        data={mockStaff}
+        onRowClick={(row) => console.log('View staff details:', row.staff_id)}
+      >
+        <button
+          className="h-11 px-6 rounded-sm bg-primary text-white font-bold flex items-center gap-2 hover:bg-opacity-90 transition-all shadow-btn"
         >
-            {steps[currentStep].content}
-        </FormWizardLayout>
-      </AppShell>
-    </FormProvider>
+          <PlusCircle size={20} weight="bold" />
+          إضافة موظف جديد
+        </button>
+      </DataTableLayout>
+    </AppShell>
   );
 }

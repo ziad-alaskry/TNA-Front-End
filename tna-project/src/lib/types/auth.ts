@@ -7,7 +7,6 @@ export interface User {
     user_role: UserRole;
     full_name?: string;
     document_number?: string;
-    doc_number?: string;
     nationality?: string;
     is_active: boolean;
     last_login_at?: string;

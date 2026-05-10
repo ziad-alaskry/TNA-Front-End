@@ -83,10 +83,10 @@ export default function TNAIssuanceWizard() {
                 <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider">Full Name</p>
                 <p className="font-bold text-neutral-900">{user?.full_name || 'Abdullah Al-Ghamdi'}</p>
               </div>
-              <div className="space-y-1">
-                <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider">Document Number</p>
-                <p className="font-bold text-neutral-900">{user?.doc_number || '1098237465'}</p>
-              </div>
+               <div className="space-y-1">
+                 <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider">Document Number</p>
+                 <p className="font-bold text-neutral-900">{user?.document_number || '1098237465'}</p>
+               </div>
               <div className="space-y-1">
                 <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider">Nationality</p>
                 <div className="flex items-center gap-2">

@@ -6,7 +6,6 @@ import { LocaleProvider } from '@/i18n/LocaleProvider'
 import { isValidLocale, getDirection, type Locale } from '@/i18n/config'
 import { getMessages } from '@/i18n/request'
 import { notFound } from 'next/navigation'
-import { GovProvider } from '@/context/GovContext';
 import { FleetProvider } from '@/context/FleetContext';
 import { BindingProvider } from '@/context/BindingContext';
 import { ToastProvider } from '@/components/ui/Toast';
@@ -63,17 +62,15 @@ export default async function LocaleLayout({
   return (
     <html lang={validLocale} dir={dir} suppressHydrationWarning>
       <body suppressHydrationWarning className="bg-background text-foreground selection:bg-primary selection:text-white">
-        <LocaleProvider locale={validLocale} messages={messages}>
-          <ToastProvider>
-            <GovProvider>
-              <FleetProvider>
-                <BindingProvider>
-                  <Providers>{children}</Providers>
-                </BindingProvider>
-              </FleetProvider>
-            </GovProvider>
-          </ToastProvider>
-        </LocaleProvider>
+         <LocaleProvider locale={validLocale} messages={messages}>
+           <ToastProvider>
+             <FleetProvider>
+               <BindingProvider>
+                 <Providers>{children}</Providers>
+               </BindingProvider>
+             </FleetProvider>
+           </ToastProvider>
+         </LocaleProvider>
       </body>
     </html>
   )

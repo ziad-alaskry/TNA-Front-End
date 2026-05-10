@@ -51,15 +51,3 @@ export interface PolicyConfiguration {
     created_at: string;
 }
 
-export interface PriceCatalogEntry {
-    catalog_id: string;
-    item_type: 'TNA_ISSUANCE' | 'RENTAL_DAILY' | 'RENTAL_MONTHLY' | 'RENTAL_YEARLY' | 'SERVICE_FEE';
-    item_name: string;
-    base_price: number;
-    currency: string;
-    pricing_rules?: any;
-    platform_fee_percentage: number;
-    authority_share_percentage: number;
-    is_active: boolean;
-    created_at: string;
-}
