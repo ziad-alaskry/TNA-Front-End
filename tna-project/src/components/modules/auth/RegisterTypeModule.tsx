@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils/cn';
 export default function RegisterTypeModule() {
     const router = useRouter();
     const { formData, updateFormData, setStep } = useRegistrationStore();
-    const [selectedRole, setSelectedRole] = useState<UserRole | null>(formData.user_role || null);
+    const [selectedRole, setSelectedRole] = useState<UserRole | null>(formData.role || null);
     const [ownerType, setOwnerType] = useState<'INDIVIDUAL' | 'ENTITY'>('INDIVIDUAL');
     const [carrierType, setCarrierType] = useState<'STAFF' | 'COMPANY'>('STAFF');
 
@@ -38,8 +38,8 @@ export default function RegisterTypeModule() {
 
     const handleNext = () => {
         if (selectedRole) {
-            updateFormData({ 
-                user_role: selectedRole,
+            updateFormData({
+                role: selectedRole,
                 is_entity: (selectedRole === 'OWNER' && ownerType === 'ENTITY') || (selectedRole === 'CARRIER_STAFF' && carrierType === 'COMPANY')
             } as any);
             setStep(2);

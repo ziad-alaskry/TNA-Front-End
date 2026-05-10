@@ -4,7 +4,7 @@
  */
 
 export type RentalPeriodType = 'DAILY' | 'MONTHLY' | 'YEARLY';
-export type RentContractStatus = 'DRAFT' | 'ACTIVE' | 'COMPLETED' | 'CANCELLED';
+export type RentContractStatus = 'DRAFT' | 'PENDING' | 'ACTIVE' | 'COMPLETED' | 'CANCELLED' | 'TERMINATED' | 'EXPIRED';
 
 export interface RentContract {
   rent_contract_id: string;
@@ -24,6 +24,27 @@ export interface RentContract {
   status: RentContractStatus;
   created_at: string;
   updated_at: string;
+}
+
+export interface RentContractResponse {
+  data: RentContract;
+}
+
+export interface RentQuoteParams {
+  tna_id: string;
+  sub_address_id: string;
+  rental_period_type: RentalPeriodType;
+  rental_duration: number;
+}
+
+export interface RentQuote {
+  gross_amount: number;
+  platform_fee_percentage: number;
+  platform_fee_amount: number;
+  authority_share_percentage: number;
+  authority_share_amount: number;
+  net_owner_amount: number;
+  message?: string;
 }
 
 export interface RentContractResponse {

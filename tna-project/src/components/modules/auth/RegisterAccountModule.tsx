@@ -64,7 +64,7 @@ export default function RegisterAccountModule() {
 
         // Simulate registration flow
         setTimeout(() => {
-            const role = (formData.user_role || 'VISITOR').toLowerCase();
+            const role = (formData.role || 'VISITOR').toLowerCase();
 
             // Set mock auth data
             // Note: useAuthStore might need update if it doesn't have login()
