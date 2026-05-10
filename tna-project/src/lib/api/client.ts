@@ -30,9 +30,21 @@ apiClient.interceptors.response.use(
         if (status === 401) {
             useAuthStore.getState().logout();
             // Optional: redirect to login if not already there
-            if (typeof window !== 'undefined' && !window.location.pathname.includes('/auth/login')) {
-                window.location.href = '/auth/login';
+            if (typeof window !== 'undefined' && !window.location.pathname.includes('/login')) {
+                window.location.href = '/login';
             }
+        }
+
+        // Handle 409 Conflict - preserve conflict details for user-facing explanation
+        if (status === 409) {
+            const conflictDetails = data?.errors || { default: ['The action cannot be completed due to a conflict.'] };
+            const conflictError = new AppError(
+                data?.message || 'Conflict: The requested action cannot be completed.',
+                status,
+                'CONFLICT',
+                conflictDetails
+            );
+            return Promise.reject(conflictError);
         }
 
         const message = data?.message || error.message || 'An unexpected error occurred';

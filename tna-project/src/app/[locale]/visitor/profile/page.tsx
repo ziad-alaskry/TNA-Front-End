@@ -15,11 +15,12 @@ import {
     SignOut
 } from '@phosphor-icons/react'
 import { useAuthStore } from '@/lib/store/useAuthStore'
-import { useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
 
 export default function VisitorProfilePage() {
-    const { user, logout } = useAuthStore();
-    const router = useRouter();
+  const { user, logout } = useAuthStore();
+  const router = useRouter();
+  const { locale } = useParams();
 
     const sections = [
         {
@@ -62,6 +63,13 @@ export default function VisitorProfilePage() {
                 <button className="w-full p-3 rounded-sm flex items-center gap-3 text-sm font-semibold text-neutral-700 hover:bg-neutral-50 transition-colors text-right">
                     <Globe size={20} className="text-neutral-400" />
                     <span>تغيير اللغة</span>
+                </button>
+                <button 
+                  className="w-full p-3 rounded-sm flex items-center gap-3 text-sm font-semibold text-neutral-700 hover:bg-neutral-50 transition-colors text-right"
+                  onClick={() => router.push('/' + locale + '/visitor/profile/kyc')}
+                >
+                    <ShieldCheck size={20} className="text-primary" />
+                    <span>Verification (KYC)</span>
                 </button>
                 <button className="w-full p-3 rounded-sm flex items-center gap-3 text-sm font-semibold text-neutral-700 hover:bg-neutral-50 transition-colors text-right">
                     <Key size={20} className="text-neutral-400" />

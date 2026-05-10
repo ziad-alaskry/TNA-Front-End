@@ -20,7 +20,7 @@ export default function LoginHeroModule() {
                 <div className="w-full flex flex-col gap-3 mt-16 mx-auto">
                     {/* Button 1: Login */}
                     <button
-                        onClick={() => router.push('/auth/login')}
+                        onClick={() => router.push('/login')}
                         dir="rtl"
                         className="w-full h-14 bg-btn-primary text-white rounded-pill flex flex-row items-center justify-center gap-2 shadow-btn hover:opacity-90 transition-opacity"
                     >
@@ -30,7 +30,7 @@ export default function LoginHeroModule() {
 
                     {/* Button 2: Nafath SSO */}
                     <button
-                        onClick={() => router.push('/auth/nafath')}
+                        onClick={() => router.push('/nafath')}
                         className="w-full h-14 bg-surface-200 border-2 border-brand-cyan text-brand-navy rounded-pill text-sm flex items-center justify-between px-6 shadow-card hover:bg-info-bg transition-colors"
                     >
                         <div className="flex items-center">
@@ -50,7 +50,7 @@ export default function LoginHeroModule() {
 
                     {/* Button 3: Register */}
                     <button
-                        onClick={() => router.push('/auth/register/type')}
+                        onClick={() => router.push('/register/type')}
                         dir="rtl"
                         className="w-full h-14 bg-surface-200 border-2 border-brand-cyan text-brand-navy rounded-pill flex flex-row items-center justify-center gap-2 shadow-card hover:bg-info-bg transition-colors"
                     >

@@ -26,7 +26,7 @@ import { cn } from '@/lib/utils/cn'
 export default function VisitorTnaDetailPage() {
     const { id } = useParams();
     const router = useRouter();
-    const { locale, isRTL } = useLocale();
+    const { locale, t, isRTL } = useLocale();
 
     const { data: tnas, isLoading } = useMock(mockTNAs);
     const tna = tnas?.find(t => t.tna_id === id);
@@ -75,7 +75,7 @@ export default function VisitorTnaDetailPage() {
     const sidebar = (
         <div className="space-y-6">
             <div>
-              <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest mb-4">Quick Actions</h3>
+              <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest mb-4">{t('tna.detail.quick_actions') || 'Quick Actions'}</h3>
               <div className="space-y-3">
                 {isUnlinked ? (
                   <Button 
@@ -83,31 +83,37 @@ export default function VisitorTnaDetailPage() {
                     onClick={() => router.push(`/${locale}/visitor/tnas/${id}/bind`)}
                   >
                     <LinkIcon size={20} weight="bold" />
-                    Bind to Address
+                    {t('tna.detail.link_address') || 'Link to Address'}
                   </Button>
                 ) : (
-                  <Button className="w-full py-4 shadow-glow-primary">
-                    <IdentificationCard size={20} weight="bold" />
-                    Digital Card
-                  </Button>
+                  <>
+                    <Button className="w-full py-4 shadow-glow-primary">
+                      <IdentificationCard size={20} weight="bold" />
+                      {t('tna.detail.digital_card') || 'Digital Card'}
+                    </Button>
+                    <Button 
+                      variant="outline"
+                      className="w-full py-4"
+                      onClick={() => {/* TODO: Implement unbind with conflict check */}}
+                    >
+                      <DotsThree size={20} weight="bold" />
+                      {t('tna.detail.unbind') || 'Unbind Address'}
+                    </Button>
+                  </>
                 )}
-                <Button variant="outline" className="w-full py-4">
-                  <DotsThree size={20} weight="bold" />
-                  View History
-                </Button>
               </div>
             </div>
 
             <div className="p-4 bg-info/5 rounded-2xl border border-info/10 space-y-2">
-                <div className="flex items-center gap-2 text-info">
-                  <Info size={20} weight="fill" />
-                  <p className="text-xs font-bold uppercase tracking-wider">Note</p>
-                </div>
-                <p className="text-xs text-neutral-600 leading-relaxed">
-                  {isUnlinked 
-                    ? "This TNA is issued but not yet bound to a physical address. You must bind it to start receiving shipments."
-                    : "To unbind this address, ensure no shipments are currently in transit."}
-                </p>
+              <div className="flex items-center gap-2 text-info">
+                <Info size={20} weight="fill" />
+                <p className="text-xs font-bold uppercase tracking-wider">{t('common.note') || 'Note'}</p>
+              </div>
+              <p className="text-xs text-neutral-600 leading-relaxed">
+                {isUnlinked 
+                  ? (t('tna.detail.unlinked_note') || 'This TNA is issued but not yet bound to a physical address. You must bind it to start receiving shipments.')
+                  : (t('tna.detail.unbind_note') || 'To unbind this address, ensure no shipments are currently in transit.')}
+              </p>
             </div>
         </div>
     );

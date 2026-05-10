@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
@@ -15,46 +13,50 @@ import {
   Globe,
   CheckCircle,
   Users,
-  CaretRight
+  CaretRight,
+  Buildings,
+  CurrencyDollar
 } from '@phosphor-icons/react';
 import { useLocale } from '@/i18n/LocaleProvider';
 import { useMock } from '@/lib/hooks/useMock';
-import { mockGovQueue } from '@/lib/mock/gov.mock';
-import { mockTNAs } from '@/lib/mock/tnas.mock';
+import { mockGovQueue, mockSubAddressQueue, mockGovAdjustments } from '@/lib/mock/gov.mock';
 import { cn } from '@/lib/utils/cn';
 import Button from '@/components/ui/Button';
 
 export default function GovHomeModule() {
-  const router = useRouter();
-  const { locale, isRTL } = useLocale();
+   const router = useRouter();
+   const { locale, isRTL } = useLocale();
 
-  const { data: queue, isLoading: queueLoading } = useMock(mockGovQueue);
-  const { data: tnas, isLoading: tnasLoading } = useMock(mockTNAs);
+   const { data: tnaQueue, isLoading: tnaQueueLoading } = useMock(mockGovQueue);
+   const { data: addressQueue, isLoading: addressQueueLoading } = useMock(mockSubAddressQueue);
+   const { data: adjustments, isLoading: adjustmentsLoading } = useMock(mockGovAdjustments);
 
-  const pendingRequests = queue?.filter(q => q.status === 'PENDING_REVIEW') || [];
+   const pendingTNARequests = tnaQueue?.filter(q => q.status === 'PENDING_REVIEW') || [];
+   const pendingAddressRequests = addressQueue?.filter(a => a.status === 'PENDING') || [];
+   const pendingAdjustments = adjustments?.filter(a => a.status === 'PENDING' && a.approval_required) || [];
 
-  return (
-    <div className="space-y-8 pb-12 animate-in fade-in duration-700">
-      
-      {/* SYSTEM HEALTH TOP STATS */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {[
-          { label: 'Total TNA Issued', value: tnas?.length || 0, icon: Globe, color: 'text-primary', bg: 'bg-primary/10' },
-          { label: 'Pending Review', value: pendingRequests.length, icon: ShieldCheck, color: 'text-warning', bg: 'bg-warning/10' },
-          { label: 'Verified Addresses', value: '1,240', icon: CheckCircle, color: 'text-success', bg: 'bg-success/10' },
-          { label: 'Active Users', value: '3,820', icon: Users, color: 'text-secondary', bg: 'bg-secondary/10' },
-        ].map((stat, i) => (
-          <div key={i} className="bg-white p-6 rounded-2xl border border-neutral-100 shadow-sm flex items-center gap-4 group hover:border-primary/20 transition-all">
-            <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center transition-all", stat.bg, stat.color)}>
-              <stat.icon size={28} weight="bold" />
+   return (
+     <div className="space-y-8 pb-12 animate-in fade-in duration-700">
+        
+        {/* SYSTEM HEALTH TOP STATS */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            { label: isRTL ? 'TNA قيد المراجعة' : 'TNA Pending', value: pendingTNARequests.length, icon: ShieldCheck, color: 'text-warning', bg: 'bg-warning/10' },
+            { label: isRTL ? 'عناوين قيد التحقق' : 'Addresses Pending', value: pendingAddressRequests.length, icon: MapPin, color: 'text-secondary', bg: 'bg-secondary/10' },
+            { label: isRTL ? 'تعديلات معلقة' : 'Adjustments Pending', value: pendingAdjustments.length, icon: CurrencyDollar, color: 'text-primary', bg: 'bg-primary/10' },
+            { label: isRTL ? 'معدل الموافقة التلقائي' : 'Auto-Approval Rate', value: '87%', icon: CheckCircle, color: 'text-success', bg: 'bg-success/10' },
+          ].map((stat, i) => (
+            <div key={i} className="bg-white p-6 rounded-2xl border border-neutral-100 shadow-sm flex items-center gap-4 group hover:border-primary/20 transition-all">
+              <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center transition-all", stat.bg, stat.color)}>
+                <stat.icon size={28} weight="bold" />
+              </div>
+              <div>
+                <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">{stat.label}</p>
+                <p className="text-2xl font-black text-neutral-900">{stat.value}</p>
+              </div>
             </div>
-            <div>
-              <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">{stat.label}</p>
-              <p className="text-2xl font-black text-neutral-900">{stat.value}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
@@ -95,43 +97,49 @@ export default function GovHomeModule() {
           {/* PENDING REVIEW QUEUE */}
           <section className="space-y-4 text-start">
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-black text-neutral-900 tracking-tight">Review Queue</h3>
-              <button 
-                onClick={() => router.push(`/${locale}/gov/queue`)}
-                className="text-sm font-bold text-primary flex items-center gap-1 hover:underline"
-              >
-                View Full Queue
-                <CaretRight size={14} className={isRTL ? "rotate-180" : ""} />
-              </button>
+              <h3 className="text-xl font-black text-neutral-900 tracking-tight">{isRTL ? 'الطابور' : 'Queues'}</h3>
             </div>
 
-            <div className="space-y-3">
-              {pendingRequests.slice(0, 3).map((req) => (
-                <div 
-                  key={req.request_id}
-                  className="bg-white rounded-2xl border border-neutral-100 shadow-sm p-4 flex items-center gap-4 hover:border-primary/30 transition-all group"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
-                    <ShieldCheck size={24} weight="bold" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* TNA Queue */}
+              <div className="bg-white rounded-2xl border border-neutral-100 p-5 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <ShieldCheck size={20} className="text-warning" weight="bold" />
+                    <h4 className="font-bold text-neutral-900">{isRTL ? 'طلبات TNA' : 'TNA Requests'}</h4>
                   </div>
-                  <div className="flex-1">
-                    <div className="flex justify-between items-start">
-                      <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">{req.mode}</p>
-                      <span className="text-[10px] font-bold text-neutral-500">{new Date(req.submitted_at).toLocaleDateString()}</span>
-                    </div>
-                    <p className="font-bold text-neutral-900 leading-tight">Visitor: {req.visitor_name}</p>
-                    <p className="text-[10px] text-neutral-500 mt-1 uppercase tracking-widest">Origin: {req.nationality}</p>
-                  </div>
-                  <Button 
-                    size="sm" 
-                    variant="outline" 
-                    className="h-9 px-6 text-xs border-neutral-200"
-                    onClick={() => router.push(`/${locale}/gov/queue/${req.request_id}`)}
-                  >
-                    Review
-                  </Button>
+                  <span className="text-2xl font-black text-warning">{pendingTNARequests.length}</span>
                 </div>
-              ))}
+                <p className="text-xs text-neutral-500">{isRTL ? 'في انتظار المراجعة' : 'Awaiting review'}</p>
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="w-full border-neutral-200"
+                  onClick={() => router.push(`/${locale}/gov/tna-queue`)}
+                >
+                  {isRTL ? 'عرض الطابور' : 'View Queue'}
+                </Button>
+              </div>
+
+              {/* Address Queue */}
+              <div className="bg-white rounded-2xl border border-neutral-100 p-5 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <MapPin size={20} className="text-secondary" weight="bold" />
+                    <h4 className="font-bold text-neutral-900">{isRTL ? 'عناوين فرعية' : 'Sub-Addresses'}</h4>
+                  </div>
+                  <span className="text-2xl font-black text-secondary">{pendingAddressRequests.length}</span>
+                </div>
+                <p className="text-xs text-neutral-500">{isRTL ? 'في انتظار التحقق' : 'Awaiting verification'}</p>
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="w-full border-neutral-200"
+                  onClick={() => router.push(`/${locale}/gov/address-queue`)}
+                >
+                  {isRTL ? 'عرض الطابور' : 'View Queue'}
+                </Button>
+              </div>
             </div>
           </section>
 
@@ -142,13 +150,14 @@ export default function GovHomeModule() {
           
           {/* QUICK ACTIONS PANEL */}
           <section className="bg-white rounded-3xl border border-neutral-200 shadow-xl p-6 space-y-6">
-            <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest">Governance Tools</h3>
+            <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest">{isRTL ? 'أدوات الحكومة' : 'Governance Tools'}</h3>
             
             <div className="space-y-3">
               {[
-                { label: 'Policy Settings', icon: Gear, path: '/gov/policy', color: 'text-primary' },
-                { label: 'System Audit', icon: Fingerprint, path: '/gov/audit', color: 'text-secondary' },
-                { label: 'Regional Analysis', icon: MapPin, path: '/gov/analytics', color: 'text-success' },
+                { label: isRTL ? 'إعدادات السياسة' : 'Policy Settings', icon: Gear, path: '/gov/policy', color: 'text-primary' },
+                { label: isRTL ? 'سجل التدقيق' : 'System Audit', icon: Fingerprint, path: '/gov/audit', color: 'text-secondary' },
+                { label: isRTL ? 'إدارة الجهات' : 'Agency Management', icon: Buildings, path: '/gov/agencies', color: 'text-success' },
+                { label: isRTL ? 'تعديلات الماليات' : 'Financial Adjustments', icon: CurrencyDollar, path: '/gov/adjustments', color: 'text-warning' },
               ].map((tool, i) => (
                 <button 
                   key={i}

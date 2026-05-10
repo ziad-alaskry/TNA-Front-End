@@ -183,6 +183,120 @@
                 "policy_config": "Modify Policies",
                 "audit_logs": "Audit Logs"
             }
+        },
+        "address_queue": {
+            "title": "Address Verification Queue",
+            "subtitle": "Review pending sub-address verification requests",
+            "total_unverified": "Total Unverified",
+            "verified_today": "Verified Today",
+            "avg_processing_time": "Avg Processing Time",
+            "columns": {
+                "owner_name": "Owner Name",
+                "address": "Parent Address",
+                "sub_address": "Sub-Address",
+                "submitted_date": "Submitted Date"
+            },
+            "detail": {
+                "owner": "Owner",
+                "national_address": "National Address",
+                "sub_address": "Sub-Address",
+                "ownership_proof_status": "Ownership Proof Status",
+                "verify": "Verify Sub-Address",
+                "reject": "Reject",
+                "verification_notes": "Verification Notes"
+            }
+        }
+    },
+    "kyc": {
+        "title": "KYC Verification",
+        "status_title": "Verification Status",
+        "upload_title": "Upload Documents",
+        "upload_desc": "Please upload clear images of your identification documents.",
+        "document_type": "Document Type",
+        "doc_types": {
+            "national_id": "National ID",
+            "passport": "Passport",
+            "residence_permit": "Residence Permit (Iqama)"
+        },
+        "front_side": "Front Side",
+        "back_side": "Back Side",
+        "selfie": "Selfie Photo",
+        "drop_front": "Drop front image or click to upload",
+        "drop_back": "Drop back image or click to upload",
+        "drop_selfie": "Take or upload a clear selfie",
+        "max_size": "Max 10MB",
+        "selfie_hint": "Face must be clearly visible",
+        "submit": "Submit for Verification",
+        "resubmit": "Resubmit Documents",
+        "security_title": "Secure & Private",
+        "security_note1": "Your documents are encrypted and stored securely.",
+        "security_note2": "We never share your personal data with third parties.",
+        "security_note3": "Verification typically completes within 24-48 hours.",
+        "status": {
+            "pending": "Pending Review",
+            "verified": "Verified",
+            "rejected": "Rejected"
+        },
+        "success": {
+            "title": "Documents Submitted",
+            "message": "Your KYC documents have been submitted for review."
+        }
+    },
+    "tna": {
+        "new": {
+            "title": "Request New TNA",
+            "eligibility_check": "Eligibility Check",
+            "kyc_required": "KYC verification required",
+            "issuance_mode": "Issuance Mode",
+            "autonomous": "Your TNA will be issued immediately upon submission.",
+            "moderated": "Your request requires administrative review before issuance.",
+            "max_active": "Maximum active TNAs allowed",
+            "terms_agreement": "I agree to the TNA Terms and Conditions and understand the operational policies.",
+            "submit_request": "Submit Request",
+            "approved": "Approved!",
+            "pending_review": "Pending Review",
+            "review_note": "Due to high demand or system policies, your request will be reviewed within 24 hours. You will receive a notification once approved.",
+            "your_tna_code": "Your TNA Code",
+            "active": "ACTIVE",
+            "go_to_tnas": "Go to My TNAs",
+            "return_dashboard": "Return to Dashboard"
+        }
+    },
+    "binding": {
+        "quote": {
+            "gross": "Gross Amount",
+            "platform_fee": "Platform Fee",
+            "authority_share": "Authority Share",
+            "net_owner": "Net Owner Amount"
+        }
+    },
+    "checkout": {
+        "payment_blocked": "Payment blocked - binding already processed"
+    },
+    "carrier": {
+        "resolve": {
+            "unlinked": "TNA not linked to any address",
+            "deliverable": "Deliverable Address",
+            "not_deliverable": "Not Deliverable"
+        }
+    },
+    "owner": {
+        "property": {
+            "deed_required": "Title deed reference is required for property verification.",
+            "registration": "Property Registration",
+            "address_info": "Address Information",
+            "document_upload": "Document Upload",
+            "document_upload_desc": "Title deed reference is required for verification.",
+            "review": "Review",
+            "building_number": "Building Number",
+            "street": "Street",
+            "district": "District",
+            "city": "City",
+            "postal_code": "Postal Code",
+            "latitude": "Latitude",
+            "longitude": "Longitude",
+            "title_deed_reference": "Title Deed Reference",
+            "property_registered": "Property registered successfully"
         }
     }
 }

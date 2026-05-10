@@ -1,12 +1,12 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useMemo } from 'react'
 import { AppShell } from '@/components/layout/AppShell'
 import DataTableLayout, { DataTableColumn } from '@/components/templates/DataTableLayout'
 import { useRouter, useParams } from 'next/navigation'
 import Button from '@/components/ui/Button'
 import { TNA } from '@/lib/types/tna'
-import { Eye, Plus } from '@phosphor-icons/react'
+import { Eye, Plus, Funnel } from '@phosphor-icons/react'
 import { mockTNAs } from '@/lib/mock/tnas.mock'
 import { useMock } from '@/lib/hooks/useMock'
 import { useLocale } from '@/i18n/LocaleProvider'
@@ -17,6 +17,13 @@ export default function VisitorTnasPage() {
   const { t, isRTL } = useLocale();
 
   const { data: tnas, isLoading } = useMock(mockTNAs);
+  const [statusFilter, setStatusFilter] = useState<string>('ALL');
+
+  const filteredTnas = useMemo(() => {
+    if (!tnas) return []
+    if (statusFilter === 'ALL') return tnas
+    return tnas.filter(tna => tna.status === statusFilter)
+  }, [tnas, statusFilter]);
 
   const columns: DataTableColumn<TNA>[] = [
     { 
@@ -70,30 +77,57 @@ export default function VisitorTnasPage() {
     },
   ]
 
+  const filterOptions = [
+    { value: 'ALL', label: isRTL ? 'الكل' : 'All' },
+    { value: 'ACTIVE', label: isRTL ? 'نشط' : 'Active' },
+    { value: 'UNLINKED', label: isRTL ? 'غير مرتبط' : 'Unlinked' },
+    { value: 'EXPIRED', label: isRTL ? 'منتهي' : 'Expired' },
+  ]
+
   return (
     <AppShell role="Visitor" header={isRTL ? 'عناويني الوطنية' : 'My TNAs'}>
-      <DataTableLayout
-        title={isRTL ? 'قائمة رموز TNA' : 'List of TNA Codes'}
-        columns={columns}
-        data={tnas || []}
-        isLoading={isLoading}
-        onRowClick={(row) => router.push(`/${locale}/visitor/tnas/${row.tna_id}`)}
-        actions={
-            <Button 
-                onClick={() => router.push(`/${locale}/visitor/tnas/create`)}
-                className="shadow-glow-primary"
-            >
-                <Plus size={20} weight="bold" />
-                {isRTL ? 'طلب TNA جديد' : 'Request New TNA'}
-            </Button>
-        }
-        emptyState={{
-          title: isRTL ? 'لا يوجد رموز TNA' : 'No TNA Codes Found',
-          description: isRTL ? 'ابدأ بطلب أول عنوان وطني مؤقت لك الآن.' : 'Start by requesting your first temporary national address.',
-          cta: isRTL ? 'طلب TNA جديد' : 'Request New TNA',
-          onCtaClick: () => router.push(`/${locale}/visitor/tnas/create`)
-        }}
-      />
+      <div className="space-y-6">
+        {/* Filter Controls */}
+        <div className="flex items-center gap-3">
+          <Funnel size={20} className="text-neutral-400" />
+          <div className="flex gap-2">
+            {filterOptions.map(opt => (
+              <Button
+                key={opt.value}
+                size="sm"
+                variant={statusFilter === opt.value ? "primary" : "outline"}
+                onClick={() => setStatusFilter(opt.value)}
+                className="px-4"
+              >
+                {opt.label}
+              </Button>
+            ))}
+          </div>
+        </div>
+
+        <DataTableLayout
+          title={isRTL ? 'قائمة رموز TNA' : 'List of TNA Codes'}
+          columns={columns}
+          data={filteredTnas || []}
+          isLoading={isLoading}
+          onRowClick={(row) => router.push(`/${locale}/visitor/tnas/${row.tna_id}`)}
+          actions={
+              <Button 
+                  onClick={() => router.push(`/${locale}/visitor/tna/new`)}
+                  className="shadow-glow-primary"
+              >
+                  <Plus size={20} weight="bold" />
+                  {isRTL ? 'طلب TNA جديد' : 'Request New TNA'}
+              </Button>
+          }
+          emptyState={{
+            title: isRTL ? 'لا يوجد رموز TNA' : 'No TNA Codes Found',
+            description: isRTL ? 'ابدأ بطلب أول عنوان وطني مؤقت لك الآن.' : 'Start by requesting your first temporary national address.',
+            cta: isRTL ? 'طلب TNA جديد' : 'Request New TNA',
+            onCtaClick: () => router.push(`/${locale}/visitor/tna/new`)
+          }}
+        />
+      </div>
     </AppShell>
   )
 }

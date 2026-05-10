@@ -5,12 +5,12 @@ import { AppShell } from '@/components/layout/AppShell'
 import DataTableLayout, { DataTableColumn } from '@/components/templates/DataTableLayout'
 import { useRouter, useParams } from 'next/navigation'
 import { 
-    Package, 
-    Truck, 
-    CheckCircle, 
-    MapPin,
-    ArrowRight,
-    Scan
+  Package, 
+  Truck, 
+  CheckCircle, 
+  MapPin,
+  ArrowRight,
+  Plus
 } from '@phosphor-icons/react'
 import { useLocale } from '@/i18n/LocaleProvider'
 import { mockShipments } from '@/lib/mock/shipments.mock'
@@ -77,10 +77,16 @@ export default function CarrierShipmentsPage() {
                 data={shipments || []}
                 isLoading={isLoading}
                 actions={
-                  <Button className="shadow-glow-primary" onClick={() => router.push(`/${locale}/carrier/scan`)}>
-                    <Scan size={20} weight="bold" />
-                    Scan Package
-                  </Button>
+                  <div className="flex gap-3">
+                    <Button variant="outline" className="border-neutral-200" onClick={() => router.push(`/${locale}/carrier/resolve`)}>
+                      <MapPin size={20} weight="bold" />
+                      {isRTL ? 'تحقق من TNA' : 'Resolve TNA'}
+                    </Button>
+                    <Button className="shadow-glow-primary" onClick={() => router.push(`/${locale}/carrier/shipments/new`)}>
+                      <Plus size={20} weight="bold" />
+                      {isRTL ? 'شحنة جديدة' : 'New Shipment'}
+                    </Button>
+                  </div>
                 }
             />
         </AppShell>

@@ -15,6 +15,8 @@ export const mockBindings: Binding[] = [
     tna_code: 'TNA-ABCD1234',
     na_id: 'na-1',
     visitor_id: 'user-visitor-1',
+    sub_address_label: 'Guest Room',
+    net_owner_amount: 1200,
   },
   {
     binding_id: 'bind-pending-1',
@@ -28,5 +30,7 @@ export const mockBindings: Binding[] = [
     tna_code: 'TNA-XYZW5678',
     na_id: 'na-2',
     visitor_id: 'user-visitor-1',
+    sub_address_label: 'Apartment 1',
+    net_owner_amount: 800,
   },
 ];

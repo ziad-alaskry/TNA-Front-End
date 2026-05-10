@@ -105,28 +105,28 @@ export default function VisitorShipmentsPage() {
         }
     ];
 
-    return (
-        <AppShell role="Visitor" header="تتبع الشحنات">
-            <DataTableLayout
-                title="سجل الشحنات"
-                columns={columns}
-                data={mockShipments}
-                onRowClick={(row) => console.log('Viewing shipment:', row.id)}
-                actions={
-                    <Button 
-                        onClick={() => router.push(`/${locale}/visitor/shipments/new`)}
-                        className="ui-gradient-primary text-white h-10 px-4 rounded-md font-bold flex items-center gap-2 border-none shadow-glow-primary hover:opacity-90 transition-opacity"
-                    >
-                        <PackageIcon size={20} className="text-white" />
-                        طلب شحن جديد
-                    </Button>
-                }
+  return (
+    <AppShell role="Visitor" header="تتبع الشحنات">
+      <DataTableLayout
+        title="سجل الشحنات"
+        columns={columns}
+        data={mockShipments}
+        onRowClick={(row) => router.push(`/${locale}/visitor/shipments/${row.id}`)}
+        actions={
+            <Button 
+                onClick={() => router.push(`/${locale}/visitor/shipments/new`)}
+                className="ui-gradient-primary text-white h-10 px-4 rounded-md font-bold flex items-center gap-2 border-none shadow-glow-primary hover:opacity-90 transition-opacity"
             >
-                <div className="flex items-center gap-2 p-3 bg-primary/5 rounded-md border border-primary/10">
-                    <InfoIcon size={20} weight="fill" className="text-primary" />
-                    <p className="text-xs text-neutral-600">يتم تحديث حالات الشحنات تلقائياً بناءً على بيانات الناقلين.</p>
-                </div>
-            </DataTableLayout>
-        </AppShell>
-    );
+                <PackageIcon size={20} className="text-white" />
+                طلب شحن جديد
+            </Button>
+        }
+      >
+        <div className="flex items-center gap-2 p-3 bg-primary/5 rounded-md border border-primary/10">
+          <InfoIcon size={20} weight="fill" className="text-primary" />
+          <p className="text-xs text-neutral-600">يتم تحديث حالات الشحنات تلقائياً بناءً على بيانات الناقلين.</p>
+        </div>
+      </DataTableLayout>
+    </AppShell>
+  );
 }

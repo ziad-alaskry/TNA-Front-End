@@ -4,6 +4,40 @@ import { locales, defaultLocale, isValidLocale } from './i18n/config';
 
 const LOCAL_STORAGE_KEY = 'tna-locale'; // This should match the key in LanguageSwitcher.tsx
 
+/**
+ * Deprecated route redirects (Phase 8.2)
+ * Maps old/orphaned paths to their new equivalents.
+ */
+const ROUTE_REDIRECTS: Record<string, string> = {
+  '/gov/verification/queue': '/gov/tna-queue',
+  '/gov/verification/detail': '/gov/tna-queue/[id]',
+  '/carrier/fleet': '/carrier/staff',
+  '/visitor/request': '/visitor/tna/new',
+  '/owner/property/add': '/owner/properties/new',
+  '/gov/queue': '/gov/tna-queue',
+};
+
+/**
+ * Check if a pathname matches a deprecated route pattern.
+ * Supports both exact matches and prefix-based patterns (e.g., /gov/queue/[id]).
+ */
+function findRedirect(pathname: string): string | null {
+  // Exact match first
+  if (ROUTE_REDIRECTS[pathname]) {
+    return ROUTE_REDIRECTS[pathname];
+  }
+
+  // Pattern-based: /gov/queue/[id] → /gov/tna-queue/[id]
+  // Match /gov/queue/<anything> and redirect to /gov/tna-queue/<anything>
+  const govQueuePrefix = '/gov/queue/';
+  if (pathname.startsWith(govQueuePrefix)) {
+    const suffix = pathname.substring(govQueuePrefix.length);
+    return `/gov/tna-queue/${suffix}`;
+  }
+
+  return null;
+}
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -15,6 +49,14 @@ export function middleware(request: NextRequest) {
     pathname.includes('.')
   ) {
     return NextResponse.next();
+  }
+
+  // Check for deprecated route redirects (301 permanent)
+  const redirectTarget = findRedirect(pathname);
+  if (redirectTarget) {
+    const url = request.nextUrl.clone();
+    url.pathname = redirectTarget;
+    return NextResponse.redirect(url, 301);
   }
 
   // 1. Determine the locale from the cookie first (Prioritized)
@@ -37,12 +79,12 @@ export function middleware(request: NextRequest) {
   // - URL locale doesn't match the prioritized target locale (e.g., /en/dashboard but cookie is 'ar' -> /ar/dashboard)
   if (!pathnameLocale || pathnameLocale !== targetLocale) {
     const url = request.nextUrl.clone();
-    const restOfPath = pathnameLocale 
-      ? pathname.substring(pathnameLocale.length + 1) 
+    const restOfPath = pathnameLocale
+      ? pathname.substring(pathnameLocale.length + 1)
       : pathname;
-    
+
     url.pathname = `/${targetLocale}${restOfPath.startsWith('/') ? restOfPath : '/' + restOfPath}`;
-    
+
     return NextResponse.redirect(url);
   }
 

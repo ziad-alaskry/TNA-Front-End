@@ -183,6 +183,120 @@
                 "policy_config": "تعديل السياسات",
                 "audit_logs": "سجلات التدقيق"
             }
+        },
+        "address_queue": {
+            "title": "طابور التحقق من العناوين",
+            "subtitle": "مراجعة طلبات التحقق من الaddresses الفرعية المعلقة",
+            "total_unverified": "إجمالي غير المحققين",
+            "verified_today": "تم التحقق منه اليوم",
+            "avg_processing_time": "متوسط زمن المعالجة",
+            "columns": {
+                "owner_name": "اسم المالك",
+                "address": "العنوان الرئيسي",
+                "sub_address": "العنوان الفرعي",
+                "submitted_date": "تاريخ التقديم"
+            },
+            "detail": {
+                "owner": "المالك",
+                "national_address": "العنوان الوطني",
+                "sub_address": "العنوان الفرعي",
+                "ownership_proof_status": "حالة إثبات الملكية",
+                "verify": "توثيق العنوان الفرعي",
+                "reject": "رفض",
+                "verification_notes": "ملاحظات التحقق"
+            }
+        }
+    },
+    "kyc": {
+        "title": "التحقق من الهوية",
+        "status_title": "حالة التحقق",
+        "upload_title": "رفع المستندات",
+        "upload_desc": "يرجى رفع صور واضحة من مستنداتك الهوية.",
+        "document_type": "نوع المستند",
+        "doc_types": {
+            "national_id": "هوية وطنية",
+            "passport": "جواز السفر",
+            "residence_permit": "إقامة"
+        },
+        "front_side": "الجانب الأمامي",
+        "back_side": "الجانب الخلفي",
+        "selfie": "صورة السلفي",
+        "drop_front": "اسحب صورة الأمام أو اضغط للرفع",
+        "drop_back": "اسحب صورة الخلف أو اضغط للرفع",
+        "drop_selfie": "التقط أو ارفع صورة سلفي واضحة",
+        "max_size": "حجم أقصى 10 ميجابايت",
+        "selfie_hint": "يجب أن تكون الوجه واضحة في الصورة",
+        "submit": "إرسال للتحقق",
+        "resubmit": "إعادة إرسال المستندات",
+        "security_title": "آمن وخاص",
+        "security_note1": "مستنداتك مُشفرة ومخزنة بأمان.",
+        "security_note2": "لا نشارك بياناتك الشخصية مع أطراف ثالثة.",
+        "security_note3": "عادة ما يكتمل التحقق خلال 24-48 ساعة.",
+        "status": {
+            "pending": "قيد المراجعة",
+            "verified": "تم التحقق",
+            "rejected": "مرفوض"
+        },
+        "success": {
+            "title": "تم إرسال المستندات",
+            "message": "تم إرسال مستنداتك للتحقق."
+        }
+    },
+    "tna": {
+        "new": {
+            "title": "طلب عنوان وطني مؤقت",
+            "eligibility_check": "فحص الأهلية",
+            "kyc_required": "مطلوب التحقق من الهوية",
+            "issuance_mode": "وضع الإصدار",
+            "autonomous": "سيتم إصدار TNA الخاص بك فور إتمام الإرسال.",
+            "moderated": "طلبك يحتاج إلى مراجعة إدارية قبل الإصدار.",
+            "max_active": "أقصى عدد من عناوين TNA النشطة المسموح بها",
+            "terms_agreement": "أوافق على شروط وأحكام العنوان الوطني المؤقت وأفهم السياسات التشغيلية.",
+            "submit_request": "إرسال الطلب",
+            "approved": "تمت الموافقة!",
+            "pending_review": "قيد المراجعة",
+            "review_note": "بسبب الطلب المرتفع أو سياسات النظام، سيتم مراجعة طلبك خلال 24 ساعة. ستتلقى إشعاراً عند الموافقة.",
+            "your_tna_code": "رمز TNA الخاص بك",
+            "active": "نشط",
+            "go_to_tnas": "انتقل إلى عناوين TNA الخاصة بي",
+            "return_dashboard": "العودة إلى لوحة التحكم"
+        }
+    },
+    "binding": {
+        "quote": {
+            "gross": "المبلغ الإجمالي",
+            "platform_fee": "رسوم المنصة",
+            "authority_share": "حصة الجهة",
+            "net_owner": "صافي المبلغ للمالك"
+        }
+    },
+    "checkout": {
+        "payment_blocked": "الدفع محظور - تم معالجة الربط بالفعل"
+    },
+    "carrier": {
+        "resolve": {
+            "unlinked": "TNA غير مرتبط بأي عنوان",
+            "deliverable": "عنوان قابل للتوصيل",
+            "not_deliverable": "غير قابل للتوصيل"
+        }
+    },
+    "owner": {
+        "property": {
+            "deed_required": "إثبات الملكية مطلوب للتحقق من العقار.",
+            "registration": "تسجيل عقار",
+            "address_info": "معلومات العنوان",
+            "document_upload": "رفع المستند",
+            "document_upload_desc": "إثبات الملكية مطلوب للتحقق.",
+            "review": "مراجعة",
+            "building_number": "رقم المبنى",
+            "street": "الشارع",
+            "district": "الحي",
+            "city": "المدينة",
+            "postal_code": "الرمز البريدي",
+            "latitude": "خط العرض",
+            "longitude": "خط الطول",
+            "title_deed_reference": "رقم سند الملكية",
+            "property_registered": "تم تسجيل العقار بنجاح"
         }
     }
 }

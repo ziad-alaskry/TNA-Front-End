@@ -1,18 +1,18 @@
 import React from 'react';
 import { render, screen, act } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import { BindingProvider, useBinding } from '../BindingContext';
+import { BindingProvider, useBindingContext } from '@/context/BindingContext';
 import userEvent from '@testing-library/user-event';
 
 const TestComponent = () => {
-    const { visitorTnas, ownerAccount, acceptBindingRequest } = useBinding();
+    const { visitorTnas, ownerAccount, acceptBindingRequest, pendingBindings } = useBindingContext();
     return (
         <div>
             <div data-testid="tna-count">{visitorTnas.length}</div>
-            <div data-testid="wallet-balance">{ownerAccount.wallet_balance}</div>
-            <button onClick={() => acceptBindingRequest('bind-101')}>Accept Bind</button>
+            <div data-testid="wallet-balance">{ownerAccount.current_balance}</div>
+            <button onClick={() => acceptBindingRequest('bind-101', 150)}>Accept Bind</button>
             <div data-testid="binding-status">
-               {visitorTnas.flatMap(t => t.bindings).find(b => b.binding_id === 'bind-101')?.status || 'not found'}
+               {pendingBindings.find(b => b.binding_id === 'bind-101')?.status || 'not found'}
             </div>
         </div>
     );

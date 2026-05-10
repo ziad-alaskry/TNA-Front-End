@@ -12,7 +12,7 @@ import {
   Buildings,
   Link as LinkIcon,
   CurrencyCircleDollar,
-  Truck,
+  Users,
   ClipboardText,
   ShieldCheck,
   Fingerprint,
@@ -59,9 +59,9 @@ export function BottomNav({ role }: BottomNavProps) {
 
   const carrierItems = [
     { id: 'home', icon: House, href: '/carrier/home', label: t('common.roles.Carrier.overview') },
-    { id: 'fleet', icon: Truck, href: '/carrier/fleet', label: t('common.roles.Carrier.fleet') },
+    { id: 'staff', icon: Users, href: '/carrier/staff', label: t('common.roles.Carrier.staff') },
     { id: 'shipments', icon: Package, href: '/carrier/shipments', label: t('common.roles.Carrier.shipments') },
-    { id: 'tasks', icon: ClipboardText, href: '/carrier/tasks', label: t('common.roles.Carrier.tasks') }
+    { id: 'tasks', icon: ClipboardText, href: '/carrier/driver/tasks', label: t('common.roles.Carrier.tasks') }
   ]
 
   const govItems = [

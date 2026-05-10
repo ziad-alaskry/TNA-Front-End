@@ -11,56 +11,16 @@ import {
   CreditCard,
   CheckCircle,
   Wallet,
-  ArrowLeft,
-  ArrowsDownUp
+  ArrowLeft
 } from '@phosphor-icons/react';
 import Button from '@/components/ui/Button';
 import { SkeletonCard } from '@/components/ui/SkeletonCard';
 import ErrorAlert from '@/components/ui/ErrorAlert';
 import { useToast } from '@/components/ui/Toast';
+import { rentalsApi } from '@/lib/api/rentals';
+import { financialsApi } from '@/lib/api/financials';
 import type { RentContract } from '@/lib/types/rentals';
-
-// Mock for rent_contracts (will be replaced by API call in Phase 2)
-const mockRentContracts: Record<string, RentContract> = {
-  'BIND-001': {
-    rent_contract_id: 'RC-001',
-    binding_id: 'BIND-001',
-    tna_id: 'TNA-001',
-    sub_address_id: 'SUB-001',
-    gross_amount: 500.00,
-    platform_fee_percentage: 10,
-    platform_fee_amount: 50.00,
-    authority_share_percentage: 5,
-    authority_share_amount: 25.00,
-    net_owner_amount: 425.00,
-    rental_period_type: 'MONTHLY',
-    rental_duration: 3,
-    start_at: '2026-06-01',
-    end_at: '2026-08-31',
-    status: 'ACTIVE',
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-  },
-  'BIND-002': {
-    rent_contract_id: 'RC-002',
-    binding_id: 'BIND-002',
-    tna_id: 'TNA-002',
-    sub_address_id: 'SUB-002',
-    gross_amount: 1200.00,
-    platform_fee_percentage: 10,
-    platform_fee_amount: 120.00,
-    authority_share_percentage: 5,
-    authority_share_amount: 60.00,
-    net_owner_amount: 1020.00,
-    rental_period_type: 'YEARLY',
-    rental_duration: 1,
-    start_at: '2026-06-01',
-    end_at: '2027-05-31',
-    status: 'ACTIVE',
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-  }
-};
+import { useAuthStore } from '@/lib/store/useAuthStore';
 
 type BindingId = string;
 
@@ -69,6 +29,7 @@ export default function CheckoutPage() {
   const router = useRouter();
   const { locale, t } = useLocale();
   const toast = useToast();
+  const { user } = useAuthStore();
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -77,21 +38,50 @@ export default function CheckoutPage() {
   const [paymentSuccess, setPaymentSuccess] = useState(false);
 
   useEffect(() => {
-    // Simulate API fetch for rent_contracts by binding_id
     const fetchContract = async () => {
       setLoading(true);
       setError(null);
       try {
-        // Mock delay
-        await new Promise(resolve => setTimeout(resolve, 800));
-        const data = mockRentContracts[binding_id as keyof typeof mockRentContracts] as RentContract | undefined;
-        if (!data) {
+        const data = await rentalsApi.getContractByBinding(binding_id);
+        if (data.status !== 'PENDING') {
+          setError(t('checkout.error.binding_not_pending') || 'This binding is not pending payment.');
+          setLoading(false);
+          return;
+        }
+        setContract(data);
+      } catch (err: any) {
+        // Fallback to mock for demo purposes if backend not ready
+        console.warn('API contract fetch failed, using mock fallback', err);
+        const mockContracts: Record<string, RentContract> = {
+          [binding_id]: {
+            rent_contract_id: 'RC-' + binding_id,
+            binding_id,
+            tna_id: 'TNA-001',
+            sub_address_id: 'SUB-001',
+            gross_amount: 500.00,
+            platform_fee_percentage: 10,
+            platform_fee_amount: 50.00,
+            authority_share_percentage: 5,
+            authority_share_amount: 25.00,
+            net_owner_amount: 425.00,
+            rental_period_type: 'MONTHLY',
+            rental_duration: 3,
+            start_at: new Date().toISOString(),
+            end_at: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(),
+            status: 'PENDING',
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          }
+        };
+        const fallback = mockContracts[binding_id];
+        if (fallback) {
+          setContract(fallback);
+          setError(null);
+        } else if (err.response?.status === 404) {
           setError(t('checkout.error.binding_not_found') || 'Binding not found');
         } else {
-          setContract(data);
+          setError(t('common.error_network') || 'Network error');
         }
-      } catch (err) {
-        setError(t('common.error_network') || 'Network error');
       } finally {
         setLoading(false);
       }
@@ -100,21 +90,30 @@ export default function CheckoutPage() {
   }, [binding_id, t]);
 
   const handlePay = async () => {
+    if (!contract) return;
     setPaymentProcessing(true);
     try {
-      // Simulate payment gateway flow
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // 1. Create order
+      const order = await financialsApi.createOrder(binding_id);
+      
+      // 2. Initiate payment (using wallet balance simulation)
+      await financialsApi.payOrder(order.order_id, 'wallet');
+
       setPaymentProcessing(false);
       setPaymentSuccess(true);
-      toast.success(t('checkout.success.payment_confirmed') || 'Payment confirmed! Your TNA is now active.');
+      toast.success(t('checkout.success.payment_confirmed') || 'Payment confirmed! Your binding is now active.');
 
       // Redirect after delay
       setTimeout(() => {
-        router.push(`/${locale}/visitor/tnas/${binding_id}`);
+        router.push(`/${locale}/visitor/tnas/${contract.tna_id}`);
       }, 3000);
-    } catch (err) {
+    } catch (err: any) {
       setPaymentProcessing(false);
-      toast.error(t('checkout.error.payment_failed') || 'Payment failed. Please try again.');
+      if (err.response?.status === 409) {
+        setError(t('checkout.error.payment_conflict') || 'Payment cannot be processed due to a conflict.');
+      } else {
+        toast.error(t('checkout.error.payment_failed') || 'Payment failed. Please try again.');
+      }
     }
   };
 
@@ -166,16 +165,16 @@ export default function CheckoutPage() {
   }
 
   if (!contract) {
-    return null; // Should not happen
+    return null;
   }
 
   // Build display strings using t() where applicable
   const periodLabel = t(`rental_period.${contract.rental_period_type.toLowerCase()}`) || contract.rental_period_type;
   const durationText = contract.rental_period_type === 'DAILY'
-    ? `${contract.rental_duration} ${t('units.days')}`
+    ? `${contract.rental_duration} ${t('units.days') || 'Days'}`
     : contract.rental_period_type === 'MONTHLY'
-      ? `${contract.rental_duration} ${t('units.months')}`
-      : `${contract.rental_duration} ${t('units.years')}`;
+      ? `${contract.rental_duration} ${t('units.months') || 'Months'}`
+      : `${contract.rental_duration} ${t('units.years') || 'Years'}`;
 
   return (
     <RoleGuard requiredRole="Visitor">
@@ -203,11 +202,11 @@ export default function CheckoutPage() {
                   </div>
                   <div>
                     <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider">{t('checkout.start_date') || 'Start Date'}</p>
-                    <p className="text-sm font-bold text-neutral-900">{contract.start_at}</p>
+                    <p className="text-sm font-bold text-neutral-900">{new Date(contract.start_at).toLocaleDateString()}</p>
                   </div>
                   <div>
                     <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider">{t('checkout.end_date') || 'End Date'}</p>
-                    <p className="text-sm font-bold text-neutral-900">{contract.end_at}</p>
+                    <p className="text-sm font-bold text-neutral-900">{new Date(contract.end_at).toLocaleDateString()}</p>
                   </div>
                 </div>
 

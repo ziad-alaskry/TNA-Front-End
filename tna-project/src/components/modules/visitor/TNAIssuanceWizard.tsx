@@ -216,16 +216,17 @@ export default function TNAIssuanceWizard() {
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
                   <Button 
                     className="w-full sm:w-auto px-10 py-6 text-lg shadow-glow-primary"
-                    onClick={() => router.push(`/${locale}/visitor/tnas/1/bind`)}
+                    onClick={() => router.push(`/${locale}/visitor/tnas`)}
                   >
-                    Bind This TNA
+                    Go to My TNAs
+                    <ArrowRight size={20} className={cn("mr-2", isRTL && "rotate-180")} />
                   </Button>
                   <Button 
                     variant="outline"
                     className="w-full sm:w-auto px-10 py-6 text-lg"
                     onClick={() => router.push(`/${locale}/visitor/home`)}
                   >
-                    Go to Dashboard
+                    Return to Dashboard
                   </Button>
                 </div>
               </>

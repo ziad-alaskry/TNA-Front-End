@@ -1,17 +1,17 @@
 import React from 'react';
 import { render, screen, act } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import { FleetProvider, useFleet } from '../FleetContext';
+import { FleetProvider, useFleetContext } from '@/context/FleetContext';
 import userEvent from '@testing-library/user-event';
 
 const TestComponent = () => {
-    const { state, updateVehicleStatus } = useFleet();
+    const { fleetData, updateVehicleStatus } = useFleetContext();
     return (
         <div>
-            <div data-testid="vehicle-count">{state.vehicles.length}</div>
-            <button onClick={() => updateVehicleStatus('V-999', 'maintenance')}>Update Status</button>
+            <div data-testid="vehicle-count">{fleetData.vehicles.length}</div>
+            <button onClick={() => updateVehicleStatus('VIN12345', 'MAINTENANCE')}>Update Status</button>
             <div data-testid="vehicle-status">
-               {state.vehicles.find(v => v.id === 'V-999')?.status || 'not found'}
+               {fleetData.vehicles.find(v => v.vehicle_id === 'VIN12345')?.status || 'not found'}
             </div>
         </div>
     );

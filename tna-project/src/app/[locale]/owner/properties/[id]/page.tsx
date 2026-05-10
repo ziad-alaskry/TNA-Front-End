@@ -15,6 +15,7 @@ import {
 } from '@phosphor-icons/react'
 import { useParams, useRouter } from 'next/navigation'
 import { mockProperties, mockSubAddresses } from '@/lib/mock/properties.mock'
+import { mockBindings } from '@/lib/mock/bindings.mock'
 import { useLocale } from '@/i18n/LocaleProvider'
 import { useMock } from '@/lib/hooks/useMock'
 import Button from '@/components/ui/Button'
@@ -45,6 +46,20 @@ export default function PropertyDetailPage() {
                 { label: isRTL ? 'الحي' : 'District', value: property.district },
                 { label: isRTL ? 'رقم المبنى' : 'Building No', value: property.building_number },
                 { label: isRTL ? 'صك الملكية' : 'Title Deed', value: <span className="font-mono text-xs">{property.title_deed_reference}</span> },
+                {
+                    label: isRTL ? 'إثبات الملكية' : 'Ownership Proof',
+                    value: (
+                        <span className={cn(
+                            "px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-widest",
+                            property.ownership_proof_status === 'VERIFIED' ? "bg-success/10 text-success" :
+                            property.ownership_proof_status === 'PENDING' ? "bg-warning/10 text-warning" :
+                            "bg-neutral-100 text-neutral-400"
+                        )}>
+                            {property.ownership_proof_status}
+                        </span>
+                    ),
+                },
+                { label: isRTL ? 'شهادة العنوان الوطني' : 'NA Certificate', value: property.na_certificate_url ?? 'Not available' },
             ]
         }
     ];
@@ -136,20 +151,22 @@ export default function PropertyDetailPage() {
                 onBack={() => router.push(`/${locale}/owner/properties`)}
             />
             
-            <div className="mt-12 space-y-4">
-                <div className="flex items-center justify-between">
-                    <h3 className="text-xl font-black text-neutral-900 tracking-tight">Manage Units</h3>
-                    <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-neutral-400 uppercase tracking-widest">Total: {units.length}</span>
+            {property.ownership_proof_status === 'VERIFIED' && (
+                <div className="mt-12 space-y-4">
+                    <div className="flex items-center justify-between">
+                        <h3 className="text-xl font-black text-neutral-900 tracking-tight">Manage Units</h3>
+                        <div className="flex items-center gap-2">
+                            <span className="text-xs font-bold text-neutral-400 uppercase tracking-widest">Total: {units.length}</span>
+                        </div>
                     </div>
+                    <DataTableLayout 
+                        columns={columns}
+                        data={units}
+                        isLoading={false}
+                        title="Property Units"
+                    />
                 </div>
-                <DataTableLayout 
-                    columns={columns}
-                    data={units}
-                    isLoading={false}
-                    title="Property Units"
-                />
-            </div>
+            )}
         </AppShell>
     );
 }

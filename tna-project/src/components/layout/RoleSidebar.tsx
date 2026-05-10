@@ -18,7 +18,8 @@ import {
     Fingerprint as FingerprintIcon,
     Users as UsersIcon,
     Package as PackageIcon,
-    Link as LinkIcon
+    Link as LinkIcon,
+    MapPin as MapPinIcon
 } from '@phosphor-icons/react'
 import Image from 'next/image'
 import { useLocale } from '@/i18n/LocaleProvider'
@@ -102,14 +103,17 @@ export function SidebarContent({ role }: SidebarProps) {
     ],
     Carrier: [
       { labelKey: 'common.roles.Carrier.overview', icon: <HouseIcon size={22} />, href: '/carrier/home' },
-      { labelKey: 'common.roles.Carrier.fleet', icon: <TruckIcon size={22} />, href: '/carrier/fleet' },
+      { labelKey: 'common.roles.Carrier.resolve', icon: <MagnifyingGlassIcon size={22} />, href: '/carrier/resolve' },
       { labelKey: 'common.roles.Carrier.shipments', icon: <PackageIcon size={22} />, href: '/carrier/shipments' },
+      { labelKey: 'common.roles.Carrier.staff', icon: <UsersIcon size={22} />, href: '/carrier/staff' },
       { labelKey: 'common.roles.Carrier.tasks', icon: <NavigationArrowIcon size={22} />, href: '/carrier/driver/tasks' },
-      { labelKey: 'common.roles.Carrier.reports', icon: <ChartBarIcon size={22} />, href: '/carrier/reports' },
+      { labelKey: 'common.roles.Carrier.settings', icon: <GearIcon size={22} />, href: '/carrier/settings/integration' },
     ],
     Gov: [
       { labelKey: 'common.roles.Gov.overview', icon: <HouseIcon size={22} />, href: '/gov/home' },
-      { labelKey: 'common.roles.Gov.queue', icon: <ChartBarIcon size={22} />, href: '/gov/verification/queue' },
+      { labelKey: 'common.roles.Gov.tna_queue', icon: <ChartBarIcon size={22} />, href: '/gov/tna-queue' },
+      { labelKey: 'common.roles.Gov.address_queue', icon: <MapPinIcon size={22} />, href: '/gov/address-queue' },
+      { labelKey: 'common.roles.Gov.adjustments', icon: <GearIcon size={22} />, href: '/gov/adjustments' },
       { labelKey: 'common.roles.Gov.audit', icon: <FingerprintIcon size={22} />, href: '/gov/audit' },
       { labelKey: 'common.roles.Gov.agencies', icon: <UsersIcon size={22} />, href: '/gov/agencies' },
       { labelKey: 'common.roles.Gov.policy', icon: <GearIcon size={22} />, href: '/gov/policy' },

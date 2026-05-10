@@ -7,6 +7,7 @@ export const mockGovQueue = [
     mode: 'MODERATED',
     visitor_id_number: '1092837465',
     status: 'PENDING_REVIEW',
+    supporting_documents: ['id_copy', 'passport_entry'],
   },
   {
     request_id: 'req-auto-1',
@@ -43,6 +44,85 @@ export const mockGovQueue = [
     mode: 'MODERATED',
     visitor_id_number: '1092837465',
     status: 'PENDING_REVIEW',
+  },
+];
+
+export const mockSubAddressQueue = [
+  {
+    sub_address_id: 'sub-001',
+    owner_name: 'Mohammed Al-Saud',
+    owner_type: 'INDIVIDUAL',
+    full_address: '1234 King Fahd Road, Al Olaya District, Riyadh',
+    suffix_code: 'A-01',
+    label: 'Unit 1',
+    submitted_at: '2024-05-01T14:30:00Z',
+    status: 'PENDING',
+  },
+  {
+    sub_address_id: 'sub-002',
+    owner_name: 'Al Rajhi Bank',
+    owner_type: 'BUSINESS',
+    full_address: '8472 Prince Mohammed Bin Fahd Road, Al Khobar',
+    suffix_code: 'B-05',
+    label: 'Branch Office',
+    submitted_at: '2024-05-02T09:15:00Z',
+    status: 'PENDING',
+  },
+  {
+    sub_address_id: 'sub-003',
+    owner_name: 'Noura Al-Mansouri',
+    owner_type: 'INDIVIDUAL',
+    full_address: '5678 King Abdulaziz Road, Jeddah',
+    suffix_code: 'C-12',
+    label: 'Apartment 3',
+    submitted_at: '2024-05-03T16:45:00Z',
+    status: 'PENDING',
+  },
+];
+
+export const mockSubAddressDetails: Record<string, any> = {
+  'sub-001': {
+    sub_address_id: 'sub-001',
+    owner: {
+      name: 'Mohammed Al-Saud',
+      owner_type: 'INDIVIDUAL',
+      national_id: '1092837465',
+      is_verified: true,
+    },
+    national_address: {
+      full_address: '1234 King Fahd Road, Al Olaya District, Riyadh',
+      ownership_proof_status: 'VERIFIED',
+      title_deed_reference: 'Deed-2024-12345',
+      na_certificate_url: '/docs/na-cert-001.pdf',
+    },
+    sub_address: {
+      suffix_code: 'A-01',
+      label: 'Unit 1',
+      description: 'Ground floor apartment',
+    },
+  },
+};
+
+export const mockGovAdjustments = [
+  {
+    adjustment_id: 'adj-001',
+    adjustment_type: 'OWNER_CORRECTION',
+    amount: 150.00,
+    reason: 'Incorrect fee calculation on binding BIND-123',
+    initiated_by: 'Gov User',
+    created_at: '2024-05-01T10:30:00Z',
+    status: 'PENDING',
+    approval_required: true,
+  },
+  {
+    adjustment_id: 'adj-002',
+    adjustment_type: 'SYSTEM_ERROR',
+    amount: -75.50,
+    reason: 'Duplicate charge refund',
+    initiated_by: 'System',
+    created_at: '2024-05-02T15:20:00Z',
+    status: 'APPROVED',
+    approval_required: false,
   },
 ];
 

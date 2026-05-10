@@ -8,3 +8,6 @@ export * from './financials.mock';
 export * from './carriers.mock';
 export * from './settlement';
 
+// Additional exports for clarity
+export { mockProperties as mockNationalAddresses } from './properties.mock';
+

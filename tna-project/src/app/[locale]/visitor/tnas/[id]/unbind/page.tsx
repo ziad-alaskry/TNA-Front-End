@@ -53,6 +53,15 @@ export default function VisitorTnaUnbindPage() {
         }
     };
 
+    useEffect(() => {
+        if (unboundSuccess) {
+            const timer = setTimeout(() => {
+                router.push(`/${locale}/visitor/tnas`);
+            }, 2000);
+            return () => clearTimeout(timer);
+        }
+    }, [unboundSuccess, router, locale]);
+
     if (!tna) return <div>TNA not found</div>;
 
     const sections = [
@@ -143,15 +152,6 @@ export default function VisitorTnaUnbindPage() {
             </div>
         </div>
     );
-
-    useEffect(() => {
-        if (unboundSuccess) {
-            const timer = setTimeout(() => {
-                router.push(`/${locale}/visitor/tnas`);
-            }, 2000);
-            return () => clearTimeout(timer);
-        }
-    }, [unboundSuccess, router, locale]);
 
     return (
         <AppShell role="Visitor" header={isRTL ? 'إلغاء ربط TNA' : 'Unbind TNA Address'}>

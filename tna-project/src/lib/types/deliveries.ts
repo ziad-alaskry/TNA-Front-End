@@ -1,5 +1,25 @@
 export type ShipmentStatus = 'CREATED' | 'PICKED_UP' | 'IN_TRANSIT' | 'OUT_FOR_DELIVERY' | 'DELIVERED' | 'FAILED' | 'RETURNED';
 
+export interface ShipmentStatusLog {
+    log_id: string;
+    shipment_id: string;
+    status: ShipmentStatus;
+    location?: string;
+    latitude?: number;
+    longitude?: number;
+    notes?: string;
+    logged_at: string;
+}
+
+export interface ShipmentMessage {
+    message_id: string;
+    shipment_id: string;
+    sender_user_id: string;
+    sender_role: string;
+    message_text: string;
+    created_at: string;
+}
+
 export interface Shipment {
     shipment_id: string;
     carrier_id: string;
@@ -29,6 +49,9 @@ export interface Shipment {
     weight?: string;
     created_at: string;
     updated_at?: string;
+    // Additional fields for detail view
+    shipment_status_logs?: ShipmentStatusLog[];
+    shipment_messages?: ShipmentMessage[];
 }
 
 export interface ShipmentStatusLog {

@@ -39,16 +39,16 @@ export default function VisitorHomeModule() {
   const slides = [
     {
       title: "Saudi National Address Proxy",
-      desc: "Get your temporary national address today and receive shipments anywhere in the Kingdom.",
+      desc: "Get your temporary national address today and receive shipments anywhere in the Kingdom with ease and security.",
       cta: "Request TNA",
-      onClick: () => router.push(`/${locale}/visitor/tnas/create`),
+      onClick: () => router.push(`/${locale}/visitor/tna/new`),
       image: "/brand/banner-1.jpg",
       color: "bg-primary"
     },
     {
       title: "Secure & Reliable",
       desc: "Our system ensures your privacy and security throughout the shipping process.",
-      cta: "Learn More",
+      cta: "Find Address",
       onClick: () => router.push(`/${locale}/visitor/search`),
       image: "/brand/banner-2.jpg",
       color: "bg-primary-dark"
@@ -57,7 +57,7 @@ export default function VisitorHomeModule() {
       title: "Instant Verification",
       desc: "Quick administrative review and autonomous issuance for eligible users.",
       cta: "Start Now",
-      onClick: () => router.push(`/${locale}/visitor/tnas/create`),
+      onClick: () => router.push(`/${locale}/visitor/tna/new`),
       image: "/brand/banner-3.jpg",
       color: "bg-secondary"
     }
@@ -191,13 +191,13 @@ export default function VisitorHomeModule() {
           ))}
           
           <button 
-            onClick={() => router.push(`/${locale}/visitor/tnas/create`)}
+            onClick={() => router.push(`/${locale}/visitor/tna/new`)}
             className="min-w-[280px] snap-start bg-primary/5 rounded-2xl border-2 border-dashed border-primary/20 flex flex-col items-center justify-center p-5 gap-3 hover:bg-primary/10 transition-all group"
           >
             <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
               <PlusCircle size={32} weight="fill" />
             </div>
-            <p className="text-sm font-black text-primary">Request New TNA</p>
+            <p className="text-sm font-black text-primary">{t('visitor.home.actions.create_new') || 'Request New TNA'}</p>
           </button>
         </div>
       </section>

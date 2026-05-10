@@ -52,7 +52,7 @@ export default function GovAuditPage() {
             render: () => (
                 <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
-                    <span className="text-[10px] font-black text-success uppercase tracking-widest">Verified Ledger</span>
+                    <span className="text-[10px] font-black text-success uppercase tracking-widest">{isRTL ? 'تم التحقق' : 'Verified Ledger'}</span>
                 </div>
             )
         }
@@ -64,15 +64,15 @@ export default function GovAuditPage() {
                 <div className="relative z-10 space-y-2">
                     <div className="flex items-center gap-2 text-primary-light">
                         <ShieldCheck size={24} weight="fill" />
-                        <h2 className="text-xl font-black uppercase tracking-tight">Immutable Ledger Protocol</h2>
+                        <h2 className="text-xl font-black uppercase tracking-tight">{isRTL ? 'بروتوكول السجل الغير قابل للتغيير' : 'Immutable Ledger Protocol'}</h2>
                     </div>
-                    <p className="text-white/60 text-sm max-w-md">Every TNA issuance, binding, and shipment update is cryptographically signed and stored in the global audit log.</p>
+                    <p className="text-white/60 text-sm max-w-md">{isRTL ? 'كل إصدار TNA والربط والشحنة تُخزن بتوقيع مشفر في سجل التدقيق العالمي.' : 'Every TNA issuance, binding, and shipment update is cryptographically signed and stored in the global audit log.'}</p>
                 </div>
                 <Fingerprint size={160} weight="thin" className="absolute -bottom-10 -right-10 text-white/5 rotate-12" />
             </div>
 
             <DataTableLayout
-                title="Global Audit Trail"
+                title={isRTL ? 'المسار التدقيقي العالمي' : 'Global Audit Trail'}
                 columns={columns}
                 data={tnas || []}
                 isLoading={isLoading}

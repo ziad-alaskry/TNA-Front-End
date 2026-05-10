@@ -5,11 +5,22 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useLocale } from '@/i18n/LocaleProvider';
 import { QuickLogin } from '@/components/shared/QuickLogin';
+import { useAuthStore } from '@/lib/store/useAuthStore';
+import type { User, UserRole } from '@/lib/types/auth';
 
 export default function LoginPage() {
     const [role, setRole] = useState('owner');
     const router = useRouter();
     const { locale } = useLocale();
+    const { setAuth } = useAuthStore();
+
+    // Map frontend role ID to backend UserRole enum
+    const roleMap: Record<string, UserRole> = {
+        owner: 'OWNER',
+        carrier: 'CARRIER_STAFF',
+        gov: 'GOV_USER',
+        visitor: 'VISITOR',
+    };
 
     const roles = [
         { id: 'owner', label: 'مالك', icon: 'home' },
@@ -21,7 +32,26 @@ export default function LoginPage() {
     const currentRoleLabel = roles.find(r => r.id === role)?.label || '';
 
     const handleLogin = () => {
-        // Mock authentication success and redirect based on role
+        const userRole = roleMap[role] || 'VISITOR';
+        
+        // Build mock user based on selected role
+        const mockUser: User = {
+            user_id: `dev-${role}-1`,
+            username: `dev_${role}`,
+            email: `${role}@example.com`,
+            user_role: userRole,
+            is_active: true,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+            full_name: `Demo ${currentRoleLabel}`,
+            nationality: 'SA',
+            document_number: '1234567890',
+        };
+
+        // Set auth state with mock token
+        setAuth(mockUser, 'mock-jwt-token-' + role);
+        
+        // Redirect to role-specific home
         router.push(`/${locale}/${role}/home`);
     };
 

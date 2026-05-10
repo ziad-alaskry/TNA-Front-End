@@ -89,7 +89,7 @@ export default function ForgotPasswordModule() {
         await new Promise(r => setTimeout(r, 1000));
         setLoading(false);
         success('تم إعادة تعيين كلمة المرور بنجاح!', 'نجاح');
-        router.push(`/${locale}/auth/login`);
+        router.push(`/${locale}/login`);
     };
 
     return (

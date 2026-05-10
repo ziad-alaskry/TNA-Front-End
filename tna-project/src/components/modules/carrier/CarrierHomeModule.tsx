@@ -133,19 +133,19 @@ export default function CarrierHomeModule() {
         {/* SIDEBAR OPS */}
         <div className="space-y-8">
           
-          {/* FLEET UTILIZATION */}
+          {/* OPERATIONS overview */}
           <section className="bg-white rounded-3xl border border-neutral-200 shadow-xl p-6 space-y-6">
             <div className="flex items-center gap-2">
               <ChartBar size={20} className="text-primary" weight="fill" />
-              <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest">Fleet Utilization</h3>
+              <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest">Operations Overview</h3>
             </div>
             
             <div className="space-y-4">
-              <div className="space-y-1.5">
-                <div className="flex justify-between text-[10px] font-black uppercase">
-                  <span className="text-neutral-500">Active Trucks</span>
-                  <span className="text-primary">85%</span>
-                </div>
+               <div className="space-y-1.5">
+                 <div className="flex justify-between text-[10px] font-black uppercase">
+                   <span className="text-neutral-500">Active Drivers</span>
+                   <span className="text-primary">85%</span>
+                 </div>
                 <div className="h-2 w-full bg-neutral-100 rounded-full overflow-hidden">
                   <div className="h-full bg-primary rounded-full transition-all duration-1000" style={{ width: '85%' }} />
                 </div>
@@ -163,18 +163,18 @@ export default function CarrierHomeModule() {
 
             <div className="h-px bg-neutral-100" />
 
-            <div className="flex items-center gap-3 p-3 bg-warning/5 border border-warning/10 rounded-xl">
-              <Warning size={20} className="text-warning shrink-0" weight="fill" />
-              <p className="text-[10px] text-warning-dark font-medium">3 vehicles require maintenance check within the next 48 hours.</p>
-            </div>
+             <div className="flex items-center gap-3 p-3 bg-warning/5 border border-warning/10 rounded-xl">
+               <Warning size={20} className="text-warning shrink-0" weight="fill" />
+               <p className="text-[10px] text-warning-dark font-medium">3 staff members require certification renewal within the next 48 hours.</p>
+             </div>
           </section>
 
           {/* QUICK LINKS */}
           <section className="space-y-3">
             {[
               { label: 'Manage Routes', icon: MapPin },
-              { label: 'Fleet Maintenance', icon: Truck },
-              { label: 'Driver Directory', icon: Users },
+              { label: 'Staff Management', icon: Users },
+              { label: 'Vehicle Maintenance', icon: Truck },
             ].map((link, i) => (
               <button 
                 key={i}
