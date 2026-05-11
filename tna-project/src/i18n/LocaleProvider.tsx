@@ -23,17 +23,23 @@ const LocaleContext = createContext<LocaleContextValue>({
 export function useLocale() {
   const context = useContext(LocaleContext)
   
-  const t = (path: string) => {
+  const t = (path: string, params?: Record<string, any>) => {
     const keys = path.split('.')
     let current = context.messages
     for (const key of keys) {
       if (current && current[key]) {
         current = current[key]
       } else {
-        return path // Fallback to key
+        return path
       }
     }
-    return typeof current === 'string' ? current : path
+    let result = typeof current === 'string' ? current : path
+    if (params && typeof result === 'string') {
+      Object.keys(params).forEach(key => {
+        result = result.replace(new RegExp(`{${key}}`, 'g'), params[key])
+      })
+    }
+    return result
   }
 
   return { ...context, t }

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -16,28 +16,31 @@ import {
 } from '@phosphor-icons/react';
 import { useRegistrationStore } from '@/lib/store/useRegistrationStore';
 import { useAuthStore } from '@/lib/store/useAuthStore';
+import { useLocale } from '@/i18n/LocaleProvider';
 import InputField from '@/components/ui/InputField';
 import ProgressStepper from '@/components/ui/ProgressStepper';
-
-const schema = z.object({
-    username: z.string().min(3, 'يجب أن يكون 3 أحرف على الأقل').regex(/^[a-zA-Z0-9_]+$/, 'حروف وأرقام فقط'),
-    email: z.string().email('البريد الإلكتروني غير صحيح'),
-    password: z.string().min(8, 'كلمة المرور 8 أحرف على الأقل'),
-    confirmPassword: z.string(),
-    termsAccepted: z.boolean().refine(v => v === true, 'يجب الموافقة على الشروط'),
-}).refine(d => d.password === d.confirmPassword, {
-    message: 'كلمة المرور غير متطابقة',
-    path: ['confirmPassword'],
-});
-
-type FormData = z.infer<typeof schema>;
+import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
 
 export default function RegisterAccountModule() {
     const router = useRouter();
+    const { t, isRTL, locale } = useLocale();
     const { formData, resetRegistration } = useRegistrationStore();
     const { setAuth } = useAuthStore();
     const [isPending, setIsPending] = useState(false);
     const [apiError, setApiError] = useState<string | null>(null);
+
+    const schema = useMemo(() => z.object({
+        username: z.string().min(3, t('auth.register.account.validation.username_min')).regex(/^[a-zA-Z0-9_]+$/, t('auth.register.account.validation.username_format')),
+        email: z.string().email(t('auth.register.account.validation.email_invalid')),
+        password: z.string().min(8, t('auth.register.account.validation.password_min')),
+        confirmPassword: z.string(),
+        termsAccepted: z.boolean().refine(v => v === true, t('auth.register.account.validation.terms_required')),
+    }).refine(d => d.password === d.confirmPassword, {
+        message: t('auth.register.account.validation.password_mismatch'),
+        path: ['confirmPassword'],
+    }), [t]);
+
+    type FormData = z.infer<typeof schema>;
 
     const {
         register,
@@ -62,14 +65,8 @@ export default function RegisterAccountModule() {
         setIsPending(true);
         setApiError(null);
 
-        // Simulate registration flow
         setTimeout(() => {
             const role = (formData.role || 'VISITOR').toLowerCase();
-
-            // Set mock auth data
-            // Note: useAuthStore might need update if it doesn't have login()
-            // For now, we simulate success and move on
-            
             resetRegistration();
             router.push(`/${role}/home`);
             setIsPending(false);
@@ -77,12 +74,12 @@ export default function RegisterAccountModule() {
     };
 
     return (
-        <div className="min-h-screen bg-surface-100 flex flex-col" dir="rtl">
+        <div className="min-h-screen bg-surface-100 flex flex-col" dir={isRTL ? 'rtl' : 'ltr'}>
             {/* Header */}
-            <header className="sticky top-0 z-50 bg-surface-200 border-b border-neutral-100 h-16 flex items-center px-4 shadow-sm">
-                <div className="w-10" />
+            <header className="sticky top-0 z-50 border-b border-neutral-100 h-16 flex items-center px-4 shadow-sm backdrop-blur-md bg-white/80">
+                <LanguageSwitcher />
                 <div className="flex-1 flex justify-center">
-                    <h1 className="text-heading font-bold text-neutral-900">إنشاء الحساب</h1>
+                    <h1 className="text-heading font-bold text-neutral-900">{t('auth.register.account.steps.account_label')}</h1>
                 </div>
                 <button
                     onClick={() => router.back()}
@@ -92,40 +89,40 @@ export default function RegisterAccountModule() {
                 </button>
             </header>
 
-            <ProgressStepper currentStep={3} label="بيانات الدخول" />
+            <ProgressStepper currentStep={3} label={t('auth.register.account.steps.account_label')} />
 
             <main className="flex-1 px-6 pt-8 pb-32 space-y-6">
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                     <InputField
-                        label="اسم المستخدم"
+                        label={t('auth.register.account.labels.username')}
                         icon={User}
-                        placeholder="أدخل اسم المستخدم بالإنجليزية"
+                        placeholder={t('auth.register.account.placeholders.username')}
                         error={errors.username?.message}
                         {...register('username')}
                     />
 
                     <InputField
-                        label="البريد الإلكتروني"
+                        label={t('auth.register.account.labels.email')}
                         icon={Envelope}
-                        placeholder="example@domain.com"
+                        placeholder={t('auth.register.account.placeholders.email')}
                         type="email"
                         error={errors.email?.message}
                         {...register('email')}
                     />
 
                     <InputField
-                        label="كلمة المرور"
+                        label={t('auth.register.account.labels.password')}
                         icon={Lock}
-                        placeholder="أدخل كلمة مرور قوية"
+                        placeholder={t('auth.register.account.placeholders.password')}
                         type="password"
                         error={errors.password?.message}
                         {...register('password')}
                     />
 
                     <InputField
-                        label="تأكيد كلمة المرور"
+                        label={t('auth.register.account.labels.confirm_password')}
                         icon={Lock}
-                        placeholder="أعد كتابة كلمة المرور"
+                        placeholder={t('auth.register.account.placeholders.confirm_password')}
                         type="password"
                         error={errors.confirmPassword?.message}
                         {...register('confirmPassword')}
@@ -146,7 +143,7 @@ export default function RegisterAccountModule() {
                         </div>
                         <div className="flex-1">
                             <span className="text-sm text-neutral-700 font-medium">
-                                أوافق على شروط الاستخدام وسياسة الخصوصية الخاصة بالعنوان الوطني المؤقت.
+                                {t('auth.register.account.terms')}
                             </span>
                         </div>
                     </label>
@@ -164,14 +161,15 @@ export default function RegisterAccountModule() {
                         <button
                             type="submit"
                             disabled={!isValid || isPending}
-                            className="w-full h-btn-lg rounded-pill bg-btn-primary text-white font-bold flex items-center justify-center gap-2 shadow-btn transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full h-[56px] rounded-full text-white font-bold text-lg shadow-lg shadow-primary/20 flex items-center justify-center gap-2 hover:opacity-90 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+                            style={{ background: 'linear-gradient(to left, #0CBBDB, #1A73C1)' }}
                         >
                             {isPending ? (
                                 <CircleNotch size={24} className="animate-spin" />
                             ) : (
                                 <>
                                     <UserPlus size={20} weight="bold" />
-                                    <span>إنشاء الحساب</span>
+                                    <span>{t('auth.register.account.create_account')}</span>
                                 </>
                             )}
                         </button>

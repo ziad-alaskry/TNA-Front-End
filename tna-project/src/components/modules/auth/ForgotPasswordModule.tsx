@@ -5,12 +5,12 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { EnvelopeSimple, CaretLeft, CheckCircle, LockKey, DotsThree } from '@phosphor-icons/react';
+import { EnvelopeSimple, CaretLeft, CheckCircle, LockKey, DotsThree, CaretRight } from '@phosphor-icons/react';
 import { useLocale } from '@/i18n/LocaleProvider';
 import InputField from '@/components/ui/InputField';
 import ProgressStepper from '@/components/ui/ProgressStepper';
-import MirrorIcon from '@/components/shared/MirrorIcon';
 import { useToast } from '@/components/ui/Toast';
+import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
 
 // -- Schema for Step 1 --
 const requestSchema = z.object({
@@ -68,7 +68,7 @@ export default function ForgotPasswordModule() {
         setSavedEmail(data.email);
         setStep(2);
         setLoading(false);
-        success('تم إرسال رمز التحقق إلى بريدك الإلكتروني', 'نجاح');
+        success(t('auth.forgot_password.send_success'), 'نجاح');
     };
 
     const onVerifySubmit = async (data: VerifyFormData) => {
@@ -78,7 +78,7 @@ export default function ForgotPasswordModule() {
         if (data.code === '123456') { // Mock verify code logic
             setStep(3);
         } else {
-            error('رمز التحقق غير صحيح', 'خطأ');
+            error(t('auth.forgot_password.invalid_code'), 'خطأ');
         }
         setLoading(false);
     };
@@ -88,129 +88,199 @@ export default function ForgotPasswordModule() {
         // Simulate API call
         await new Promise(r => setTimeout(r, 1000));
         setLoading(false);
-        success('تم إعادة تعيين كلمة المرور بنجاح!', 'نجاح');
+        success(t('auth.forgot_password.reset_success'), 'نجاح');
         router.push(`/${locale}/login`);
     };
 
     return (
-        <div className="min-h-screen bg-surface-100 flex flex-col" dir={isRTL ? 'rtl' : 'ltr'}>
+        <div 
+            className="min-h-screen flex flex-col font-display items-center bg-surface-100" 
+            dir={isRTL ? 'rtl' : 'ltr'}
+            style={{
+                backgroundImage: 'repeating-linear-gradient(45deg, #ffffff, #ffffff 10px, #f9fafb 10px, #f9fafb 20px)'
+            }}
+        >
             {/* Header */}
-            <header className="sticky top-0 z-50 bg-surface-200 border-b border-neutral-100 h-16 flex items-center px-4 shadow-sm">
-                <div className="flex-1 flex items-center justify-between max-w-lg mx-auto w-full">
-                    <button
-                        onClick={() => {
-                            if (step > 1) setStep((s) => (s - 1) as 1 | 2 | 3);
-                            else router.back();
-                        }}
-                        className="w-10 h-10 flex items-center justify-center text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 rounded-full transition-all"
-                    >
-                        <MirrorIcon reverse>
-                            <CaretLeft size={24} weight="bold" />
-                        </MirrorIcon>
-                    </button>
-                    <h1 className="text-base font-bold text-neutral-900">{t('auth.forgot_password.title')}</h1>
-                    <div className="w-10" />
-                </div>
+            <header className="w-full max-w-[480px] h-16 flex items-center justify-between px-6 sticky top-0 bg-white/80 backdrop-blur-md z-10 border-b border-gray-100">
+                <button
+                    type="button"
+                    onClick={() => {
+                        if (step > 1) setStep((s) => (s - 1) as 1 | 2 | 3);
+                        else router.back();
+                    }}
+                    className="flex items-center justify-center w-10 h-10 hover:bg-gray-50 rounded-full transition-colors"
+                >
+                    <CaretLeft size={24} className={isRTL ? 'rotate-180' : ''} />
+                </button>
+                <h1 className="text-[16px] font-semibold text-slate-900">{t('auth.forgot_password.title')}</h1>
+                <LanguageSwitcher />
             </header>
 
-            <div className="max-w-lg mx-auto w-full flex-1 flex flex-col">
-                <div className="pt-8 px-6 pb-4">
-                    <h2 className="text-heading font-bold text-neutral-900 mb-2">
-                        {step === 1 && 'نسيت كلمة المرور؟'}
-                        {step === 2 && 'التحقق من الرمز'}
-                        {step === 3 && 'تعيين كلمة مرور جديدة'}
-                    </h2>
-                    <p className="text-body text-neutral-500 font-medium leading-relaxed">
-                        {step === 1 && 'أدخل بريدك الإلكتروني وسنرسل لك رمزاً لإعادة تعيين كلمة المرور لتتمكن من العودة لحسابك.'}
-                        {step === 2 && `قمنا بإرسال رمز مكون من 6 أرقام إلى ${savedEmail}. (لغرض التجربة استخدم 123456)`}
-                        {step === 3 && 'أدخل كلمة المرور الجديدة لتأمين حسابك. تأكد من تطابق كلمتي المرور.'}
-                    </p>
-                </div>
+            {/* STEP 1 */}
+            {step === 1 && (
+                <main className="w-full max-w-[480px] flex-1 flex flex-col items-center px-6 py-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div className="mb-8 flex items-center justify-center">
+                        <div className="relative w-20 h-20 bg-[#199bd7]/10 rounded-full flex items-center justify-center text-[#199bd7]">
+                            <LockKey size={48} weight="fill" />
+                            <div className="absolute -top-1 -right-1 bg-[#199bd7] text-white w-8 h-8 rounded-full border-4 border-white flex items-center justify-center font-bold text-lg">؟</div>
+                        </div>
+                    </div>
+                    
+                    <div className="text-center mb-6">
+                        <p className="text-[14px] text-gray-600">{t('auth.forgot_password.subtitle_step1')}</p>
+                    </div>
+                    
+                    <div className="flex items-center gap-2 mb-8">
+                        <div className="w-2.5 h-2.5 rounded-full bg-[#199bd7]"></div>
+                        <div className="w-2.5 h-2.5 rounded-full bg-gray-200"></div>
+                        <div className="w-2.5 h-2.5 rounded-full bg-gray-200"></div>
+                    </div>
 
-                <div className="px-6 pb-6">
-                     <ProgressStepper currentStep={step} label="" />
-                </div>
-
-                <main className="flex-1 px-6 pb-32">
-                    {/* STEP 1 */}
-                    {step === 1 && (
-                        <form onSubmit={form1.handleSubmit(onRequestSubmit)} className="space-y-6">
-                            <InputField
-                                label="البريد الإلكتروني"
-                                icon={EnvelopeSimple}
+                    <form onSubmit={form1.handleSubmit(onRequestSubmit)} className="w-full space-y-6">
+                        <div className="relative">
+                            <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-gray-400">
+                                <EnvelopeSimple size={20} />
+                            </div>
+                            <input 
+                                className={`w-full h-14 pr-12 pl-4 rounded-lg border ${form1.formState.errors.email ? 'border-red-500 focus:ring-red-500/20 focus:border-red-500' : 'border-gray-200 focus:ring-[#199bd7]/20 focus:border-[#199bd7]'} transition-all text-right outline-none`}
+                                dir="rtl" 
+                                placeholder={t('auth.forgot_password.email_placeholder')}
                                 type="email"
-                                placeholder="name@example.com"
-                                error={form1.formState.errors.email?.message}
                                 {...form1.register('email')}
                             />
-                            <div className="fixed bottom-0 left-0 right-0 p-6 z-40 bg-gradient-to-t from-surface-100 via-surface-100/95 to-transparent pt-10 md:static md:p-0 md:bg-none">
-                                <button
-                                    type="submit"
-                                    disabled={!form1.formState.isValid || loading}
-                                    className="w-full h-btn-lg rounded-pill bg-btn-primary text-white font-bold flex items-center justify-center gap-2 shadow-btn transition-all hover:opacity-95 disabled:opacity-50"
-                                >
-                                    {loading ? <DotsThree size={32} className="animate-pulse" /> : <span>إرسال الرمز</span>}
-                                </button>
-                            </div>
-                        </form>
-                    )}
+                            {form1.formState.errors.email && (
+                                <p className="text-red-500 text-xs mt-1 text-right">{form1.formState.errors.email.message}</p>
+                            )}
+                        </div>
+                        <button 
+                            type="submit"
+                            disabled={!form1.formState.isValid || loading}
+                            className="w-full h-14 rounded-full text-white font-semibold text-lg shadow-lg shadow-[#199bd7]/20 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center"
+                            style={{ background: 'linear-gradient(270deg, #199bd7 0%, #312e81 100%)' }}
+                        >
+                            {loading ? <DotsThree size={32} className="animate-pulse" /> : <span>{t('auth.forgot_password.send_code')}</span>}
+                        </button>
+                    </form>
+                </main>
+            )}
 
-                    {/* STEP 2 */}
-                    {step === 2 && (
-                        <form onSubmit={form2.handleSubmit(onVerifySubmit)} className="space-y-6 animate-in slide-in-from-bottom-4 duration-300">
-                            <InputField
-                                label="رمز التحقق"
-                                placeholder="000000"
-                                maxLength={6}
-                                type="text"
-                                className="text-center font-mono text-heading tracking-[0.5em]"
-                                error={form2.formState.errors.code?.message}
-                                {...form2.register('code')}
-                            />
-                            <div className="fixed bottom-0 left-0 right-0 p-6 z-40 bg-gradient-to-t from-surface-100 via-surface-100/95 to-transparent pt-10 md:static md:p-0 md:bg-none">
-                                <button
+            {/* STEP 2 */}
+            {step === 2 && (
+                <main className="flex-1 flex w-full max-w-[480px] items-start pt-8 justify-center p-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div className="w-full bg-white rounded-3xl shadow-xl border border-slate-50 p-8">
+                        <div className="flex justify-center items-center gap-3 mb-10">
+                            <div className="w-2.5 h-2.5 rounded-full bg-slate-200"></div>
+                            <div className="w-2.5 h-2.5 rounded-full bg-[#199bd7] ring-4 ring-[#199bd7]/20"></div>
+                            <div className="w-2.5 h-2.5 rounded-full bg-slate-200"></div>
+                        </div>
+                        <div className="text-center mb-8">
+                            <h2 className="text-slate-900 text-lg font-bold mb-2">{t('auth.forgot_password.verify_title')}</h2>
+                            <p className="text-slate-500 text-sm font-medium">{t('auth.forgot_password.verify_subtitle')}</p>
+                        </div>
+                        {process.env.NODE_ENV === 'development' && (
+                            <div className="text-xs text-amber-600 bg-amber-50 px-3 py-1.5 rounded-full border border-amber-200 text-center mb-4">
+                                Mock Mode: Use code <code className="font-mono font-bold">123456</code>
+                            </div>
+                        )}
+                        <form onSubmit={form2.handleSubmit(onVerifySubmit)} className="space-y-8">
+                            <div className="flex flex-col gap-2">
+                                <input 
+                                    className="w-full h-14 text-center font-mono tracking-[1em] rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#199bd7]/20 focus:border-[#199bd7] transition-all outline-none text-xl font-bold"
+                                    placeholder={t('auth.forgot_password.code_placeholder')}
+                                    maxLength={6}
+                                    type="text"
+                                    {...form2.register('code')}
+                                />
+                                {form2.formState.errors.code && (
+                                    <p className="text-red-500 text-xs text-center">{form2.formState.errors.code.message}</p>
+                                )}
+                            </div>
+                            
+                            <div className="space-y-6">
+                                <div className="text-center">
+                                    <p className="text-[12px] text-gray-400 font-medium">{t('auth.forgot_password.resend_timer', { time: '02:30' })}</p>
+                                </div>
+                                <button 
                                     type="submit"
                                     disabled={!form2.formState.isValid || loading}
-                                    className="w-full h-btn-lg rounded-pill bg-btn-primary text-white font-bold flex items-center justify-center gap-2 shadow-btn transition-all hover:opacity-95 disabled:opacity-50"
+                                    className="w-full h-[56px] text-white font-bold text-lg rounded-full shadow-lg shadow-[#199bd7]/30 hover:shadow-[#199bd7]/40 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center"
+                                    style={{ background: 'linear-gradient(to left, #199bd7, #0ea5e9)' }}
                                 >
-                                     {loading ? <DotsThree size={32} className="animate-pulse" /> : <span>تحقق</span>}
+                                    {loading ? <DotsThree size={32} className="animate-pulse" /> : <span>{t('auth.forgot_password.confirm_code')}</span>}
                                 </button>
                             </div>
                         </form>
-                    )}
+                        <div className="mt-8 text-center">
+                            <button type="button" className="text-[#199bd7] text-sm font-bold hover:underline">
+                                {t('auth.forgot_password.resend_button')}
+                            </button>
+                        </div>
+                    </div>
+                </main>
+            )}
 
-                    {/* STEP 3 */}
-                    {step === 3 && (
-                        <form onSubmit={form3.handleSubmit(onResetSubmit)} className="space-y-6 animate-in slide-in-from-bottom-4 duration-300">
-                            <InputField
-                                label="كلمة المرور الجديدة"
-                                icon={LockKey}
-                                type="password"
-                                placeholder="••••••••"
-                                error={form3.formState.errors.password?.message}
-                                {...form3.register('password')}
-                            />
-                            <InputField
-                                label="تأكيد كلمة المرور"
-                                icon={CheckCircle}
-                                type="password"
-                                placeholder="••••••••"
-                                error={form3.formState.errors.confirmPassword?.message}
-                                {...form3.register('confirmPassword')}
-                            />
-                            <div className="fixed bottom-0 left-0 right-0 p-6 z-40 bg-gradient-to-t from-surface-100 via-surface-100/95 to-transparent pt-10 md:static md:p-0 md:bg-none">
-                                <button
+            {/* STEP 3 */}
+            {step === 3 && (
+                <main className="flex-1 flex w-full max-w-[480px] items-start pt-8 justify-center p-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div className="w-full bg-white rounded-3xl shadow-xl border border-slate-50 p-8">
+                        <div className="flex justify-center items-center gap-3 mb-10">
+                            <div className="w-2.5 h-2.5 rounded-full bg-slate-200"></div>
+                            <div className="w-2.5 h-2.5 rounded-full bg-slate-200"></div>
+                            <div className="w-2.5 h-2.5 rounded-full bg-[#199bd7] ring-4 ring-[#199bd7]/20"></div>
+                        </div>
+                        <div className="text-center mb-8">
+                            <h2 className="text-slate-900 text-lg font-bold mb-2">{t('auth.forgot_password.reset_title')}</h2>
+                            <p className="text-slate-500 text-sm font-medium">{t('auth.forgot_password.reset_subtitle')}</p>
+                        </div>
+                        <form onSubmit={form3.handleSubmit(onResetSubmit)} className="space-y-6">
+                            <div className="relative">
+                                <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-gray-400">
+                                    <LockKey size={20} />
+                                </div>
+                                <input 
+                                    className={`w-full h-14 pr-12 pl-4 rounded-lg border ${form3.formState.errors.password ? 'border-red-500 focus:ring-red-500/20 focus:border-red-500' : 'border-gray-200 focus:ring-[#199bd7]/20 focus:border-[#199bd7]'} transition-all text-right outline-none`}
+                                    placeholder={t('auth.forgot_password.new_password_placeholder')}
+                                    type="password"
+                                    {...form3.register('password')}
+                                />
+                                {form3.formState.errors.password && (
+                                    <p className="text-red-500 text-xs mt-1 text-right">{form3.formState.errors.password.message}</p>
+                                )}
+                            </div>
+
+                            <div className="relative">
+                                <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-gray-400">
+                                    <LockKey size={20} />
+                                </div>
+                                <input 
+                                    className={`w-full h-14 pr-12 pl-4 rounded-lg border ${form3.formState.errors.confirmPassword ? 'border-red-500 focus:ring-red-500/20 focus:border-red-500' : 'border-gray-200 focus:ring-[#199bd7]/20 focus:border-[#199bd7]'} transition-all text-right outline-none`}
+                                    placeholder={t('auth.forgot_password.confirm_password_placeholder')}
+                                    type="password"
+                                    {...form3.register('confirmPassword')}
+                                />
+                                {form3.formState.errors.confirmPassword && (
+                                    <p className="text-red-500 text-xs mt-1 text-right">{form3.formState.errors.confirmPassword.message}</p>
+                                )}
+                            </div>
+
+                            <div className="pt-4">
+                                <button 
                                     type="submit"
                                     disabled={!form3.formState.isValid || loading}
-                                    className="w-full h-btn-lg rounded-pill bg-btn-primary text-white font-bold flex items-center justify-center gap-2 shadow-btn transition-all hover:opacity-95 disabled:opacity-50"
+                                    className="w-full h-[56px] text-white font-bold text-lg rounded-full shadow-lg shadow-[#199bd7]/30 hover:shadow-[#199bd7]/40 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center"
+                                    style={{ background: 'linear-gradient(to left, #199bd7, #0ea5e9)' }}
                                 >
-                                    {loading ? <DotsThree size={32} className="animate-pulse" /> : <span>حفظ وتسجيل الدخول</span>}
+                                    {loading ? <DotsThree size={32} className="animate-pulse" /> : <span>{t('auth.forgot_password.save_login')}</span>}
                                 </button>
                             </div>
                         </form>
-                    )}
+                    </div>
                 </main>
-            </div>
+            )}
+
+            <footer className="w-full max-w-[480px] p-8 text-center text-gray-400 text-xs mt-auto">
+                <p>{t('common.copyright')}</p>
+            </footer>
         </div>
     );
 }

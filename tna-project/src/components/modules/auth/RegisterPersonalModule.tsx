@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -21,18 +21,7 @@ import ProgressStepper from '@/components/ui/ProgressStepper';
 import Select from '@/components/ui/Select';
 import MirrorIcon from '@/components/shared/MirrorIcon';
 import { cn } from '@/lib/utils/cn';
-
-const schema = z.object({
-    full_name: z.string().min(5, 'الاسم يجب أن يكون 5 أحرف على الأقل'),
-    document_type: z.enum(['VISA', 'IQAMA', 'PASSPORT']),
-    document_number: z.string().min(8, 'رقم الوثيقة غير صحيح'),
-    date_of_birth: z.string().min(1, 'مطلوب'),
-    mobile: z.string().regex(/^05\d{8}$/, 'رقم الجوال يجب أن يبدأ بـ 05 ويتكون من 10 أرقام'),
-    nationality: z.string().min(2, 'مطلوب'),
-    personalDataConfirmed: z.boolean().refine(v => v === true, 'يجب الموافقة على صحة البيانات'),
-});
-
-type FormData = z.infer<typeof schema>;
+import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
 
 export default function RegisterPersonalModule() {
     const router = useRouter();
@@ -40,12 +29,27 @@ export default function RegisterPersonalModule() {
     const { formData, updateFormData, setStep } = useRegistrationStore();
     const isEntity = formData.is_entity;
 
+    const schema = useMemo(() => z.object({
+        full_name: z.string().min(5, t('auth.register.personal.validation.full_name_min')),
+        document_type: z.enum(['VISA', 'IQAMA', 'PASSPORT']),
+        document_number: z.string().min(8, t('auth.register.personal.validation.document_number_invalid')),
+        date_of_birth: z.string().min(1, t('auth.register.personal.validation.field_required')),
+        mobile: z.string().regex(/^05\d{8}$/, t('auth.register.personal.validation.mobile_invalid')),
+        nationality: z.string().min(2, t('auth.register.personal.validation.field_required')),
+        personalDataConfirmed: z.boolean().refine(v => v === true, t('auth.register.personal.validation.confirm_required')),
+        // B2B fields (conditionally required)
+        agency_type: z.enum(['HOTEL', 'TOURISM', 'OTHER']).optional(),
+        license_number: z.string().optional(),
+    }), [t]);
+
+    type FormData = z.infer<typeof schema>;
+
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors, isValid },
-    } = useForm<any>({
+    } = useForm<FormData>({
         resolver: zodResolver(schema),
         mode: 'onChange',
         defaultValues: {
@@ -68,32 +72,29 @@ export default function RegisterPersonalModule() {
         const { personalDataConfirmed, ...rest } = data;
         updateFormData(rest);
         setStep(3);
-        router.push(`/${locale}/auth/register/account`);
+        router.push(`/${locale}/register/account`);
     };
 
     return (
         <div className="min-h-screen bg-surface-100 flex flex-col" dir={isRTL ? 'rtl' : 'ltr'}>
             {/* 1. STICKY HEADER */}
-            <header className="sticky top-0 z-50 bg-surface-200 border-b border-neutral-100 h-16 flex items-center px-4 shadow-sm">
-                <div className="flex-1 flex items-center justify-between max-w-lg mx-auto w-full">
-                    <button
-                        onClick={() => router.back()}
-                        className="w-10 h-10 flex items-center justify-center text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 rounded-full transition-all"
-                        aria-label="Back"
-                    >
-                        <MirrorIcon reverse>
-                            <CaretLeft size={24} weight="bold" />
-                        </MirrorIcon>
-                    </button>
-                    
-                    <h1 className="text-base font-bold text-neutral-900">{t('auth.register.steps.personal')}</h1>
-                    
-                    <div className="w-10" /> {/* Spacer for centering */}
+            <header className="sticky top-0 z-50 border-b border-neutral-100 h-16 flex items-center px-4 shadow-sm backdrop-blur-md bg-white/80">
+                <LanguageSwitcher />
+                <div className="flex-1 flex justify-center">
+                    <h1 className="text-heading font-bold text-neutral-900">{t('auth.register.personal.steps.personal_label')}</h1>
                 </div>
+                <button
+                    onClick={() => router.back()}
+                    className="w-10 h-10 flex items-center justify-center text-neutral-900 hover:bg-neutral-50 rounded-full transition-colors"
+                >
+                    <MirrorIcon reverse>
+                        <CaretLeft size={24} weight="bold" />
+                    </MirrorIcon>
+                </button>
             </header>
 
             <div className="max-w-lg mx-auto w-full flex-1 flex flex-col">
-                <ProgressStepper currentStep={2} label={t('auth.register.steps.personal_label')} />
+                <ProgressStepper currentStep={2} label={t('auth.register.personal.steps.personal_label')} />
 
                 <main className="flex-1 px-6 pt-8 pb-32">
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -101,51 +102,51 @@ export default function RegisterPersonalModule() {
                             <div className="p-5 bg-primary/5 border border-primary/20 rounded-md mb-8 space-y-5">
                                 <div className="flex items-center gap-2 text-primary">
                                     <Buildings size={20} weight="fill" />
-                                    <p className="text-xs font-bold uppercase tracking-wider">بيانات المنشأة (B2B)</p>
+                                    <p className="text-xs font-bold uppercase tracking-wider">{t('auth.register.personal.b2b.title')}</p>
                                 </div>
-                                <Select 
-                                    label="نوع المنشأة"
+                                <Select
+                                    label={t('auth.register.personal.b2b.agency_type_label')}
                                     options={[
-                                        { value: 'HOTEL', label: 'فندق / شقق مفروشة' },
-                                        { value: 'TOURISM', label: 'وكالة سياحة وسفر' },
-                                        { value: 'OTHER', label: 'أخرى' },
+                                        { value: 'HOTEL', label: t('auth.register.personal.b2b.agency_hotel') },
+                                        { value: 'TOURISM', label: t('auth.register.personal.b2b.agency_tourism') },
+                                        { value: 'OTHER', label: t('auth.register.personal.b2b.agency_other') },
                                     ]}
                                     {...register('agency_type')}
                                 />
-                                <InputField 
-                                    label="رقم السجل التجاري / الترخيص"
-                                    placeholder="700XXXXXXXX"
+                                <InputField
+                                    label={t('auth.register.personal.b2b.license_label')}
+                                    placeholder={t('auth.register.personal.b2b.license_placeholder')}
                                     {...register('license_number')}
                                 />
                             </div>
                         )}
 
                         <InputField
-                            label={isEntity ? "اسم المنشأة الرسمي" : t('auth.register.labels.full_name')}
+                            label={isEntity ? t('auth.register.personal.labels.entity_name') : t('auth.register.personal.labels.full_name')}
                             icon={isEntity ? Buildings : UserIcon}
-                            placeholder={isEntity ? "مثلاً: فندق الرياض ان" : t('auth.register.placeholders.full_name')}
+                            placeholder={isEntity ? t('auth.register.personal.labels.entity_placeholder') : t('auth.register.personal.placeholders.full_name')}
                             error={errors.full_name?.message as string}
                             {...register('full_name')}
                         />
 
                         <div className="flex flex-col gap-5 sm:flex-row">
                             <div className="flex-1">
-                                <Select
-                                    label={t('auth.register.labels.document_type')}
-                                    options={[
-                                        { value: 'PASSPORT', label: t('auth.register.document_types.passport') },
-                                        { value: 'IQAMA', label: t('auth.register.document_types.iqama') },
-                                        { value: 'VISA', label: t('auth.register.document_types.visa') },
-                                    ]}
-                                    {...register('document_type')}
-                                    error={errors.document_type?.message as string}
-                                />
+                            <Select
+                                label={t('auth.register.personal.labels.document_type')}
+                                options={[
+                                    { value: 'PASSPORT', label: t('auth.register.personal.document_types.passport') },
+                                    { value: 'IQAMA', label: t('auth.register.personal.document_types.iqama') },
+                                    { value: 'VISA', label: t('auth.register.personal.document_types.visa') },
+                                ]}
+                                {...register('document_type')}
+                                error={errors.document_type?.message as string}
+                            />
                             </div>
                             <div className="flex-[2]">
                                 <InputField
-                                    label={t('auth.register.labels.document_number')}
+                                    label={t('auth.register.personal.labels.document_number')}
                                     icon={IdentificationCard}
-                                    placeholder={t('auth.register.placeholders.document_number')}
+                                    placeholder={t('auth.register.personal.placeholders.document_number')}
                                     error={errors.document_number?.message as string}
                                     {...register('document_number')}
                                 />
@@ -154,24 +155,24 @@ export default function RegisterPersonalModule() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <InputField
-                                label={t('auth.register.labels.dob')}
+                                label={t('auth.register.personal.labels.dob')}
                                 icon={Calendar}
                                 type="date"
                                 error={errors.date_of_birth?.message as string}
                                 {...register('date_of_birth')}
                             />
                             <InputField
-                                label={t('auth.register.labels.nationality')}
-                                placeholder="SA"
+                                label={t('auth.register.personal.labels.nationality')}
+                                placeholder={t('auth.register.personal.placeholders.nationality_hint')}
                                 error={errors.nationality?.message as string}
                                 {...register('nationality')}
                             />
                         </div>
 
                         <InputField
-                            label={t('auth.register.labels.mobile')}
+                            label={t('auth.register.personal.labels.mobile')}
                             icon={Phone}
-                            placeholder="05XXXXXXXX"
+                            placeholder={t('auth.register.personal.placeholders.mobile_hint')}
                             type="tel"
                             error={errors.mobile?.message as string}
                             {...register('mobile')}
@@ -199,10 +200,10 @@ export default function RegisterPersonalModule() {
                                 </div>
                                 <div className="flex-1">
                                     <span className="text-label font-bold text-neutral-900 block mb-1">
-                                        {t('auth.register.labels.confirm_data')}
+                                        {t('auth.register.personal.labels.confirm_data')}
                                     </span>
                                     <p className="text-caption text-neutral-500 leading-relaxed font-medium">
-                                        {t('auth.register.descriptions.confirm_data_desc')}
+                                        {t('auth.register.personal.descriptions.confirm_data_desc')}
                                     </p>
                                 </div>
                             </label>
@@ -218,7 +219,8 @@ export default function RegisterPersonalModule() {
                             <button
                                 type="submit"
                                 disabled={!isValid}
-                                className="w-full max-w-lg mx-auto h-btn-lg rounded-pill bg-btn-primary text-white font-bold flex items-center justify-center gap-2 shadow-btn transition-all hover:opacity-95 active:scale-[0.98] disabled:opacity-50 disabled:grayscale-[0.5]"
+                                className="w-full max-w-lg mx-auto h-[56px] rounded-full text-white font-bold text-lg shadow-lg shadow-primary/20 flex items-center justify-center gap-2 hover:opacity-90 active:scale-[0.98] disabled:opacity-50 disabled:grayscale-[0.5] transition-opacity"
+                                style={{ background: 'linear-gradient(to left, #0CBBDB, #1A73C1)' }}
                             >
                                 <span className="text-sm">{t('common.next')}</span>
                                 <MirrorIcon>

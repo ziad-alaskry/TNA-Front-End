@@ -34,16 +34,17 @@ export default function RegistrationModule() {
     };
 
     return (
-        <div className="bg-background-light dark:bg-background-dark min-h-screen font-sans" dir="rtl">
+        <div className="bg-background-light dark:bg-background-dark min-h-screen font-display" dir="rtl">
             {/* Sticky Header */}
             <header className="sticky top-0 z-50 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-4 py-4 flex items-center justify-between shadow-sm">
                 <button 
                     onClick={() => router.back()}
                     className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                    type="button"
                 >
                     <span className="material-symbols-outlined text-slate-900 dark:text-slate-100">arrow_forward</span>
                 </button>
-                <h1 className="text-slate-900 dark:text-slate-100 text-lg font-bold flex-1 text-center">إنشاء حساب جديد</h1>
+                <h1 className="text-slate-900 dark:text-slate-100 text-lg font-semibold flex-1 text-center font-display">إنشاء حساب جديد</h1>
                 <div className="w-10"></div>
             </header>
 
@@ -53,10 +54,10 @@ export default function RegistrationModule() {
                     <form className="space-y-5" onSubmit={handleSubmit}>
                         {/* User Role Selection */}
                         <div>
-                            <label className="block text-slate-700 dark:text-slate-300 text-sm font-bold mb-2">نوع المستخدم</label>
+                            <label className="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">نوع المستخدم</label>
                             <div className="relative group">
                                 <select 
-                                    className="w-full h-14 pr-4 pl-10 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 appearance-none outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all font-medium"
+                                    className="focus:border-primary focus:ring-2 focus:ring-primary/20 w-full h-14 pr-4 pl-10 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 appearance-none outline-none transition-all font-display"
                                     value={formData.userRole}
                                     onChange={(e) => handleInputChange('userRole', e.target.value as UserRole)}
                                     required
@@ -64,7 +65,7 @@ export default function RegistrationModule() {
                                     <option disabled value="">اختر نوع المستخدم</option>
                                     <option value="VISITOR">زائر</option>
                                     <option value="OWNER">مالك</option>
-                                    <option value="CARRIER_STAFF">ناقل</option>
+                                    <option value="CARRIER_STAFF">شركة شحن</option>
                                     <option value="GOV_USER">جهة حكومية</option>
                                 </select>
                                 <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none transition-transform group-focus-within:rotate-180">expand_more</span>
@@ -73,10 +74,10 @@ export default function RegistrationModule() {
 
                         {/* Full Name */}
                         <div>
-                            <label className="block text-slate-700 dark:text-slate-300 text-sm font-bold mb-2">الأسم الثلاثي الرسمي</label>
+                            <label className="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">الأسم الثلاثي الرسمي</label>
                             <div className="relative group">
                                 <input 
-                                    className="w-full h-14 pr-12 pl-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" 
+                                    className="focus:border-primary focus:ring-2 focus:ring-primary/20 w-full h-14 pr-12 pl-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 outline-none transition-all font-display" 
                                     placeholder="أدخل اسمك الكامل" 
                                     type="text"
                                     value={formData.fullName}
@@ -89,10 +90,10 @@ export default function RegistrationModule() {
 
                         {/* Email */}
                         <div>
-                            <label className="block text-slate-700 dark:text-slate-300 text-sm font-bold mb-2">البريد الإلكتروني</label>
+                            <label className="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">البريد الإلكتروني</label>
                             <div className="relative group">
                                 <input 
-                                    className="w-full h-14 pr-12 pl-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" 
+                                    className="focus:border-primary focus:ring-2 focus:ring-primary/20 w-full h-14 pr-12 pl-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 outline-none transition-all font-display" 
                                     placeholder="example@mail.com" 
                                     type="email"
                                     value={formData.email}
@@ -105,10 +106,10 @@ export default function RegistrationModule() {
 
                         {/* Mobile */}
                         <div>
-                            <label className="block text-slate-700 dark:text-slate-300 text-sm font-bold mb-2">رقم الجوال</label>
+                            <label className="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">رقم الجوال</label>
                             <div className="relative group">
                                 <input 
-                                    className="w-full h-14 pr-12 pl-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-left outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" 
+                                    className="focus:border-primary focus:ring-2 focus:ring-primary/20 w-full h-14 pr-12 pl-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-left outline-none transition-all font-display" 
                                     dir="ltr" 
                                     placeholder="05xxxxxxxx" 
                                     type="tel"
@@ -123,10 +124,10 @@ export default function RegistrationModule() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {/* Document Type */}
                             <div>
-                                <label className="block text-slate-700 dark:text-slate-300 text-sm font-bold mb-2">نوع الوثيقة الرسمية</label>
+                                <label className="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">نوع الوثيقة الرسمية</label>
                                 <div className="relative group">
                                     <select 
-                                        className="w-full h-14 pr-4 pl-10 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 appearance-none outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all font-medium"
+                                        className="focus:border-primary focus:ring-2 focus:ring-primary/20 w-full h-14 pr-4 pl-10 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 appearance-none outline-none transition-all font-display"
                                         value={formData.documentType}
                                         onChange={(e) => handleInputChange('documentType', e.target.value)}
                                     >
@@ -139,9 +140,9 @@ export default function RegistrationModule() {
                             </div>
                             {/* Document Number */}
                             <div>
-                                <label className="block text-slate-700 dark:text-slate-300 text-sm font-bold mb-2">رقم الوثيقة الرسمية</label>
+                                <label className="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">رقم الوثيقة الرسمية</label>
                                 <input 
-                                    className="w-full h-14 px-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all font-medium" 
+                                    className="focus:border-primary focus:ring-2 focus:ring-primary/20 w-full h-14 px-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 outline-none transition-all font-display" 
                                     placeholder="رقم الوثيقة" 
                                     type="text"
                                     value={formData.documentNumber}
@@ -153,10 +154,10 @@ export default function RegistrationModule() {
 
                         {/* Password */}
                         <div>
-                            <label className="block text-slate-700 dark:text-slate-300 text-sm font-bold mb-2">كلمة المرور</label>
+                            <label className="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">كلمة المرور</label>
                             <div className="relative group">
                                 <input 
-                                    className="w-full h-14 pr-12 pl-12 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" 
+                                    className="focus:border-primary focus:ring-2 focus:ring-primary/20 w-full h-14 pr-12 pl-12 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 outline-none transition-all font-display" 
                                     placeholder="••••••••" 
                                     type="password"
                                     value={formData.password}
@@ -170,10 +171,10 @@ export default function RegistrationModule() {
 
                         {/* Confirm Password */}
                         <div>
-                            <label className="block text-slate-700 dark:text-slate-300 text-sm font-bold mb-2">تأكيد كلمة المرور</label>
+                            <label className="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">تأكيد كلمة المرور</label>
                             <div className="relative group">
                                 <input 
-                                    className="w-full h-14 pr-12 pl-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" 
+                                    className="focus:border-primary focus:ring-2 focus:ring-primary/20 w-full h-14 pr-12 pl-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 outline-none transition-all font-display" 
                                     placeholder="••••••••" 
                                     type="password"
                                     value={formData.confirmPassword}
@@ -189,28 +190,28 @@ export default function RegistrationModule() {
                             <label className="flex items-start gap-3 cursor-pointer group">
                                 <div className="mt-1 relative">
                                     <input 
-                                        className="peer w-5 h-5 rounded border-slate-300 text-primary focus:ring-primary/20 transition-all" 
+                                        className="peer w-5 h-5 rounded border-slate-300 text-primary focus:ring-primary/50 transition-all" 
                                         type="checkbox"
                                         checked={formData.agreeData}
                                         onChange={(e) => handleInputChange('agreeData', e.target.checked)}
                                         required
                                     />
                                 </div>
-                                <span className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed group-hover:text-slate-900 dark:group-hover:text-slate-200 transition-colors">
+                                <span className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed group-hover:text-slate-900 dark:group-hover:text-slate-200 transition-colors font-display">
                                     أقر بأن جميع البيانات الشخصية المدخلة صحيحة وتحت مسؤوليتي الشخصية.
                                 </span>
                             </label>
                             <label className="flex items-start gap-3 cursor-pointer group">
                                 <div className="mt-1">
                                     <input 
-                                        className="peer w-5 h-5 rounded border-slate-300 text-primary focus:ring-primary/20 transition-all" 
+                                        className="peer w-5 h-5 rounded border-slate-300 text-primary focus:ring-primary/50 transition-all" 
                                         type="checkbox"
                                         checked={formData.agreeTerms}
                                         onChange={(e) => handleInputChange('agreeTerms', e.target.checked)}
                                         required
                                     />
                                 </div>
-                                <span className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed group-hover:text-slate-900 dark:group-hover:text-slate-200 transition-colors">
+                                <span className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed group-hover:text-slate-900 dark:group-hover:text-slate-200 transition-colors font-display">
                                     أوافق على <Link href="#" className="text-primary font-bold hover:underline transition-all">شروط وأحكام</Link> العنوان الوطني المؤقت (TNA).
                                 </span>
                             </label>
@@ -218,7 +219,7 @@ export default function RegistrationModule() {
 
                         {/* CTA Button */}
                         <button 
-                            className="bg-blue-gradient-golden w-full h-14 mt-6 text-white font-bold text-lg rounded-full shadow-lg shadow-primary/25 hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:grayscale" 
+                            className="w-full h-14 mt-6 bg-blue-gradient disabled:opacity-50 disabled:cursor-not-allowed disabled:grayscale text-white font-bold text-lg rounded-full shadow-lg shadow-primary/25 hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 font-display" 
                             type="submit"
                         >
                             <span>إنشاء حساب مستخدم جديد</span>
@@ -229,7 +230,7 @@ export default function RegistrationModule() {
 
                 {/* Footer */}
                 <div className="mt-8 text-center px-6">
-                    <p className="text-slate-600 dark:text-slate-400 text-sm">
+                    <p className="text-slate-600 dark:text-slate-400 text-sm font-display">
                         لديك حساب بالفعل؟
                         <Link href={`/${locale}/`} className="text-primary font-bold mr-1 hover:underline transition-all">تسجيل الدخول</Link>
                     </p>
@@ -241,7 +242,7 @@ export default function RegistrationModule() {
                         <div className="w-12 h-12 bg-primary rounded-xl mb-2 flex items-center justify-center shadow-lg shadow-primary/20">
                             <span className="material-symbols-outlined text-white text-2xl">lan</span>
                         </div>
-                        <span className="text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-widest">TNA Platform</span>
+                        <span className="text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-widest font-display">TNA Platform</span>
                     </div>
                 </div>
             </main>

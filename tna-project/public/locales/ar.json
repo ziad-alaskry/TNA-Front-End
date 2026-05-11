@@ -56,26 +56,141 @@
             "REJECTED": "مرفوض",
             "SUSPENDED": "موقوف",
             "UNLINKED": "غير مرتبط"
-        }
+        },
+        "copyright": "© 2024 جميع الحقوق محفوظة لبرنامج العنوان الوطني المؤقت"
     },
     "auth": {
-        "title": "إنشاء حساب جديد",
-        "personal_data": "البيانات الشخصية",
-        "full_name": "الأسم الثلاثي الرسمي",
-        "doc_number": "رقم الوثيقة الرسمية",
-        "passport": "جواز سفر",
-        "national_id": "هوية وطنية",
-        "iqama": "إقامة",
-        "dob": "تاريخ الميلاد",
-        "mobile": "رقم الجوال",
-        "confirm_checkbox": "أُقر بأن جميع البيانات الشخصية بياناتي الصحيحة",
-        "account_data": "بيانات حساب المستخدم",
-        "username": "أسم المستخدم",
-        "email": "البريد الإلكتروني",
-        "password": "كلمة المرور",
-        "confirm_password": "تأكيد كلمة المرور",
-        "terms_and_conditions": "أُوافق على شروط وأحكام العنوان الوطني المؤقت",
-        "create_account": "إنشاء حساب مستخدم جديد"
+        "login": {
+            "title": "العنوان الوطني المؤقت",
+            "subtitle": "Temporary National Address",
+            "role_label": "تسجيل الدخول كـ",
+            "role_owner": "مالك",
+            "role_carrier": "ناقل",
+            "role_gov": "جهة حكومية",
+            "role_visitor": "زائر",
+            "username_label": "اسم المستخدم أو البريد الإلكتروني",
+            "username_placeholder": "أدخل اسم المستخدم",
+            "password_label": "كلمة المرور",
+            "password_placeholder": "أدخل كلمة المرور",
+            "forgot_password": "نسيت كلمة المرور؟",
+            "login_button": "تسجيل الدخول كـ {role}",
+            "or_divider": "أو",
+            "sso_button": "تسجيل الدخول عبر النفاذ الوطني",
+            "no_account": "ليس لديك حساب كـ {role}؟",
+            "create_account": "إنشاء حساب جديد"
+        },
+            "register": {
+                "type": {
+                    "title": "إنشاء حساب جديد",
+                    "subtitle": "اختر نوع الحساب المناسب لك للبدء في استخدام خدمات العنوان الوطني المؤقت",
+                    "visitor_label": "زائر / سائح",
+                    "visitor_sublabel": "الحصول على عنوان وطني مؤقت للشحنات",
+                    "owner_label": "مالك عقار",
+                    "owner_sublabel": "تأجير المساحات البريدية للزوار",
+                    "owner_type_title": "نوع ملكية العقارات",
+                    "owner_individual": "فرد / مواطن",
+                    "owner_entity": "فندق / وكالة سياحية",
+                    "carrier_type_title": "نوع التسجيل في قطاع النقل",
+                    "carrier_staff": "مندوب / فرد",
+                    "carrier_company": "شركة خدمات لوجستية",
+                    "carrier_label": "موظف ناقل",
+                    "carrier_sublabel": "إدارة وتوصيل الشحنات للزائرين",
+                    "next_button": "التالي"
+                },
+                "personal": {
+                    "steps": {
+                        "personal_label": "البيانات الشخصية"
+                    },
+                    "labels": {
+                        "full_name": "الاسم الكامل",
+                        "entity_name": "الاسم الرسمي للمنشأة",
+                        "document_type": "نوع الوثيقة",
+                        "document_number": "رقم الوثيقة",
+                        "dob": "تاريخ الميلاد",
+                        "nationality": "الجنسية",
+                        "mobile": "رقم الجوال",
+                        "confirm_data": "أؤكد صحة البيانات المذكورة أعلاه",
+                        "entity_placeholder": "مثال: مجموعة فنادق الرياض"
+                    },
+                    "placeholders": {
+                        "full_name": "أدخل اسمك الكامل",
+                        "document_number": "أدخل رقم الوثيقة",
+                        "mobile_hint": "05XXXXXXXX",
+                        "nationality_hint": "SA"
+                    },
+                    "document_types": {
+                        "passport": "جواز سفر",
+                        "iqama": "إقامة / تصريح إقامة",
+                        "visa": "تأشيرة"
+                    },
+                    "descriptions": {
+                        "confirm_data_desc": "بالتأكيد، أنت مصادق على أن جميع المعلومات المقدمة دقيقة وتتوافق مع مستنداتك الرسمية."
+                    },
+                    "b2b": {
+                        "title": "بيانات المنشأة (B2B)",
+                        "agency_type_label": "نوع المنشأة",
+                        "agency_hotel": "فندق / شقق مفروشة",
+                        "agency_tourism": "وكالة سياحة وسفر",
+                        "agency_other": "أخرى",
+                        "license_label": "رقم السجل التجاري / الترخيص",
+                        "license_placeholder": "700XXXXXXXX"
+                    },
+                    "validation": {
+                        "full_name_min": "يجب أن يكون الاسم 5 أحرف على الأقل",
+                        "document_number_invalid": "رقم الوثيقة غير صحيح",
+                        "field_required": "هذا الحقل مطلوب",
+                        "mobile_invalid": "رقم الجوال يجب أن يبدأ بـ 05 ويتكون من 10 أرقام",
+                        "confirm_required": "يجب الموافقة على صحة البيانات"
+                    }
+                },
+                "account": {
+                    "steps": {
+                        "account_label": "بيانات الحساب"
+                    },
+                    "labels": {
+                        "username": "اسم المستخدم",
+                        "email": "البريد الإلكتروني",
+                        "password": "كلمة المرور",
+                        "confirm_password": "تأكيد كلمة المرور"
+                    },
+                    "placeholders": {
+                        "username": "اختر اسم مستخدم (حروف/أرقام إنجليزية)",
+                        "email": "بريدك@مثال.com",
+                        "password": "أنشئ كلمة مرور قوية",
+                        "confirm_password": "أعد كتابة كلمة المرور"
+                    },
+                    "terms": "أوافق على شروط الاستخدام وسياسة الخصوصية الخاصة بالعنوان الوطني المؤقت.",
+                    "create_account": "إنشاء الحساب",
+                    "validation": {
+                        "username_min": "يجب أن يكون اسم المستخدم 3 أحرف على الأقل",
+                        "username_format": "حروف وأرقام فقط",
+                        "email_invalid": "البريد الإلكتروني غير صحيح",
+                        "password_min": "كلمة المرور يجب أن تكون 8 أحرف على الأقل",
+                        "password_mismatch": "كلمات المرور غير متطابقة",
+                        "terms_required": "يجب الموافقة على الشروط والأحكام"
+                    }
+                }
+        },
+        "forgot_password": {
+            "title": "نسيت كلمة المرور؟",
+            "subtitle_step1": "أدخل رقم جوالك أو بريدك الإلكتروني لاستلام رمز التحقق",
+            "email_placeholder": "البريد الإلكتروني",
+            "send_code": "إرسال رمز التحقق",
+            "send_success": "تم إرسال رمز التحقق إلى بريدك الإلكتروني",
+            "verify_title": "أدخل رمز التحقق",
+            "verify_subtitle": "أدخل رمز التحقق المكون من 6 أرقام",
+            "code_placeholder": "رمز التحقق",
+            "resend_timer": "إعادة الإرسال بعد {time}",
+            "confirm_code": "تأكيد الرمز",
+            "resend_button": "لم يصلك الرمز؟ إعادة الإرسال",
+            "invalid_code": "رمز التحقق غير صحيح",
+            "reset_title": "تعيين كلمة مرور جديدة",
+            "reset_subtitle": "أدخل كلمة المرور الجديدة لتأمين حسابك",
+            "new_password_placeholder": "كلمة المرور الجديدة",
+            "confirm_password_placeholder": "تأكيد كلمة المرور",
+            "save_login": "حفظ وتسجيل الدخول",
+            "reset_success": "تم إعادة تعيين كلمة المرور بنجاح!"
+        }
     },
     "visitor": {
         "home": {
