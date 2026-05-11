@@ -164,17 +164,6 @@
       "na_certificate_161": "شهادة العنوان الوطني",
       "available_162": "متوفي"
     },
-    "auth": {
-      "ltr_1": "rtl",
-      "ltr_2": "rtl",
-      "ltr_3": "rtl",
-      "ltr_4": "rtl",
-      "ltr_5": "rtl"
-    },
-    "shell": {
-      "ltr_1": "rtl",
-      "left0_2": "right-0"
-    },
     "visitor": {
       "tna_code_1": "كود TNA",
       "status_2": "الحالة",
@@ -213,8 +202,7 @@
       "address_35": "العنوان",
       "city_36": "المدينة",
       "unit_37": "رقم الوحدة",
-      "unbind_tna_address_38": "إلغاء ربط TNA",
-      "ltr_39": "rtl"
+      "unbind_tna_address_38": "إلغاء ربط TNA"
     },
     "owner": {
       "payout_settings_1": "إعدادات السحب",
@@ -259,9 +247,6 @@
       "loading_40": "جاري التحميل...",
       "add_subaddress_41": "إضافة وحدة فرعية",
       "add_subaddress_42": "إضافة وحدة فرعية",
-      "ltr_43": "rtl",
-      "ltr_44": "rtl",
-      "ltr_45": "rtl",
       "owner_dashboard_46": "لوحة تحكم المالك",
       "tna_code_47": "كود TNA",
       "unit_48": "الوحدة",
@@ -314,7 +299,6 @@
       "shipment_details_10": "تفاصيل الشحنة",
       "not_found_11": "غير موجود",
       "shipment_not_found_12": "الشحنة غير موجودة",
-      "mr2_13": "rotate-180 ml-2",
       "go_back_14": "رجوع",
       "shipment_details_15": "تفاصيل الشحنة",
       "sender_16": "المرسل",
@@ -339,11 +323,9 @@
       "register_new_shipment_35": "تسجيل شحنة جديدة",
       "verify_tna_address_36": "التحقق من عنوان TNA",
       "tna_code_37": "رمز TNA",
-      "eg_tna123456_38": "مثال: TNA-123456",
       "address_is_deliverable_39": "العنوان صالح للتوصيل",
       "address_is_not_deliverable_40": "العنوان غير صالح",
       "continue_41": "متابعة",
-      "ml2_42": "rotate-180 mr-2",
       "package_details_43": "تفاصيل الطرد",
       "weight_kg_44": "الوزن (كجم)",
       "eg_25_45": "مثال: 2.5",
@@ -353,7 +335,6 @@
       "eg_books_clothing_49": "مثال: كتب، ملابس",
       "back_50": "رجوع",
       "continue_51": "متابعة",
-      "ml2_52": "rotate-180 ml-2",
       "assign_delivery_staff_53": "تعيين موظف التوصيل",
       "delivery_staff_54": "موظف التوصيل",
       "shipment_summary_55": "ملخص الشحنة",
@@ -362,12 +343,10 @@
       "dimensions_58": "الأبعاد",
       "staff_59": "الموظف",
       "back_60": "رجوع",
-      "mr2_61": "rotate-180 ml-2",
       "create_shipment_62": "إنشاء الشحنة",
       "tna_address_resolver_63": "تحقق من عنوان TNA",
       "national_address_resolver_64": "التحقق من العنوان الوطني",
       "tna_code_65": "رمز TNA",
-      "eg_tna123456_66": "مثال: TNA-123456",
       "resolving_67": "جاري التحقق...",
       "resolve_address_68": "تحقق من العنوان",
       "deliverable_address_69": "العنوان قابل للتوصيل",
@@ -384,13 +363,11 @@
       "confirm_delivery_80": "تأكيد التوصيل",
       "not_found_81": "غير موجود",
       "shipment_not_found_82": "الشحنة غير موجودة",
-      "mr2_83": "rotate-180 ml-2",
       "go_back_84": "رجوع",
       "please_fill_all_required_fields_85": "يرجى ملء جميع الحقول المطلوبة",
       "confirm_delivery_86": "تأكيد التوصيل",
       "not_found_87": "غير موجود",
       "shipment_not_found_88": "الشحنة غير موجودة",
-      "mr2_89": "rotate-180 ml-2",
       "go_back_90": "رجوع",
       "confirm_delivery_91": "تأكيد التوصيل",
       "verification_otp_92": "رمز التحقق (OTP)",
@@ -399,7 +376,6 @@
       "xxxxxx_95": "XXXXXX",
       "delivery_proof_photo_96": "صورة إثبات التوصيل",
       "tap_to_take_photo_97": "اضغط لالتقاط صورة",
-      "mr2_98": "rotate-180 ml-2",
       "confirm_delivery_99": "تأكيد التوصيل",
       "important_note_100": "ملاحظة هامة"
     }
@@ -569,17 +545,6 @@
       "na_certificate_161": "NA Certificate",
       "available_162": "AVAILABLE"
     },
-    "auth": {
-      "ltr_1": "ltr",
-      "ltr_2": "ltr",
-      "ltr_3": "ltr",
-      "ltr_4": "ltr",
-      "ltr_5": "ltr"
-    },
-    "shell": {
-      "ltr_1": "ltr",
-      "left0_2": "left-0"
-    },
     "visitor": {
       "tna_code_1": "TNA Code",
       "status_2": "Status",
@@ -618,8 +583,7 @@
       "address_35": "Address",
       "city_36": "City",
       "unit_37": "Unit",
-      "unbind_tna_address_38": "Unbind TNA Address",
-      "ltr_39": "ltr"
+      "unbind_tna_address_38": "Unbind TNA Address"
     },
     "owner": {
       "payout_settings_1": "Payout Settings",
@@ -664,9 +628,6 @@
       "loading_40": "Loading...",
       "add_subaddress_41": "Add Sub-Address",
       "add_subaddress_42": "Add Sub-Address",
-      "ltr_43": "ltr",
-      "ltr_44": "ltr",
-      "ltr_45": "ltr",
       "owner_dashboard_46": "Owner Dashboard",
       "tna_code_47": "TNA Code",
       "unit_48": "Unit",
@@ -719,7 +680,6 @@
       "shipment_details_10": "Shipment Details",
       "not_found_11": "Not Found",
       "shipment_not_found_12": "Shipment not found",
-      "mr2_13": "mr-2",
       "go_back_14": "Go Back",
       "shipment_details_15": "Shipment Details",
       "sender_16": "Sender",
@@ -744,11 +704,9 @@
       "register_new_shipment_35": "Register New Shipment",
       "verify_tna_address_36": "Verify TNA Address",
       "tna_code_37": "TNA Code",
-      "eg_tna123456_38": "e.g., TNA-123456",
       "address_is_deliverable_39": "Address is deliverable",
       "address_is_not_deliverable_40": "Address is not deliverable",
       "continue_41": "Continue",
-      "ml2_42": "ml-2",
       "package_details_43": "Package Details",
       "weight_kg_44": "Weight (kg)",
       "eg_25_45": "e.g., 2.5",
@@ -758,7 +716,6 @@
       "eg_books_clothing_49": "e.g., books, clothing",
       "back_50": "Back",
       "continue_51": "Continue",
-      "ml2_52": "ml-2",
       "assign_delivery_staff_53": "Assign Delivery Staff",
       "delivery_staff_54": "Delivery Staff",
       "shipment_summary_55": "Shipment Summary",
@@ -767,12 +724,10 @@
       "dimensions_58": "Dimensions",
       "staff_59": "Staff",
       "back_60": "Back",
-      "mr2_61": "mr-2",
       "create_shipment_62": "Create Shipment",
       "tna_address_resolver_63": "TNA Address Resolver",
       "national_address_resolver_64": "National Address Resolver",
       "tna_code_65": "TNA Code",
-      "eg_tna123456_66": "e.g., TNA-123456",
       "resolving_67": "Resolving...",
       "resolve_address_68": "Resolve Address",
       "deliverable_address_69": "Deliverable Address",
@@ -789,13 +744,11 @@
       "confirm_delivery_80": "Confirm Delivery",
       "not_found_81": "Not Found",
       "shipment_not_found_82": "Shipment not found",
-      "mr2_83": "mr-2",
       "go_back_84": "Go Back",
       "please_fill_all_required_fields_85": "Please fill all required fields",
       "confirm_delivery_86": "Confirm Delivery",
       "not_found_87": "Not Found",
       "shipment_not_found_88": "Shipment not found",
-      "mr2_89": "mr-2",
       "go_back_90": "Go Back",
       "confirm_delivery_91": "Confirm Delivery",
       "verification_otp_92": "Verification OTP",
@@ -804,7 +757,6 @@
       "xxxxxx_95": "XXXXXX",
       "delivery_proof_photo_96": "Delivery Proof Photo",
       "tap_to_take_photo_97": "Tap to take photo",
-      "mr2_98": "mr-2",
       "confirm_delivery_99": "Confirm Delivery",
       "important_note_100": "Important Note"
     }

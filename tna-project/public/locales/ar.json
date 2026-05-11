@@ -1,417 +1,730 @@
 {
-    "common": {
-        "next": "التالي",
-        "back": "رجوع",
-        "confirm": "تأكيد",
-        "cancel": "إلغاء",
-        "loading": "جاري التحميل...",
-        "save": "حفظ",
-        "delete": "حذف",
-        "edit": "تعديل",
-        "view_all": "عرض الكل",
-        "menu": "القائمة",
-        "support": "الدعم الفني",
-        "logged_in_as": "مسجل الدخول بصفتك {role}",
-        "view_profile": "الملف الشخصي",
-        "wallet_balance": "رصيد المحفظة",
-        "total_records": "الإجمالي: {count} سجلات",
-        "search_placeholder": "بحث...",
-        "page_of": "صفحة {current} من {total}",
-        "no_data": "لا توجد بيانات",
-        "no_data_desc": "لم نتمكن من العثور على أي سجلات تطابق معاييرك.",
-        "roles": {
-            "Visitor": {
-                "overview": "الرئيسية",
-                "address_search": "البحث عن عنوان",
-                "wallet": "المحفظة الرقمية",
-                "codes": "أكواد TNA",
-                "shipments": "تتبع الشحنات",
-                "profile": "الملف الشخصي"
-            },
-            "Owner": {
-                "overview": "لوحة التحكم",
-                "properties": "إدارة العقارات",
-                "bindings": "طلبات الربط",
-                "earnings": "الأرباح"
-            },
-            "Carrier": {
-                "overview": "مركز القيادة",
-                "fleet": "الأسطول",
-                "shipments": "إدارة الشحنات",
-                "tasks": "مهام السائقين",
-                "reports": "التقارير"
-            },
-            "Gov": {
-                "overview": "مؤشرات الأنظمة",
-                "queue": "طلبات المراجعة",
-                "audit": "سجل التدقيق",
-                "agencies": "الجهات الحكومية",
-                "policy": "إعدادات السياسة"
-            }
+  "common": {
+    "next": "التالي",
+    "back": "رجوع",
+    "confirm": "تأكيد",
+    "cancel": "إلغاء",
+    "loading": "جاري التحميل...",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "view_all": "عرض الكل",
+    "menu": "القائمة",
+    "support": "الدعم الفني",
+    "logged_in_as": "مسجل الدخول بصفتك {role}",
+    "view_profile": "الملف الشخصي",
+    "wallet_balance": "رصيد المحفظة",
+    "total_records": "الإجمالي: {count} سجلات",
+    "search_placeholder": "بحث...",
+    "page_of": "صفحة {current} من {total}",
+    "no_data": "لا توجد بيانات",
+    "no_data_desc": "لم نتمكن من العثور على أي سجلات تطابق معاييرك.",
+    "roles": {
+      "Visitor": {
+        "overview": "الرئيسية",
+        "address_search": "البحث عن عنوان",
+        "wallet": "المحفظة الرقمية",
+        "codes": "أكواد TNA",
+        "shipments": "تتبع الشحنات",
+        "profile": "الملف الشخصي"
+      },
+      "Owner": {
+        "overview": "لوحة التحكم",
+        "properties": "إدارة العقارات",
+        "bindings": "طلبات الربط",
+        "earnings": "الأرباح"
+      },
+      "Carrier": {
+        "overview": "مركز القيادة",
+        "fleet": "الأسطول",
+        "shipments": "إدارة الشحنات",
+        "tasks": "مهام السائقين",
+        "reports": "التقارير"
+      },
+      "Gov": {
+        "overview": "مؤشرات الأنظمة",
+        "queue": "طلبات المراجعة",
+        "audit": "سجل التدقيق",
+        "agencies": "الجهات الحكومية",
+        "policy": "إعدادات السياسة"
+      }
+    },
+    "statuses": {
+      "ACTIVE": "نشط",
+      "PENDING": "قيد المراجعة",
+      "EXPIRED": "منتهي",
+      "REJECTED": "مرفوض",
+      "SUSPENDED": "موقوف",
+      "UNLINKED": "غير مرتبط"
+    },
+    "copyright": "© 2024 جميع الحقوق محفوظة لبرنامج العنوان الوطني المؤقت"
+  },
+  "auth": {
+    "login": {
+      "title": "العنوان الوطني المؤقت",
+      "subtitle": "Temporary National Address",
+      "role_label": "تسجيل الدخول كـ",
+      "role_owner": "مالك",
+      "role_carrier": "ناقل",
+      "role_gov": "جهة حكومية",
+      "role_visitor": "زائر",
+      "username_label": "اسم المستخدم أو البريد الإلكتروني",
+      "username_placeholder": "أدخل اسم المستخدم",
+      "password_label": "كلمة المرور",
+      "password_placeholder": "أدخل كلمة المرور",
+      "forgot_password": "نسيت كلمة المرور؟",
+      "login_button": "تسجيل الدخول كـ {role}",
+      "or_divider": "أو",
+      "sso_button": "تسجيل الدخول عبر النفاذ الوطني",
+      "no_account": "ليس لديك حساب كـ {role}؟",
+      "create_account": "إنشاء حساب جديد"
+    },
+    "register": {
+      "type": {
+        "title": "إنشاء حساب جديد",
+        "subtitle": "اختر نوع الحساب المناسب لك للبدء في استخدام خدمات العنوان الوطني المؤقت",
+        "visitor_label": "زائر / سائح",
+        "visitor_sublabel": "الحصول على عنوان وطني مؤقت للشحنات",
+        "owner_label": "مالك عقار",
+        "owner_sublabel": "تأجير المساحات البريدية للزوار",
+        "owner_type_title": "نوع ملكية العقارات",
+        "owner_individual": "فرد / مواطن",
+        "owner_entity": "فندق / وكالة سياحية",
+        "carrier_type_title": "نوع التسجيل في قطاع النقل",
+        "carrier_staff": "مندوب / فرد",
+        "carrier_company": "شركة خدمات لوجستية",
+        "carrier_label": "موظف ناقل",
+        "carrier_sublabel": "إدارة وتوصيل الشحنات للزائرين",
+        "next_button": "التالي"
+      },
+      "personal": {
+        "steps": {
+          "personal_label": "البيانات الشخصية"
         },
-        "statuses": {
-            "ACTIVE": "نشط",
-            "PENDING": "قيد المراجعة",
-            "EXPIRED": "منتهي",
-            "REJECTED": "مرفوض",
-            "SUSPENDED": "موقوف",
-            "UNLINKED": "غير مرتبط"
+        "labels": {
+          "full_name": "الاسم الكامل",
+          "entity_name": "الاسم الرسمي للمنشأة",
+          "document_type": "نوع الوثيقة",
+          "document_number": "رقم الوثيقة",
+          "dob": "تاريخ الميلاد",
+          "nationality": "الجنسية",
+          "mobile": "رقم الجوال",
+          "confirm_data": "أؤكد صحة البيانات المذكورة أعلاه",
+          "entity_placeholder": "مثال: مجموعة فنادق الرياض"
         },
-        "copyright": "© 2024 جميع الحقوق محفوظة لبرنامج العنوان الوطني المؤقت"
-    },
-    "auth": {
-        "login": {
-            "title": "العنوان الوطني المؤقت",
-            "subtitle": "Temporary National Address",
-            "role_label": "تسجيل الدخول كـ",
-            "role_owner": "مالك",
-            "role_carrier": "ناقل",
-            "role_gov": "جهة حكومية",
-            "role_visitor": "زائر",
-            "username_label": "اسم المستخدم أو البريد الإلكتروني",
-            "username_placeholder": "أدخل اسم المستخدم",
-            "password_label": "كلمة المرور",
-            "password_placeholder": "أدخل كلمة المرور",
-            "forgot_password": "نسيت كلمة المرور؟",
-            "login_button": "تسجيل الدخول كـ {role}",
-            "or_divider": "أو",
-            "sso_button": "تسجيل الدخول عبر النفاذ الوطني",
-            "no_account": "ليس لديك حساب كـ {role}؟",
-            "create_account": "إنشاء حساب جديد"
+        "placeholders": {
+          "full_name": "أدخل اسمك الكامل",
+          "document_number": "أدخل رقم الوثيقة",
+          "mobile_hint": "05XXXXXXXX",
+          "nationality_hint": "SA"
         },
-            "register": {
-                "type": {
-                    "title": "إنشاء حساب جديد",
-                    "subtitle": "اختر نوع الحساب المناسب لك للبدء في استخدام خدمات العنوان الوطني المؤقت",
-                    "visitor_label": "زائر / سائح",
-                    "visitor_sublabel": "الحصول على عنوان وطني مؤقت للشحنات",
-                    "owner_label": "مالك عقار",
-                    "owner_sublabel": "تأجير المساحات البريدية للزوار",
-                    "owner_type_title": "نوع ملكية العقارات",
-                    "owner_individual": "فرد / مواطن",
-                    "owner_entity": "فندق / وكالة سياحية",
-                    "carrier_type_title": "نوع التسجيل في قطاع النقل",
-                    "carrier_staff": "مندوب / فرد",
-                    "carrier_company": "شركة خدمات لوجستية",
-                    "carrier_label": "موظف ناقل",
-                    "carrier_sublabel": "إدارة وتوصيل الشحنات للزائرين",
-                    "next_button": "التالي"
-                },
-                "personal": {
-                    "steps": {
-                        "personal_label": "البيانات الشخصية"
-                    },
-                    "labels": {
-                        "full_name": "الاسم الكامل",
-                        "entity_name": "الاسم الرسمي للمنشأة",
-                        "document_type": "نوع الوثيقة",
-                        "document_number": "رقم الوثيقة",
-                        "dob": "تاريخ الميلاد",
-                        "nationality": "الجنسية",
-                        "mobile": "رقم الجوال",
-                        "confirm_data": "أؤكد صحة البيانات المذكورة أعلاه",
-                        "entity_placeholder": "مثال: مجموعة فنادق الرياض"
-                    },
-                    "placeholders": {
-                        "full_name": "أدخل اسمك الكامل",
-                        "document_number": "أدخل رقم الوثيقة",
-                        "mobile_hint": "05XXXXXXXX",
-                        "nationality_hint": "SA"
-                    },
-                    "document_types": {
-                        "passport": "جواز سفر",
-                        "iqama": "إقامة / تصريح إقامة",
-                        "visa": "تأشيرة"
-                    },
-                    "descriptions": {
-                        "confirm_data_desc": "بالتأكيد، أنت مصادق على أن جميع المعلومات المقدمة دقيقة وتتوافق مع مستنداتك الرسمية."
-                    },
-                    "b2b": {
-                        "title": "بيانات المنشأة (B2B)",
-                        "agency_type_label": "نوع المنشأة",
-                        "agency_hotel": "فندق / شقق مفروشة",
-                        "agency_tourism": "وكالة سياحة وسفر",
-                        "agency_other": "أخرى",
-                        "license_label": "رقم السجل التجاري / الترخيص",
-                        "license_placeholder": "700XXXXXXXX"
-                    },
-                    "validation": {
-                        "full_name_min": "يجب أن يكون الاسم 5 أحرف على الأقل",
-                        "document_number_invalid": "رقم الوثيقة غير صحيح",
-                        "field_required": "هذا الحقل مطلوب",
-                        "mobile_invalid": "رقم الجوال يجب أن يبدأ بـ 05 ويتكون من 10 أرقام",
-                        "confirm_required": "يجب الموافقة على صحة البيانات"
-                    }
-                },
-                "account": {
-                    "steps": {
-                        "account_label": "بيانات الحساب"
-                    },
-                    "labels": {
-                        "username": "اسم المستخدم",
-                        "email": "البريد الإلكتروني",
-                        "password": "كلمة المرور",
-                        "confirm_password": "تأكيد كلمة المرور"
-                    },
-                    "placeholders": {
-                        "username": "اختر اسم مستخدم (حروف/أرقام إنجليزية)",
-                        "email": "بريدك@مثال.com",
-                        "password": "أنشئ كلمة مرور قوية",
-                        "confirm_password": "أعد كتابة كلمة المرور"
-                    },
-                    "terms": "أوافق على شروط الاستخدام وسياسة الخصوصية الخاصة بالعنوان الوطني المؤقت.",
-                    "create_account": "إنشاء الحساب",
-                    "validation": {
-                        "username_min": "يجب أن يكون اسم المستخدم 3 أحرف على الأقل",
-                        "username_format": "حروف وأرقام فقط",
-                        "email_invalid": "البريد الإلكتروني غير صحيح",
-                        "password_min": "كلمة المرور يجب أن تكون 8 أحرف على الأقل",
-                        "password_mismatch": "كلمات المرور غير متطابقة",
-                        "terms_required": "يجب الموافقة على الشروط والأحكام"
-                    }
-                }
+        "document_types": {
+          "passport": "جواز سفر",
+          "iqama": "إقامة / تصريح إقامة",
+          "visa": "تأشيرة"
         },
-        "forgot_password": {
-            "title": "نسيت كلمة المرور؟",
-            "subtitle_step1": "أدخل رقم جوالك أو بريدك الإلكتروني لاستلام رمز التحقق",
-            "email_placeholder": "البريد الإلكتروني",
-            "send_code": "إرسال رمز التحقق",
-            "send_success": "تم إرسال رمز التحقق إلى بريدك الإلكتروني",
-            "verify_title": "أدخل رمز التحقق",
-            "verify_subtitle": "أدخل رمز التحقق المكون من 6 أرقام",
-            "code_placeholder": "رمز التحقق",
-            "resend_timer": "إعادة الإرسال بعد {time}",
-            "confirm_code": "تأكيد الرمز",
-            "resend_button": "لم يصلك الرمز؟ إعادة الإرسال",
-            "invalid_code": "رمز التحقق غير صحيح",
-            "reset_title": "تعيين كلمة مرور جديدة",
-            "reset_subtitle": "أدخل كلمة المرور الجديدة لتأمين حسابك",
-            "new_password_placeholder": "كلمة المرور الجديدة",
-            "confirm_password_placeholder": "تأكيد كلمة المرور",
-            "save_login": "حفظ وتسجيل الدخول",
-            "reset_success": "تم إعادة تعيين كلمة المرور بنجاح!"
-        }
-    },
-    "visitor": {
-        "home": {
-            "title": "العنوان الوطني المؤقت",
-            "subtitle": "إدارة عناوينك وشحناتك في مكان واحد",
-            "hero": {
-                "title": "الآن مع تطبيق العنوان الوطني المؤقت",
-                "description": "يمكنك الحصول على عنوان وطني مؤقت لإستلام وإرسال الشحنات من أي مكان داخل المملكة العربية السعودية بكل سهولة وأمان"
-            },
-            "shipments": {
-                "title": "الشحنات",
-                "from": "شحنة من",
-                "arrival_date": "تاريخ الوصول المتوقع",
-                "to_tna": "إلى العنوان المؤقت"
-            },
-            "addresses": {
-                "title": "عناويني المؤقتة",
-                "manage": "إدارة العناوين",
-                "linked_success": "مرتبط بنجاح",
-                "until_date": "حتى تاريخ",
-                "not_linked": "لم يتم الربط",
-                "suspended": "موقوف"
-            },
-            "actions": {
-                "create_new": "إنشاء عنوان وطني مؤقت جديد",
-                "order_shipment": "طلب شحنة"
-            }
-        }
-    },
-    "owner": {
-        "home": {
-            "header": "لوحة التحكم",
-            "title": "مرحباً بك، شريك النجاح",
-            "subtitle": "إدارة عقاراتك، متابعة طلبات الربط، ومراقبة نمو أرباحك في منصة TNA.",
-            "stats": {
-                "properties": "العقارات المسجلة",
-                "bindings": "الارتباطات النشطة",
-                "earnings": "إجمالي الأرباح",
-                "balance": "الرصيد المتاح"
-            },
-            "cta": {
-                "title": "سجل عقاراً جديداً",
-                "description": "ابدأ بجني الأرباح عبر تسجيل عقاراتك في المنصة وإتاحتها للزوار والباحثين عن عناوين وطنية مؤقتة.",
-                "button": "إضافة عقار جديد"
-            },
-            "withdraw": {
-                "title": "سحب الرصيد",
-                "current_balance": "رصيدك الحالي",
-                "statement": "كشف حساب",
-                "transfer": "تحويل للبنك"
-            },
-            "analytics": {
-                "title": "تحليلات الأرباح (آخر ٧ أيام)",
-                "view_details": "مشاهدة التفاصيل",
-                "placeholder": "سيتم تفعيل الرسوم البيانية التفاعلية قريباً"
-            }
-        }
-    },
-    "carrier": {
-        "home": {
-            "header": "مركز قيادة العمليات",
-            "title": "موجز أداء الأسطول واللوجستيات",
-            "subtitle": "مراقبة أداء الشحنات وتوزيع المهام اليومية للسائقين.",
-            "stats": {
-                "fleet_size": "حجم الأسطول",
-                "active_shipments": "شحنات نشطة",
-                "available_drivers": "السائقين المتاحين",
-                "pending_distribution": "بانتظار التوزيع"
-            },
-            "utilization": {
-                "title": "مؤشر استغلال الأسطول",
-                "view_report": "عرض التقرير",
-                "day_label": "اليوم"
-            },
-            "tasks": {
-                "title": "توزيع المهام",
-                "description": "قم بتوزيع الشحنات الجديدة على السائقين المتاحين وتحديد المسارات المثلى.",
-                "map_button": "خريطة التوزيع",
-                "manage_fleet": "إدارة الأسطول"
-            },
-            "tracking": {
-                "title": "تتبع حي للشحنات",
-                "description": "يوجد حالياً {count} شحنة في طور التوصيل الفعلي.",
-                "button": "دخول الخريطة الحية"
-            }
-        }
-    },
-    "gov": {
-        "home": {
-            "header": "مركز التحكم والرقابة",
-            "title": "نظرة عامة على النظام",
-            "subtitle": "متابعة أداء العناوين الوطنية المؤقتة وحالات التحقق والسياسات العامة عبر المملكة.",
-            "stats": {
-                "total_tnas": "إجمالي عناوين TNA",
-                "pending_verification": "طلبات قيد المراجعة",
-                "daily_issuance": "معدل الإصدار اليومي",
-                "critical_alerts": "تنبيهات حرجة"
-            },
-            "map": {
-                "title": "التوزيع الجغرافي للطلبات",
-                "view_full": "عرض كامل الخارطة"
-            },
-            "actions": {
-                "title": "إجراءات سريعة",
-                "policy_config": "تعديل السياسات",
-                "audit_logs": "سجلات التدقيق"
-            }
+        "descriptions": {
+          "confirm_data_desc": "بالتأكيد، أنت مصادق على أن جميع المعلومات المقدمة دقيقة وتتوافق مع مستنداتك الرسمية."
         },
-        "address_queue": {
-            "title": "طابور التحقق من العناوين",
-            "subtitle": "مراجعة طلبات التحقق من الaddresses الفرعية المعلقة",
-            "total_unverified": "إجمالي غير المحققين",
-            "verified_today": "تم التحقق منه اليوم",
-            "avg_processing_time": "متوسط زمن المعالجة",
-            "columns": {
-                "owner_name": "اسم المالك",
-                "address": "العنوان الرئيسي",
-                "sub_address": "العنوان الفرعي",
-                "submitted_date": "تاريخ التقديم"
-            },
-            "detail": {
-                "owner": "المالك",
-                "national_address": "العنوان الوطني",
-                "sub_address": "العنوان الفرعي",
-                "ownership_proof_status": "حالة إثبات الملكية",
-                "verify": "توثيق العنوان الفرعي",
-                "reject": "رفض",
-                "verification_notes": "ملاحظات التحقق"
-            }
-        }
-    },
-    "kyc": {
-        "title": "التحقق من الهوية",
-        "status_title": "حالة التحقق",
-        "upload_title": "رفع المستندات",
-        "upload_desc": "يرجى رفع صور واضحة من مستنداتك الهوية.",
-        "document_type": "نوع المستند",
-        "doc_types": {
-            "national_id": "هوية وطنية",
-            "passport": "جواز السفر",
-            "residence_permit": "إقامة"
+        "b2b": {
+          "title": "بيانات المنشأة (B2B)",
+          "agency_type_label": "نوع المنشأة",
+          "agency_hotel": "فندق / شقق مفروشة",
+          "agency_tourism": "وكالة سياحة وسفر",
+          "agency_other": "أخرى",
+          "license_label": "رقم السجل التجاري / الترخيص",
+          "license_placeholder": "700XXXXXXXX"
         },
-        "front_side": "الجانب الأمامي",
-        "back_side": "الجانب الخلفي",
-        "selfie": "صورة السلفي",
-        "drop_front": "اسحب صورة الأمام أو اضغط للرفع",
-        "drop_back": "اسحب صورة الخلف أو اضغط للرفع",
-        "drop_selfie": "التقط أو ارفع صورة سلفي واضحة",
-        "max_size": "حجم أقصى 10 ميجابايت",
-        "selfie_hint": "يجب أن تكون الوجه واضحة في الصورة",
-        "submit": "إرسال للتحقق",
-        "resubmit": "إعادة إرسال المستندات",
-        "security_title": "آمن وخاص",
-        "security_note1": "مستنداتك مُشفرة ومخزنة بأمان.",
-        "security_note2": "لا نشارك بياناتك الشخصية مع أطراف ثالثة.",
-        "security_note3": "عادة ما يكتمل التحقق خلال 24-48 ساعة.",
-        "status": {
-            "pending": "قيد المراجعة",
-            "verified": "تم التحقق",
-            "rejected": "مرفوض"
+        "validation": {
+          "full_name_min": "يجب أن يكون الاسم 5 أحرف على الأقل",
+          "document_number_invalid": "رقم الوثيقة غير صحيح",
+          "field_required": "هذا الحقل مطلوب",
+          "mobile_invalid": "رقم الجوال يجب أن يبدأ بـ 05 ويتكون من 10 أرقام",
+          "confirm_required": "يجب الموافقة على صحة البيانات"
+        }
+      },
+      "account": {
+        "steps": {
+          "account_label": "بيانات الحساب"
         },
-        "success": {
-            "title": "تم إرسال المستندات",
-            "message": "تم إرسال مستنداتك للتحقق."
+        "labels": {
+          "username": "اسم المستخدم",
+          "email": "البريد الإلكتروني",
+          "password": "كلمة المرور",
+          "confirm_password": "تأكيد كلمة المرور"
+        },
+        "placeholders": {
+          "username": "اختر اسم مستخدم (حروف/أرقام إنجليزية)",
+          "email": "بريدك@مثال.com",
+          "password": "أنشئ كلمة مرور قوية",
+          "confirm_password": "أعد كتابة كلمة المرور"
+        },
+        "terms": "أوافق على شروط الاستخدام وسياسة الخصوصية الخاصة بالعنوان الوطني المؤقت.",
+        "create_account": "إنشاء الحساب",
+        "validation": {
+          "username_min": "يجب أن يكون اسم المستخدم 3 أحرف على الأقل",
+          "username_format": "حروف وأرقام فقط",
+          "email_invalid": "البريد الإلكتروني غير صحيح",
+          "password_min": "كلمة المرور يجب أن تكون 8 أحرف على الأقل",
+          "password_mismatch": "كلمات المرور غير متطابقة",
+          "terms_required": "يجب الموافقة على الشروط والأحكام"
         }
+      }
     },
-    "tna": {
-        "new": {
-            "title": "طلب عنوان وطني مؤقت",
-            "eligibility_check": "فحص الأهلية",
-            "kyc_required": "مطلوب التحقق من الهوية",
-            "issuance_mode": "وضع الإصدار",
-            "autonomous": "سيتم إصدار TNA الخاص بك فور إتمام الإرسال.",
-            "moderated": "طلبك يحتاج إلى مراجعة إدارية قبل الإصدار.",
-            "max_active": "أقصى عدد من عناوين TNA النشطة المسموح بها",
-            "terms_agreement": "أوافق على شروط وأحكام العنوان الوطني المؤقت وأفهم السياسات التشغيلية.",
-            "submit_request": "إرسال الطلب",
-            "approved": "تمت الموافقة!",
-            "pending_review": "قيد المراجعة",
-            "review_note": "بسبب الطلب المرتفع أو سياسات النظام، سيتم مراجعة طلبك خلال 24 ساعة. ستتلقى إشعاراً عند الموافقة.",
-            "your_tna_code": "رمز TNA الخاص بك",
-            "active": "نشط",
-            "go_to_tnas": "انتقل إلى عناوين TNA الخاصة بي",
-            "return_dashboard": "العودة إلى لوحة التحكم"
-        }
-    },
-    "binding": {
-        "quote": {
-            "gross": "المبلغ الإجمالي",
-            "platform_fee": "رسوم المنصة",
-            "authority_share": "حصة الجهة",
-            "net_owner": "صافي المبلغ للمالك"
-        }
-    },
-    "checkout": {
-        "payment_blocked": "الدفع محظور - تم معالجة الربط بالفعل"
-    },
-    "carrier": {
-        "resolve": {
-            "unlinked": "TNA غير مرتبط بأي عنوان",
-            "deliverable": "عنوان قابل للتوصيل",
-            "not_deliverable": "غير قابل للتوصيل"
-        }
-    },
-    "owner": {
-        "property": {
-            "deed_required": "إثبات الملكية مطلوب للتحقق من العقار.",
-            "registration": "تسجيل عقار",
-            "address_info": "معلومات العنوان",
-            "document_upload": "رفع المستند",
-            "document_upload_desc": "إثبات الملكية مطلوب للتحقق.",
-            "review": "مراجعة",
-            "building_number": "رقم المبنى",
-            "street": "الشارع",
-            "district": "الحي",
-            "city": "المدينة",
-            "postal_code": "الرمز البريدي",
-            "latitude": "خط العرض",
-            "longitude": "خط الطول",
-            "title_deed_reference": "رقم سند الملكية",
-            "property_registered": "تم تسجيل العقار بنجاح"
-        }
+    "forgot_password": {
+      "title": "نسيت كلمة المرور؟",
+      "subtitle_step1": "أدخل رقم جوالك أو بريدك الإلكتروني لاستلام رمز التحقق",
+      "email_placeholder": "البريد الإلكتروني",
+      "send_code": "إرسال رمز التحقق",
+      "send_success": "تم إرسال رمز التحقق إلى بريدك الإلكتروني",
+      "verify_title": "أدخل رمز التحقق",
+      "verify_subtitle": "أدخل رمز التحقق المكون من 6 أرقام",
+      "code_placeholder": "رمز التحقق",
+      "resend_timer": "إعادة الإرسال بعد {time}",
+      "confirm_code": "تأكيد الرمز",
+      "resend_button": "لم يصلك الرمز؟ إعادة الإرسال",
+      "invalid_code": "رمز التحقق غير صحيح",
+      "reset_title": "تعيين كلمة مرور جديدة",
+      "reset_subtitle": "أدخل كلمة المرور الجديدة لتأمين حسابك",
+      "new_password_placeholder": "كلمة المرور الجديدة",
+      "confirm_password_placeholder": "تأكيد كلمة المرور",
+      "save_login": "حفظ وتسجيل الدخول",
+      "reset_success": "تم إعادة تعيين كلمة المرور بنجاح!"
     }
+  },
+  "visitor": {
+    "home": {
+      "title": "العنوان الوطني المؤقت",
+      "subtitle": "إدارة عناوينك وشحناتك في مكان واحد",
+      "hero": {
+        "title": "الآن مع تطبيق العنوان الوطني المؤقت",
+        "description": "يمكنك الحصول على عنوان وطني مؤقت لإستلام وإرسال الشحنات من أي مكان داخل المملكة العربية السعودية بكل سهولة وأمان"
+      },
+      "shipments": {
+        "title": "الشحنات",
+        "from": "شحنة من",
+        "arrival_date": "تاريخ الوصول المتوقع",
+        "to_tna": "إلى العنوان المؤقت"
+      },
+      "addresses": {
+        "title": "عناويني المؤقتة",
+        "manage": "إدارة العناوين",
+        "linked_success": "مرتبط بنجاح",
+        "until_date": "حتى تاريخ",
+        "not_linked": "لم يتم الربط",
+        "suspended": "موقوف"
+      },
+      "actions": {
+        "create_new": "إنشاء عنوان وطني مؤقت جديد",
+        "order_shipment": "طلب شحنة"
+      }
+    },
+    "tna_code_1": "كود TNA",
+    "status_2": "الحالة",
+    "issued_at_3": "تاريخ الإصدار",
+    "view_details_4": "عرض التفاصيل",
+    "all_5": "الكل",
+    "active_6": "نشط",
+    "unlinked_7": "غير مرتبط",
+    "expired_8": "منتهي",
+    "my_tnas_9": "عناويني الوطنية",
+    "list_of_tna_codes_10": "قائمة رموز TNA",
+    "request_new_tna_11": "طلب TNA جديد",
+    "no_tna_codes_found_12": "لا يوجد رموز TNA",
+    "start_by_requesting_your_first_temporary_13": "ابدأ بطلب أول عنوان وطني مؤقت لك الآن.",
+    "request_new_tna_14": "طلب TNA جديد",
+    "tna_information_15": "معلومات العنوان",
+    "core_identity_data_for_your_temporary_na_16": "البيانات الأساسية لعنوانك الوطني المؤقت.",
+    "tna_code_17": "كود TNA",
+    "status_18": "الحالة",
+    "issued_at_19": "تاريخ الإصدار",
+    "expires_at_20": "تاريخ الانتهاء",
+    "linked_property_21": "العقار المرتبط",
+    "details_of_the_physical_property_bound_t_22": "تفاصيل العقار الذي تم ربط العنوان به.",
+    "address_23": "العنوان",
+    "city_24": "المدينة",
+    "unit_25": "رقم الوحدة",
+    "tna_details_26": "تفاصيل TNA",
+    "tna_information_27": "معلومات العنوان",
+    "core_identity_data_for_your_temporary_na_28": "البيانات الأساسية لعنوانك الوطني المؤقت.",
+    "tna_code_29": "كود TNA",
+    "status_30": "الحالة",
+    "issued_at_31": "تاريخ الإصدار",
+    "expires_at_32": "تاريخ الانتهاء",
+    "linked_property_33": "العقار المرتبط",
+    "details_of_the_physical_property_bound_t_34": "تفاصيل العقار الذي تم ربط العنوان به.",
+    "address_35": "العنوان",
+    "city_36": "المدينة",
+    "unit_37": "رقم الوحدة",
+    "unbind_tna_address_38": "إلغاء ربط TNA"
+  },
+  "owner": {
+    "property": {
+      "deed_required": "إثبات الملكية مطلوب للتحقق من العقار.",
+      "registration": "تسجيل عقار",
+      "address_info": "معلومات العنوان",
+      "document_upload": "رفع المستند",
+      "document_upload_desc": "إثبات الملكية مطلوب للتحقق.",
+      "review": "مراجعة",
+      "building_number": "رقم المبنى",
+      "street": "الشارع",
+      "district": "الحي",
+      "city": "المدينة",
+      "postal_code": "الرمز البريدي",
+      "latitude": "خط العرض",
+      "longitude": "خط الطول",
+      "title_deed_reference": "رقم سند الملكية",
+      "property_registered": "تم تسجيل العقار بنجاح"
+    },
+    "payout_settings_1": "إعدادات السحب",
+    "payout_method_settings_2": "إعدادات طريقة السحب",
+    "bank_name_3": "اسم البنك",
+    "eg_al_rajhi_bank_4": "مثال: مصرف الراجحي",
+    "bank_account_number_5": "رقم الحساب البنكي",
+    "enter_your_bank_account_number_6": "أدخل رقم الحساب البنكي",
+    "iban_7": "رقم الآيبان (IBAN)",
+    "sa00_0000_0000_0000_0000_0000_8": "SA00 0000 0000 0000 0000 0000",
+    "swift_code_optional_9": "رمز السويفت (اختياري)",
+    "swiftbic_code_10": "رمز السويفت",
+    "settings_saved_successfully_11": "تم حفظ الإعدادات بنجاح",
+    "save_settings_12": "حفظ الإعدادات",
+    "property_13": "العقار",
+    "location_14": "المدينة",
+    "status_15": "حالة التوثيق",
+    "details_16": "التفاصيل",
+    "property_management_17": "إدارة العقارات",
+    "property_portfolio_18": "قائمة العقارات",
+    "add_property_19": "إضافة عقار",
+    "property_information_20": "معلومات العقار",
+    "core_data_registered_with_the_national_a_21": "البيانات الأساسية المسجلة في العنوان الوطني.",
+    "full_address_22": "العنوان الكامل",
+    "city_23": "المدينة",
+    "district_24": "الحي",
+    "building_no_25": "رقم المبنى",
+    "title_deed_26": "صك الملكية",
+    "ownership_proof_27": "إثبات الملكية",
+    "na_certificate_28": "شهادة العنوان الوطني",
+    "unit_label_29": "الوحدة",
+    "suffix_30": "الكود",
+    "status_31": "الحالة",
+    "property_details_32": "تفاصيل العقار",
+    "suffix_code_33": "كود اللاحقة",
+    "4_unique_characters_for_the_unit_eg_room_34": "4 أحرف فريدة للوحدة (مثال: ROOM)",
+    "label_35": "التسمية",
+    "unit_name_36": "اسم الوحدة",
+    "description_37": "الوصف",
+    "optional_unit_description_38": "وصف اختياري للوحدة",
+    "create_unit_39": "إنشاء الوحدة",
+    "loading_40": "جاري التحميل...",
+    "add_subaddress_41": "إضافة وحدة فرعية",
+    "add_subaddress_42": "إضافة وحدة فرعية",
+    "owner_dashboard_46": "لوحة تحكم المالك",
+    "tna_code_47": "كود TNA",
+    "unit_48": "الوحدة",
+    "period_49": "الفترة",
+    "net_owner_amount_50": "صافي المبلغ للمالك",
+    "status_51": "الحالة",
+    "actions_52": "الإجراءات",
+    "linking_requests_53": "طلبات الربط",
+    "binding_information_54": "معلومات الربط",
+    "details_of_the_binding_request_between_t_55": "تفاصيل طلب الربط بين TNA والوحدة",
+    "financial_contract_56": "التفاصيل المالية",
+    "breakdown_of_the_financial_distribution__57": "تفاصيل توزيع المبلغ المالي للربط",
+    "tna_code_58": "كود TNA",
+    "unit_59": "الوحدة",
+    "property_60": "العقار",
+    "visitor_61": "المستأجر",
+    "status_62": "الحالة",
+    "start_date_63": "تاريخ البداية",
+    "end_date_64": "تاريخ النهاية",
+    "created_at_65": "تاريخ الإنشاء",
+    "gross_amount_66": "الإجمالي",
+    "platform_fee_67": "رسوم المنصة",
+    "authority_share_68": "حصة الهيئة",
+    "net_owner_amount_69": "صافي المبلغ للمالك",
+    "approve_70": "موافقة",
+    "reject_71": "رفض",
+    "terminate_72": "إنهاء",
+    "actions_73": "Actions",
+    "note_74": "ملاحظة",
+    "status_timeline_75": "تemporal Timeline",
+    "binding_request_created_76": "تم إنشاء طلب الربط",
+    "awaiting_owner_approval_77": "في انتظار موافقة المالك",
+    "request_approved_78": "تمت الموافقة على الطلب",
+    "binding_activated_79": "تم تفعيل الربط",
+    "binding_terminated_80": "تم إنهاء الربط",
+    "binding_terminated_by_agreement_81": "تم إنهاء الربط بالاتفاق",
+    "reason_param_82": "السبب: ${param}",
+    "binding_details_83": "تفاصيل الربط"
+  },
+  "carrier": {
+    "resolve": {
+      "unlinked": "TNA غير مرتبط بأي عنوان",
+      "deliverable": "عنوان قابل للتوصيل",
+      "not_deliverable": "غير قابل للتوصيل"
+    },
+    "tracking_1": "رقم التتبع",
+    "tna_destination_2": "عنوان TNA",
+    "status_3": "الحالة",
+    "shipment_management_4": "إدارة الشحنات",
+    "resolve_tna_5": "تحقق من TNA",
+    "new_shipment_6": "شحنة جديدة",
+    "status_updated_7": "تم تحديث الحالة",
+    "failed_to_update_status_8": "فشل في تحديث الحالة",
+    "message_sent_9": "تم إرسال الرسالة",
+    "shipment_details_10": "تفاصيل الشحنة",
+    "not_found_11": "غير موجود",
+    "shipment_not_found_12": "الشحنة غير موجودة",
+    "go_back_14": "رجوع",
+    "shipment_details_15": "تفاصيل الشحنة",
+    "sender_16": "المرسل",
+    "recipient_17": "المستلم",
+    "created_18": "تم الإنشاء",
+    "delivery_address_19": "عنوان التوصيل",
+    "expected_delivery_20": "موعد التوصيل المتوقع",
+    "delivered_at_21": "تم التوصيل في",
+    "package_details_22": "تفاصيل الطرد",
+    "weight_23": "الوزن",
+    "dimensions_24": "الأبعاد",
+    "contents_25": "المحتويات",
+    "status_history_26": "سجل الحالات",
+    "messages_27": "المحادثات",
+    "type_your_message_28": "اكتب رسالتك...",
+    "update_status_29": "تحديث الحالة",
+    "quick_actions_30": "إجراءات سريعة",
+    "call_customer_31": "اتصال بالعميل",
+    "open_in_maps_32": "فتح في الخريطة",
+    "confirm_delivery_33": "تأكيد التوصيل",
+    "shipment_created_successfully_34": "تم إنشاء الشحنة بنجاح",
+    "register_new_shipment_35": "تسجيل شحنة جديدة",
+    "verify_tna_address_36": "التحقق من عنوان TNA",
+    "tna_code_37": "رمز TNA",
+    "address_is_deliverable_39": "العنوان صالح للتوصيل",
+    "address_is_not_deliverable_40": "العنوان غير صالح",
+    "continue_41": "متابعة",
+    "package_details_43": "تفاصيل الطرد",
+    "weight_kg_44": "الوزن (كجم)",
+    "eg_25_45": "مثال: 2.5",
+    "dimensions_46": "الأبعاد",
+    "eg_30x20x15_cm_47": "مثال: 30x20x15 سم",
+    "package_contents_48": "محتويات الشحنة",
+    "eg_books_clothing_49": "مثال: كتب، ملابس",
+    "back_50": "رجوع",
+    "continue_51": "متابعة",
+    "assign_delivery_staff_53": "تعيين موظف التوصيل",
+    "delivery_staff_54": "موظف التوصيل",
+    "shipment_summary_55": "ملخص الشحنة",
+    "tna_code_56": "رمز TNA",
+    "weight_57": "الوزن",
+    "dimensions_58": "الأبعاد",
+    "staff_59": "الموظف",
+    "back_60": "رجوع",
+    "create_shipment_62": "إنشاء الشحنة",
+    "tna_address_resolver_63": "تحقق من عنوان TNA",
+    "national_address_resolver_64": "التحقق من العنوان الوطني",
+    "tna_code_65": "رمز TNA",
+    "resolving_67": "جاري التحقق...",
+    "resolve_address_68": "تحقق من العنوان",
+    "deliverable_address_69": "العنوان قابل للتوصيل",
+    "not_deliverable_70": "لا يمكن التوصيل",
+    "address_resultnationaladdressfulladdress_71": "العنوان: ${result.national_address.full_address}",
+    "subaddress_72": "الرمز الفرعي",
+    "full_national_address_73": "العنوان الوطني الكامل",
+    "binding_status_74": "حالة الربط",
+    "address_already_bound_75": "العنوان مرتبط بالفعل",
+    "please_verify_the_tna_code_and_try_again_76": "يرجى التحقق من رمز TNA وإعادة المحاولة",
+    "carrier_dashboard_77": "لوحة تحكم الناقل",
+    "delivery_confirmed_successfully_78": "تم تأكيد التوصيل بنجاح",
+    "failed_to_confirm_delivery_79": "فشل تأكيد التوصيل",
+    "confirm_delivery_80": "تأكيد التوصيل",
+    "not_found_81": "غير موجود",
+    "shipment_not_found_82": "الشحنة غير موجودة",
+    "go_back_84": "رجوع",
+    "please_fill_all_required_fields_85": "يرجى ملء جميع الحقول المطلوبة",
+    "confirm_delivery_86": "تأكيد التوصيل",
+    "not_found_87": "غير موجود",
+    "shipment_not_found_88": "الشحنة غير موجودة",
+    "go_back_90": "رجوع",
+    "confirm_delivery_91": "تأكيد التوصيل",
+    "verification_otp_92": "رمز التحقق (OTP)",
+    "sent_to_customer_93": "أرسل إلى العميل",
+    "enter_verification_code_94": "أدخل رمز التحقق",
+    "xxxxxx_95": "XXXXXX",
+    "delivery_proof_photo_96": "صورة إثبات التوصيل",
+    "tap_to_take_photo_97": "اضغط لالتقاط صورة",
+    "confirm_delivery_99": "تأكيد التوصيل",
+    "important_note_100": "ملاحظة هامة"
+  },
+  "gov": {
+    "home": {
+      "header": "مركز التحكم والرقابة",
+      "title": "نظرة عامة على النظام",
+      "subtitle": "متابعة أداء العناوين الوطنية المؤقتة وحالات التحقق والسياسات العامة عبر المملكة.",
+      "stats": {
+        "total_tnas": "إجمالي عناوين TNA",
+        "pending_verification": "طلبات قيد المراجعة",
+        "daily_issuance": "معدل الإصدار اليومي",
+        "critical_alerts": "تنبيهات حرجة"
+      },
+      "map": {
+        "title": "التوزيع الجغرافي للطلبات",
+        "view_full": "عرض كامل الخارطة"
+      },
+      "actions": {
+        "title": "إجراءات سريعة",
+        "policy_config": "تعديل السياسات",
+        "audit_logs": "سجلات التدقيق"
+      }
+    },
+    "address_queue": {
+      "title": "طابور التحقق من العناوين",
+      "subtitle": "مراجعة طلبات التحقق من الaddresses الفرعية المعلقة",
+      "total_unverified": "إجمالي غير المحققين",
+      "verified_today": "تم التحقق منه اليوم",
+      "avg_processing_time": "متوسط زمن المعالجة",
+      "columns": {
+        "owner_name": "اسم المالك",
+        "address": "العنوان الرئيسي",
+        "sub_address": "العنوان الفرعي",
+        "submitted_date": "تاريخ التقديم"
+      },
+      "detail": {
+        "owner": "المالك",
+        "national_address": "العنوان الوطني",
+        "sub_address": "العنوان الفرعي",
+        "ownership_proof_status": "حالة إثبات الملكية",
+        "verify": "توثيق العنوان الفرعي",
+        "reject": "رفض",
+        "verification_notes": "ملاحظات التحقق"
+      }
+    },
+    "tna_pending_1": "TNA قيد المراجعة",
+    "addresses_pending_2": "عناوين قيد التحقق",
+    "adjustments_pending_3": "تعديلات معلقة",
+    "autoapproval_rate_4": "معدل الموافقة التلقائي",
+    "queues_5": "الطابور",
+    "tna_requests_6": "طلبات TNA",
+    "awaiting_review_7": "في انتظار المراجعة",
+    "view_queue_8": "عرض الطابور",
+    "subaddresses_9": "عناوين فرعية",
+    "awaiting_verification_10": "في انتظار التحقق",
+    "view_queue_11": "عرض الطابور",
+    "governance_tools_12": "أدوات الحكومة",
+    "policy_settings_13": "إعدادات السياسة",
+    "system_audit_14": "سجل التدقيق",
+    "agency_management_15": "إدارة الجهات",
+    "financial_adjustments_16": "تعديلات الماليات",
+    "applicant_17": "مقدم الطلب",
+    "nationality_18": "الجنسية",
+    "mode_19": "وضع المراجعة",
+    "moderated_20": "مُراقَب",
+    "autonomous_21": "أوتوماتيكي",
+    "submitted_at_22": "تاريخ التقديم",
+    "review_23": "مراجعة",
+    "tna_issuance_queue_24": "طابور طلبات إصدار TNA",
+    "pending_tna_requests_25": "طلبات الإصدار المعلّقة",
+    "applicant_26": "مقدم الطلب",
+    "policy_mode_27": "السياسة",
+    "submitted_at_28": "تاريخ التقديم",
+    "status_29": "الحالة",
+    "review_30": "مراجعة",
+    "verification_queue_31": "قائمة المراجعة",
+    "loading_request_details_32": "جاري تحميل تفاصيل الطلب...",
+    "request_not_found_33": "الطلب غير موجود",
+    "applicant_identity_34": "بيانات مقدم الطلب",
+    "personal_details_and_identification_docu_35": "المعلومات الشخصية ووثائق الهوية.",
+    "full_name_36": "الأسم الكامل",
+    "nationality_37": "الجنسية",
+    "idpassport_number_38": "رقم الهوية/الجواز",
+    "submission_date_39": "تاريخ التقديم",
+    "review_mode_40": "وضع المراجعة",
+    "moderated_41": "مُراقَب",
+    "autonomous_42": "أوتوماتيكي",
+    "eligibility_snapshot_43": "لقطة أهلية الطلب",
+    "automatic_eligibility_indicators_44": "المؤشرات التلقائية لتحديد الأهلية.",
+    "kyc_status_45": "حالة KYC",
+    "verified_46": "تم التحقق",
+    "document_source_47": "نوع الوثيقة",
+    "decision_matrix_48": "مصفوفة القرار",
+    "approve_issuance_49": "الموافقة على الإصدار",
+    "reject_request_50": "رفض الطلب",
+    "the_system_has_been_updated_and_a_notifi_51": "تم تحديث النظام وإرسال إشعار للزائر.",
+    "back_to_queue_52": "العودة للطابور",
+    "kyc_verification_53": "التحقق من KYC",
+    "this_user_has_been_verified_against_the__54": "تم التحقق من هذا المستخدم من خلال نظام الهوية الوطنية الرقمي (IAM). أهلية العنوان هي الخطوة اليدوية الوحيدة المطلوبة.",
+    "review_tna_issuance_request_55": "مراجعة طلب إصدار TNA",
+    "request_56": "طلب",
+    "supporting_documents_57": "المستندات الداعمة",
+    "digital_id_copy_iam_58": "نسخة الهوية الرقمية (IAM)",
+    "verified_59": "تم التحقق",
+    "passport_entry_record_60": "سجل دخول الجواز",
+    "verified_61": "تم التحقق",
+    "issuance_policies_62": "سياسات الإصدار",
+    "issuance_mode_63": "وضع الإصدار",
+    "moderated_for_manual_review_or_autonomou_64": "MODERATED للمراجعة اليدوية أو AUTONOMOUS للإصدار الفوري.",
+    "max_active_tnas_per_visitor_65": "الحد الأقصى لكل زائر",
+    "maximum_active_tnas_allowed_per_visitor_66": "عدد TNAs النشطة المسموح بها لكل زائر.",
+    "tna_validity_days_67": "صلاحية TNA (بالأيام)",
+    "number_of_days_a_tna_remains_valid_68": "عدد الأيام التي يكون فيها TNA صالحًا.",
+    "minimum_rental_period_days_69": "الحد الأدنى لفترة الإيجار",
+    "minimum_rental_duration_allowed_70": "الحد الأدنى لمدة الإيجار.",
+    "economic_parameters_71": "المعايير الاقتصادية",
+    "platform_fee_72": "عمولة المنصة (%)",
+    "percentage_taken_from_owner_earnings_73": "النسبة المئوية التي تأخذها المنصة من أرباح المالك.",
+    "binding_fee_sar_74": "رسوم الربط (SAR)",
+    "flat_fee_for_linking_a_tna_to_a_property_75": "الرسوم الثابتة لربط TNA بعنوان.",
+    "eligibility_rules_76": "قواعد الأهلية",
+    "autoapprove_if_visa_valid_77": "الموافقة التلقائية إذا كان التأشيرة صالحة",
+    "autoapprove_visitors_with_valid_visa_78": "الموافقة التلقائية للزوار ذوي تأشيرة سارية.",
+    "autoapprove_if_iqama_valid_79": "الموافقة التلقائية إذا كان الإقامة صالحة",
+    "autoapprove_visitors_with_valid_iqama_80": "الموافقة التلقائية للزوار ذوي إقامة سارية.",
+    "global_policy_control_81": "إعدادات السياسة",
+    "system_configuration_82": "إعدادات النظام",
+    "modify_global_rules_and_economic_paramet_83": "تعديل القواعد العالمية ومعايير الاقتصاد لمنصة TNA.",
+    "save_changes_84": "حفظ التغييرات",
+    "cautionary_note_85": "ملاحظة مهمة",
+    "changes_to_economic_parameters_fees_and__86": "سيسري التغييرات على المعايير الاقتصادية (الرسوم والعمولات) على المعاملات الجديدة فورًا. ستستمر الروابط الحالية بالسياسة السابقة حتى انتهاء صلاحيتها.",
+    "gov_control_center_87": "مركز التحكم والرقابة",
+    "transaction_id_88": "معرف المعاملة",
+    "tna_hash_89": "كود TNA",
+    "timestamp_90": "الطابع الزمني",
+    "integrity_91": "التحقق",
+    "verified_ledger_92": "تم التحقق",
+    "system_audit_logs_93": "سجل التدقيق",
+    "immutable_ledger_protocol_94": "بروتوكول السجل الغير قابل للتغيير",
+    "every_tna_issuance_binding_and_shipment__95": "كل إصدار TNA والربط والشحنة تُخزن بتوقيع مشفر في سجل التدقيق العالمي.",
+    "global_audit_trail_96": "المسار التدقيقي العالمي",
+    "adjustment_type_97": "نوع التعديل",
+    "owner_correction_98": "تصحيح المالك",
+    "system_error_99": "خطأ نظامي",
+    "amount_100": "المبلغ",
+    "reason_101": "السبب",
+    "initiated_by_102": "منفذ الطلب",
+    "created_at_103": "تاريخ الإنشاء",
+    "review_104": "مراجعة",
+    "settlement_adjustment_approval_105": "موافقة التعديلات المالية",
+    "pending_adjustment_requests_106": "طلبات التعديل المعلّقة",
+    "search_by_id_107": "بحث برقم المعرف...",
+    "filter_108": "تصفية",
+    "review_adjustment_request_109": "مراجعة طلب التعديل",
+    "adjustment_type_110": "نوع التعديل",
+    "owner_correction_111": "تصحيح المالك",
+    "system_error_112": "خطأ نظامي",
+    "amount_113": "المبلغ",
+    "reason_114": "سبب التعديل",
+    "approve_115": "موافقة",
+    "cancel_116": "إلغاء",
+    "owner_117": "المالك",
+    "individual_118": "فردي",
+    "business_119": "شركة",
+    "full_address_120": "العنوان الكامل",
+    "suffix_121": "اللاحقة",
+    "submitted_at_122": "تاريخ التقديم",
+    "review_123": "مراجعة",
+    "subaddress_verification_queue_124": "طابور التحقق من العناوين",
+    "pending_verification_requests_125": "طلبات التحقق المعلّقة",
+    "loading_request_details_126": "جاري تحميل تفاصيل الطلب...",
+    "request_not_found_127": "الطلب غير موجود",
+    "owner_information_128": "معلومات المالك",
+    "name_129": "الاسم",
+    "owner_type_130": "نوع المالك",
+    "individual_131": "فردي",
+    "business_132": "شركة",
+    "national_id_133": "رقم الهوية",
+    "verification_status_134": "حالة التحقق",
+    "verified_135": "تم التحقق",
+    "pending_136": "قيد المراجعة",
+    "national_address_137": "العنوان الوطني",
+    "parent_national_address_linked_to_subadd_138": "العنوان الرئيسي المرتبط بالعنوان الفرعي.",
+    "full_address_139": "العنوان الكامل",
+    "ownership_proof_status_140": "حالة إثبات الملكية",
+    "verified_141": "تم التحقق",
+    "pending_142": "قيد المراجعة",
+    "title_deed_reference_143": "مرجع سند الملكية",
+    "subaddress_144": "العنوان الفرعي",
+    "details_of_the_subaddress_to_be_verified_145": "تفاصيل العنوان الفرعي المراد التحقق منه.",
+    "suffix_code_146": "اللاحقة",
+    "label_147": "التصنيف",
+    "description_148": "الوصف",
+    "verification_action_149": "إجراء التحقق",
+    "verify_address_150": "تأكيد التحقق",
+    "reject_request_151": "رفض الطلب",
+    "the_subaddress_verification_status_has_b_152": "تم تحديث حالة العنوان الفرعي.",
+    "back_to_queue_153": "العودة للطابور",
+    "security_note_154": "ملاحظة أمنية",
+    "verify_that_the_subaddress_matches_the_p_155": "يجب التحقق من مطابقة العنوان الفرعي بالوثائق المقدمة قبل الموافقة.",
+    "subaddress_verification_review_156": "مراجعة طلب التحقق من العنوان الفرعي",
+    "subaddress_157": "عنوان فرعي",
+    "supporting_documents_158": "الوثائق المرفقة",
+    "title_deed_159": "سند الملكية",
+    "available_160": "متوفي",
+    "na_certificate_161": "شهادة العنوان الوطني",
+    "available_162": "متوفي"
+  },
+  "kyc": {
+    "title": "التحقق من الهوية",
+    "status_title": "حالة التحقق",
+    "upload_title": "رفع المستندات",
+    "upload_desc": "يرجى رفع صور واضحة من مستنداتك الهوية.",
+    "document_type": "نوع المستند",
+    "doc_types": {
+      "national_id": "هوية وطنية",
+      "passport": "جواز السفر",
+      "residence_permit": "إقامة"
+    },
+    "front_side": "الجانب الأمامي",
+    "back_side": "الجانب الخلفي",
+    "selfie": "صورة السلفي",
+    "drop_front": "اسحب صورة الأمام أو اضغط للرفع",
+    "drop_back": "اسحب صورة الخلف أو اضغط للرفع",
+    "drop_selfie": "التقط أو ارفع صورة سلفي واضحة",
+    "max_size": "حجم أقصى 10 ميجابايت",
+    "selfie_hint": "يجب أن تكون الوجه واضحة في الصورة",
+    "submit": "إرسال للتحقق",
+    "resubmit": "إعادة إرسال المستندات",
+    "security_title": "آمن وخاص",
+    "security_note1": "مستنداتك مُشفرة ومخزنة بأمان.",
+    "security_note2": "لا نشارك بياناتك الشخصية مع أطراف ثالثة.",
+    "security_note3": "عادة ما يكتمل التحقق خلال 24-48 ساعة.",
+    "status": {
+      "pending": "قيد المراجعة",
+      "verified": "تم التحقق",
+      "rejected": "مرفوض"
+    },
+    "success": {
+      "title": "تم إرسال المستندات",
+      "message": "تم إرسال مستنداتك للتحقق."
+    }
+  },
+  "tna": {
+    "new": {
+      "title": "طلب عنوان وطني مؤقت",
+      "eligibility_check": "فحص الأهلية",
+      "kyc_required": "مطلوب التحقق من الهوية",
+      "issuance_mode": "وضع الإصدار",
+      "autonomous": "سيتم إصدار TNA الخاص بك فور إتمام الإرسال.",
+      "moderated": "طلبك يحتاج إلى مراجعة إدارية قبل الإصدار.",
+      "max_active": "أقصى عدد من عناوين TNA النشطة المسموح بها",
+      "terms_agreement": "أوافق على شروط وأحكام العنوان الوطني المؤقت وأفهم السياسات التشغيلية.",
+      "submit_request": "إرسال الطلب",
+      "approved": "تمت الموافقة!",
+      "pending_review": "قيد المراجعة",
+      "review_note": "بسبب الطلب المرتفع أو سياسات النظام، سيتم مراجعة طلبك خلال 24 ساعة. ستتلقى إشعاراً عند الموافقة.",
+      "your_tna_code": "رمز TNA الخاص بك",
+      "active": "نشط",
+      "go_to_tnas": "انتقل إلى عناوين TNA الخاصة بي",
+      "return_dashboard": "العودة إلى لوحة التحكم"
+    }
+  },
+  "binding": {
+    "quote": {
+      "gross": "المبلغ الإجمالي",
+      "platform_fee": "رسوم المنصة",
+      "authority_share": "حصة الجهة",
+      "net_owner": "صافي المبلغ للمالك"
+    }
+  },
+  "checkout": {
+    "payment_blocked": "الدفع محظور - تم معالجة الربط بالفعل"
+  }
 }

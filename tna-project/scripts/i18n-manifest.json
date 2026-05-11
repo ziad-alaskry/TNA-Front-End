@@ -144,60 +144,6 @@
     "original": "isRTL ? 'تعديلات الماليات' : 'Financial Adjustments'"
   },
   {
-    "file": "components\\modules\\auth\\RegisterTypeModule.tsx",
-    "line": 39,
-    "column": 72,
-    "arStr": "rtl",
-    "enStr": "ltr",
-    "suggestedKey": "auth.ltr_1",
-    "original": "isRTL ? 'rtl' : 'ltr'"
-  },
-  {
-    "file": "components\\modules\\auth\\RegisterPersonalModule.tsx",
-    "line": 79,
-    "column": 72,
-    "arStr": "rtl",
-    "enStr": "ltr",
-    "suggestedKey": "auth.ltr_2",
-    "original": "isRTL ? 'rtl' : 'ltr'"
-  },
-  {
-    "file": "components\\modules\\auth\\RegisterAccountModule.tsx",
-    "line": 77,
-    "column": 72,
-    "arStr": "rtl",
-    "enStr": "ltr",
-    "suggestedKey": "auth.ltr_3",
-    "original": "isRTL ? 'rtl' : 'ltr'"
-  },
-  {
-    "file": "components\\modules\\auth\\ForgotPasswordModule.tsx",
-    "line": 98,
-    "column": 17,
-    "arStr": "rtl",
-    "enStr": "ltr",
-    "suggestedKey": "auth.ltr_4",
-    "original": "isRTL ? 'rtl' : 'ltr'"
-  },
-  {
-    "file": "components\\layout\\AppShell.tsx",
-    "line": 43,
-    "column": 113,
-    "arStr": "rtl",
-    "enStr": "ltr",
-    "suggestedKey": "shell.ltr_1",
-    "original": "isRTL ? 'rtl' : 'ltr'"
-  },
-  {
-    "file": "components\\layout\\AppShell.tsx",
-    "line": 90,
-    "column": 16,
-    "arStr": "right-0",
-    "enStr": "left-0",
-    "suggestedKey": "shell.left0_2",
-    "original": "isRTL ? \"right-0\" : \"left-0\""
-  },
-  {
     "file": "app\\[locale]\\visitor\\tnas\\page.tsx",
     "line": 31,
     "column": 13,
@@ -538,15 +484,6 @@
     "enStr": "Unbind TNA Address",
     "suggestedKey": "visitor.unbind_tna_address_38",
     "original": "isRTL ? 'إلغاء ربط TNA' : 'Unbind TNA Address'"
-  },
-  {
-    "file": "app\\[locale]\\visitor\\profile\\verify\\page.tsx",
-    "line": 139,
-    "column": 60,
-    "arStr": "rtl",
-    "enStr": "ltr",
-    "suggestedKey": "visitor.ltr_39",
-    "original": "isRTL ? 'rtl' : 'ltr'"
   },
   {
     "file": "app\\[locale]\\owner\\settings\\payout\\page.tsx",
@@ -925,33 +862,6 @@
     "enStr": "Add Sub-Address",
     "suggestedKey": "owner.add_subaddress_42",
     "original": "isRTL ? 'إضافة وحدة فرعية' : 'Add Sub-Address'"
-  },
-  {
-    "file": "app\\[locale]\\owner\\properties\\new\\page.tsx",
-    "line": 61,
-    "column": 42,
-    "arStr": "rtl",
-    "enStr": "ltr",
-    "suggestedKey": "owner.ltr_43",
-    "original": "isRTL ? 'rtl' : 'ltr'"
-  },
-  {
-    "file": "app\\[locale]\\owner\\properties\\new\\page.tsx",
-    "line": 72,
-    "column": 42,
-    "arStr": "rtl",
-    "enStr": "ltr",
-    "suggestedKey": "owner.ltr_44",
-    "original": "isRTL ? 'rtl' : 'ltr'"
-  },
-  {
-    "file": "app\\[locale]\\owner\\properties\\new\\page.tsx",
-    "line": 77,
-    "column": 42,
-    "arStr": "rtl",
-    "enStr": "ltr",
-    "suggestedKey": "owner.ltr_45",
-    "original": "isRTL ? 'rtl' : 'ltr'"
   },
   {
     "file": "app\\[locale]\\owner\\home\\page.tsx",
@@ -2719,15 +2629,6 @@
   },
   {
     "file": "app\\[locale]\\carrier\\shipments\\[id]\\page.tsx",
-    "line": 139,
-    "column": 44,
-    "arStr": "rotate-180 ml-2",
-    "enStr": "mr-2",
-    "suggestedKey": "carrier.mr2_13",
-    "original": "isRTL ? \"rotate-180 ml-2\" : \"mr-2\""
-  },
-  {
-    "file": "app\\[locale]\\carrier\\shipments\\[id]\\page.tsx",
     "line": 140,
     "column": 13,
     "arStr": "رجوع",
@@ -2944,15 +2845,6 @@
   },
   {
     "file": "app\\[locale]\\carrier\\shipments\\new\\page.tsx",
-    "line": 165,
-    "column": 35,
-    "arStr": "مثال: TNA-123456",
-    "enStr": "e.g., TNA-123456",
-    "suggestedKey": "carrier.eg_tna123456_38",
-    "original": "isRTL ? \"مثال: TNA-123456\" : \"e.g., TNA-123456\""
-  },
-  {
-    "file": "app\\[locale]\\carrier\\shipments\\new\\page.tsx",
     "line": 199,
     "column": 29,
     "arStr": "العنوان صالح للتوصيل",
@@ -2977,15 +2869,6 @@
     "enStr": "Continue",
     "suggestedKey": "carrier.continue_41",
     "original": "isRTL ? 'متابعة' : 'Continue'"
-  },
-  {
-    "file": "app\\[locale]\\carrier\\shipments\\new\\page.tsx",
-    "line": 221,
-    "column": 51,
-    "arStr": "rotate-180 mr-2",
-    "enStr": "ml-2",
-    "suggestedKey": "carrier.ml2_42",
-    "original": "isRTL ? \"rotate-180 mr-2\" : \"ml-2\""
   },
   {
     "file": "app\\[locale]\\carrier\\shipments\\new\\page.tsx",
@@ -3070,15 +2953,6 @@
   },
   {
     "file": "app\\[locale]\\carrier\\shipments\\new\\page.tsx",
-    "line": 269,
-    "column": 51,
-    "arStr": "rotate-180 ml-2",
-    "enStr": "ml-2",
-    "suggestedKey": "carrier.ml2_52",
-    "original": "isRTL ? \"rotate-180 ml-2\" : \"ml-2\""
-  },
-  {
-    "file": "app\\[locale]\\carrier\\shipments\\new\\page.tsx",
     "line": 280,
     "column": 19,
     "arStr": "تعيين موظف التوصيل",
@@ -3151,15 +3025,6 @@
   },
   {
     "file": "app\\[locale]\\carrier\\shipments\\new\\page.tsx",
-    "line": 359,
-    "column": 60,
-    "arStr": "rotate-180 ml-2",
-    "enStr": "mr-2",
-    "suggestedKey": "carrier.mr2_61",
-    "original": "isRTL ? \"rotate-180 ml-2\" : \"mr-2\""
-  },
-  {
-    "file": "app\\[locale]\\carrier\\shipments\\new\\page.tsx",
     "line": 360,
     "column": 19,
     "arStr": "إنشاء الشحنة",
@@ -3193,15 +3058,6 @@
     "enStr": "TNA Code",
     "suggestedKey": "carrier.tna_code_65",
     "original": "isRTL ? 'رمز TNA' : 'TNA Code'"
-  },
-  {
-    "file": "app\\[locale]\\carrier\\resolve\\page.tsx",
-    "line": 96,
-    "column": 35,
-    "arStr": "مثال: TNA-123456",
-    "enStr": "e.g., TNA-123456",
-    "suggestedKey": "carrier.eg_tna123456_66",
-    "original": "isRTL ? \"مثال: TNA-123456\" : \"e.g., TNA-123456\""
   },
   {
     "file": "app\\[locale]\\carrier\\resolve\\page.tsx",
@@ -3349,15 +3205,6 @@
   },
   {
     "file": "app\\[locale]\\carrier\\driver\\confirm\\page.tsx",
-    "line": 77,
-    "column": 44,
-    "arStr": "rotate-180 ml-2",
-    "enStr": "mr-2",
-    "suggestedKey": "carrier.mr2_83",
-    "original": "isRTL ? \"rotate-180 ml-2\" : \"mr-2\""
-  },
-  {
-    "file": "app\\[locale]\\carrier\\driver\\confirm\\page.tsx",
     "line": 78,
     "column": 13,
     "arStr": "رجوع",
@@ -3400,15 +3247,6 @@
     "enStr": "Shipment not found",
     "suggestedKey": "carrier.shipment_not_found_88",
     "original": "isRTL ? 'الشحنة غير موجودة' : 'Shipment not found'"
-  },
-  {
-    "file": "app\\[locale]\\carrier\\driver\\confirm\\page.tsx",
-    "line": 136,
-    "column": 44,
-    "arStr": "rotate-180 ml-2",
-    "enStr": "mr-2",
-    "suggestedKey": "carrier.mr2_89",
-    "original": "isRTL ? \"rotate-180 ml-2\" : \"mr-2\""
   },
   {
     "file": "app\\[locale]\\carrier\\driver\\confirm\\page.tsx",
@@ -3484,15 +3322,6 @@
   },
   {
     "file": "app\\[locale]\\carrier\\driver\\confirm\\page.tsx",
-    "line": 262,
-    "column": 60,
-    "arStr": "rotate-180 ml-2",
-    "enStr": "mr-2",
-    "suggestedKey": "carrier.mr2_98",
-    "original": "isRTL ? \"rotate-180 ml-2\" : \"mr-2\""
-  },
-  {
-    "file": "app\\[locale]\\carrier\\driver\\confirm\\page.tsx",
     "line": 263,
     "column": 13,
     "arStr": "تأكيد التوصيل",
@@ -3508,14 +3337,5 @@
     "enStr": "Important Note",
     "suggestedKey": "carrier.important_note_100",
     "original": "isRTL ? 'ملاحظة هامة' : 'Important Note'"
-  },
-  {
-    "file": "app\\[locale]\\(auth)\\login\\page.tsx",
-    "line": 65,
-    "column": 16,
-    "arStr": "rtl",
-    "enStr": "ltr",
-    "suggestedKey": "auth.ltr_5",
-    "original": "isRTL ? 'rtl' : 'ltr'"
   }
 ]
