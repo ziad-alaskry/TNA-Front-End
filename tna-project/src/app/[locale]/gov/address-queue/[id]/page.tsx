@@ -109,7 +109,7 @@ export default function GovAddressVerificationDetailPage() {
                       {decision === 'APPROVED' ? <CheckCircle size={40} weight="fill" /> : <XCircle size={40} weight="fill" />}
                   </div>
                   <div>
-                    <h3 className="font-black text-xl uppercase tracking-tight">{isRTL ? (decision === 'APPROVED' ? 'تم التحقق' : 'تم الرفض') : `Request ${decision}`}</h3>
+                    <h3 className="font-black text-xl uppercase tracking-tight">{isRTL ? t(decision === 'APPROVED' ? 'gov.address_verified' : 'gov.address_rejected') : t('gov.request_decision', { decision })}</h3>
                     <p className="text-xs font-medium opacity-70">{t('gov.the_subaddress_verification_status_has_b_152')}</p>
                   </div>
                   <Button variant="outline" className="w-full border-neutral-200 text-neutral-900" onClick={() => router.push(`/${locale}/gov/address-queue`)}>

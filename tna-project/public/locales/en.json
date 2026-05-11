@@ -453,7 +453,9 @@
     "delivery_proof_photo_96": "Delivery Proof Photo",
     "tap_to_take_photo_97": "Tap to take photo",
     "confirm_delivery_99": "Confirm Delivery",
-    "important_note_100": "Important Note"
+    "important_note_100": "Important Note",
+    "bind_address": "Bind Address",
+    "view_details": "View Details"
   },
   "gov": {
     "home": {
@@ -659,7 +661,12 @@
     "title_deed_159": "Title Deed",
     "available_160": "AVAILABLE",
     "na_certificate_161": "NA Certificate",
-    "available_162": "AVAILABLE"
+    "available_162": "AVAILABLE",
+    "address_verified": "Address Verified",
+    "address_rejected": "Address Rejected",
+    "request_decision": "Request {decision}",
+    "approval_completed": "Approval Completed",
+    "rejection_completed": "Rejection Completed"
   },
   "kyc": {
     "title": "KYC Verification",

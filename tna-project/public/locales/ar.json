@@ -453,7 +453,9 @@
     "delivery_proof_photo_96": "صورة إثبات التوصيل",
     "tap_to_take_photo_97": "اضغط لالتقاط صورة",
     "confirm_delivery_99": "تأكيد التوصيل",
-    "important_note_100": "ملاحظة هامة"
+    "important_note_100": "ملاحظة هامة",
+    "bind_address": "ربط العنوان",
+    "view_details": "عرض التفاصيل"
   },
   "gov": {
     "home": {
@@ -659,7 +661,12 @@
     "title_deed_159": "سند الملكية",
     "available_160": "متوفي",
     "na_certificate_161": "شهادة العنوان الوطني",
-    "available_162": "متوفي"
+    "available_162": "متوفي",
+    "address_verified": "تم التحقق",
+    "address_rejected": "تم الرفض",
+    "request_decision": "Request {decision}",
+    "approval_completed": "تمت الموافقة",
+    "rejection_completed": "تم الرفض"
   },
   "kyc": {
     "title": "التحقق من الهوية",

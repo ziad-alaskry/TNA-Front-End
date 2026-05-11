@@ -225,10 +225,7 @@ export default function CarrierResolvePage() {
                         }}
                       >
                         <NavigationArrow size={20} weight="bold" className={isRTL ? "rotate-180" : ""} />
-                        {isRTL 
-                          ? (result.binding_status === 'UNLINKED' ? 'ربط العنوان' : 'عرض التفاصيل')
-                          : (result.binding_status === 'UNLINKED' ? 'Bind Address' : 'View Details')
-                        }
+                        {t(result.binding_status === 'UNLINKED' ? 'carrier.bind_address' : 'carrier.view_details')}
                       </Button>
                     </div>
                   </div>

@@ -104,7 +104,7 @@ export default function GovTNAReviewDetailPage() {
                       {decision === 'APPROVED' ? <CheckCircle size={40} weight="fill" /> : <XCircle size={40} weight="fill" />}
                   </div>
                   <div>
-                    <h3 className="font-black text-xl uppercase tracking-tight">{isRTL ? `تم ${decision === 'APPROVED' ? 'الموافقة' : 'الرفض'}` : `Request ${decision}`}</h3>
+                    <h3 className="font-black text-xl uppercase tracking-tight">{isRTL ? t(decision === 'APPROVED' ? 'gov.approval_completed' : 'gov.rejection_completed') : t('gov.request_decision', { decision })}</h3>
                     <p className="text-xs font-medium opacity-70">{t('gov.the_system_has_been_updated_and_a_notifi_51')}</p>
                   </div>
                   <Button variant="outline" className="w-full border-neutral-200 text-neutral-900" onClick={() => router.push(`/${locale}/gov/tna-queue`)}>
