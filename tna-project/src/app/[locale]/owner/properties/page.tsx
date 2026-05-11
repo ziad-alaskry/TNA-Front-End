@@ -18,18 +18,19 @@ import { mockProperties } from '@/lib/mock/properties.mock'
 import { useMock } from '@/lib/hooks/useMock'
 import Button from '@/components/ui/Button'
 import { cn } from '@/lib/utils/cn'
+import { useTranslation } from 'react-i18next';
 
 export default function OwnerPropertiesPage() {
     const router = useRouter();
     const { locale } = useParams();
-    const { t, isRTL } = useLocale();
+    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const { t, isRTL } = useLocale();
 
     const { data: properties, isLoading } = useMock(mockProperties);
 
     const columns: DataTableColumn<any>[] = [
         {
             key: 'full_address',
-            label: isRTL ? 'العقار' : 'Property',
+            label: t('owner.property_13'),
             width: '40%',
             render: (val, row) => (
                 <div className="flex items-center gap-3">
@@ -45,7 +46,7 @@ export default function OwnerPropertiesPage() {
         },
         {
             key: 'city',
-            label: isRTL ? 'المدينة' : 'Location',
+            label: t('owner.location_14'),
             width: '20%',
             render: (val, row) => (
                 <div className="flex flex-col">
@@ -56,7 +57,7 @@ export default function OwnerPropertiesPage() {
         },
         {
             key: 'ownership_proof_status',
-            label: isRTL ? 'حالة التوثيق' : 'Status',
+            label: t('owner.status_15'),
             width: '20%',
             render: (val) => {
                 const isVerified = val === 'VERIFIED';
@@ -87,7 +88,7 @@ export default function OwnerPropertiesPage() {
                         size="sm"
                         className="h-9 px-4 gap-2 border-neutral-200"
                     >
-                        {isRTL ? 'التفاصيل' : 'Details'}
+                        {t('owner.details_16')}
                         <ArrowRight size={16} className={isRTL ? "rotate-180" : ""} />
                     </Button>
                 </div>
@@ -96,9 +97,9 @@ export default function OwnerPropertiesPage() {
     ];
 
     return (
-        <AppShell role="Owner" header={isRTL ? 'إدارة العقارات' : 'Property Management'}>
+        <AppShell role="Owner" header={t('owner.property_management_17')}>
             <DataTableLayout
-                title={isRTL ? 'قائمة العقارات' : 'Property Portfolio'}
+                title={t('owner.property_portfolio_18')}
                 columns={columns}
                 data={properties || []}
                 isLoading={isLoading}
@@ -109,7 +110,7 @@ export default function OwnerPropertiesPage() {
                         className="shadow-glow-primary px-6"
                     >
                         <PlusCircle size={20} weight="bold" />
-                        {isRTL ? 'إضافة عقار' : 'Add Property'}
+                        {t('owner.add_property_19')}
                     </Button>
                 }
                 emptyState={{

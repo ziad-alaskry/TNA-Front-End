@@ -17,16 +17,17 @@ import { mockGovQueue } from '@/lib/mock/gov.mock'
 import { useMock } from '@/lib/hooks/useMock'
 import Button from '@/components/ui/Button'
 import { cn } from '@/lib/utils/cn'
+import { useTranslation } from 'react-i18next';
 
 export default function GovQueuePage() {
     const router = useRouter();
-    const { locale, isRTL } = useLocale();
+    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  locale, isRTL , t } = useLocale();
     const { data: queue, isLoading } = useMock(mockGovQueue);
 
     const columns: DataTableColumn<any>[] = [
         {
             key: 'visitor_name',
-            label: isRTL ? 'مقدم الطلب' : 'Applicant',
+            label: t('gov.applicant_26'),
             width: '30%',
             render: (val, row) => (
                 <div className="flex items-center gap-3">
@@ -42,7 +43,7 @@ export default function GovQueuePage() {
         },
         {
             key: 'mode',
-            label: isRTL ? 'السياسة' : 'Policy Mode',
+            label: t('gov.policy_mode_27'),
             width: '20%',
             render: (val) => (
                 <span className="px-2 py-1 bg-primary/5 text-primary text-[10px] font-black rounded uppercase border border-primary/10">
@@ -52,7 +53,7 @@ export default function GovQueuePage() {
         },
         {
             key: 'submitted_at',
-            label: isRTL ? 'تاريخ التقديم' : 'Submitted At',
+            label: t('gov.submitted_at_28'),
             width: '20%',
             render: (val) => (
                 <div className="flex items-center gap-2 text-neutral-500">
@@ -63,7 +64,7 @@ export default function GovQueuePage() {
         },
         {
             key: 'status',
-            label: isRTL ? 'الحالة' : 'Status',
+            label: t('gov.status_29'),
             width: '15%',
             render: (val) => (
                 <span className={cn(
@@ -86,7 +87,7 @@ export default function GovQueuePage() {
                         size="sm"
                         className="h-9 px-4 border-neutral-200"
                     >
-                        {isRTL ? 'مراجعة' : 'Review'}
+                        {t('gov.review_30')}
                         <ArrowRight size={16} className={isRTL ? "rotate-180" : ""} />
                     </Button>
                 </div>
@@ -95,7 +96,7 @@ export default function GovQueuePage() {
     ];
 
     return (
-        <AppShell role="Gov" header={isRTL ? 'قائمة المراجعة' : 'Verification Queue'}>
+        <AppShell role="Gov" header={t('gov.verification_queue_31')}>
             <DataTableLayout
                 title="Pending TNA Requests"
                 columns={columns}

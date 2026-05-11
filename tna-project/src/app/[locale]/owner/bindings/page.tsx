@@ -17,6 +17,7 @@ import { mockBindings } from '@/lib/mock/bindings.mock'
 import { useMock } from '@/lib/hooks/useMock'
 import Button from '@/components/ui/Button'
 import { cn } from '@/lib/utils/cn'
+import { useTranslation } from 'react-i18next';
 
 const t = (key: string, params?: Record<string, string>): string => {
     const translations: Record<string, string> = {
@@ -49,7 +50,7 @@ const t = (key: string, params?: Record<string, string>): string => {
 
 export default function OwnerBindingsPage() {
     const router = useRouter();
-    const { locale, isRTL } = useLocale();
+    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  locale, isRTL , t } = useLocale();
     const [filter, setFilter] = useState<'all' | 'PENDING' | 'ACTIVE' | 'COMPLETED' | 'TERMINATED'>('all');
     const { data: bindings, isLoading } = useMock(mockBindings);
 
@@ -60,19 +61,19 @@ export default function OwnerBindingsPage() {
     const columns: DataTableColumn<any>[] = [
         {
             key: 'tna_code',
-            label: isRTL ? 'كود TNA' : 'TNA Code',
+            label: t('owner.tna_code_47'),
             width: '20%',
             render: (val) => <span className="font-mono font-bold text-primary">{val}</span>
         },
         {
             key: 'sub_address_label',
-            label: isRTL ? 'الوحدة' : 'Unit',
+            label: t('owner.unit_48'),
             width: '20%',
             render: (val) => <span className="font-bold text-neutral-900">{val}</span>
         },
         {
             key: 'period',
-            label: isRTL ? 'الفترة' : 'Period',
+            label: t('owner.period_49'),
             width: '20%',
             render: (row) => {
                 const start = new Date(row.start_at);
@@ -84,13 +85,13 @@ export default function OwnerBindingsPage() {
         },
         {
             key: 'net_owner_amount',
-            label: isRTL ? 'صافي المبلغ للمالك' : 'Net Owner Amount',
+            label: t('owner.net_owner_amount_50'),
             width: '15%',
             render: (val) => <span className="font-bold text-neutral-900">{val} SAR</span>
         },
         {
             key: 'status',
-            label: isRTL ? 'الحالة' : 'Status',
+            label: t('owner.status_51'),
             width: '15%',
             render: (val) => (
                 <span className={cn(
@@ -108,7 +109,7 @@ export default function OwnerBindingsPage() {
         },
         {
             key: 'actions',
-            label: isRTL ? 'الإجراءات' : 'Actions',
+            label: t('owner.actions_52'),
             width: '15%',
             render: (id, row) => (
                 <div className="flex gap-2 justify-end">
@@ -163,7 +164,7 @@ export default function OwnerBindingsPage() {
     ];
 
     return (
-        <AppShell role="Owner" header={isRTL ? 'طلبات الربط' : 'Linking Requests'}>
+        <AppShell role="Owner" header={t('owner.linking_requests_53')}>
             <div className="mt-6 flex flex-wrap gap-3">
                 {[ 'all', 'PENDING', 'ACTIVE', 'COMPLETED', 'TERMINATED' ].map((status) => (
                     <Button

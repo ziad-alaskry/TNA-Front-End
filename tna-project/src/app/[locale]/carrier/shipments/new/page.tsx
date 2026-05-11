@@ -14,6 +14,7 @@ import { useLocale } from '@/i18n/LocaleProvider'
 import { resolverApi } from '@/lib/api/resolver'
 import type { TNAResolutionResult } from '@/lib/api/resolver'
 import {
+import { useTranslation } from 'react-i18next';
   Package,
   Truck,
   User,
@@ -31,7 +32,7 @@ interface PackageDetails {
 
 export default function NewShipmentPage() {
   const router = useRouter()
-  const { locale, isRTL, t } = useLocale()
+  /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const { locale, isRTL, t } = useLocale()
   const toast = useToast()
 
   const [step, setStep] = useState(1)
@@ -82,7 +83,7 @@ export default function NewShipmentPage() {
       return response.json()
     },
     onSuccess: () => {
-      toast.success(isRTL ? 'تم إنشاء الشحنة بنجاح' : 'Shipment created successfully')
+      toast.success(t('carrier.shipment_created_successfully_34'))
       router.push(`/${locale}/carrier/shipments`)
     },
     onError: (error: any) => {
@@ -116,7 +117,7 @@ export default function NewShipmentPage() {
 
   return (
     <RoleGuard requiredRole="Carrier">
-      <AppShell role="Carrier" header={isRTL ? 'تسجيل شحنة جديدة' : 'Register New Shipment'}>
+      <AppShell role="Carrier" header={t('carrier.register_new_shipment_35')}>
         <div className="max-w-2xl mx-auto space-y-8 pb-12">
 
           {/* Progress Steps */}
@@ -144,7 +145,7 @@ export default function NewShipmentPage() {
             <section className="bg-white rounded-2xl border border-neutral-200 shadow-sm p-6 space-y-6 animate-in fade-in duration-500">
               <div className="space-y-2">
                 <h2 className="text-xl font-black text-neutral-900">
-                  {isRTL ? 'التحقق من عنوان TNA' : 'Verify TNA Address'}
+                  {t('carrier.verify_tna_address_36')}
                 </h2>
                 <p className="text-sm text-neutral-600">
                   {isRTL 
@@ -155,14 +156,14 @@ export default function NewShipmentPage() {
 
               <div className="space-y-3">
                 <label className="block text-sm font-bold text-neutral-700">
-                  {isRTL ? 'رمز TNA' : 'TNA Code'}
+                  {t('carrier.tna_code_37')}
                 </label>
                 <div className="flex gap-3">
                   <div className="flex-1">
                     <InputField
                       value={tnaCode}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTnaCode(e.target.value)}
-                      placeholder={isRTL ? "مثال: TNA-123456" : "e.g., TNA-123456"}
+                      placeholder={t('carrier.example_tna_1')}
                       disabled={isValidating}
                       className="h-12 text-lg font-mono"
                     />
@@ -196,8 +197,8 @@ export default function NewShipmentPage() {
                     <div className="space-y-1">
                       <p className="font-bold text-neutral-900">
                         {tnaResolution.deliverable
-                          ? (isRTL ? 'العنوان صالح للتوصيل' : 'Address is deliverable')
-                          : (isRTL ? 'العنوان غير صالح' : 'Address is not deliverable')
+                          ? (t('carrier.address_is_deliverable_39'))
+                          : (t('carrier.address_is_not_deliverable_40'))
                         }
                       </p>
                       <p className="text-sm text-neutral-600">
@@ -217,7 +218,7 @@ export default function NewShipmentPage() {
                   onClick={() => setStep(2)}
                   disabled={!tnaResolution?.deliverable}
                 >
-                  {isRTL ? 'متابعة' : 'Continue'}
+                  {t('carrier.continue_41')}
                   <ArrowRight size={20} className={isRTL ? "rotate-180 mr-2" : "ml-2"} />
                 </Button>
               </div>
@@ -229,7 +230,7 @@ export default function NewShipmentPage() {
             <section className="bg-white rounded-2xl border border-neutral-200 shadow-sm p-6 space-y-6 animate-in fade-in duration-500">
               <div className="space-y-2">
                 <h2 className="text-xl font-black text-neutral-900">
-                  {isRTL ? 'تفاصيل الطرد' : 'Package Details'}
+                  {t('carrier.package_details_43')}
                 </h2>
                 <p className="text-sm text-neutral-600">
                   {isRTL 
@@ -240,32 +241,32 @@ export default function NewShipmentPage() {
 
               <div className="space-y-4">
                 <InputField
-                  label={isRTL ? 'الوزن (كجم)' : 'Weight (kg)'}
+                  label={t('carrier.weight_kg_44')}
                   type="number"
                   value={packageDetails.weight}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPackageDetails(prev => ({ ...prev, weight: e.target.value }))}
-                  placeholder={isRTL ? 'مثال: 2.5' : 'e.g., 2.5'}
+                  placeholder={t('carrier.eg_25_45')}
                 />
                 <InputField
-                  label={isRTL ? 'الأبعاد' : 'Dimensions'}
+                  label={t('carrier.dimensions_46')}
                   value={packageDetails.dimensions}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPackageDetails(prev => ({ ...prev, dimensions: e.target.value }))}
-                  placeholder={isRTL ? 'مثال: 30x20x15 سم' : 'e.g., 30x20x15 cm'}
+                  placeholder={t('carrier.eg_30x20x15_cm_47')}
                 />
                 <InputField
-                  label={isRTL ? 'محتويات الشحنة' : 'Package Contents'}
+                  label={t('carrier.package_contents_48')}
                   value={packageDetails.contents}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPackageDetails(prev => ({ ...prev, contents: e.target.value }))}
-                  placeholder={isRTL ? 'مثال: كتب، ملابس' : 'e.g., books, clothing'}
+                  placeholder={t('carrier.eg_books_clothing_49')}
                 />
               </div>
 
               <div className="flex justify-between pt-4">
                 <Button variant="ghost" onClick={() => setStep(1)}>
-                  {isRTL ? 'رجوع' : 'Back'}
+                  {t('carrier.back_50')}
                 </Button>
                 <Button className="px-8" onClick={() => setStep(3)}>
-                  {isRTL ? 'متابعة' : 'Continue'}
+                  {t('carrier.continue_41')}
                   <ArrowRight size={20} className={isRTL ? "rotate-180 ml-2" : "ml-2"} />
                 </Button>
               </div>
@@ -277,7 +278,7 @@ export default function NewShipmentPage() {
             <section className="bg-white rounded-2xl border border-neutral-200 shadow-sm p-6 space-y-6 animate-in fade-in duration-500">
               <div className="space-y-2">
                 <h2 className="text-xl font-black text-neutral-900">
-                  {isRTL ? 'تعيين موظف التوصيل' : 'Assign Delivery Staff'}
+                  {t('carrier.assign_delivery_staff_53')}
                 </h2>
                 <p className="text-sm text-neutral-600">
                   {isRTL 
@@ -288,7 +289,7 @@ export default function NewShipmentPage() {
 
               <div className="space-y-2">
                 <label className="block text-sm font-bold text-neutral-700">
-                  {isRTL ? 'موظف التوصيل' : 'Delivery Staff'}
+                  {t('carrier.delivery_staff_54')}
                 </label>
                 <div className="grid gap-3">
                   {staffList.map((staff) => (
@@ -322,23 +323,23 @@ export default function NewShipmentPage() {
               {/* Summary */}
               <div className="bg-surface-200 rounded-lg p-4 space-y-2">
                 <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">
-                  {isRTL ? 'ملخص الشحنة' : 'Shipment Summary'}
+                  {t('carrier.shipment_summary_55')}
                 </p>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="text-neutral-500">{isRTL ? 'رمز TNA' : 'TNA Code'}:</span>
+                    <span className="text-neutral-500">{t('carrier.tna_code_37')}:</span>
                     <span className="font-mono font-bold text-neutral-900 ms-2">{tnaCode}</span>
                   </div>
                   <div>
-                    <span className="text-neutral-500">{isRTL ? 'الوزن' : 'Weight'}:</span>
+                    <span className="text-neutral-500">{t('carrier.weight_57')}:</span>
                     <span className="font-bold text-neutral-900 ms-2">{packageDetails.weight || '-'} kg</span>
                   </div>
                   <div>
-                    <span className="text-neutral-500">{isRTL ? 'الأبعاد' : 'Dimensions'}:</span>
+                    <span className="text-neutral-500">{t('carrier.dimensions_46')}:</span>
                     <span className="font-bold text-neutral-900 ms-2">{packageDetails.dimensions || '-'}</span>
                   </div>
                   <div>
-                    <span className="text-neutral-500">{isRTL ? 'الموظف' : 'Staff'}:</span>
+                    <span className="text-neutral-500">{t('carrier.staff_59')}:</span>
                     <span className="font-bold text-neutral-900 ms-2">
                       {staffList.find(s => s.staff_id === assignedStaff)?.full_name || '-'}
                     </span>
@@ -348,7 +349,7 @@ export default function NewShipmentPage() {
 
               <div className="flex justify-between pt-4">
                 <Button variant="ghost" onClick={() => setStep(2)}>
-                  {isRTL ? 'رجوع' : 'Back'}
+                  {t('carrier.back_50')}
                 </Button>
                 <Button
                   className="px-8"
@@ -357,7 +358,7 @@ export default function NewShipmentPage() {
                   isLoading={createShipmentMutation.isPending}
                 >
                   <Truck size={20} weight="bold" className={isRTL ? "rotate-180 ml-2" : "mr-2"} />
-                  {isRTL ? 'إنشاء الشحنة' : 'Create Shipment'}
+                  {t('carrier.create_shipment_62')}
                 </Button>
               </div>
             </section>

@@ -26,11 +26,12 @@ import { useLocale } from '@/i18n/LocaleProvider';
 import Button from '@/components/ui/Button';
 import { cn } from '@/lib/utils/cn';
 import { useBindingContext } from '@/context/BindingContext';
+import { useTranslation } from 'react-i18next';
 
 export default function VisitorTnaUnbindPage() {
     const { id } = useParams();
     const router = useRouter();
-    const { locale, isRTL } = useLocale();
+    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  locale, isRTL , t } = useLocale();
     const { terminateBinding, visitorTnas } = useBindingContext();
 
     const tna = visitorTnas?.find(t => t.tna_id === id);
@@ -66,15 +67,15 @@ export default function VisitorTnaUnbindPage() {
 
     const sections = [
         {
-            title: isRTL ? 'معلومات العنوان' : 'TNA Information',
-            description: isRTL ? 'البيانات الأساسية لعنوانك الوطني المؤقت.' : 'Core identity data for your temporary national address.',
+            title: t('visitor.tna_information_27'),
+            description: t('visitor.core_identity_data_for_your_temporary_na_28'),
             items: [
                 { 
-                  label: isRTL ? 'كود TNA' : 'TNA Code', 
+                  label: t('visitor.tna_code_29'), 
                   value: <span className="font-mono font-bold text-primary">{tna.tna_code}</span> 
                 },
                 { 
-                  label: isRTL ? 'الحالة' : 'Status', 
+                  label: t('visitor.status_30'), 
                   value: (
                     <span className={cn(
                       "px-2 py-0.5 text-[10px] font-bold rounded uppercase tracking-widest",
@@ -85,17 +86,17 @@ export default function VisitorTnaUnbindPage() {
                     </span>
                   ) 
                 },
-                { label: isRTL ? 'تاريخ الإصدار' : 'Issued At', value: new Date(tna.issued_at).toLocaleDateString() },
-                { label: isRTL ? 'تاريخ الانتهاء' : 'Expires At', value: new Date(tna.expires_at).toLocaleDateString() },
+                { label: t('visitor.issued_at_31'), value: new Date(tna.issued_at).toLocaleDateString() },
+                { label: t('visitor.expires_at_32'), value: new Date(tna.expires_at).toLocaleDateString() },
             ]
         },
         {
-            title: isRTL ? 'العقار المرتبط' : 'Linked Property',
-            description: isRTL ? 'تفاصيل العقار الذي تم ربط العنوان به.' : 'Details of the physical property bound to this TNA.',
+            title: t('visitor.linked_property_33'),
+            description: t('visitor.details_of_the_physical_property_bound_t_34'),
             items: [
-                { label: isRTL ? 'العنوان' : 'Address', value: mockProperties[0].full_address },
-                { label: isRTL ? 'المدينة' : 'City', value: mockProperties[0].city },
-                { label: isRTL ? 'رقم الوحدة' : 'Unit', value: mockSubAddresses[1].suffix_code },
+                { label: t('visitor.address_35'), value: mockProperties[0].full_address },
+                { label: t('visitor.city_36'), value: mockProperties[0].city },
+                { label: t('visitor.unit_37'), value: mockSubAddresses[1].suffix_code },
             ]
         },
     ];
@@ -154,7 +155,7 @@ export default function VisitorTnaUnbindPage() {
     );
 
     return (
-        <AppShell role="Visitor" header={isRTL ? 'إلغاء ربط TNA' : 'Unbind TNA Address'}>
+        <AppShell role="Visitor" header={t('visitor.unbind_tna_address_38')}>
             <DetailViewLayout
                 title={`TNA: ${tna.tna_code}`}
                 mainContent={sections}

@@ -22,11 +22,12 @@ import { useLocale } from '@/i18n/LocaleProvider'
 import { useMock } from '@/lib/hooks/useMock'
 import Button from '@/components/ui/Button'
 import { cn } from '@/lib/utils/cn'
+import { useTranslation } from 'react-i18next';
 
 export default function VisitorTnaDetailPage() {
     const { id } = useParams();
     const router = useRouter();
-    const { locale, t, isRTL } = useLocale();
+    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const { locale, t, isRTL } = useLocale();
 
     const { data: tnas, isLoading } = useMock(mockTNAs);
     const tna = tnas?.find(t => t.tna_id === id);
@@ -38,15 +39,15 @@ export default function VisitorTnaDetailPage() {
 
     const sections = [
         {
-            title: isRTL ? 'معلومات العنوان' : 'TNA Information',
-            description: isRTL ? 'البيانات الأساسية لعنوانك الوطني المؤقت.' : 'Core identity data for your temporary national address.',
+            title: t('visitor.tna_information_15'),
+            description: t('visitor.core_identity_data_for_your_temporary_na_16'),
             items: [
                 { 
-                  label: isRTL ? 'كود TNA' : 'TNA Code', 
+                  label: t('visitor.tna_code_17'), 
                   value: <span className="font-mono font-bold text-primary">{tna.tna_code}</span> 
                 },
                 { 
-                  label: isRTL ? 'الحالة' : 'Status', 
+                  label: t('visitor.status_18'), 
                   value: (
                     <span className={cn(
                       "px-2 py-0.5 text-[10px] font-bold rounded uppercase tracking-widest",
@@ -57,17 +58,17 @@ export default function VisitorTnaDetailPage() {
                     </span>
                   ) 
                 },
-                { label: isRTL ? 'تاريخ الإصدار' : 'Issued At', value: new Date(tna.issued_at).toLocaleDateString() },
-                { label: isRTL ? 'تاريخ الانتهاء' : 'Expires At', value: new Date(tna.expires_at).toLocaleDateString() },
+                { label: t('visitor.issued_at_19'), value: new Date(tna.issued_at).toLocaleDateString() },
+                { label: t('visitor.expires_at_20'), value: new Date(tna.expires_at).toLocaleDateString() },
             ]
         },
         !isUnlinked && {
-            title: isRTL ? 'العقار المرتبط' : 'Linked Property',
-            description: isRTL ? 'تفاصيل العقار الذي تم ربط العنوان به.' : 'Details of the physical property bound to this TNA.',
+            title: t('visitor.linked_property_21'),
+            description: t('visitor.details_of_the_physical_property_bound_t_22'),
             items: [
-                { label: isRTL ? 'العنوان' : 'Address', value: mockProperties[0].full_address },
-                { label: isRTL ? 'المدينة' : 'City', value: mockProperties[0].city },
-                { label: isRTL ? 'رقم الوحدة' : 'Unit', value: mockSubAddresses[1].suffix_code },
+                { label: t('visitor.address_23'), value: mockProperties[0].full_address },
+                { label: t('visitor.city_24'), value: mockProperties[0].city },
+                { label: t('visitor.unit_25'), value: mockSubAddresses[1].suffix_code },
             ]
         },
     ].filter(Boolean) as any[];
@@ -119,7 +120,7 @@ export default function VisitorTnaDetailPage() {
     );
 
     return (
-        <AppShell role="Visitor" header={isRTL ? 'تفاصيل TNA' : 'TNA Details'}>
+        <AppShell role="Visitor" header={t('visitor.tna_details_26')}>
             <DetailViewLayout
                 title={`TNA: ${tna.tna_code}`}
                 mainContent={sections}

@@ -30,6 +30,7 @@ import { cn } from '@/lib/utils/cn'
 import { formatDate } from '@/lib/utils/formatDate'
 import { useMock } from '@/lib/hooks/useMock'
 import { mockShipments } from '@/lib/mock/shipments.mock'
+import { useTranslation } from 'react-i18next';
 
 const statusConfig: Record<string, { labelAr: string; labelEn: string; color: string; icon: React.ReactNode }> = {
   CREATED: {
@@ -79,7 +80,7 @@ const statusConfig: Record<string, { labelAr: string; labelEn: string; color: st
 export default function ShipmentDetailPage() {
   const router = useRouter()
   const params = useParams()
-  const { locale, isRTL, t } = useLocale()
+  /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const { locale, isRTL, t } = useLocale()
   const toast = useToast()
   const queryClient = useQueryClient()
   const shipmentId = params.id as string
@@ -96,11 +97,11 @@ export default function ShipmentDetailPage() {
       return { status }
     },
     onSuccess: () => {
-      toast.success(isRTL ? 'تم تحديث الحالة' : 'Status updated')
+      toast.success(t('carrier.status_updated_7'))
       queryClient.invalidateQueries({ queryKey: ['shipments'] })
     },
     onError: () => {
-      toast.error(isRTL ? 'فشل في تحديث الحالة' : 'Failed to update status')
+      toast.error(t('carrier.failed_to_update_status_8'))
     }
   })
 
@@ -110,7 +111,7 @@ export default function ShipmentDetailPage() {
       return { message }
     },
     onSuccess: () => {
-      toast.success(isRTL ? 'تم إرسال الرسالة' : 'Message sent')
+      toast.success(t('carrier.message_sent_9'))
       setNewMessage('')
       queryClient.invalidateQueries({ queryKey: ['shipments'] })
     }
@@ -118,7 +119,7 @@ export default function ShipmentDetailPage() {
 
   if (isLoading) {
     return (
-      <AppShell role="Carrier" header={isRTL ? 'تفاصيل الشحنة' : 'Shipment Details'}>
+      <AppShell role="Carrier" header={t('carrier.shipment_details_10')}>
         <div className="animate-pulse space-y-6">
           <div className="h-48 bg-neutral-200 rounded-2xl" />
           <div className="h-64 bg-neutral-200 rounded-2xl" />
@@ -129,15 +130,15 @@ export default function ShipmentDetailPage() {
 
   if (!shipment) {
     return (
-      <AppShell role="Carrier" header={isRTL ? 'غير موجود' : 'Not Found'}>
+      <AppShell role="Carrier" header={t('carrier.not_found_11')}>
         <div className="text-center py-12 space-y-4">
           <WarningCircle size={64} className="text-warning mx-auto" weight="fill" />
           <h2 className="text-xl font-bold text-neutral-900">
-            {isRTL ? 'الشحنة غير موجودة' : 'Shipment not found'}
+            {t('carrier.shipment_not_found_12')}
           </h2>
           <Button onClick={() => router.back()}>
             <ArrowLeft size={20} className={isRTL ? "rotate-180 ml-2" : "mr-2"} />
-            {isRTL ? 'رجوع' : 'Go Back'}
+            {t('carrier.go_back_14')}
           </Button>
         </div>
       </AppShell>
@@ -153,7 +154,7 @@ export default function ShipmentDetailPage() {
           <button onClick={() => router.back()} className="p-2 hover:bg-white/10 rounded-lg">
             <ArrowLeft size={24} className={isRTL ? "rotate-180" : ""} />
           </button>
-          <span>{isRTL ? 'تفاصيل الشحنة' : 'Shipment Details'}</span>
+          <span>{t('carrier.shipment_details_10')}</span>
         </div>
       }>
         <div className="space-y-6 pb-12">
@@ -174,10 +175,10 @@ export default function ShipmentDetailPage() {
                 </div>
                 <h1 className="text-2xl font-black text-neutral-900">{shipment.tna_code}</h1>
                 <p className="text-sm text-neutral-600">
-                  {isRTL ? 'المرسل' : 'Sender'}: {shipment.sender_name}
+                  {t('carrier.sender_16')}: {shipment.sender_name}
                 </p>
                 <p className="text-sm text-neutral-600">
-                  {isRTL ? 'المستلم' : 'Recipient'}: {shipment.recipient_name}
+                  {t('carrier.recipient_17')}: {shipment.recipient_name}
                 </p>
               </div>
               <div className="flex flex-col items-start md:items-end gap-2">
@@ -189,7 +190,7 @@ export default function ShipmentDetailPage() {
                   {isRTL ? statusInfo.labelAr : statusInfo.labelEn}
                 </span>
                 <p className="text-xs text-neutral-500">
-                  {isRTL ? 'تم الإنشاء' : 'Created'}: {formatDate(shipment.created_at)}
+                  {t('carrier.created_18')}: {formatDate(shipment.created_at)}
                 </p>
               </div>
             </div>
@@ -205,18 +206,18 @@ export default function ShipmentDetailPage() {
             <section className="bg-white rounded-2xl border border-neutral-200 shadow-sm p-6 space-y-4">
               <h3 className="text-lg font-black text-neutral-900 flex items-center gap-2">
                 <MapPin size={20} className="text-primary" weight="fill" />
-                {isRTL ? 'عنوان التوصيل' : 'Delivery Address'}
+                {t('carrier.delivery_address_19')}
               </h3>
               <div className="space-y-2 text-neutral-700">
                 <p className="font-bold">{shipment.destination_address_full}</p>
                 {shipment.estimated_delivery && (
                   <p className="text-sm text-neutral-500">
-                    {isRTL ? 'موعد التوصيل المتوقع' : 'Expected Delivery'}: {formatDate(shipment.estimated_delivery)}
+                    {t('carrier.expected_delivery_20')}: {formatDate(shipment.estimated_delivery)}
                   </p>
                 )}
                 {shipment.actual_delivery && (
                   <p className="text-sm text-success">
-                    {isRTL ? 'تم التوصيل في' : 'Delivered at'}: {formatDate(shipment.actual_delivery)}
+                    {t('carrier.delivered_at_21')}: {formatDate(shipment.actual_delivery)}
                   </p>
                 )}
               </div>
@@ -227,25 +228,25 @@ export default function ShipmentDetailPage() {
               <section className="bg-white rounded-2xl border border-neutral-200 shadow-sm p-6 space-y-4">
                 <h3 className="text-lg font-black text-neutral-900 flex items-center gap-2">
                   <Package size={20} className="text-secondary" weight="fill" />
-                  {isRTL ? 'تفاصيل الطرد' : 'Package Details'}
+                  {t('carrier.package_details_22')}
                 </h3>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   {shipment.package_details.weight && (
                     <div>
-                      <span className="text-neutral-500">{isRTL ? 'الوزن' : 'Weight'}:</span>
+                      <span className="text-neutral-500">{t('carrier.weight_23')}:</span>
                       <span className="font-bold text-neutral-900 ms-2">{shipment.package_details.weight} kg</span>
                     </div>
                   )}
                   {shipment.package_details.dimensions && (
                     <div>
-                      <span className="text-neutral-500">{isRTL ? 'الأبعاد' : 'Dimensions'}:</span>
+                      <span className="text-neutral-500">{t('carrier.dimensions_24')}:</span>
                       <span className="font-bold text-neutral-900 ms-2">{shipment.package_details.dimensions}</span>
                     </div>
                   )}
                 </div>
                 {shipment.package_details.contents && (
                   <div className="pt-2 border-t border-neutral-100">
-                    <span className="text-neutral-500 text-sm">{isRTL ? 'المحتويات' : 'Contents'}:</span>
+                    <span className="text-neutral-500 text-sm">{t('carrier.contents_25')}:</span>
                     <p className="font-bold text-neutral-900 mt-1">{shipment.package_details.contents}</p>
                   </div>
                 )}
@@ -256,7 +257,7 @@ export default function ShipmentDetailPage() {
             <section className="bg-white rounded-2xl border border-neutral-200 shadow-sm p-6 space-y-4">
               <h3 className="text-lg font-black text-neutral-900 flex items-center gap-2">
                 <Clock size={20} className="text-secondary" weight="fill" />
-                {isRTL ? 'سجل الحالات' : 'Status History'}
+                {t('carrier.status_history_26')}
               </h3>
               <div className="space-y-4">
                 {shipment.shipment_status_logs?.map((log: ShipmentStatusLog, idx: number) => (
@@ -296,7 +297,7 @@ export default function ShipmentDetailPage() {
             <section className="bg-white rounded-2xl border border-neutral-200 shadow-sm p-6 space-y-4">
               <h3 className="text-lg font-black text-neutral-900 flex items-center gap-2">
                  <ChatCircle size={20} className="text-primary" weight="fill" />
-                {isRTL ? 'المحادثات' : 'Messages'}
+                {t('carrier.messages_27')}
               </h3>
               <div className="space-y-4 max-h-80 overflow-y-auto">
                 {shipment.shipment_messages?.map((msg: ShipmentMessage) => (
@@ -317,7 +318,7 @@ export default function ShipmentDetailPage() {
                 <InputField
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
-                  placeholder={isRTL ? 'اكتب رسالتك...' : 'Type your message...'}
+                  placeholder={t('carrier.type_your_message_28')}
                   className="flex-1"
                 />
                 <Button
@@ -338,7 +339,7 @@ export default function ShipmentDetailPage() {
             {shipment.status !== 'DELIVERED' && shipment.status !== 'FAILED' && (
               <section className="bg-white rounded-2xl border border-neutral-200 shadow-sm p-6 space-y-4">
                 <h3 className="text-sm font-black text-neutral-400 uppercase tracking-widest">
-                  {isRTL ? 'تحديث الحالة' : 'Update Status'}
+                  {t('carrier.update_status_29')}
                 </h3>
                 <div className="space-y-2">
                   {Object.entries(statusConfig).map(([key, config]) => (
@@ -364,16 +365,16 @@ export default function ShipmentDetailPage() {
             {/* Quick Actions */}
             <section className="bg-white rounded-2xl border border-neutral-200 shadow-sm p-6 space-y-3">
               <h3 className="text-sm font-black text-neutral-400 uppercase tracking-widest">
-                {isRTL ? 'إجراءات سريعة' : 'Quick Actions'}
+                {t('carrier.quick_actions_30')}
               </h3>
               <div className="space-y-2">
                 <Button variant="outline" className="w-full justify-start">
                   <Phone size={18} />
-                  {isRTL ? 'اتصال بالعميل' : 'Call Customer'}
+                  {t('carrier.call_customer_31')}
                 </Button>
                 <Button variant="outline" className="w-full justify-start">
                   <MapPin size={18} />
-                  {isRTL ? 'فتح في الخريطة' : 'Open in Maps'}
+                  {t('carrier.open_in_maps_32')}
                 </Button>
                 {shipment.status === 'OUT_FOR_DELIVERY' && (
                   <Button 
@@ -381,7 +382,7 @@ export default function ShipmentDetailPage() {
                     onClick={() => router.push(`/${locale}/carrier/driver/confirm?shipment=${shipmentId}`)}
                   >
                     <CheckCircle size={18} weight="fill" />
-                    {isRTL ? 'تأكيد التوصيل' : 'Confirm Delivery'}
+                    {t('carrier.confirm_delivery_33')}
                   </Button>
                 )}
               </div>

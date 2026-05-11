@@ -20,10 +20,11 @@ import { useLocale } from '@/i18n/LocaleProvider'
 import { useMutation } from '@tanstack/react-query'
 import { resolverApi, TNAResolutionResult } from '@/lib/api/resolver'
 import { cn } from '@/lib/utils/cn'
+import { useTranslation } from 'react-i18next';
 
 export default function CarrierResolvePage() {
   const router = useRouter()
-  const { locale, isRTL, t } = useLocale()
+  /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const { locale, isRTL, t } = useLocale()
   const toast = useToast()
 
   const [tnaCode, setTnaCode] = useState('')
@@ -58,7 +59,7 @@ export default function CarrierResolvePage() {
 
   return (
     <RoleGuard requiredRole="Carrier">
-      <AppShell role="Carrier" header={isRTL ? 'تحقق من عنوان TNA' : 'TNA Address Resolver'}>
+      <AppShell role="Carrier" header={t('carrier.tna_address_resolver_63')}>
         <div className="max-w-2xl mx-auto space-y-8 pb-12">
 
           {/* Intro Banner */}
@@ -68,7 +69,7 @@ export default function CarrierResolvePage() {
                 <MapPin size={28} weight="bold" />
               </div>
               <h2 className="text-2xl font-black tracking-tight leading-tight">
-                {isRTL ? 'التحقق من العنوان الوطني' : 'National Address Resolver'}
+                {t('carrier.national_address_resolver_64')}
               </h2>
               <p className="text-white/80 text-sm md:text-base">
                 {isRTL 
@@ -86,14 +87,14 @@ export default function CarrierResolvePage() {
             <form onSubmit={handleResolve} className="space-y-4">
               <div className="space-y-2">
                 <label className="block text-sm font-bold text-neutral-700">
-                  {isRTL ? 'رمز TNA' : 'TNA Code'}
+                  {t('carrier.tna_code_65')}
                 </label>
                 <div className="flex gap-3">
                   <div className="flex-1">
                     <InputField
                       value={tnaCode}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTnaCode(e.target.value)}
-                      placeholder={isRTL ? "مثال: TNA-123456" : "e.g., TNA-123456"}
+                      placeholder={t('carrier.example_tna_1')}
                       disabled={isLoading}
                       className="h-12 text-lg font-mono"
                     />
@@ -117,11 +118,11 @@ export default function CarrierResolvePage() {
                 isLoading={isLoading}
               >
                 {isLoading 
-                  ? (isRTL ? 'جاري التحقق...' : 'Resolving...')
+                  ? (t('carrier.resolving_67'))
                   : (
                     <>
                       <MagnifyingGlass size={20} weight="bold" />
-                      {isRTL ? 'تحقق من العنوان' : 'Resolve Address'}
+                      {t('carrier.resolve_address_68')}
                     </>
                     )
                   }
@@ -154,13 +155,13 @@ export default function CarrierResolvePage() {
                   <div className="flex-1 space-y-1">
                     <h3 className="text-lg font-bold text-neutral-900">
                       {result.deliverable 
-                        ? (isRTL ? 'العنوان قابل للتوصيل' : 'Deliverable Address')
-                        : (isRTL ? 'لا يمكن التوصيل' : 'Not Deliverable')
+                        ? (t('carrier.deliverable_address_69'))
+                        : (t('carrier.not_deliverable_70'))
                       }
                     </h3>
                     <p className="text-sm text-neutral-600">
                       {result.deliverable 
-                        ? (isRTL ? `العنوان: ${result.national_address.full_address}` : `Address: ${result.national_address.full_address}`)
+                        ? (t('carrier.address_resultnationaladdressfulladdress_71'))
                         : result.error
                       }
                     </p>
@@ -172,7 +173,7 @@ export default function CarrierResolvePage() {
                     {/* Sub-address info */}
                     <div className="bg-white/50 rounded-lg p-4 space-y-2">
                       <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">
-                        {isRTL ? 'الرمز الفرعي' : 'Sub-Address'}
+                        {t('carrier.subaddress_72')}
                       </p>
                       <p className="text-base font-bold text-neutral-900 font-mono">
                         {result.sub_address.suffix_code} — {result.sub_address.label}
@@ -182,7 +183,7 @@ export default function CarrierResolvePage() {
                     {/* Full address */}
                     <div className="bg-white/50 rounded-lg p-4 space-y-2">
                       <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">
-                        {isRTL ? 'العنوان الوطني الكامل' : 'Full National Address'}
+                        {t('carrier.full_national_address_73')}
                       </p>
                       <p className="text-sm font-bold text-neutral-900 leading-relaxed">
                         {result.national_address.full_address}
@@ -196,7 +197,7 @@ export default function CarrierResolvePage() {
                     <div className="flex items-center justify-between bg-white/50 rounded-lg p-4">
                       <div>
                         <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">
-                          {isRTL ? 'حالة الربط' : 'Binding Status'}
+                          {t('carrier.binding_status_74')}
                         </p>
                         <p className={cn(
                           "text-sm font-bold",
@@ -219,7 +220,7 @@ export default function CarrierResolvePage() {
                           if (result.binding_status === 'UNLINKED') {
                             router.push(`/${locale}/visitor/tnas/${result.tna_code}/bind`)
                           } else {
-                            toast.info(isRTL ? 'العنوان مرتبط بالفعل' : 'Address already bound')
+                            toast.info(t('carrier.address_already_bound_75'))
                           }
                         }}
                       >
@@ -237,7 +238,7 @@ export default function CarrierResolvePage() {
                   <div className="pt-4 border-t border-warning/20">
                     <p className="text-xs text-warning font-bold flex items-center gap-2">
                       <X size={16} weight="bold" />
-                      {isRTL ? 'يرجى التحقق من رمز TNA وإعادة المحاولة' : 'Please verify the TNA code and try again'}
+                      {t('carrier.please_verify_the_tna_code_and_try_again_76')}
                     </p>
                   </div>
                 )}

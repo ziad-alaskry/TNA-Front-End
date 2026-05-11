@@ -8,6 +8,7 @@ import Button from '@/components/ui/Button'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { useTranslation } from 'react-i18next';
 
 const payoutSchema = z.object({
   bank_name: z.string().min(1, 'Bank name is required'),
@@ -19,7 +20,7 @@ const payoutSchema = z.object({
 type PayoutInputs = z.infer<typeof payoutSchema>
 
 export default function PayoutSettingsPage() {
-  const { isRTL } = useLocale()
+  /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  isRTL , t } = useLocale()
   const [isLoading, setIsLoading] = useState(false)
   const [success, setSuccess] = useState(false)
 
@@ -49,12 +50,12 @@ export default function PayoutSettingsPage() {
   }
 
   return (
-    <AppShell role="Owner" header={isRTL ? 'إعدادات السحب' : 'Payout Settings'}>
+    <AppShell role="Owner" header={t('owner.payout_settings_1')}>
       <div className="max-w-2xl mx-auto">
         <div className="p-8 bg-white rounded-3xl border border-neutral-200 shadow-sm space-y-6">
           <div>
             <h2 className="text-xl font-black text-neutral-900">
-              {isRTL ? 'إعدادات طريقة السحب' : 'Payout Method Settings'}
+              {t('owner.payout_method_settings_2')}
             </h2>
             <p className="text-sm text-neutral-600 mt-1">
               {isRTL 
@@ -66,32 +67,32 @@ export default function PayoutSettingsPage() {
           <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4">
               <InputField
-                label={isRTL ? 'اسم البنك' : 'Bank Name'}
-                placeholder={isRTL ? 'مثال: مصرف الراجحي' : 'e.g., Al Rajhi Bank'}
+                label={t('owner.bank_name_3')}
+                placeholder={t('owner.eg_al_rajhi_bank_4')}
                 {...methods.register('bank_name')}
                 error={methods.formState.errors.bank_name?.message}
               />
               <InputField
-                label={isRTL ? 'رقم الحساب البنكي' : 'Bank Account Number'}
-                placeholder={isRTL ? 'أدخل رقم الحساب البنكي' : 'Enter your bank account number'}
+                label={t('owner.bank_account_number_5')}
+                placeholder={t('owner.enter_your_bank_account_number_6')}
                 {...methods.register('account_number')}
                 error={methods.formState.errors.account_number?.message}
               />
               <InputField
-                label={isRTL ? 'رقم الآيبان (IBAN)' : 'IBAN'}
-                placeholder={isRTL ? 'SA00 0000 0000 0000 0000 0000' : 'SA00 0000 0000 0000 0000 0000'}
+                label={t('owner.iban_7')}
+                placeholder={t('owner.sa00_0000_0000_0000_0000_0000_8')}
                 {...methods.register('iban')}
                 error={methods.formState.errors.iban?.message}
               />
               <InputField
-                label={isRTL ? 'رمز السويفت (اختياري)' : 'SWIFT Code (Optional)'}
-                placeholder={isRTL ? 'رمز السويفت' : 'SWIFT/BIC code'}
+                label={t('owner.swift_code_optional_9')}
+                placeholder={t('owner.swiftbic_code_10')}
                 {...methods.register('swift')}
               />
 
               {success && (
                 <div className="p-3 bg-success/10 text-success text-sm rounded-lg">
-                  {isRTL ? 'تم حفظ الإعدادات بنجاح' : 'Settings saved successfully'}
+                  {t('owner.settings_saved_successfully_11')}
                 </div>
               )}
 
@@ -101,7 +102,7 @@ export default function PayoutSettingsPage() {
                   isLoading={isLoading}
                   className="px-8"
                 >
-                  {isRTL ? 'حفظ الإعدادات' : 'Save Settings'}
+                  {t('owner.save_settings_12')}
                 </Button>
               </div>
             </form>

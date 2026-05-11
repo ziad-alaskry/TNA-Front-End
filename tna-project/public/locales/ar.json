@@ -363,7 +363,7 @@
       "deliverable": "عنوان قابل للتوصيل",
       "not_deliverable": "غير قابل للتوصيل"
     },
-    "tracking_1": "رقم التتبع",
+    "example_tna_1": "مثال: TNA-123456",
     "tna_destination_2": "عنوان TNA",
     "status_3": "الحالة",
     "shipment_management_4": "إدارة الشحنات",

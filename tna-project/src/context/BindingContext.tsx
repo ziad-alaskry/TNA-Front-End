@@ -13,7 +13,7 @@ interface BindingContextType {
   addVisitorTna: (tna: Partial<TNA>) => void;
   acceptBindingRequest: (id: string, fee: number) => void;
   initiateBindingRequest: (tnaId: string, subAddressId: string) => Promise<void>;
-  processPayment: (bindingId: string) => Promise<boolean>;
+  processPayment: (bindingId: string, amount?: number) => Promise<boolean>;
   verifyPayment: (bindingId: string) => Promise<boolean>;
   activateBinding: (bindingId: string) => Promise<void>;
   terminateBinding: (bindingId: string) => Promise<{ success: boolean; error?: string }>;
@@ -23,6 +23,7 @@ interface BindingContextType {
   realEstateObjects: Property[];
   financialTransactions: FinancialTransaction[];
   pendingBindings: Binding[];
+  addPendingBinding: (binding: Binding) => void;
 }
 
 const BindingContext = createContext<BindingContextType | undefined>(undefined);
@@ -191,11 +192,11 @@ export const BindingProvider = ({ children }: { children: ReactNode }) => {
     setPendingBindings(prev => [newBinding, ...prev]);
   };
 
-  const processPayment = async (bindingId: string): Promise<boolean> => {
+  const processPayment = async (bindingId: string, amount?: number): Promise<boolean> => {
     try {
       const binding = pendingBindings.find(b => b.binding_id === bindingId);
       if (!binding) { throw new Error('Binding not found'); }
-      const txnAmount = 150;
+      const txnAmount = amount || 150;
       const newTxn: FinancialTransaction = {
         transaction_id: `txn-${Date.now()}`,
         order_id: `ord-${Date.now()}`,
@@ -220,6 +221,10 @@ export const BindingProvider = ({ children }: { children: ReactNode }) => {
       }));
       return true;
     } catch (err) { return false; }
+  };
+
+  const addPendingBinding = (binding: Binding) => {
+    setPendingBindings(prev => [binding, ...prev]);
   };
 
   const verifyPayment = async (bindingId: string): Promise<boolean> => {
@@ -266,6 +271,10 @@ export const BindingProvider = ({ children }: { children: ReactNode }) => {
     return { success: true };
   };
 
+  const addPendingBinding = (binding: Binding) => {
+    setPendingBindings(prev => [binding, ...prev]);
+  };
+
   const acceptBindingRequest = (id: string, fee: number) => {
     setPendingBindings(current =>
       current.map(b => b.binding_id === id ? { ...b, status: 'ACTIVE' } : b)
@@ -300,6 +309,7 @@ export const BindingProvider = ({ children }: { children: ReactNode }) => {
         realEstateObjects,
         financialTransactions,
         pendingBindings,
+        addPendingBinding,
     }}>
       {children}
     </BindingContext.Provider>

@@ -10,6 +10,7 @@ import { useLocale } from '@/i18n/LocaleProvider'
 import Button from '@/components/ui/Button'
 import { cn } from '@/lib/utils/cn'
 import { 
+import { useTranslation } from 'react-i18next';
   CheckCircle, 
   XCircle, 
   Info 
@@ -18,7 +19,7 @@ import {
 export default function BindingDetailPage() {
   const { id } = useParams<{ id: string }>()
   const router = useRouter()
-  const { locale, isRTL } = useLocale()
+  /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  locale, isRTL , t } = useLocale()
 
   const { data: bindings, isLoading: bindingsLoading } = useMock(mockBindings)
   const { data: rentContracts, isLoading: contractsLoading } = useMock(mockRentContracts)
@@ -41,44 +42,44 @@ export default function BindingDetailPage() {
 
   const t = (key: string, param?: string): string => {
     const translations: Record<string, string> = {
-      'bindingInformation': isRTL ? 'معلومات الربط' : 'Binding Information',
-      'bindingDetailsDesc': isRTL ? 'تفاصيل طلب الربط بين TNA والوحدة' : 'Details of the binding request between TNA and unit',
-      'financialContract': isRTL ? 'التفاصيل المالية' : 'Financial Contract',
-      'financialDetailsDesc': isRTL ? 'تفاصيل توزيع المبلغ المالي للربط' : 'Breakdown of the financial distribution for the binding',
-      'tnaCode': isRTL ? 'كود TNA' : 'TNA Code',
-      'unit': isRTL ? 'الوحدة' : 'Unit',
-      'property': isRTL ? 'العقار' : 'Property',
-      'visitor': isRTL ? 'المستأجر' : 'Visitor',
-      'status': isRTL ? 'الحالة' : 'Status',
-      'startDate': isRTL ? 'تاريخ البداية' : 'Start Date',
-      'endDate': isRTL ? 'تاريخ النهاية' : 'End Date',
-      'createdAt': isRTL ? 'تاريخ الإنشاء' : 'Created At',
-      'grossAmount': isRTL ? 'الإجمالي' : 'Gross Amount',
-      'platformFee': isRTL ? 'رسوم المنصة' : 'Platform Fee',
-      'authorityShare': isRTL ? 'حصة الهيئة' : 'Authority Share',
-      'netOwnerAmount': isRTL ? 'صافي المبلغ للمالك' : 'Net Owner Amount',
-      'approve': isRTL ? 'موافقة' : 'Approve',
-      'reject': isRTL ? 'رفض' : 'Reject',
-      'terminate': isRTL ? 'إنهاء' : 'Terminate',
-      'actions': isRTL ? 'Actions' : 'Actions',
-      'note': isRTL ? 'ملاحظة' : 'Note',
+      'bindingInformation': t('owner.binding_information_54'),
+      'bindingDetailsDesc': t('owner.details_of_the_binding_request_between_t_55'),
+      'financialContract': t('owner.financial_contract_56'),
+      'financialDetailsDesc': t('owner.breakdown_of_the_financial_distribution__57'),
+      'tnaCode': t('owner.tna_code_58'),
+      'unit': t('owner.unit_59'),
+      'property': t('owner.property_60'),
+      'visitor': t('owner.visitor_61'),
+      'status': t('owner.status_62'),
+      'startDate': t('owner.start_date_63'),
+      'endDate': t('owner.end_date_64'),
+      'createdAt': t('owner.created_at_65'),
+      'grossAmount': t('owner.gross_amount_66'),
+      'platformFee': t('owner.platform_fee_67'),
+      'authorityShare': t('owner.authority_share_68'),
+      'netOwnerAmount': t('owner.net_owner_amount_69'),
+      'approve': t('owner.approve_70'),
+      'reject': t('owner.reject_71'),
+      'terminate': t('owner.terminate_72'),
+      'actions': t('owner.actions_73'),
+      'note': t('owner.note_74'),
       'financialNote': isRTL ? 
         'تظهر تفاصيل المالية المبلغ النهائي الذي سيستلمه المالك بعد خصم جميع الرسوم.' : 
         'Financial details show the final amount the owner will receive after deducting all fees.',
-      'statusTimeline': isRTL ? 'تemporal Timeline' : 'Status Timeline',
-      'requestCreated': isRTL ? 'تم إنشاء طلب الربط' : 'Binding request created',
-      'awaitingApproval': isRTL ? 'في انتظار موافقة المالك' : 'Awaiting owner approval',
-      'requestApproved': isRTL ? 'تمت الموافقة على الطلب' : 'Request approved',
-      'bindingActivated': isRTL ? 'تم تفعيل الربط' : 'Binding activated',
-      'bindingTerminated': isRTL ? 'تم إنهاء الربط' : 'Binding terminated',
-      'terminatedByAgreement': isRTL ? 'تم إنهاء الربط بالاتفاق' : 'Binding terminated by agreement',
+      'statusTimeline': t('owner.status_timeline_75'),
+      'requestCreated': t('owner.binding_request_created_76'),
+      'awaitingApproval': t('owner.awaiting_owner_approval_77'),
+      'requestApproved': t('owner.request_approved_78'),
+      'bindingActivated': t('owner.binding_activated_79'),
+      'bindingTerminated': t('owner.binding_terminated_80'),
+      'terminatedByAgreement': t('owner.binding_terminated_by_agreement_81'),
     }
     
     const result = translations[key] || key
     
     // Handle terminationReason with parameter
     if (key === 'terminationReason' && param) {
-      return isRTL ? `السبب: ${param}` : `Reason: ${param}`
+      return t('owner.reason_param_82')
     }
     
     return result
@@ -257,7 +258,7 @@ export default function BindingDetailPage() {
   )
 
   return (
-    <AppShell role="Owner" header={isRTL ? 'تفاصيل الربط' : 'Binding Details'}>
+    <AppShell role="Owner" header={t('owner.binding_details_83')}>
       <DetailViewLayout
         title={`${binding.tna_code} - ${subAddress?.label}`}
         mainContent={sections}

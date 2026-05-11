@@ -20,12 +20,13 @@ import { RoleGuard } from '@/components/shared/RoleGuard'
 import { formatDate } from '@/lib/utils/formatDate'
 import { deliveriesApi } from '@/lib/api/deliveries'
 import type { Shipment } from '@/lib/types/deliveries'
+import { useTranslation } from 'react-i18next';
 
 function DeliveryConfirmationContent() {
   const router = useRouter()
   const params = useParams()
   const searchParams = useSearchParams()
-  const { locale, isRTL, t } = useLocale()
+  /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const { locale, isRTL, t } = useLocale()
   const toast = useToast()
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -47,17 +48,17 @@ function DeliveryConfirmationContent() {
       return { success: true }
     },
     onSuccess: () => {
-      toast.success(isRTL ? 'تم تأكيد التوصيل بنجاح' : 'Delivery confirmed successfully')
+      toast.success(t('carrier.delivery_confirmed_successfully_78'))
       router.push(`/${locale}/carrier/driver/tasks`)
     },
     onError: (error: any) => {
-      toast.error(error.message || (isRTL ? 'فشل تأكيد التوصيل' : 'Failed to confirm delivery'))
+      toast.error(error.message || (t('carrier.failed_to_confirm_delivery_79')))
     }
   })
 
   if (isLoading) {
     return (
-      <AppShell role="Carrier" header={isRTL ? 'تأكيد التوصيل' : 'Confirm Delivery'}>
+      <AppShell role="Carrier" header={t('carrier.confirm_delivery_80')}>
         <div className="animate-pulse space-y-6">
           <div className="h-64 bg-neutral-200 rounded-2xl" />
         </div>
@@ -67,15 +68,15 @@ function DeliveryConfirmationContent() {
 
   if (!shipment) {
     return (
-      <AppShell role="Carrier" header={isRTL ? 'غير موجود' : 'Not Found'}>
+      <AppShell role="Carrier" header={t('carrier.not_found_81')}>
         <div className="text-center py-12 space-y-4">
           <Info size={64} className="text-warning mx-auto" weight="fill" />
           <h2 className="text-xl font-bold text-neutral-900">
-            {isRTL ? 'الشحنة غير موجودة' : 'Shipment not found'}
+            {t('carrier.shipment_not_found_82')}
           </h2>
           <Button onClick={() => router.back()}>
             <ArrowLeft size={20} className={isRTL ? "rotate-180 ml-2" : "mr-2"} />
-            {isRTL ? 'رجوع' : 'Go Back'}
+            {t('carrier.go_back_84')}
           </Button>
         </div>
        </AppShell>
@@ -97,7 +98,7 @@ function DeliveryConfirmationContent() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!otpCode.trim() || !photo) {
-      toast.error(isRTL ? 'يرجى ملء جميع الحقول المطلوبة' : 'Please fill all required fields')
+      toast.error(t('carrier.please_fill_all_required_fields_85'))
       return
     }
 
@@ -116,7 +117,7 @@ function DeliveryConfirmationContent() {
 
   if (isLoading) {
     return (
-      <AppShell role="Carrier" header={isRTL ? 'تأكيد التوصيل' : 'Confirm Delivery'}>
+      <AppShell role="Carrier" header={t('carrier.confirm_delivery_80')}>
         <div className="animate-pulse space-y-6">
           <div className="h-64 bg-neutral-200 rounded-2xl" />
         </div>
@@ -126,15 +127,15 @@ function DeliveryConfirmationContent() {
 
   if (!shipment) {
     return (
-      <AppShell role="Carrier" header={isRTL ? 'غير موجود' : 'Not Found'}>
+      <AppShell role="Carrier" header={t('carrier.not_found_81')}>
         <div className="text-center py-12 space-y-4">
           <Info size={64} className="text-warning mx-auto" weight="fill" />
           <h2 className="text-xl font-bold text-neutral-900">
-            {isRTL ? 'الشحنة غير موجودة' : 'Shipment not found'}
+            {t('carrier.shipment_not_found_82')}
           </h2>
           <Button onClick={() => router.back()}>
             <ArrowLeft size={20} className={isRTL ? "rotate-180 ml-2" : "mr-2"} />
-            {isRTL ? 'رجوع' : 'Go Back'}
+            {t('carrier.go_back_84')}
           </Button>
         </div>
       </AppShell>
@@ -143,7 +144,7 @@ function DeliveryConfirmationContent() {
 
   return (
     <RoleGuard requiredRole="Carrier">
-      <AppShell role="Carrier" header={isRTL ? 'تأكيد التوصيل' : 'Confirm Delivery'} showBottomNav={false}>
+      <AppShell role="Carrier" header={t('carrier.confirm_delivery_80')} showBottomNav={false}>
         <div className="max-w-2xl mx-auto space-y-6 pb-8">
         
         {/* Shipment Info */}
@@ -163,10 +164,10 @@ function DeliveryConfirmationContent() {
               <Key size={18} className="text-neutral-400 mt-0.5 shrink-0" />
               <div>
                 <p className="text-neutral-500 text-xs">
-                  {isRTL ? 'رمز التحقق (OTP)' : 'Verification OTP'}
+                  {t('carrier.verification_otp_92')}
                 </p>
                 <p className="font-mono font-bold text-neutral-900">
-                  {isRTL ? 'أرسل إلى العميل' : 'Sent to customer'}
+                  {t('carrier.sent_to_customer_93')}
                 </p>
               </div>
             </div>
@@ -180,7 +181,7 @@ function DeliveryConfirmationContent() {
           <section className="bg-white rounded-2xl border border-neutral-200 shadow-sm p-6 space-y-4">
             <div className="space-y-2">
               <label className="block text-sm font-bold text-neutral-700">
-                {isRTL ? 'أدخل رمز التحقق' : 'Enter Verification Code'}
+                {t('carrier.enter_verification_code_94')}
               </label>
               <p className="text-xs text-neutral-500">
                 {isRTL 
@@ -191,7 +192,7 @@ function DeliveryConfirmationContent() {
             <InputField
               value={otpCode}
               onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
-              placeholder={isRTL ? 'XXXXXX' : 'XXXXXX'}
+              placeholder={t('carrier.xxxxxx_95')}
               maxLength={6}
               className="h-14 text-center text-2xl font-mono tracking-widest"
             />
@@ -201,7 +202,7 @@ function DeliveryConfirmationContent() {
           <section className="bg-white rounded-2xl border border-neutral-200 shadow-sm p-6 space-y-4">
             <div className="space-y-2">
               <label className="block text-sm font-bold text-neutral-700">
-                {isRTL ? 'صورة إثبات التوصيل' : 'Delivery Proof Photo'}
+                {t('carrier.delivery_proof_photo_96')}
               </label>
               <p className="text-xs text-neutral-500">
                 {isRTL 
@@ -245,7 +246,7 @@ function DeliveryConfirmationContent() {
               >
                 <Camera size={40} className="text-neutral-400" weight="fill" />
                 <span className="text-sm font-bold text-neutral-600">
-                  {isRTL ? 'اضغط لالتقاط صورة' : 'Tap to take photo'}
+                  {t('carrier.tap_to_take_photo_97')}
                 </span>
               </button>
             )}
@@ -260,7 +261,7 @@ function DeliveryConfirmationContent() {
             isLoading={confirmDeliveryMutation.isPending}
           >
             <CheckCircle size={24} weight="fill" className={isRTL ? "rotate-180 ml-2" : "mr-2"} />
-            {isRTL ? 'تأكيد التوصيل' : 'Confirm Delivery'}
+            {t('carrier.confirm_delivery_80')}
           </Button>
 
         </form>
@@ -270,7 +271,7 @@ function DeliveryConfirmationContent() {
           <Info size={24} className="text-warning shrink-0" weight="fill" />
           <div className="space-y-1">
             <p className="text-sm font-bold text-warning-dark">
-              {isRTL ? 'ملاحظة هامة' : 'Important Note'}
+              {t('carrier.important_note_100')}
             </p>
             <p className="text-xs text-neutral-600">
               {isRTL 

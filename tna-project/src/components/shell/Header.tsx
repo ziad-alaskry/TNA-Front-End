@@ -117,10 +117,10 @@ export default function Header({ title, onMenuClick }: { title?: React.ReactNode
           {/* Wallet Balance Chip */}
           {shouldShowBalance && (
             <div className="hidden sm:block">
-              <WalletBalanceChip 
-                balance={balance} 
-                onClick={() => router.push(`/${currentLocale}/visitor/checkout`)}
-              />
+               <WalletBalanceChip 
+                 balance={balance} 
+                 onClick={() => router.push(`/${currentLocale}/visitor/wallet`)}
+               />
             </div>
           )}
 

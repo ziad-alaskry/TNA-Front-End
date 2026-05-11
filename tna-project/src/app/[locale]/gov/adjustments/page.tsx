@@ -20,6 +20,7 @@ import { useMock } from '@/lib/hooks/useMock'
 import Button from '@/components/ui/Button'
 import Modal from '@/components/ui/Modal'
 import { cn } from '@/lib/utils/cn'
+import { useTranslation } from 'react-i18next';
 
 interface SettlementAdjustment {
     adjustment_id: string;
@@ -34,7 +35,7 @@ interface SettlementAdjustment {
 
 export default function GovAdjustmentsPage() {
     const router = useRouter();
-    const { locale, isRTL } = useLocale();
+    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  locale, isRTL , t } = useLocale();
     const { data: adjustments, isLoading } = useMock(mockGovAdjustments);
     const [selectedAdjustment, setSelectedAdjustment] = useState<SettlementAdjustment | null>(null);
     const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
@@ -45,18 +46,18 @@ export default function GovAdjustmentsPage() {
     const columns: DataTableColumn<SettlementAdjustment>[] = [
         {
             key: 'adjustment_type',
-            label: isRTL ? 'نوع التعديل' : 'Adjustment Type',
+            label: t('gov.adjustment_type_97'),
             width: '20%',
             render: (val) => (
                 <span className="text-xs font-bold text-neutral-700">
-                    {val === 'OWNER_CORRECTION' ? (isRTL ? 'تصحيح المالك' : 'Owner Correction') : 
-                     val === 'SYSTEM_ERROR' ? (isRTL ? 'خطأ نظامي' : 'System Error') : val}
+                    {val === 'OWNER_CORRECTION' ? (t('gov.owner_correction_98')) : 
+                     val === 'SYSTEM_ERROR' ? (t('gov.system_error_99')) : val}
                 </span>
             )
         },
         {
             key: 'amount',
-            label: isRTL ? 'المبلغ' : 'Amount',
+            label: t('gov.amount_100'),
             width: '15%',
             render: (val) => (
                 <span className={cn(
@@ -69,7 +70,7 @@ export default function GovAdjustmentsPage() {
         },
         {
             key: 'reason',
-            label: isRTL ? 'السبب' : 'Reason',
+            label: t('gov.reason_101'),
             width: '30%',
             render: (val) => (
                 <span className="text-xs text-neutral-600 line-clamp-2">{val}</span>
@@ -77,7 +78,7 @@ export default function GovAdjustmentsPage() {
         },
         {
             key: 'initiated_by',
-            label: isRTL ? 'منفذ الطلب' : 'Initiated By',
+            label: t('gov.initiated_by_102'),
             width: '15%',
             render: (val) => (
                 <div className="flex items-center gap-2 text-xs text-neutral-600">
@@ -88,7 +89,7 @@ export default function GovAdjustmentsPage() {
         },
         {
             key: 'created_at',
-            label: isRTL ? 'تاريخ الإنشاء' : 'Created At',
+            label: t('gov.created_at_103'),
             width: '15%',
             render: (val) => (
                 <span className="text-xs text-neutral-500">{new Date(val).toLocaleDateString()}</span>
@@ -109,7 +110,7 @@ export default function GovAdjustmentsPage() {
                         size="sm"
                         className="h-9 px-4 border-neutral-200"
                     >
-                        {isRTL ? 'مراجعة' : 'Review'}
+                        {t('gov.review_104')}
                         <ArrowRight size={16} className={isRTL ? "rotate-180" : ""} />
                     </Button>
                 </div>
@@ -126,9 +127,9 @@ export default function GovAdjustmentsPage() {
     };
 
     return (
-        <AppShell role="Gov" header={isRTL ? 'موافقة التعديلات المالية' : 'Settlement Adjustment Approval'}>
+        <AppShell role="Gov" header={t('gov.settlement_adjustment_approval_105')}>
             <DataTableLayout
-                title={isRTL ? 'طلبات التعديل المعلّقة' : 'Pending Adjustment Requests'}
+                title={t('gov.pending_adjustment_requests_106')}
                 columns={columns}
                 data={pendingAdjustments}
                 isLoading={isLoading}
@@ -137,13 +138,13 @@ export default function GovAdjustmentsPage() {
                     <div className="relative">
                         <MagnifyingGlass size={18} className="absolute end-3 top-1/2 -translate-y-1/2 text-neutral-400" />
                         <input 
-                            placeholder={isRTL ? 'بحث برقم المعرف...' : 'Search by ID...'} 
+                            placeholder={t('gov.search_by_id_107')} 
                             className="h-11 w-[240px] px-10 rounded-md border border-neutral-200 bg-white text-xs focus:ring-1 focus:ring-primary outline-offset-0"
                         />
                     </div>
                     <button className="h-11 px-6 rounded-md border border-neutral-200 bg-white font-bold text-xs flex items-center gap-2 hover:bg-neutral-50 transition-colors">
                         <Funnel size={18} />
-                        {isRTL ? 'تصفية' : 'Filter'}
+                        {t('gov.filter_108')}
                     </button>
                 </div>
             </DataTableLayout>
@@ -151,20 +152,20 @@ export default function GovAdjustmentsPage() {
             <Modal 
                 isOpen={isApproveModalOpen} 
                 onClose={() => setIsApproveModalOpen(false)}
-                title={isRTL ? 'مراجعة طلب التعديل' : 'Review Adjustment Request'}
+                title={t('gov.review_adjustment_request_109')}
             >
                 {selectedAdjustment && (
                     <div className="space-y-6">
                         <div className="space-y-4">
                             <div className="p-4 bg-neutral-50 rounded-xl border border-neutral-100">
-                                <p className="text-xs font-bold text-neutral-400 uppercase mb-2">{isRTL ? 'نوع التعديل' : 'Adjustment Type'}</p>
+                                <p className="text-xs font-bold text-neutral-400 uppercase mb-2">{t('gov.adjustment_type_97')}</p>
                                 <p className="text-sm font-bold text-neutral-900">
-                                    {selectedAdjustment.adjustment_type === 'OWNER_CORRECTION' ? (isRTL ? 'تصحيح المالك' : 'Owner Correction') : 
-                                     selectedAdjustment.adjustment_type === 'SYSTEM_ERROR' ? (isRTL ? 'خطأ نظامي' : 'System Error') : selectedAdjustment.adjustment_type}
+                                    {selectedAdjustment.adjustment_type === 'OWNER_CORRECTION' ? (t('gov.owner_correction_98')) : 
+                                     selectedAdjustment.adjustment_type === 'SYSTEM_ERROR' ? (t('gov.system_error_99')) : selectedAdjustment.adjustment_type}
                                 </p>
                             </div>
                             <div className="p-4 bg-neutral-50 rounded-xl border border-neutral-100">
-                                <p className="text-xs font-bold text-neutral-400 uppercase mb-2">{isRTL ? 'المبلغ' : 'Amount'}</p>
+                                <p className="text-xs font-bold text-neutral-400 uppercase mb-2">{t('gov.amount_100')}</p>
                                 <p className={cn(
                                     "text-2xl font-mono font-bold",
                                     selectedAdjustment.amount >= 0 ? "text-success" : "text-error"
@@ -173,7 +174,7 @@ export default function GovAdjustmentsPage() {
                                 </p>
                             </div>
                             <div className="p-4 bg-neutral-50 rounded-xl border border-neutral-100">
-                                <p className="text-xs font-bold text-neutral-400 uppercase mb-2">{isRTL ? 'سبب التعديل' : 'Reason'}</p>
+                                <p className="text-xs font-bold text-neutral-400 uppercase mb-2">{t('gov.reason_114')}</p>
                                 <p className="text-sm text-neutral-700">{selectedAdjustment.reason}</p>
                             </div>
                         </div>
@@ -185,14 +186,14 @@ export default function GovAdjustmentsPage() {
                                 className="flex-1"
                             >
                                 <CheckCircle size={20} weight="bold" />
-                                {isRTL ? 'موافقة' : 'Approve'}
+                                {t('gov.approve_115')}
                             </Button>
                             <Button 
                                 variant="outline" 
                                 onClick={() => setIsApproveModalOpen(false)}
                                 className="flex-1"
                             >
-                                {isRTL ? 'إلغاء' : 'Cancel'}
+                                {t('gov.cancel_116')}
                             </Button>
                         </div>
                     </div>

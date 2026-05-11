@@ -24,11 +24,12 @@ import { mockGovQueue } from '@/lib/mock/gov.mock'
 import { useLocale } from '@/i18n/LocaleProvider'
 import Button from '@/components/ui/Button'
 import { cn } from '@/lib/utils/cn'
+import { useTranslation } from 'react-i18next';
 
 export default function GovTNAReviewDetailPage() {
     const { id } = useParams();
     const router = useRouter();
-    const { locale, isRTL } = useLocale();
+    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  locale, isRTL , t } = useLocale();
 
     const { data: queue, isLoading } = useMock(mockGovQueue);
     const request = queue?.find(q => q.request_id === id);
@@ -37,8 +38,8 @@ export default function GovTNAReviewDetailPage() {
     const [decision, setDecision] = useState<'APPROVED' | 'REJECTED' | null>(null);
     const [rejectionReason, setRejectionReason] = useState('');
 
-    if (isLoading) return <div className="p-12 text-center">{isRTL ? 'جاري تحميل تفاصيل الطلب...' : 'Loading request details...'}</div>;
-    if (!request) return <div className="p-12 text-center text-error">{isRTL ? 'الطلب غير موجود' : 'Request not found'}</div>;
+    if (isLoading) return <div className="p-12 text-center">{t('gov.loading_request_details_32')}</div>;
+    if (!request) return <div className="p-12 text-center text-error">{t('gov.request_not_found_33')}</div>;
 
     const handleDecision = async (type: 'APPROVED' | 'REJECTED') => {
       setIsProcessing(true);
@@ -49,22 +50,22 @@ export default function GovTNAReviewDetailPage() {
 
     const sections = [
         {
-            title: isRTL ? 'بيانات مقدم الطلب' : 'Applicant Identity',
-            description: isRTL ? 'المعلومات الشخصية ووثائق الهوية.' : 'Personal details and identification documents.',
+            title: t('gov.applicant_identity_34'),
+            description: t('gov.personal_details_and_identification_docu_35'),
             items: [
-                { label: isRTL ? 'الأسم الكامل' : 'Full Name', value: request.visitor_name },
-                { label: isRTL ? 'الجنسية' : 'Nationality', value: request.nationality },
-                { label: isRTL ? 'رقم الهوية/الجواز' : 'ID/Passport Number', value: <span className="font-mono text-xs">{request.visitor_id_number}</span> },
-                { label: isRTL ? 'تاريخ التقديم' : 'Submission Date', value: new Date(request.submitted_at).toLocaleString() },
-                { label: isRTL ? 'وضع المراجعة' : 'Review Mode', value: request.mode === 'MODERATED' ? (isRTL ? 'مُراقَب' : 'MODERATED') : (isRTL ? 'أوتوماتيكي' : 'AUTONOMOUS') },
+                { label: t('gov.full_name_36'), value: request.visitor_name },
+                { label: t('gov.nationality_37'), value: request.nationality },
+                { label: t('gov.idpassport_number_38'), value: <span className="font-mono text-xs">{request.visitor_id_number}</span> },
+                { label: t('gov.submission_date_39'), value: new Date(request.submitted_at).toLocaleString() },
+                { label: t('gov.review_mode_40'), value: request.mode === 'MODERATED' ? (t('gov.moderated_41')) : (t('gov.autonomous_42')) },
             ]
         },
         {
-          title: isRTL ? 'لقطة أهلية الطلب' : 'Eligibility Snapshot',
-          description: isRTL ? 'المؤشرات التلقائية لتحديد الأهلية.' : 'Automatic eligibility indicators.',
+          title: t('gov.eligibility_snapshot_43'),
+          description: t('gov.automatic_eligibility_indicators_44'),
           items: [
-              { label: isRTL ? 'حالة KYC' : 'KYC Status', value: <span className="text-success font-bold">{isRTL ? 'تم التحقق' : 'VERIFIED'}</span> },
-              { label: isRTL ? 'نوع الوثيقة' : 'Document Source', value: 'National Digital Identity (IAM)' },
+              { label: t('gov.kyc_status_45'), value: <span className="text-success font-bold">{t('gov.verified_46')}</span> },
+              { label: t('gov.document_source_47'), value: 'National Digital Identity (IAM)' },
           ]
       }
     ];
@@ -73,7 +74,7 @@ export default function GovTNAReviewDetailPage() {
         <div className="space-y-6">
             {!decision ? (
               <div className="p-6 bg-white rounded-3xl border border-neutral-200 shadow-xl space-y-4">
-                  <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest">{isRTL ? 'مصفوفة القرار' : 'Decision Matrix'}</h3>
+                  <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest">{t('gov.decision_matrix_48')}</h3>
                   <div className="space-y-3">
                       <Button 
                           className="w-full py-4 shadow-glow-primary"
@@ -81,7 +82,7 @@ export default function GovTNAReviewDetailPage() {
                           isLoading={isProcessing}
                       >
                           <CheckCircle size={20} weight="bold" />
-                          {isRTL ? 'الموافقة على الإصدار' : 'Approve Issuance'}
+                          {t('gov.approve_issuance_49')}
                       </Button>
                       <Button 
                           variant="outline" 
@@ -90,7 +91,7 @@ export default function GovTNAReviewDetailPage() {
                           isLoading={isProcessing}
                       >
                           <XCircle size={20} weight="bold" />
-                          {isRTL ? 'رفض الطلب' : 'Reject Request'}
+                          {t('gov.reject_request_50')}
                       </Button>
                   </div>
               </div>
@@ -104,10 +105,10 @@ export default function GovTNAReviewDetailPage() {
                   </div>
                   <div>
                     <h3 className="font-black text-xl uppercase tracking-tight">{isRTL ? `تم ${decision === 'APPROVED' ? 'الموافقة' : 'الرفض'}` : `Request ${decision}`}</h3>
-                    <p className="text-xs font-medium opacity-70">{isRTL ? 'تم تحديث النظام وإرسال إشعار للزائر.' : 'The system has been updated and a notification sent to the visitor.'}</p>
+                    <p className="text-xs font-medium opacity-70">{t('gov.the_system_has_been_updated_and_a_notifi_51')}</p>
                   </div>
                   <Button variant="outline" className="w-full border-neutral-200 text-neutral-900" onClick={() => router.push(`/${locale}/gov/tna-queue`)}>
-                    {isRTL ? 'العودة للطابور' : 'Back to Queue'}
+                    {t('gov.back_to_queue_52')}
                   </Button>
               </div>
             )}
@@ -115,19 +116,19 @@ export default function GovTNAReviewDetailPage() {
             <div className="p-4 bg-primary/5 rounded-2xl border border-primary/10 space-y-2">
                 <div className="flex items-center gap-2 text-primary">
                   <IdentificationCard size={20} weight="fill" />
-                  <p className="text-xs font-bold uppercase tracking-wider">{isRTL ? 'التحقق من KYC' : 'KYC Verification'}</p>
+                  <p className="text-xs font-bold uppercase tracking-wider">{t('gov.kyc_verification_53')}</p>
                 </div>
                 <p className="text-[10px] text-neutral-600 leading-relaxed font-medium">
-                    {isRTL ? 'تم التحقق من هذا المستخدم من خلال نظام الهوية الوطنية الرقمي (IAM). أهلية العنوان هي الخطوة اليدوية الوحيدة المطلوبة.' : 'This user has been verified against the National Digital Identity (IAM) system. Address eligibility is the only manual step required.'}
+                    {t('gov.this_user_has_been_verified_against_the__54')}
                 </p>
             </div>
         </div>
     );
 
     return (
-        <AppShell role="Gov" header={isRTL ? 'مراجعة طلب إصدار TNA' : 'Review TNA Issuance Request'}>
+        <AppShell role="Gov" header={t('gov.review_tna_issuance_request_55')}>
             <DetailViewLayout
-                title={`${isRTL ? 'طلب' : 'Request'} #${request.request_id.slice(0, 8)}...`}
+                title={`${t('gov.request_56')} #${request.request_id.slice(0, 8)}...`}
                 mainContent={sections}
                 sidebar={sidebar}
                 onBack={() => router.push(`/${locale}/gov/tna-queue`)}
@@ -136,7 +137,7 @@ export default function GovTNAReviewDetailPage() {
             <div className="mt-12 p-8 bg-surface-200 rounded-3xl border border-neutral-200 space-y-6">
                 <div className="flex items-center gap-3">
                   <Files size={24} className="text-neutral-400" />
-                  <h3 className="text-lg font-black text-neutral-900 tracking-tight">{isRTL ? 'المستندات الداعمة' : 'Supporting Documents'}</h3>
+                  <h3 className="text-lg font-black text-neutral-900 tracking-tight">{t('gov.supporting_documents_57')}</h3>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 bg-white rounded-2xl border border-neutral-100 flex items-center justify-between group hover:border-primary/30 cursor-pointer transition-all">
@@ -144,18 +145,18 @@ export default function GovTNAReviewDetailPage() {
                       <div className="w-10 h-10 rounded-lg bg-neutral-50 flex items-center justify-center text-neutral-400 group-hover:text-primary transition-colors">
                         <IdentificationCard size={20} />
                       </div>
-                      <span className="text-xs font-bold text-neutral-700">{isRTL ? 'نسخة الهوية الرقمية (IAM)' : 'Digital ID Copy (IAM)'}</span>
+                      <span className="text-xs font-bold text-neutral-700">{t('gov.digital_id_copy_iam_58')}</span>
                     </div>
-                    <span className="text-[10px] font-black text-success uppercase">{isRTL ? 'تم التحقق' : 'VERIFIED'}</span>
+                    <span className="text-[10px] font-black text-success uppercase">{t('gov.verified_46')}</span>
                   </div>
                   <div className="p-4 bg-white rounded-2xl border border-neutral-100 flex items-center justify-between group hover:border-primary/30 cursor-pointer transition-all">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-lg bg-neutral-50 flex items-center justify-center text-neutral-400 group-hover:text-primary transition-colors">
                         <Globe size={20} />
                       </div>
-                      <span className="text-xs font-bold text-neutral-700">{isRTL ? 'سجل دخول الجواز' : 'Passport Entry Record'}</span>
+                      <span className="text-xs font-bold text-neutral-700">{t('gov.passport_entry_record_60')}</span>
                     </div>
-                    <span className="text-[10px] font-black text-success uppercase">{isRTL ? 'تم التحقق' : 'VERIFIED'}</span>
+                    <span className="text-[10px] font-black text-success uppercase">{t('gov.verified_46')}</span>
                   </div>
                 </div>
             </div>

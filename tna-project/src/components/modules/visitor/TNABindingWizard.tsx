@@ -24,6 +24,7 @@ import { cn } from '@/lib/utils/cn';
 import Button from '@/components/ui/Button';
 import InputField from '@/components/ui/InputField';
 import { usePriceCatalogStore } from '@/lib/store/usePriceCatalogStore';
+import { useBindingContext } from '@/context/BindingContext';
 import { bindingsApi } from '@/lib/api/bindings';
 import ErrorAlert from '@/components/ui/ErrorAlert';
 import { useToast } from '@/components/ui/Toast';
@@ -35,6 +36,7 @@ export default function TNABindingWizard() {
   const { locale, isRTL, t } = useLocale();
   const toast = useToast();
   const tnaId = params.id as string;
+  const { addPendingBinding } = useBindingContext();
 
   const { getRentQuote, loading: quoteLoading } = usePriceCatalogStore();
 
@@ -114,10 +116,12 @@ export default function TNABindingWizard() {
         rental_period_type: rentalPeriodType,
         rental_duration: days
       });
-      
-      const binding = response.data;
+
+      const { data: binding, rent_contract } = response;
+      // Add binding to local context state so it can be activated after payment
+      addPendingBinding(binding);
       toast.success(t('binding.created') || 'Binding request created successfully');
-      
+
       // Redirect to checkout page
       router.push(`/${locale}/visitor/checkout/${binding.binding_id}`);
     } catch (err: any) {

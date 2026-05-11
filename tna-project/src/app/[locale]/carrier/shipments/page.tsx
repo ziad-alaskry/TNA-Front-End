@@ -17,28 +17,29 @@ import { mockShipments } from '@/lib/mock/shipments.mock'
 import { useMock } from '@/lib/hooks/useMock'
 import Button from '@/components/ui/Button'
 import { cn } from '@/lib/utils/cn'
+import { useTranslation } from 'react-i18next';
 
 export default function CarrierShipmentsPage() {
     const router = useRouter();
-    const { locale, isRTL } = useLocale();
+    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  locale, isRTL , t } = useLocale();
     const { data: shipments, isLoading } = useMock(mockShipments);
 
     const columns: DataTableColumn<any>[] = [
         {
             key: 'tracking_number',
-            label: isRTL ? 'رقم التتبع' : 'Tracking #',
+            label: t('carrier.tracking_1'),
             width: '25%',
             render: (val) => <span className="font-mono font-bold text-neutral-900">{val}</span>
         },
         {
             key: 'tna_id',
-            label: isRTL ? 'عنوان TNA' : 'TNA Destination',
+            label: t('carrier.tna_destination_2'),
             width: '25%',
             render: (val) => <span className="font-mono font-bold text-primary">{val}</span>
         },
         {
             key: 'status',
-            label: isRTL ? 'الحالة' : 'Status',
+            label: t('carrier.status_3'),
             width: '20%',
             render: (val) => (
                 <span className={cn(
@@ -70,7 +71,7 @@ export default function CarrierShipmentsPage() {
     ];
 
     return (
-        <AppShell role="Carrier" header={isRTL ? 'إدارة الشحنات' : 'Shipment Management'}>
+        <AppShell role="Carrier" header={t('carrier.shipment_management_4')}>
             <DataTableLayout
                 title="Active Shipments"
                 columns={columns}
@@ -80,11 +81,11 @@ export default function CarrierShipmentsPage() {
                   <div className="flex gap-3">
                     <Button variant="outline" className="border-neutral-200" onClick={() => router.push(`/${locale}/carrier/resolve`)}>
                       <MapPin size={20} weight="bold" />
-                      {isRTL ? 'تحقق من TNA' : 'Resolve TNA'}
+                      {t('carrier.resolve_tna_5')}
                     </Button>
                     <Button className="shadow-glow-primary" onClick={() => router.push(`/${locale}/carrier/shipments/new`)}>
                       <Plus size={20} weight="bold" />
-                      {isRTL ? 'شحنة جديدة' : 'New Shipment'}
+                      {t('carrier.new_shipment_6')}
                     </Button>
                   </div>
                 }

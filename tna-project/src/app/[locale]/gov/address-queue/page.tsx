@@ -17,16 +17,17 @@ import { useLocale } from '@/i18n/LocaleProvider'
 import { mockSubAddressQueue } from '@/lib/mock/gov.mock'
 import { useMock } from '@/lib/hooks/useMock'
 import Button from '@/components/ui/Button'
+import { useTranslation } from 'react-i18next';
 
 export default function GovAddressQueuePage() {
     const router = useRouter();
-    const { locale, isRTL } = useLocale();
+    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  locale, isRTL , t } = useLocale();
     const { data: queue, isLoading } = useMock(mockSubAddressQueue);
 
     const columns: DataTableColumn<any>[] = [
         {
             key: 'owner_name',
-            label: isRTL ? 'المالك' : 'Owner',
+            label: t('gov.owner_117'),
             width: '25%',
             render: (val, row) => (
                 <div className="flex items-center gap-3">
@@ -35,14 +36,14 @@ export default function GovAddressQueuePage() {
                     </div>
                     <div className="flex flex-col">
                         <span className="font-bold text-neutral-900 line-clamp-1">{val}</span>
-                        <span className="text-[10px] text-neutral-400">{row.owner_type === 'INDIVIDUAL' ? (isRTL ? 'فردي' : 'Individual') : (isRTL ? 'شركة' : 'Business')}</span>
+                        <span className="text-[10px] text-neutral-400">{row.owner_type === 'INDIVIDUAL' ? (t('gov.individual_118')) : (t('gov.business_119'))}</span>
                     </div>
                 </div>
             )
         },
         {
             key: 'full_address',
-            label: isRTL ? 'العنوان الكامل' : 'Full Address',
+            label: t('gov.full_address_120'),
             width: '35%',
             render: (val) => (
                 <div className="flex items-center gap-2 text-xs text-neutral-600">
@@ -53,7 +54,7 @@ export default function GovAddressQueuePage() {
         },
         {
             key: 'suffix_code',
-            label: isRTL ? 'اللاحقة' : 'Suffix',
+            label: t('gov.suffix_121'),
             width: '10%',
             render: (val, row) => (
                 <span className="font-mono font-bold text-primary">{val} - {row.label}</span>
@@ -61,7 +62,7 @@ export default function GovAddressQueuePage() {
         },
         {
             key: 'submitted_at',
-            label: isRTL ? 'تاريخ التقديم' : 'Submitted At',
+            label: t('gov.submitted_at_122'),
             width: '15%',
             render: (val) => (
                 <div className="flex items-center gap-2 text-neutral-500">
@@ -82,7 +83,7 @@ export default function GovAddressQueuePage() {
                         size="sm"
                         className="h-9 px-4 border-neutral-200"
                     >
-                        {isRTL ? 'مراجعة' : 'Review'}
+                        {t('gov.review_123')}
                         <ArrowRight size={16} className={isRTL ? "rotate-180" : ""} />
                     </Button>
                 </div>
@@ -91,9 +92,9 @@ export default function GovAddressQueuePage() {
     ];
 
     return (
-        <AppShell role="Gov" header={isRTL ? 'طابور التحقق من العناوين' : 'Sub-Address Verification Queue'}>
+        <AppShell role="Gov" header={t('gov.subaddress_verification_queue_124')}>
             <DataTableLayout
-                title={isRTL ? 'طلبات التحقق المعلّقة' : 'Pending Verification Requests'}
+                title={t('gov.pending_verification_requests_125')}
                 columns={columns}
                 data={queue || []}
                 isLoading={isLoading}

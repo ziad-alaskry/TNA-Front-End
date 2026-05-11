@@ -11,6 +11,7 @@ import Textarea from '@/components/ui/Textarea'
 import Button from '@/components/ui/Button'
 import { subAddressesApi } from '@/lib/api/subAddresses'
 import { useLocale } from '@/i18n/LocaleProvider'
+import { useTranslation } from 'react-i18next';
 
 const subAddressSchema = z.object({
   suffix_code: z.string().length(4, 'Suffix code must be exactly 4 characters'),
@@ -23,20 +24,20 @@ type SubAddressInputs = z.infer<typeof subAddressSchema>
 export default function AddSubAddressPage() {
   const { id: na_id } = useParams<{ id: string }>()
   const router = useRouter()
-  const { isRTL } = useLocale()
+  /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  isRTL , t } = useLocale()
   const [existingSubAddresses, setExistingSubAddresses] = useState<Array<{ suffix_code: string }>>([])
   const [isLoading, setIsLoading] = useState(true)
 
   const t = (key: string): string => {
     const translations: Record<string, string> = {
-      'suffixCode': isRTL ? 'كود اللاحقة' : 'Suffix Code',
-      'suffixCodeDescription': isRTL ? '4 أحرف فريدة للوحدة (مثال: ROOM)' : '4 unique characters for the unit (e.g., ROOM)',
-      'label': isRTL ? 'التسمية' : 'Label',
-      'labelDescription': isRTL ? 'اسم الوحدة' : 'Unit name',
-      'description': isRTL ? 'الوصف' : 'Description',
-      'descriptionDescription': isRTL ? 'وصف اختياري للوحدة' : 'Optional unit description',
-      'createSubAddress': isRTL ? 'إنشاء الوحدة' : 'Create Unit',
-      'loading': isRTL ? 'جاري التحميل...' : 'Loading...',
+      'suffixCode': t('owner.suffix_code_33'),
+      'suffixCodeDescription': t('owner.4_unique_characters_for_the_unit_eg_room_34'),
+      'label': t('owner.label_35'),
+      'labelDescription': t('owner.unit_name_36'),
+      'description': t('owner.description_37'),
+      'descriptionDescription': t('owner.optional_unit_description_38'),
+      'createSubAddress': t('owner.create_unit_39'),
+      'loading': t('owner.loading_40'),
     }
     return translations[key] || key
   }
@@ -92,14 +93,14 @@ export default function AddSubAddressPage() {
 
   if (isLoading) {
     return (
-      <AppShell role="Owner" header={isRTL ? 'إضافة وحدة فرعية' : 'Add Sub-Address'}>
+      <AppShell role="Owner" header={t('owner.add_subaddress_41')}>
         <div className="p-12 text-center">{t('loading')}</div>
       </AppShell>
     )
   }
 
   return (
-    <AppShell role="Owner" header={isRTL ? 'إضافة وحدة فرعية' : 'Add Sub-Address'}>
+    <AppShell role="Owner" header={t('owner.add_subaddress_41')}>
       <div className="max-w-2xl mx-auto">
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-6">

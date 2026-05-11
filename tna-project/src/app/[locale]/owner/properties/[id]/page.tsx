@@ -21,11 +21,12 @@ import { useMock } from '@/lib/hooks/useMock'
 import Button from '@/components/ui/Button'
 import { cn } from '@/lib/utils/cn'
 import DataTableLayout, { DataTableColumn } from '@/components/templates/DataTableLayout'
+import { useTranslation } from 'react-i18next';
 
 export default function PropertyDetailPage() {
     const { id } = useParams();
     const router = useRouter();
-    const { locale, isRTL } = useLocale();
+    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  locale, isRTL , t } = useLocale();
 
     const { data: properties, isLoading: propLoading } = useMock(mockProperties);
     const { data: subAddresses, isLoading: unitsLoading } = useMock(mockSubAddresses);
@@ -38,16 +39,16 @@ export default function PropertyDetailPage() {
 
     const sections = [
         {
-            title: isRTL ? 'معلومات العقار' : 'Property Information',
-            description: isRTL ? 'البيانات الأساسية المسجلة في العنوان الوطني.' : 'Core data registered with the National Address.',
+            title: t('owner.property_information_20'),
+            description: t('owner.core_data_registered_with_the_national_a_21'),
             items: [
-                { label: isRTL ? 'العنوان الكامل' : 'Full Address', value: property.full_address },
-                { label: isRTL ? 'المدينة' : 'City', value: property.city },
-                { label: isRTL ? 'الحي' : 'District', value: property.district },
-                { label: isRTL ? 'رقم المبنى' : 'Building No', value: property.building_number },
-                { label: isRTL ? 'صك الملكية' : 'Title Deed', value: <span className="font-mono text-xs">{property.title_deed_reference}</span> },
+                { label: t('owner.full_address_22'), value: property.full_address },
+                { label: t('owner.city_23'), value: property.city },
+                { label: t('owner.district_24'), value: property.district },
+                { label: t('owner.building_no_25'), value: property.building_number },
+                { label: t('owner.title_deed_26'), value: <span className="font-mono text-xs">{property.title_deed_reference}</span> },
                 {
-                    label: isRTL ? 'إثبات الملكية' : 'Ownership Proof',
+                    label: t('owner.ownership_proof_27'),
                     value: (
                         <span className={cn(
                             "px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-widest",
@@ -59,7 +60,7 @@ export default function PropertyDetailPage() {
                         </span>
                     ),
                 },
-                { label: isRTL ? 'شهادة العنوان الوطني' : 'NA Certificate', value: property.na_certificate_url ?? 'Not available' },
+                { label: t('owner.na_certificate_28'), value: property.na_certificate_url ?? 'Not available' },
             ]
         }
     ];
@@ -67,7 +68,7 @@ export default function PropertyDetailPage() {
     const columns: DataTableColumn<any>[] = [
         {
             key: 'label',
-            label: isRTL ? 'الوحدة' : 'Unit Label',
+            label: t('owner.unit_label_29'),
             width: '40%',
             render: (val, row) => (
                 <div className="flex items-center gap-3">
@@ -83,13 +84,13 @@ export default function PropertyDetailPage() {
         },
         {
             key: 'suffix_code',
-            label: isRTL ? 'الكود' : 'Suffix',
+            label: t('owner.suffix_30'),
             width: '20%',
             render: (val) => <span className="font-mono font-bold text-primary">{val}</span>
         },
         {
             key: 'is_available',
-            label: isRTL ? 'الحالة' : 'Status',
+            label: t('owner.status_31'),
             width: '20%',
             render: (val) => (
                 <span className={cn(
@@ -143,7 +144,7 @@ export default function PropertyDetailPage() {
     );
 
     return (
-        <AppShell role="Owner" header={isRTL ? 'تفاصيل العقار' : 'Property Details'}>
+        <AppShell role="Owner" header={t('owner.property_details_32')}>
             <DetailViewLayout
                 title={property.full_address}
                 mainContent={sections}

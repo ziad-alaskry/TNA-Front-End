@@ -363,7 +363,7 @@
       "deliverable": "Deliverable Address",
       "not_deliverable": "Not Deliverable"
     },
-    "tracking_1": "Tracking #",
+    "example_tna_1": "e.g., TNA-123456",
     "tna_destination_2": "TNA Destination",
     "status_3": "Status",
     "shipment_management_4": "Shipment Management",

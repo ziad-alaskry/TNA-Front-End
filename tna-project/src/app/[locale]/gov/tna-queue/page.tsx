@@ -19,10 +19,11 @@ import { mockGovQueue } from '@/lib/mock/gov.mock'
 import { useMock } from '@/lib/hooks/useMock'
 import Button from '@/components/ui/Button'
 import { cn } from '@/lib/utils/cn'
+import { useTranslation } from 'react-i18next';
 
 export default function GovTNAQueuePage() {
     const router = useRouter();
-    const { locale, isRTL } = useLocale();
+    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  locale, isRTL , t } = useLocale();
     const { data: queue, isLoading } = useMock(mockGovQueue);
 
     const pendingRequests = queue?.filter(q => q.status === 'PENDING_REVIEW') || [];
@@ -30,7 +31,7 @@ export default function GovTNAQueuePage() {
     const columns: DataTableColumn<any>[] = [
         {
             key: 'visitor_name',
-            label: isRTL ? 'مقدم الطلب' : 'Applicant',
+            label: t('gov.applicant_17'),
             width: '30%',
             render: (val, row) => (
                 <div className="flex items-center gap-3">
@@ -46,7 +47,7 @@ export default function GovTNAQueuePage() {
         },
         {
             key: 'nationality',
-            label: isRTL ? 'الجنسية' : 'Nationality',
+            label: t('gov.nationality_18'),
             width: '20%',
             render: (val) => (
                 <span className="text-xs font-medium text-neutral-600">{val}</span>
@@ -54,20 +55,20 @@ export default function GovTNAQueuePage() {
         },
         {
             key: 'mode',
-            label: isRTL ? 'وضع المراجعة' : 'Mode',
+            label: t('gov.mode_19'),
             width: '15%',
             render: (val) => (
                 <span className={cn(
                     "px-2 py-1 text-[10px] font-black rounded uppercase border",
                     val === 'MODERATED' ? "bg-warning/10 text-warning border-warning/10" : "bg-primary/10 text-primary border-primary/10"
                 )}>
-                    {val === 'MODERATED' ? (isRTL ? 'مُراقَب' : 'MODERATED') : (isRTL ? 'أوتوماتيكي' : 'AUTONOMOUS')}
+                    {val === 'MODERATED' ? (t('gov.moderated_20')) : (t('gov.autonomous_21'))}
                 </span>
             )
         },
         {
             key: 'submitted_at',
-            label: isRTL ? 'تاريخ التقديم' : 'Submitted At',
+            label: t('gov.submitted_at_22'),
             width: '20%',
             render: (val) => (
                 <div className="flex items-center gap-2 text-neutral-500">
@@ -88,7 +89,7 @@ export default function GovTNAQueuePage() {
                         size="sm"
                         className="h-9 px-4 border-neutral-200"
                     >
-                        {isRTL ? 'مراجعة' : 'Review'}
+                        {t('gov.review_23')}
                         <ArrowRight size={16} className={isRTL ? "rotate-180" : ""} />
                     </Button>
                 </div>
@@ -97,9 +98,9 @@ export default function GovTNAQueuePage() {
     ];
 
     return (
-        <AppShell role="Gov" header={isRTL ? 'طابور طلبات إصدار TNA' : 'TNA Issuance Queue'}>
+        <AppShell role="Gov" header={t('gov.tna_issuance_queue_24')}>
             <DataTableLayout
-                title={isRTL ? 'طلبات الإصدار المعلّقة' : 'Pending TNA Requests'}
+                title={t('gov.pending_tna_requests_25')}
                 columns={columns}
                 data={pendingRequests}
                 isLoading={isLoading}

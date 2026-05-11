@@ -22,10 +22,11 @@ import { useMock } from '@/lib/hooks/useMock';
 import { mockGovQueue, mockSubAddressQueue, mockGovAdjustments } from '@/lib/mock/gov.mock';
 import { cn } from '@/lib/utils/cn';
 import Button from '@/components/ui/Button';
+import { useTranslation } from 'react-i18next';
 
 export default function GovHomeModule() {
    const router = useRouter();
-   const { locale, isRTL } = useLocale();
+   /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  locale, isRTL , t } = useLocale();
 
    const { data: tnaQueue, isLoading: tnaQueueLoading } = useMock(mockGovQueue);
    const { data: addressQueue, isLoading: addressQueueLoading } = useMock(mockSubAddressQueue);
@@ -41,10 +42,10 @@ export default function GovHomeModule() {
         {/* SYSTEM HEALTH TOP STATS */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { label: isRTL ? 'TNA قيد المراجعة' : 'TNA Pending', value: pendingTNARequests.length, icon: ShieldCheck, color: 'text-warning', bg: 'bg-warning/10' },
-            { label: isRTL ? 'عناوين قيد التحقق' : 'Addresses Pending', value: pendingAddressRequests.length, icon: MapPin, color: 'text-secondary', bg: 'bg-secondary/10' },
-            { label: isRTL ? 'تعديلات معلقة' : 'Adjustments Pending', value: pendingAdjustments.length, icon: CurrencyDollar, color: 'text-primary', bg: 'bg-primary/10' },
-            { label: isRTL ? 'معدل الموافقة التلقائي' : 'Auto-Approval Rate', value: '87%', icon: CheckCircle, color: 'text-success', bg: 'bg-success/10' },
+            { label: t('gov.tna_pending_1'), value: pendingTNARequests.length, icon: ShieldCheck, color: 'text-warning', bg: 'bg-warning/10' },
+            { label: t('gov.addresses_pending_2'), value: pendingAddressRequests.length, icon: MapPin, color: 'text-secondary', bg: 'bg-secondary/10' },
+            { label: t('gov.adjustments_pending_3'), value: pendingAdjustments.length, icon: CurrencyDollar, color: 'text-primary', bg: 'bg-primary/10' },
+            { label: t('gov.autoapproval_rate_4'), value: '87%', icon: CheckCircle, color: 'text-success', bg: 'bg-success/10' },
           ].map((stat, i) => (
             <div key={i} className="bg-white p-6 rounded-2xl border border-neutral-100 shadow-sm flex items-center gap-4 group hover:border-primary/20 transition-all">
               <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center transition-all", stat.bg, stat.color)}>
@@ -97,7 +98,7 @@ export default function GovHomeModule() {
           {/* PENDING REVIEW QUEUE */}
           <section className="space-y-4 text-start">
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-black text-neutral-900 tracking-tight">{isRTL ? 'الطابور' : 'Queues'}</h3>
+              <h3 className="text-xl font-black text-neutral-900 tracking-tight">{t('gov.queues_5')}</h3>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -106,18 +107,18 @@ export default function GovHomeModule() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <ShieldCheck size={20} className="text-warning" weight="bold" />
-                    <h4 className="font-bold text-neutral-900">{isRTL ? 'طلبات TNA' : 'TNA Requests'}</h4>
+                    <h4 className="font-bold text-neutral-900">{t('gov.tna_requests_6')}</h4>
                   </div>
                   <span className="text-2xl font-black text-warning">{pendingTNARequests.length}</span>
                 </div>
-                <p className="text-xs text-neutral-500">{isRTL ? 'في انتظار المراجعة' : 'Awaiting review'}</p>
+                <p className="text-xs text-neutral-500">{t('gov.awaiting_review_7')}</p>
                 <Button 
                   size="sm" 
                   variant="outline" 
                   className="w-full border-neutral-200"
                   onClick={() => router.push(`/${locale}/gov/tna-queue`)}
                 >
-                  {isRTL ? 'عرض الطابور' : 'View Queue'}
+                  {t('gov.view_queue_8')}
                 </Button>
               </div>
 
@@ -126,18 +127,18 @@ export default function GovHomeModule() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <MapPin size={20} className="text-secondary" weight="bold" />
-                    <h4 className="font-bold text-neutral-900">{isRTL ? 'عناوين فرعية' : 'Sub-Addresses'}</h4>
+                    <h4 className="font-bold text-neutral-900">{t('gov.subaddresses_9')}</h4>
                   </div>
                   <span className="text-2xl font-black text-secondary">{pendingAddressRequests.length}</span>
                 </div>
-                <p className="text-xs text-neutral-500">{isRTL ? 'في انتظار التحقق' : 'Awaiting verification'}</p>
+                <p className="text-xs text-neutral-500">{t('gov.awaiting_verification_10')}</p>
                 <Button 
                   size="sm" 
                   variant="outline" 
                   className="w-full border-neutral-200"
                   onClick={() => router.push(`/${locale}/gov/address-queue`)}
                 >
-                  {isRTL ? 'عرض الطابور' : 'View Queue'}
+                  {t('gov.view_queue_8')}
                 </Button>
               </div>
             </div>
@@ -150,14 +151,14 @@ export default function GovHomeModule() {
           
           {/* QUICK ACTIONS PANEL */}
           <section className="bg-white rounded-3xl border border-neutral-200 shadow-xl p-6 space-y-6">
-            <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest">{isRTL ? 'أدوات الحكومة' : 'Governance Tools'}</h3>
+            <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest">{t('gov.governance_tools_12')}</h3>
             
             <div className="space-y-3">
               {[
-                { label: isRTL ? 'إعدادات السياسة' : 'Policy Settings', icon: Gear, path: '/gov/policy', color: 'text-primary' },
-                { label: isRTL ? 'سجل التدقيق' : 'System Audit', icon: Fingerprint, path: '/gov/audit', color: 'text-secondary' },
-                { label: isRTL ? 'إدارة الجهات' : 'Agency Management', icon: Buildings, path: '/gov/agencies', color: 'text-success' },
-                { label: isRTL ? 'تعديلات الماليات' : 'Financial Adjustments', icon: CurrencyDollar, path: '/gov/adjustments', color: 'text-warning' },
+                { label: t('gov.policy_settings_13'), icon: Gear, path: '/gov/policy', color: 'text-primary' },
+                { label: t('gov.system_audit_14'), icon: Fingerprint, path: '/gov/audit', color: 'text-secondary' },
+                { label: t('gov.agency_management_15'), icon: Buildings, path: '/gov/agencies', color: 'text-success' },
+                { label: t('gov.financial_adjustments_16'), icon: CurrencyDollar, path: '/gov/adjustments', color: 'text-warning' },
               ].map((tool, i) => (
                 <button 
                   key={i}

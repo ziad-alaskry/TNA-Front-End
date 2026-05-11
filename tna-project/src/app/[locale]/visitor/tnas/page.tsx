@@ -10,11 +10,12 @@ import { Eye, Plus, Funnel } from '@phosphor-icons/react'
 import { mockTNAs } from '@/lib/mock/tnas.mock'
 import { useMock } from '@/lib/hooks/useMock'
 import { useLocale } from '@/i18n/LocaleProvider'
+import { useTranslation } from 'react-i18next';
 
 export default function VisitorTnasPage() {
   const router = useRouter();
   const { locale } = useParams();
-  const { t, isRTL } = useLocale();
+  /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const { t, isRTL } = useLocale();
 
   const { data: tnas, isLoading } = useMock(mockTNAs);
   const [statusFilter, setStatusFilter] = useState<string>('ALL');
@@ -28,13 +29,13 @@ export default function VisitorTnasPage() {
   const columns: DataTableColumn<TNA>[] = [
     { 
       key: 'tna_code', 
-      label: isRTL ? 'كود TNA' : 'TNA Code', 
+      label: t('visitor.tna_code_1'), 
       width: '30%',
       render: (val) => <span className="font-mono font-bold text-primary">{val}</span>
     },
     { 
         key: 'status', 
-        label: isRTL ? 'الحالة' : 'Status', 
+        label: t('visitor.status_2'), 
         width: '20%',
         render: (val) => {
             const isSuccess = val === 'ACTIVE';
@@ -50,7 +51,7 @@ export default function VisitorTnasPage() {
     },
     { 
         key: 'issued_at', 
-        label: isRTL ? 'تاريخ الإصدار' : 'Issued At', 
+        label: t('visitor.issued_at_3'), 
         width: '25%',
         render: (val) => <span className="text-xs text-neutral-500 font-medium">{val ? new Date(val).toLocaleDateString() : '---'}</span>
     },
@@ -70,7 +71,7 @@ export default function VisitorTnasPage() {
                 className="gap-2 h-9"
             >
                 <Eye size={16} />
-                {isRTL ? 'عرض التفاصيل' : 'View Details'}
+                {t('visitor.view_details_4')}
             </Button>
         </div>
       )
@@ -78,14 +79,14 @@ export default function VisitorTnasPage() {
   ]
 
   const filterOptions = [
-    { value: 'ALL', label: isRTL ? 'الكل' : 'All' },
-    { value: 'ACTIVE', label: isRTL ? 'نشط' : 'Active' },
-    { value: 'UNLINKED', label: isRTL ? 'غير مرتبط' : 'Unlinked' },
-    { value: 'EXPIRED', label: isRTL ? 'منتهي' : 'Expired' },
+    { value: 'ALL', label: t('visitor.all_5') },
+    { value: 'ACTIVE', label: t('visitor.active_6') },
+    { value: 'UNLINKED', label: t('visitor.unlinked_7') },
+    { value: 'EXPIRED', label: t('visitor.expired_8') },
   ]
 
   return (
-    <AppShell role="Visitor" header={isRTL ? 'عناويني الوطنية' : 'My TNAs'}>
+    <AppShell role="Visitor" header={t('visitor.my_tnas_9')}>
       <div className="space-y-6">
         {/* Filter Controls */}
         <div className="flex items-center gap-3">
@@ -106,7 +107,7 @@ export default function VisitorTnasPage() {
         </div>
 
         <DataTableLayout
-          title={isRTL ? 'قائمة رموز TNA' : 'List of TNA Codes'}
+          title={t('visitor.list_of_tna_codes_10')}
           columns={columns}
           data={filteredTnas || []}
           isLoading={isLoading}
@@ -117,13 +118,13 @@ export default function VisitorTnasPage() {
                   className="shadow-glow-primary"
               >
                   <Plus size={20} weight="bold" />
-                  {isRTL ? 'طلب TNA جديد' : 'Request New TNA'}
+                  {t('visitor.request_new_tna_11')}
               </Button>
           }
           emptyState={{
-            title: isRTL ? 'لا يوجد رموز TNA' : 'No TNA Codes Found',
-            description: isRTL ? 'ابدأ بطلب أول عنوان وطني مؤقت لك الآن.' : 'Start by requesting your first temporary national address.',
-            cta: isRTL ? 'طلب TNA جديد' : 'Request New TNA',
+            title: t('visitor.no_tna_codes_found_12'),
+            description: t('visitor.start_by_requesting_your_first_temporary_13'),
+            cta: t('visitor.request_new_tna_11'),
             onCtaClick: () => router.push(`/${locale}/visitor/tna/new`)
           }}
         />
