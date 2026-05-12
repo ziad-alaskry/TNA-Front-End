@@ -4,56 +4,44 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { CaretRight, CaretLeft, Users, Briefcase, CheckCircle } from '@phosphor-icons/react';
 import { useRegistrationStore } from '@/lib/store/useRegistrationStore';
+import { useLocale } from '@/i18n/LocaleProvider';
 import { UserRole } from '@/lib/types/auth';
 import ProgressStepper from '@/components/ui/ProgressStepper';
 import { cn } from '@/lib/utils/cn';
+import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
 
 export default function RegisterTypeModule() {
     const router = useRouter();
+    const { locale, isRTL, t } = useLocale();
     const { formData, updateFormData, setStep } = useRegistrationStore();
-    const [selectedRole, setSelectedRole] = useState<UserRole | null>(formData.user_role || null);
+    const [selectedRole, setSelectedRole] = useState<UserRole | null>(formData.role || null);
     const [ownerType, setOwnerType] = useState<'INDIVIDUAL' | 'ENTITY'>('INDIVIDUAL');
     const [carrierType, setCarrierType] = useState<'STAFF' | 'COMPANY'>('STAFF');
 
-    const roles: { id: UserRole; label: string; subLabel: string; icon: any }[] = [
-        { 
-            id: 'VISITOR', 
-            label: 'زائر / سائح', 
-            subLabel: 'الحصول على عنوان وطني مؤقت للشحنات', 
-            icon: Users 
-        },
-        { 
-            id: 'OWNER', 
-            label: 'مالك عقار', 
-            subLabel: 'تأجير المساحات البريدية للزوار', 
-            icon: Briefcase 
-        },
-        { 
-            id: 'CARRIER_STAFF', 
-            label: 'موظف ناقل', 
-            subLabel: 'إدارة وتوصيل الشحنات للزوار', 
-            icon: CheckCircle 
-        },
+    const roles = [
+        { id: 'VISITOR' as UserRole, labelKey: 'visitor_label', subLabelKey: 'visitor_sublabel', icon: Users },
+        { id: 'OWNER' as UserRole, labelKey: 'owner_label', subLabelKey: 'owner_sublabel', icon: Briefcase },
+        { id: 'CARRIER_STAFF' as UserRole, labelKey: 'carrier_label', subLabelKey: 'carrier_sublabel', icon: CheckCircle },
     ];
 
     const handleNext = () => {
         if (selectedRole) {
-            updateFormData({ 
-                user_role: selectedRole,
+            updateFormData({
+                role: selectedRole,
                 is_entity: (selectedRole === 'OWNER' && ownerType === 'ENTITY') || (selectedRole === 'CARRIER_STAFF' && carrierType === 'COMPANY')
             } as any);
             setStep(2);
-            router.push('/auth/register/personal');
+            router.push(`/${locale}/register/personal`);
         }
     };
 
     return (
-        <div className="min-h-screen bg-surface-100 flex flex-col" dir="rtl">
+        <div className="min-h-screen bg-surface-100 flex flex-col" dir={isRTL ? 'rtl' : 'ltr'}>
             {/* Header */}
-            <header className="sticky top-0 z-50 bg-surface-200 border-b border-neutral-100 h-16 flex items-center px-4 shadow-sm">
-                <div className="w-10" />
+            <header className="sticky top-0 z-50 border-b border-neutral-100 h-16 flex items-center px-4 shadow-sm backdrop-blur-md bg-white/80">
+                <LanguageSwitcher />
                 <div className="flex-1 flex justify-center">
-                    <h1 className="text-heading font-bold text-neutral-900">إنشاء حساب جديد</h1>
+                    <h1 className="text-heading font-bold text-neutral-900">{t('auth.register.type.title')}</h1>
                 </div>
                 <button
                     onClick={() => router.back()}
@@ -63,11 +51,11 @@ export default function RegisterTypeModule() {
                 </button>
             </header>
 
-            <ProgressStepper currentStep={1} label="تحديد نوع الحساب" />
+            <ProgressStepper currentStep={1} label={t('auth.register.type.subtitle')} />
 
             <main className="flex-1 px-6 pt-8 space-y-6">
                 <p className="text-center text-body text-neutral-500 font-medium px-4">
-                    اختر نوع الحساب المناسب لك للبدء في استخدام خدمات العنوان الوطني المؤقت
+                    {t('auth.register.type.subtitle')}
                 </p>
 
                 <div className="space-y-4">
@@ -93,9 +81,9 @@ export default function RegisterTypeModule() {
                                     "text-subheading font-bold transition-colors",
                                     selectedRole === role.id ? "text-primary" : "text-neutral-900"
                                 )}>
-                                    {role.label}
+                                    {t(`auth.register.type.${role.labelKey}`)}
                                 </h3>
-                                <p className="text-caption text-neutral-500">{role.subLabel}</p>
+                                <p className="text-caption text-neutral-500">{t(`auth.register.type.${role.subLabelKey}`)}</p>
                             </div>
                             <div className={cn(
                                 "w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all",
@@ -109,7 +97,7 @@ export default function RegisterTypeModule() {
 
                 {selectedRole === 'OWNER' && (
                     <div className="p-6 bg-surface-200 border border-neutral-200 rounded-md space-y-4 animate-in slide-in-from-bottom duration-300">
-                        <p className="text-sm font-bold text-neutral-900">نوع ملكية العقارات</p>
+                        <p className="text-sm font-bold text-neutral-900">{t('auth.register.type.owner_type_title')}</p>
                         <div className="grid grid-cols-2 gap-3">
                             <button 
                                 onClick={() => setOwnerType('INDIVIDUAL')}
@@ -118,7 +106,7 @@ export default function RegisterTypeModule() {
                                     ownerType === 'INDIVIDUAL' ? "border-primary bg-primary/5 text-primary" : "border-neutral-100 text-neutral-400 hover:border-neutral-200"
                                 )}
                             >
-                                فرد / مواطن
+                                {t('auth.register.type.owner_individual')}
                             </button>
                             <button 
                                 onClick={() => setOwnerType('ENTITY')}
@@ -127,14 +115,14 @@ export default function RegisterTypeModule() {
                                     ownerType === 'ENTITY' ? "border-primary bg-primary/5 text-primary" : "border-neutral-100 text-neutral-400 hover:border-neutral-200"
                                 )}
                             >
-                                فندق / وكالة سياحية
+                                {t('auth.register.type.owner_entity')}
                             </button>
                         </div>
                     </div>
                 )}
                 {selectedRole === 'CARRIER_STAFF' && (
                     <div className="p-6 bg-surface-200 border border-neutral-200 rounded-md space-y-4 animate-in slide-in-from-bottom duration-300">
-                        <p className="text-sm font-bold text-neutral-900">نوع التسجيل في قطاع النقل</p>
+                        <p className="text-sm font-bold text-neutral-900">{t('auth.register.type.carrier_type_title')}</p>
                         <div className="grid grid-cols-2 gap-3">
                             <button 
                                 onClick={() => setCarrierType('STAFF')}
@@ -143,7 +131,7 @@ export default function RegisterTypeModule() {
                                     carrierType === 'STAFF' ? "border-primary bg-primary/5 text-primary" : "border-neutral-100 text-neutral-400 hover:border-neutral-200"
                                 )}
                             >
-                                مندوب / فرد
+                                {t('auth.register.type.carrier_staff')}
                             </button>
                             <button 
                                 onClick={() => setCarrierType('COMPANY')}
@@ -152,7 +140,7 @@ export default function RegisterTypeModule() {
                                     carrierType === 'COMPANY' ? "border-primary bg-primary/5 text-primary" : "border-neutral-100 text-neutral-400 hover:border-neutral-200"
                                 )}
                             >
-                                شركة خدمات لوجستية
+                                {t('auth.register.type.carrier_company')}
                             </button>
                         </div>
                     </div>
@@ -163,9 +151,10 @@ export default function RegisterTypeModule() {
                 <button
                     onClick={handleNext}
                     disabled={!selectedRole}
-                    className="w-full h-btn-lg rounded-pill bg-btn-primary text-white font-bold flex items-center justify-center gap-2 shadow-btn transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full h-[56px] rounded-full text-white font-bold text-lg shadow-lg shadow-primary/20 flex items-center justify-center gap-2 hover:opacity-90 transition-opacity active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                    style={{ background: 'linear-gradient(to left, #0CBBDB, #1A73C1)' }}
                 >
-                    <span>التالي</span>
+                    <span>{t('auth.register.type.next_button')}</span>
                     <CaretRight size={20} className="rotate-180" />
                 </button>
             </footer>

@@ -1,0 +1,375 @@
+# TNA Platform — E2E Testing Strategy & Implementation Plan
+
+## Background
+
+The TNA (Total National Address) platform serves 4 distinct user roles (Visitor, Owner, Gov-User, Carrier) across a Next.js App Router architecture with i18n (ar/en), Zustand state management, and mock data layers. The current test infrastructure consists of a single `smoke.spec.ts` with 2 basic assertions. This plan designs a production-grade Playwright E2E suite.
+
+> [!IMPORTANT]
+> **Critical Fix Required**: The TNA issuance detail page (`/gov/tna-queue/[id]`) is **missing entirely** — no `[id]` directory exists under `tna-queue/`. This causes a 404 when Gov users click "Review" on any TNA request. The address-queue detail page (`/gov/address-queue/[id]/page.tsx`) exists and is fully functional — it must be used as the architectural blueprint to reconstruct the TNA detail page.
+
+---
+
+## Open Questions
+
+> [!IMPORTANT]
+> 1. **Base URL**: Should tests target `localhost:3000` (dev server) or a dedicated test server? Current smoke test assumes `:3000`.
+> 2. **Locale priority**: Should E2E tests run in Arabic (`/ar/`) only, English (`/en/`) only, or both? Arabic is the primary market but English validates i18n completeness.
+> 3. **CI Integration**: Do you want GitHub Actions / pipeline config included in this plan, or is local-only sufficient for now?
+
+---
+
+## Proposed Changes
+
+### Phase 0 — Critical Fix: TNA Queue Detail Page
+
+#### [NEW] [tna-queue/[id]/page.tsx](file:///c:/Users/Kimo%20Store/Desktop/project-tna/project-a/frontend/tna-project/src/app/[locale]/gov/tna-queue/[id]/page.tsx)
+
+Reconstruct the missing TNA issuance review page, mirroring the architecture of `address-queue/[id]/page.tsx`:
+
+- Uses `DetailViewLayout` template with sidebar action panel
+- Reads `mockGovQueue` by `request_id` param (+ new `mockTNARequestDetails` lookup)
+- Sections: Visitor Information, Eligibility Snapshot, Supporting Documents
+- Sidebar: Approve/Reject buttons with processing state → success/failure animation
+- Security note panel matching address-queue pattern
+
+**New mock data required** in `gov.mock.ts`:
+```ts
+export const mockTNARequestDetails: Record<string, any> = {
+  'req-pending-1': {
+    request_id: 'req-pending-1',
+    visitor: { name: 'Abdullah Al-Ghamdi', nationality: 'Saudi Arabia', national_id: '1092837465', visa_status: 'VALID' },
+    eligibility: { visa_valid: true, iqama_valid: true, max_tnas_reached: false, risk_score: 'LOW' },
+    documents: [{ type: 'passport_entry', status: 'UPLOADED' }, { type: 'id_copy', status: 'UPLOADED' }],
+  },
+  // ... entries for req-pending-2, req-pending-3, req-pending-4
+};
+```
+
+---
+
+### Phase 1 — Playwright Infrastructure
+
+#### [NEW] [playwright.config.ts](file:///c:/Users/Kimo%20Store/Desktop/project-tna/project-a/frontend/tna-project/playwright.config.ts)
+
+```ts
+// Key config points:
+// - baseURL: 'http://localhost:3000'
+// - projects: [chromium, firefox, mobile-chrome]
+// - retries: 1 (CI), 0 (local)
+// - trace: 'on-first-retry'
+// - screenshot: 'only-on-failure'
+// - webServer: { command: 'npm run dev', port: 3000 }
+```
+
+#### [NEW] [tests/e2e/fixtures/](file:///c:/Users/Kimo%20Store/Desktop/project-tna/project-a/frontend/tna-project/tests/e2e/fixtures/)
+
+| File | Purpose |
+|------|---------|
+| `auth.fixture.ts` | Custom fixture that pre-sets Zustand auth state via `localStorage` injection for each role |
+| `locale.fixture.ts` | Sets `tna-locale` cookie to `ar` or `en` before navigation |
+| `mock-api.fixture.ts` | Base fixture with `page.route()` interceptors for success/failure/404/500 |
+
+#### [MODIFY] [package.json](file:///c:/Users/Kimo%20Store/Desktop/project-tna/project-a/frontend/tna-project/package.json)
+
+Add Playwright dependency and scripts:
+```diff
++ "@playwright/test": "^1.52.0"
+  ...
++ "test:e2e": "playwright test",
++ "test:e2e:ui": "playwright test --ui",
++ "test:e2e:report": "playwright show-report"
+```
+
+---
+
+### Phase 2 — Page Object Model (POM)
+
+#### Directory: `tests/e2e/pages/`
+
+| Page Object | Route(s) | Key Methods |
+|---|---|---|
+| `LoginPage` | `/{locale}/login` | `selectRole()`, `fillCredentials()`, `submit()`, `expectRoleButtons()` |
+| `VisitorHomePage` | `/{locale}/visitor/home` | `expectDashboardCards()`, `expectActiveTNAs()` |
+| `VisitorSearchPage` | `/{locale}/visitor/search` | `searchAddress()`, `selectResult()`, `expectResultsList()` |
+| `VisitorTNAPage` | `/{locale}/visitor/tnas` | `expectTNAList()`, `clickTNADetail()`, `requestUnbind()` |
+| `CheckoutPage` | `/{locale}/visitor/checkout` | `selectPaymentMethod()`, `confirmPayment()`, `expectSuccess()` |
+| `ShipmentsPage` | `/{locale}/visitor/shipments` | `expectShipmentTable()`, `filterByStatus()` |
+| `OwnerHomePage` | `/{locale}/owner/home` | `expectWalletBalance()`, `expectPropertyCount()` |
+| `OwnerPropertiesPage` | `/{locale}/owner/properties` | `addProperty()`, `createSubAddress()`, `toggleAutoAccept()` |
+| `OwnerBindingsPage` | `/{locale}/owner/bindings` | `approveBinding()`, `rejectBinding()`, `expectPendingList()` |
+| `OwnerPayoutsPage` | `/{locale}/owner/payouts` | `requestCashOut()`, `expectTransactionHistory()` |
+| `GovHomePage` | `/{locale}/gov/home` | `expectKPICards()`, `expectRegionStats()` |
+| `GovTNAQueuePage` | `/{locale}/gov/tna-queue` | `expectPendingTable()`, `clickReview()` |
+| `GovTNADetailPage` | `/{locale}/gov/tna-queue/[id]` | `approveRequest()`, `rejectRequest()`, `expectDecisionState()` |
+| `GovAddressQueuePage` | `/{locale}/gov/address-queue` | `expectQueueTable()`, `clickReview()` |
+| `GovPolicyPage` | `/{locale}/gov/policy` | `toggleIssuanceMode()`, `updateRules()` |
+| `CarrierHomePage` | `/{locale}/carrier/home` | `expectFleetStats()`, `expectActiveShipments()` |
+| `CarrierShipmentsPage` | `/{locale}/carrier/shipments` | `updateStatus()`, `assignDriver()` |
+| `CarrierResolvePage` | `/{locale}/carrier/resolve` | `resolveTNACode()`, `expectAddressResult()` |
+
+---
+
+### Phase 3 — Test Specs by Role
+
+#### 3A. Visitor Role (`tests/e2e/visitor/`)
+
+| Spec File | Test Cases | Edge Cases |
+|---|---|---|
+| `visitor-login.spec.ts` | Login with VISITOR role → redirects to `/visitor/home` | Invalid role fallback |
+| `visitor-tna-request.spec.ts` | Request new TNA → verify PENDING state → mock gov approval → verify ACTIVE | Duplicate TNA request rejection |
+| `visitor-search-bind.spec.ts` | Search marketplace → select address → initiate binding → verify pending state | No results state, empty search |
+| `visitor-payment.spec.ts` | Checkout flow → Apple Pay mock → Visa mock → success toast → verify transaction | Payment failure (500), insufficient funds |
+| `visitor-shipment.spec.ts` | View shipments table → filter by IN_TRANSIT → verify tracking details | Empty shipments state |
+| `visitor-unbind.spec.ts` | Unbind active TNA → verify UNLINKED status | **⚠️ IN_TRANSIT guardrail**: attempt unbind while shipment is IN_TRANSIT → expect error toast "Cannot unlink: Active deliveries in progress" |
+| `visitor-profile.spec.ts` | View/edit profile → update contact info → verify persistence | |
+
+#### 3B. Owner Role (`tests/e2e/owner/`)
+
+| Spec File | Test Cases | Edge Cases |
+|---|---|---|
+| `owner-login.spec.ts` | Login → redirect to `/owner/home` → verify wallet balance card | |
+| `owner-properties.spec.ts` | Add property → verify in table → create sub-address → verify suffix code | Duplicate property, invalid building number |
+| `owner-bindings.spec.ts` | View pending bindings → approve → verify balance increase → reject alternate | Auto-accept toggle verification |
+| `owner-cashout.spec.ts` | Request wallet cash-out → select Apple Pay/Visa → verify payout record | Insufficient balance, payout failure |
+
+#### 3C. Gov-User Role (`tests/e2e/gov/`)
+
+| Spec File | Test Cases | Edge Cases |
+|---|---|---|
+| `gov-login.spec.ts` | Login → redirect to `/gov/home` → verify KPI dashboard | |
+| `gov-tna-queue.spec.ts` | View pending queue → click review → navigate to detail | Empty queue state |
+| `gov-tna-approval.spec.ts` | Open `req-pending-1` → approve → verify success animation → back to queue | Reject flow, 404 on invalid ID |
+| `gov-address-queue.spec.ts` | View address queue → review `sub-001` → approve → verify decision state | |
+| `gov-policy.spec.ts` | Toggle issuance mode MODERATED↔AUTONOMOUS → verify rule config persistence | |
+| `gov-agencies.spec.ts` | View agencies table → verify permission display | |
+| `gov-audit.spec.ts` | Verify audit log table renders with action history | |
+
+#### 3D. Carrier-User Role (`tests/e2e/carrier/`)
+
+| Spec File | Test Cases | Edge Cases |
+|---|---|---|
+| `carrier-login.spec.ts` | Login → redirect to `/carrier/home` → verify fleet dashboard | |
+| `carrier-register.spec.ts` | Registration flow → webhook/API key redirection | Duplicate registration |
+| `carrier-shipments.spec.ts` | View shipments → update status (CREATED→PICKED_UP→IN_TRANSIT→DELIVERED) | Invalid status transition |
+| `carrier-driver.spec.ts` | Assign driver → verify task list → verify map page loads | |
+| `carrier-resolve.spec.ts` | TNA-to-address resolution → verify physical address displayed | Invalid TNA code |
+
+---
+
+### Phase 4 — API Mocking Strategy
+
+#### [NEW] [tests/e2e/mocks/api-handlers.ts](file:///c:/Users/Kimo%20Store/Desktop/project-tna/project-a/frontend/tna-project/tests/e2e/mocks/api-handlers.ts)
+
+Centralized route interceptors using `page.route()`:
+
+```ts
+// Pattern: Each handler returns a factory for success/failure/error scenarios
+export const mockHandlers = {
+  auth: {
+    loginSuccess: (role: UserRole) => ({ status: 200, body: { token: '...', user: mockUsers[role] } }),
+    loginFailure: () => ({ status: 401, body: { error: 'Invalid credentials' } }),
+  },
+  tna: {
+    listSuccess: () => ({ status: 200, body: { data: mockTNAs } }),
+    approveSuccess: (id: string) => ({ status: 200, body: { request_id: id, status: 'APPROVED' } }),
+    approveFail500: () => ({ status: 500, body: { error: 'Internal server error' } }),
+    notFound404: () => ({ status: 404, body: { error: 'Request not found' } }),
+  },
+  payment: {
+    chargeSuccess: () => ({ status: 200, body: { transaction_id: '...', status: 'COMPLETED' } }),
+    chargeFailed: () => ({ status: 402, body: { error: 'Payment declined' } }),
+  },
+  binding: {
+    terminateBlocked: () => ({ status: 409, body: { error: 'Cannot unlink: Active deliveries in progress' } }),
+    terminateSuccess: () => ({ status: 200, body: { status: 'TERMINATED' } }),
+  },
+};
+```
+
+**Scenarios tested per endpoint:**
+
+| Endpoint Pattern | 200 | 401 | 404 | 409 | 500 |
+|---|:---:|:---:|:---:|:---:|:---:|
+| `POST /auth/login` | ✅ | ✅ | — | — | ✅ |
+| `GET /tna/requests` | ✅ | — | ✅ | — | ✅ |
+| `POST /tna/approve` | ✅ | — | ✅ | — | ✅ |
+| `POST /payment/charge` | ✅ | — | — | — | ✅ |
+| `DELETE /binding/:id` | ✅ | — | ✅ | ✅ | ✅ |
+| `POST /carrier/shipment/status` | ✅ | — | ✅ | ✅ | ✅ |
+
+---
+
+### Phase 5 — Three-Pillar Assertion Library
+
+#### [NEW] [tests/e2e/assertions/visual.ts](file:///c:/Users/Kimo%20Store/Desktop/project-tna/project-a/frontend/tna-project/tests/e2e/assertions/)
+
+**Pillar 1 — Visual & UX Integrity:**
+```ts
+// Reusable assertions that verify design system compliance
+async expectSPATIALTheme(page: Page) {
+  // Verify CSS variables are loaded (--color-primary: #2196C9)
+  // Verify font-family includes 'Rubik' or 'IBM Plex Sans Arabic'
+  // Verify no raw browser-default fonts
+  // Verify primary gradient exists on CTA buttons
+}
+async expectRTLLayout(page: Page) {
+  // Verify dir="rtl" on root when locale=ar
+  // Verify logical CSS properties (margin-inline, padding-inline)
+}
+```
+
+**Pillar 2 — Functional Correctness:**
+```ts
+async expectStateTransition(page: Page, from: string, to: string) {
+  // Verify status badge changes from `from` to `to`
+  // Verify localStorage/Zustand state reflects change
+}
+async expectGuardrail(page: Page, errorMessage: string) {
+  // Verify error toast/dialog appears with specific message
+  // Verify destructive action was blocked
+}
+```
+
+**Pillar 3 — Flow Continuity:**
+```ts
+async expectFlowCompletion(page: Page, finalElement: string) {
+  // Verify the journey reached the terminal success/failure dialog
+  // Verify no intermediate 404s or blank states
+  // Screenshot on success for audit trail
+}
+```
+
+---
+
+### Phase 6 — Reporting & CI
+
+#### [NEW] [playwright.config.ts](file:///c:/Users/Kimo%20Store/Desktop/project-tna/project-a/frontend/tna-project/playwright.config.ts) — Reporter Config
+
+```ts
+reporter: [
+  ['html', { open: 'never' }],
+  ['json', { outputFile: 'test-results/results.json' }],
+  ['list'],  // Console output
+],
+use: {
+  trace: 'on-first-retry',
+  screenshot: 'only-on-failure',
+  video: 'retain-on-failure',
+},
+```
+
+---
+
+## File Tree Summary
+
+```
+tests/e2e/
+├── fixtures/
+│   ├── auth.fixture.ts          # Role-based auth state injection
+│   ├── locale.fixture.ts        # i18n cookie setup
+│   └── mock-api.fixture.ts      # API interceptor base
+├── pages/                       # Page Object Model
+│   ├── LoginPage.ts
+│   ├── visitor/
+│   │   ├── VisitorHomePage.ts
+│   │   ├── VisitorSearchPage.ts
+│   │   ├── VisitorTNAPage.ts
+│   │   ├── CheckoutPage.ts
+│   │   └── ShipmentsPage.ts
+│   ├── owner/
+│   │   ├── OwnerHomePage.ts
+│   │   ├── OwnerPropertiesPage.ts
+│   │   ├── OwnerBindingsPage.ts
+│   │   └── OwnerPayoutsPage.ts
+│   ├── gov/
+│   │   ├── GovHomePage.ts
+│   │   ├── GovTNAQueuePage.ts
+│   │   ├── GovTNADetailPage.ts
+│   │   ├── GovAddressQueuePage.ts
+│   │   └── GovPolicyPage.ts
+│   └── carrier/
+│       ├── CarrierHomePage.ts
+│       ├── CarrierShipmentsPage.ts
+│       └── CarrierResolvePage.ts
+├── mocks/
+│   └── api-handlers.ts          # Centralized mock responses
+├── assertions/
+│   ├── visual.ts                # Design system compliance
+│   ├── functional.ts            # State transition verification
+│   └── flow.ts                  # Journey completion checks
+├── visitor/
+│   ├── visitor-login.spec.ts
+│   ├── visitor-tna-request.spec.ts
+│   ├── visitor-search-bind.spec.ts
+│   ├── visitor-payment.spec.ts
+│   ├── visitor-shipment.spec.ts
+│   ├── visitor-unbind.spec.ts
+│   └── visitor-profile.spec.ts
+├── owner/
+│   ├── owner-login.spec.ts
+│   ├── owner-properties.spec.ts
+│   ├── owner-bindings.spec.ts
+│   └── owner-cashout.spec.ts
+├── gov/
+│   ├── gov-login.spec.ts
+│   ├── gov-tna-queue.spec.ts
+│   ├── gov-tna-approval.spec.ts
+│   ├── gov-address-queue.spec.ts
+│   ├── gov-policy.spec.ts
+│   ├── gov-agencies.spec.ts
+│   └── gov-audit.spec.ts
+├── carrier/
+│   ├── carrier-login.spec.ts
+│   ├── carrier-register.spec.ts
+│   ├── carrier-shipments.spec.ts
+│   ├── carrier-driver.spec.ts
+│   └── carrier-resolve.spec.ts
+└── smoke.spec.ts                # (existing, will be updated)
+```
+
+**Total: ~40 spec files, 15+ page objects, 3 fixture files, 1 mock handler module, 3 assertion modules**
+
+---
+
+## Critical Edge-Case Guardrails
+
+| ID | Guardrail | Expected Behavior | Test File |
+|---|---|---|---|
+| G-1 | **In-Transit Unbind Block** | Attempting to unbind a TNA with `IN_TRANSIT` shipments → error toast with "Cannot unlink: Active deliveries in progress (409 Conflict)" | `visitor-unbind.spec.ts` |
+| G-2 | **Payment Before Activation** | `activateBinding()` throws if no completed payment exists for binding | `visitor-payment.spec.ts` |
+| G-3 | **Max TNA Limit** | Visitor with 3 active TNAs cannot request a 4th (when policy `max_active_tnas_per_visitor: 3`) | `visitor-tna-request.spec.ts` |
+| G-4 | **Invalid TNA Resolution** | Carrier scanning an invalid/expired TNA code → error state | `carrier-resolve.spec.ts` |
+| G-5 | **Gov 404 Detail Page** | Navigating to `/gov/tna-queue/nonexistent-id` → "Request not found" message | `gov-tna-approval.spec.ts` |
+| G-6 | **Auto-Accept Toggle** | Owner toggles auto-accept ON → incoming binding bypasses manual approval | `owner-bindings.spec.ts` |
+| G-7 | **Deprecated Route Redirect** | Navigating to `/gov/verification/queue` → 301 redirect to `/gov/tna-queue` | `smoke.spec.ts` |
+
+---
+
+## Verification Plan
+
+### Automated Tests
+1. `npx playwright install` — Install browser binaries
+2. `npm run dev` (background) — Start Next.js dev server
+3. `npx playwright test` — Run full suite
+4. `npx playwright test --grep @critical` — Run critical-path-only subset
+5. `npx playwright show-report` — View HTML report with screenshots/traces
+
+### Manual Verification
+- Visually confirm the reconstructed TNA detail page (`/gov/tna-queue/req-pending-1`) matches the address-queue detail page's layout
+- Verify RTL layout in Arabic locale for all 4 role dashboards
+- Confirm trace files attach to every failed assertion for debugging
+
+---
+
+## Execution Priority
+
+| Priority | Phase | Estimated Effort |
+|---|---|---|
+| 🔴 P0 | Phase 0: Fix TNA Queue Detail Page (404 blocker) | ~1 hour |
+| 🔴 P0 | Phase 1: Playwright config + fixtures + install | ~30 min |
+| 🟡 P1 | Phase 2: Page Object Model (core 10 pages) | ~2 hours |
+| 🟡 P1 | Phase 3A: Visitor flow specs (highest coverage) | ~2 hours |
+| 🟢 P2 | Phase 3B-3D: Owner, Gov, Carrier specs | ~3 hours |
+| 🟢 P2 | Phase 4: API mock handlers | ~1 hour |
+| 🔵 P3 | Phase 5: Three-Pillar assertion library | ~1 hour |
+| 🔵 P3 | Phase 6: Reporting & CI config | ~30 min |

@@ -17,21 +17,21 @@ export default function BottomNav() {
     ];
 
     return (
-        <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md h-20 bg-white border-t border-tna-gray-200 flex items-center justify-around px-2 pb-2 safe-area-bottom z-[100]">
+        <nav className="fixed bottom-0 inset-x-0 w-full bg-card border-t border-divider flex items-center justify-around px-2 pb-2 safe-area-bottom z-navbar">
             {navItems.map((item) => {
                 const isActive = pathname === item.href || (item.href !== '/visitor/home' && pathname.startsWith(item.href));
                 return (
                     <Link
                         key={item.href}
                         href={item.href}
-                        className={`flex flex-col items-center gap-1 min-w-[64px] transition-colors relative pt-3 pb-1 flex-1 ${isActive ? 'text-primary' : 'text-tna-gray-400'
+                        className={`flex flex-col items-center gap-1 min-w-[64px] transition-all duration-fast relative pt-3 pb-1 flex-1 ${isActive ? 'text-primary' : 'text-text-placeholder'
                             }`}
                     >
                         {isActive && (
-                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-0.5 bg-amber-500 rounded-b-full" />
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-1 bg-secondary rounded-b-full shadow-button" />
                         )}
-                        <item.icon size={24} strokeWidth={isActive ? 2.5 : 2} />
-                        <span className="text-[10px] font-bold">{item.label}</span>
+                        <item.icon size={22} strokeWidth={isActive ? 2.5 : 2} />
+                        <span className="text-xs font-bold">{item.label}</span>
                     </Link>
                 );
             })}

@@ -1,0 +1,55 @@
+{
+  "common": {
+    "next": "التالي",
+    "back": "الرجوع",
+    "confirm": "تأكيد",
+    "cancel": "إلغاء",
+    "loading": "جاري التحميل...",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "view_all": "عرض الكل",
+    "menu": "القائمة",
+    "support": "الدعم",
+    "logged_in_as": "مسجل الدخول كـ {role}",
+    "view_profile": "عرض الملف الشخصي",
+    "wallet_balance": "رصيد المحفظة",
+    "total_records": "الإجمالي: {count} سجلات",
+    "search_placeholder": "ابحث...",
+    "page_of": "الصفحة {current} من {total}",
+    "no_data": "لا توجد بيانات",
+    "no_data_desc": "لم نتمكن من العثور على أي سجلات تطابق معايير البحث.",
+    "currency": "SAR",
+    "goBack": "الرجوع"
+  },
+  "Owner": {
+    "overview": "لوحة التحكم",
+    "properties": "إدارة العقارات",
+    "bindings": "طلبات الربط",
+    "earnings": "الأرباح",
+    "profile": "الملف الشخصي"
+  },
+  "Carrier": {
+    "overview": "مركز القيادة",
+    "fleet": "الأسطول",
+    "shipments": "إدارة الشحنات",
+    "tasks": "مهام السائقين",
+    "reports": "التقارير",
+    "profile": "الملف الشخصي"
+  },
+  "Gov": {
+    "overview": "مؤشرات الأنظمة",
+    "queue": "طلبات المراجعة",
+    "audit": "سجل التدقيق",
+    "agencies": "الجهات الحكومية",
+    "policy": "إعدادات السياسة",
+    "profile": "الملف الشخصي"
+  },
+  "statuses": {
+    "ACTIVE": "نشط",
+    "PENDING": "قيد المراجعة",
+    "EXPIRED": "منتهي",
+    "REJECTED": "مرفوض",
+    "SUSPENDED": "موقوف",
+    "UNLINKED": "غير مرتبط"
+  },

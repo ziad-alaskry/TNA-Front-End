@@ -1,0 +1,41 @@
+/* ============================================
+   TNA Carrier — Brand Tokens
+   Drop this into your globals.css or index.css
+   ============================================ */
+
+:root {
+  /* --- Core palette --- */
+  --brand-navy:       #014A8F;   /* sidebar bg, primary text on light */
+  --brand-navy-dark:  #012F5C;   /* hover state, pressed */
+  --brand-teal:       #17BFD9;   /* accents, active highlights */
+  --brand-teal-light: #4FD1E7;   /* hover on teal elements */
+  --brand-cyan:       #0EA5C9;   /* secondary accent */
+  --brand-white:      #FFFFFF;
+  --brand-surface:    #F4F6FA;   /* page background */
+
+  /* --- Sidebar --- */
+  --sidebar-bg:            linear-gradient(180deg, #0D2E6E 0%, #1756A9 100%);
+  --sidebar-width:         240px;
+  --sidebar-icon-color:    rgba(255,255,255,0.65);
+  --sidebar-text:          rgba(255,255,255,0.85);
+  --sidebar-active-bg:     rgba(255,255,255,0.12);
+  --sidebar-active-text:   #FFFFFF;
+  --sidebar-active-accent: var(--brand-teal);  /* 3px left border */
+
+  /* --- Header --- */
+  --header-height:      56px;
+  --header-bg:          #FFFFFF;
+  --header-border:      1px solid rgba(0,0,0,0.08);
+  --header-accent-line: 3px solid var(--brand-teal); /* top border */
+
+  /* --- Logo sizes --- */
+  --logo-sidebar-size:    36px;   /* icon only in sidebar header */
+  --logo-topbar-height:   28px;   /* if used in top bar */
+
+  /* --- Typography --- */
+  --font-brand: 'Cairo', 'IBM Plex Arabic', 'Segoe UI', sans-serif;
+
+  /* --- Watermark --- */
+  --watermark-opacity: 0.06;
+  --watermark-size:    340px;    /* width of watermark in content area */
+}

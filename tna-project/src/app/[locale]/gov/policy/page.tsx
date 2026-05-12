@@ -6,226 +6,123 @@ import {
     Gear, 
     ShieldCheck, 
     CurrencyCircleDollar, 
-    Clock, 
-    WarningCircle,
-    PlusCircle,
-    SlidersHorizontal,
+    Bell, 
+    Info, 
     CheckCircle,
-    Trash
+    ArrowLeft,
+    IdentificationCard,
+    Lock
 } from '@phosphor-icons/react'
-import InputField from '@/components/ui/InputField'
-import Select from '@/components/ui/Select'
-import Button from '@/components/ui/Button'
-import { useRouter, useParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useLocale } from '@/i18n/LocaleProvider'
-
-interface Condition {
-    id: string;
-    parameter: string;
-    operator: string;
-    value: string;
-}
+import Button from '@/components/ui/Button'
+import { cn } from '@/lib/utils/cn'
+import { useTranslation } from 'react-i18next';
 
 export default function GovPolicyPage() {
     const router = useRouter();
-    const { locale } = useParams();
-    const { t } = useLocale();
-
-    const [isAutomationEnabled, setIsAutomationEnabled] = useState(true);
+    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  isRTL , t } = useLocale();
     const [isSaving, setIsSaving] = useState(false);
-    const [conditions, setConditions] = useState<Condition[]>([
-        { id: 'c1', parameter: 'age', operator: '>=', value: '18' },
-        { id: 'c2', parameter: 'nationality', operator: 'in', value: 'دول مجلس التعاون' },
-        { id: 'c3', parameter: 'active_tnas', operator: '<', value: '3' }
-    ]);
+    const [saved, setSaved] = useState(false);
 
-    const handleAddCondition = () => {
-        const newCondition: Condition = {
-            id: Math.random().toString(36).substr(2, 9),
-            parameter: 'age',
-            operator: '==',
-            value: ''
-        };
-        setConditions([...conditions, newCondition]);
-    };
-
-    const removeCondition = (id: string) => {
-        setConditions(conditions.filter(c => c.id !== id));
-    };
-
-    const handleSave = () => {
+    const handleSave = async () => {
         setIsSaving(true);
-        setTimeout(() => setIsSaving(false), 1500);
+        await new Promise(r => setTimeout(r, 1000));
+        setIsSaving(false);
+        setSaved(true);
+        setTimeout(() => setSaved(false), 3000);
     };
 
-    return (
-        <AppShell role="Gov" header={t('gov.policy.header')}>
-            <div className="max-w-4xl space-y-8">
-                {/* Automation Toggle Header */}
-                <div className={`p-6 rounded-md border transition-all flex items-center justify-between ${
-                    isAutomationEnabled ? 'border-primary bg-primary/5' : 'border-neutral-200 bg-surface-200'
-                }`}>
-                    <div className="flex items-center gap-4">
-                        <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                            isAutomationEnabled ? 'bg-primary text-white' : 'bg-neutral-200 text-neutral-400'
-                        }`}>
-                            <Gear size={24} weight="fill" className={isAutomationEnabled ? 'animate-spin-slow' : ''} />
-                        </div>
-                        <div>
-                            <h3 className="text-lg font-bold text-neutral-900">{t('gov.policy.smart_automation')}</h3>
-                            <p className="text-xs text-neutral-500">{t('gov.policy.smart_automation_desc')}</p>
-                        </div>
+    const settings = [
+        {
+            group: t('gov.issuance_policies_62'),
+            items: [
+                { id: 'issuance_mode', label: t('gov.issuance_mode_63'), description: t('gov.moderated_for_manual_review_or_autonomou_64'), type: 'select', options: ['MODERATED', 'AUTONOMOUS'], default: 'MODERATED' },
+                { id: 'max_active_tnas_per_visitor', label: t('gov.max_active_tnas_per_visitor_65'), description: t('gov.maximum_active_tnas_allowed_per_visitor_66'), type: 'number', default: 3 },
+                { id: 'tna_validity_days', label: t('gov.tna_validity_days_67'), description: t('gov.number_of_days_a_tna_remains_valid_68'), type: 'number', default: 365 },
+                { id: 'minimum_rental_period_days', label: t('gov.minimum_rental_period_days_69'), description: t('gov.minimum_rental_duration_allowed_70'), type: 'number', default: 1 },
+            ]
+        },
+        {
+            group: t('gov.economic_parameters_71'),
+            items: [
+                { id: 'platform_fee_percentage', label: t('gov.platform_fee_72'), description: t('gov.percentage_taken_from_owner_earnings_73'), type: 'number', default: 15 },
+                { id: 'binding_fee', label: t('gov.binding_fee_sar_74'), description: t('gov.flat_fee_for_linking_a_tna_to_a_property_75'), type: 'number', default: 50 },
+            ]
+        },
+        {
+            group: t('gov.eligibility_rules_76'),
+            items: [
+                { id: 'auto_approve_if_visa_valid', label: t('gov.autoapprove_if_visa_valid_77'), description: t('gov.autoapprove_visitors_with_valid_visa_78'), type: 'toggle', default: true },
+                { id: 'auto_approve_if_iqama_valid', label: t('gov.autoapprove_if_iqama_valid_79'), description: t('gov.autoapprove_visitors_with_valid_iqama_80'), type: 'toggle', default: true },
+            ]
+        }
+    ];
+
+return (
+        <AppShell role="Gov" header={t('gov.global_policy_control_81')}>
+            <div className="max-w-4xl space-y-8 pb-12">
+                <div className="flex items-center justify-between">
+                    <div className="space-y-1">
+                        <h2 className="text-2xl font-black text-neutral-900 tracking-tight">{t('gov.system_configuration_82')}</h2>
+                        <p className="text-sm text-neutral-500">{t('gov.modify_global_rules_and_economic_paramet_83')}</p>
                     </div>
-                    <button 
-                        onClick={() => setIsAutomationEnabled(!isAutomationEnabled)}
-                        className={`w-16 h-8 rounded-pill relative transition-colors ${
-                            isAutomationEnabled ? 'bg-primary' : 'bg-neutral-300'
-                        }`}
+                    <Button 
+                        onClick={handleSave} 
+                        isLoading={isSaving}
+                        className={cn("px-8 shadow-glow-primary", saved && "bg-success hover:bg-success")}
                     >
-                        <div className={`absolute top-1 w-6 h-6 bg-white rounded-full transition-all ${
-                            isAutomationEnabled ? 'right-9' : 'right-1'
-                        }`} />
-                    </button>
+                        {saved ? <CheckCircle size={20} weight="bold" /> : (t('gov.save_changes_84'))}
+                    </Button>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {/* Fee Configuration */}
-                    <div className="space-y-6">
-                        <h4 className="font-bold text-neutral-900 flex items-center gap-2">
-                            <CurrencyCircleDollar size={20} className="text-primary" weight="fill" />
-                            {t('gov.policy.fee_structure')}
-                        </h4>
-                        <div className="space-y-4">
-                            <InputField label={t('gov.policy.residential_fee')} defaultValue={t('gov.policy.residential_fee_val')} />
-                            <InputField label={t('gov.policy.commercial_fee')} defaultValue={t('gov.policy.commercial_fee_val')} />
-                            <InputField label={t('gov.policy.platform_percentage')} defaultValue={t('gov.policy.platform_percentage_val')} />
-                        </div>
-                    </div>
-
-                    {/* Expiry & Lifecycle */}
-                    <div className="space-y-6">
-                        <h4 className="font-bold text-neutral-900 flex items-center gap-2">
-                            <Clock size={20} className="text-primary" weight="fill" />
-                            {t('gov.policy.lifecycle')}
-                        </h4>
-                        <div className="space-y-4">
-                            <InputField label={t('gov.policy.default_validity')} defaultValue={t('gov.policy.default_validity_val')} />
-                            <InputField label={t('gov.policy.grace_period')} defaultValue={t('gov.policy.grace_period_val')} />
-                            <div className="p-4 bg-warning-bg border border-warning/10 rounded-md">
-                                <p className="text-[10px] text-warning font-bold flex items-center gap-2">
-                                    <WarningCircle size={14} weight="fill" />
-                                    {t('gov.policy.security_alert')}
-                                </p>
-                                <p className="text-[10px] text-neutral-600 mt-1 leading-relaxed">
-                                    {t('gov.policy.security_alert_desc')}
-                                </p>
+                <div className="space-y-6">
+                    {settings.map((group, i) => (
+                        <section key={i} className="bg-white rounded-3xl border border-neutral-200 shadow-sm overflow-hidden">
+                            <div className="px-6 py-4 bg-surface-200 border-b border-neutral-100">
+                                <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest">{group.group}</h3>
                             </div>
-                        </div>
-                    </div>
+                            <div className="divide-y divide-neutral-100">
+                                {group.items.map((item) => (
+                                    <div key={item.id} className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                        <div className="space-y-1">
+                                            <p className="text-sm font-black text-neutral-900">{item.label}</p>
+                                            <p className="text-xs text-neutral-500 leading-relaxed max-w-md">{item.description}</p>
+                                        </div>
+                                        <div className="flex items-center gap-4">
+                                            {item.type === 'toggle' && (
+                                                <button className="relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full bg-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
+                                                    <span className="pointer-events-none block h-5 w-5 translate-x-5 rounded-full bg-white shadow-lg ring-0 transition-transform" />
+                                                </button>
+                                            )}
+                                            {item.type === 'number' && (
+                                                <input 
+                                                    type="number" 
+                                                    defaultValue={item.default as any} 
+                                                    className="w-24 h-10 px-4 bg-surface-200 rounded-xl border border-neutral-100 text-sm font-black text-neutral-900 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                                                />
+                                            )}
+                                            {item.type === 'select' && (
+                                                <select className="h-10 px-4 bg-surface-200 rounded-xl border border-neutral-100 text-sm font-bold text-neutral-900 outline-none">
+                                                    {((item as any).options as string[]).map(o => <option key={o} value={o}>{o}</option>)}
+                                                </select>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    ))}
                 </div>
 
-                {/* Eligibility Rules / Conditions Editor */}
-                <div className="p-6 rounded-md border border-neutral-200 bg-surface-200">
-                    <div className="flex justify-between items-center mb-6">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center text-primary">
-                                <SlidersHorizontal size={20} weight="bold" />
-                            </div>
-                            <div>
-                                <h4 className="font-bold text-neutral-900">{t('gov.policy.eligibility_rules')}</h4>
-                                <p className="text-[10px] text-neutral-500">تحديد شروط استحقاق العناوين الوطنية المؤقتة</p>
-                            </div>
-                        </div>
-                        <Button 
-                            size="sm" 
-                            variant="outline" 
-                            className="gap-2 h-9 border-primary/20 text-primary"
-                            onClick={handleAddCondition}
-                        >
-                            <PlusCircle size={16} />
-                            {t('gov.policy.add_rule')}
-                        </Button>
+                <div className="p-6 bg-warning/5 rounded-3xl border border-warning/10 flex items-start gap-4">
+                    <Info size={24} className="text-warning shrink-0" weight="fill" />
+                    <div className="space-y-1">
+                        <p className="text-xs font-black text-warning-dark uppercase tracking-widest">{t('gov.cautionary_note_85')}</p>
+                        <p className="text-xs text-neutral-600 leading-relaxed">
+                            {t('gov.changes_to_economic_parameters_fees_and__86')}
+                        </p>
                     </div>
-
-                    <div className="space-y-3">
-                        {conditions.map((condition) => (
-                            <div key={condition.id} className="grid grid-cols-12 gap-3 items-center p-3 bg-white rounded border border-neutral-100 group animate-in fade-in slide-in-from-right-2 duration-300">
-                                <div className="col-span-4">
-                                    <Select 
-                                        options={[
-                                            { value: 'age', label: 'العمر' },
-                                            { value: 'nationality', label: 'الجنسية' },
-                                            { value: 'region', label: 'المنطقة الحالية' },
-                                            { value: 'active_tnas', label: 'عدد العناوين النشطة' },
-                                        ]}
-                                        defaultValue={condition.parameter}
-                                        className="h-9 text-xs"
-                                    />
-                                </div>
-                                <div className="col-span-2">
-                                    <Select 
-                                        options={[
-                                            { value: '>=', label: '>=' },
-                                            { value: '<=', label: '<=' },
-                                            { value: '==', label: '==' },
-                                            { value: 'in', label: 'في قائمة' },
-                                        ]}
-                                        defaultValue={condition.operator}
-                                        className="h-9 text-xs"
-                                    />
-                                </div>
-                                <div className="col-span-5">
-                                    <InputField 
-                                        placeholder="القيمة" 
-                                        defaultValue={condition.value}
-                                        className="h-9 text-xs"
-                                    />
-                                </div>
-                                <div className="col-span-1 flex justify-end">
-                                    <button 
-                                        onClick={() => removeCondition(condition.id)}
-                                        className="w-8 h-8 rounded-full flex items-center justify-center text-error hover:bg-error/10 transition-colors"
-                                    >
-                                        <Trash size={16} />
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className="mt-6 p-4 bg-primary/5 rounded border border-dashed border-primary/20">
-                        <div className="flex gap-3 text-right">
-                            <ShieldCheck size={20} className="text-primary" weight="fill" />
-                            <p className="text-[10px] text-neutral-600 leading-relaxed">
-                                <span className="font-bold block text-neutral-900 mb-1">التحقق من التداخل</span>
-                                يتم تطبيق هذه القواعد بالتسلسل (AND logic). أي طلب لا يستوفي كافة الشروط المذكورة أعلاه سيتم تحويله للمراجعة اليدوية أو الرفض التلقائي بناءً على إعدادات المراجعة الآلية.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Save Footer */}
-                <div className="pt-8 border-t border-neutral-200 flex justify-end gap-3">
-                    <button 
-                        onClick={() => router.back()}
-                        className="h-12 px-8 rounded-sm text-sm font-bold text-neutral-500 hover:bg-neutral-100 transition-colors"
-                    >
-                        {t('gov.policy.discard_changes')}
-                    </button>
-                    <button 
-                        onClick={handleSave}
-                        disabled={isSaving}
-                        className="h-12 px-12 rounded-pill bg-neutral-900 text-white text-sm font-bold shadow-btn hover:bg-black transition-all flex items-center gap-2 disabled:opacity-50"
-                    >
-                        {isSaving ? (
-                            <>{t('gov.policy.saving')}</>
-                        ) : (
-                            <>
-                                <CheckCircle size={20} />
-                                {t('gov.policy.save_sync')}
-                            </>
-                        )}
-                    </button>
                 </div>
             </div>
         </AppShell>

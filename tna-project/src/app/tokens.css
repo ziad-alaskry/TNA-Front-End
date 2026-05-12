@@ -1,152 +1,164 @@
 /* ═══════════════════════════════════════════════════
    SPATIAL Design Token System — tokens.css
-   Source of truth: Brand PDF + 14 Figma Screens
+   Source of truth: SPATIAL Design System v2.0
    Base unit: 4px grid
+   Direction: RTL (Arabic) Support
 ═══════════════════════════════════════════════════ */
 
 :root {
-  /* ─── BRAND PRIMITIVES ─── */
-  --primitive-cyan-light: #18CCE5;
-  --primitive-cyan-mid: #00B4C9;
-  --primitive-navy: #02488D;
-  --primitive-navy-dark: #013A70;
-  --primitive-navy-light: #1A6FC4;
-  --primitive-amber: #F5A623;
-  --primitive-green: #28A745;
-  --primitive-red: #DC3545;
+  /* ─── BRAND PRIMITIVES (SPATIAL) ─── */
+  --primitive-navy:           #02488D;
+  --primitive-navy-dark:      #01336A;
+  --primitive-navy-mid:       #015B9E;
+  --primitive-navy-light:     #E8F0F8;
+  --primitive-cyan:           #18CCE5;
+  --primitive-cyan-dark:      #00B4C9;
+  --primitive-cyan-light:     #E0F9FC;
+  --primitive-orange:         #F5A623;
+  --primitive-orange-light:   #FFF3DC;
+  --primitive-teal:           #26C6DA;
 
-  /* ─── SEMANTIC: BRAND ─── */
-  --color-brand-primary: #F68B1E; /* Orange Theme */
-  --color-brand-secondary: #FFB347;
-  --color-brand-accent: #FFCC33;
+   /* ─── CORE COLORS — Mapping to SPATIAL ─── */
+   --color-primary:            #02488D; /* SPATIAL Navy */
+   --color-primary-dark:       #01336A; /* Navy Dark */
+   --color-primary-light:      #E8F0F8; /* Navy Light */
+   --color-primary-gradient:   linear-gradient(135deg, #02488D, #00B4C9); /* Navy → Cyan */
 
-  /* ─── SEMANTIC: STATUS ─── */
-  --color-success: #28A745;
-  --color-success-bg: #E8F7EC;
-  --color-success-border: #A3D9B1;
-  --color-error: #DC3545;
-  --color-error-bg: #FDECEA;
-  --color-error-border: #F5B3BA;
-  --color-warning: #F5A623;
-  --color-warning-bg: #FEF6E7;
-  --color-warning-border: #FAD98D;
-  --color-info: #00B4C9;
-  --color-info-bg: #E6F7FA;
-  --color-info-border: #99DDE8;
-  --color-pending: #1A6FC4;
-  --color-pending-bg: #EAF2FB;
+   --color-brand-primary:      var(--color-primary); /* Alias for backward compatibility */
 
-  /* ─── NEUTRAL SCALE (9-step) ─── */
-  --neutral-50: #FAFAFA;
-  --neutral-100: #F4F5F6;
-  --neutral-200: #EAECEE;
-  --neutral-300: #D8DBDF;
-  --neutral-400: #B7B7B7;
-  --neutral-500: #8C9098;
-  --neutral-600: #5C6370;
-  --neutral-700: #3A3F47;
-  --neutral-800: #1E2228;
-  --neutral-900: #0A0D10;
+   --color-secondary:          #00B4C9; /* SPATIAL Cyan Mid */
+   --color-secondary-light:    #E0F9FC;
+   --color-accent:             #18CCE5; /* Cyan Light */
+   --color-accent-light:       #E0F9FC;
 
-  /* ─── SURFACE LEVELS ─── */
-  --surface-100: #F4F5F6; /* main app bg */
-  --surface-200: #FFFFFF; /* cards, sections */
-  --surface-300: #FFFFFF; /* modals, sheets */
-  --surface-dark-100: #02488D;
-  --surface-dark-200: #013A70;
-  --surface-dark-300: #0A1E3D;
+   /* ─── SEMANTIC: STATUS ─── */
+   --color-success:            #4CAF50;
+   --color-success-light:      #E8F5E9;
+   --color-error:              #C62828;
+   --color-error-border:       #D32F2F;
+   --color-error-light:        #FFEBEE;
+   --color-warning:            #F5A623;
+   --color-info:               #2196C9;
 
-  /* ─── TYPOGRAPHY ─── */
-  --font-en: 'Rubik', sans-serif;
-  --font-ar: 'Rubik', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+    /* ─── NEUTRAL SCALE ─── */
+    --color-white:              #FFFFFF;
+    --color-background:         #F2F2F7;
+    --color-surface:            #FFFFFF;
+    --color-surface-200:        #F5F5F7; /* Light gray for header/bar backgrounds */
+    --color-divider:            #E0E0E0;
+    --color-border-light:       #EEEEEE;
+    --color-overlay:            rgba(0, 0, 0, 0.04);
 
-  --text-display-size: 32px;
-  --text-display-weight: 800;
-  --text-display-lh: 1.2;
-  --text-display-ls: -0.02em;
-  --text-heading-size: 22px;
-  --text-heading-weight: 700;
-  --text-heading-lh: 1.3;
-  --text-heading-ls: -0.01em;
-  --text-subheading-size: 17px;
-  --text-subheading-weight: 600;
-  --text-subheading-lh: 1.4;
-  --text-body-size: 15px;
-  --text-body-weight: 400;
-  --text-body-lh: 1.6;
-  --text-label-size: 13px;
-  --text-label-lh: 1.5;
-  --text-caption-size: 11px;
-  --text-caption-ls: 0.02em;
-  --text-code-size: 14px;
-  --text-code-ls: 0.04em;
+   /* ─── TEXT ─── */
+   --text-primary:             #1A1A1A;
+   --text-secondary:           #555555;
+   --text-placeholder:         #AAAAAA;
+   --text-link:                #2196C9;
+   --text-on-primary:          #FFFFFF;
+   --text-on-error:            #FFFFFF;
+   --text-disabled:            #9E9E9E;
+   --text-caption:             #777777;
 
-  /* ─── SPACING (4px base) ─── */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-7: 28px;
-  --space-8: 32px;
-  --space-10: 40px;
-  --space-12: 48px;
-  --space-16: 64px;
+   /* ─── TYPOGRAPHY ─── */
+   --font-arabic:    var(--font-ibm-arabic), 'IBM Plex Sans Arabic', sans-serif;
+   --font-english:   var(--font-rubik), 'Rubik', sans-serif;
+   --font-mono:      'IBM Plex Mono', monospace;
 
-  --layout-screen-padding: 20px;
-  --layout-section-gap: 24px;
-  --layout-card-padding: 16px;
-  --layout-content-max-width: 1280px;
-  --layout-mobile-max-width: 390px;
+   /* ─── FONT SIZES ─── */
+   --text-xs:        11px;
+   --text-sm:        13px;
+   --text-base:      15px;
+   --text-md:        17px;
+   --text-lg:        20px;
+   --text-xl:        24px;
+   --text-2xl:       28px;
+   --text-3xl:       34px;
 
-  /* ─── BORDER RADIUS ─── */
-  --radius-xs: 6px;
-  --radius-sm: 10px; /* inputs */
-  --radius-md: 14px; /* cards */
-  --radius-lg: 20px; /* large cards */
-  --radius-pill: 999px; /* buttons */
+   /* ─── FONT WEIGHTS ─── */
+   --font-regular:   400;
+   --font-medium:    500;
+   --font-semibold:  600;
+   --font-bold:      700;
+   --font-extrabold: 800;
 
-  /* ─── SHADOWS ─── */
-  --shadow-card: 0 2px 8px rgba(246, 139, 30, 0.08);
-  --shadow-modal: 0 8px 32px rgba(246, 139, 30, 0.16);
-  --shadow-btn: 0 4px 16px rgba(246, 139, 30, 0.30);
-  --shadow-glow-primary: 0 0 12px rgba(246, 139, 30, 0.40);
-  --shadow-glow-cyan: 0 0 12px rgba(0, 180, 201, 0.35);
-  --shadow-navbar: 0 -1px 8px rgba(0, 0, 0, 0.06);
+   /* ─── LINE HEIGHTS ─── */
+   --leading-none:    1;
+   --leading-tight:   1.2;
+   --leading-snug:    1.375;
+   --leading-normal:  1.5;
+   --leading-relaxed: 1.625;
+   --leading-loose:   2;
 
-  /* ─── COMPONENT: PRIMARY BUTTON ─── */
-  --btn-primary-height: 56px;
-  --btn-primary-radius: var(--radius-pill);
-  --btn-primary-font-size: var(--text-body-size);
-  --btn-primary-weight: 700;
-  --btn-primary-color: #FFFFFF;
-  --btn-primary-bg: linear-gradient(135deg, #F68B1E, #FFB347);
+   /* ─── SPACING (4px base) ─── */
+   --space-0:    0px;
+   --space-1:    4px;
+   --space-2:    8px;
+   --space-3:    12px;
+   --space-4:    16px;
+   --space-5:    20px;
+   --space-6:    24px;
+   --space-7:    28px;
+   --space-8:    32px;
+   --space-10:   40px;
+   --space-12:   48px;
 
-  /* ─── COMPONENT: OUTLINE BUTTON ─── */
-  --btn-outline-height: 52px;
-  --btn-outline-radius: var(--radius-pill);
-  --btn-outline-border: 1.5px solid #00B4C9;
+   --layout-screen-margin:     20px;
+   --layout-card-padding:      16px;
+   --layout-section-gap:       24px;
+   --layout-content-max-width: 960px; /* Aligned with SPATIAL reference */
 
-  /* ─── COMPONENT: INPUT ─── */
-  --input-height: 52px;
-  --input-padding: 0 16px;
-  --input-radius: var(--radius-sm);
-  --input-bg: #FFFFFF;
-  --input-border: 1px solid #D8DBDF;
-  --input-border-focus: 1.5px solid #F68B1E;
+   /* ─── BORDER RADIUS ─── */
+   --radius-none:   0px;
+   --radius-sm:     6px;
+   --radius-md:     10px;
+   --radius-lg:     14px;
+   --radius-xl:     18px;
+   --radius-2xl:    24px;
+   --radius-full:   9999px;
+   --radius-circle: 50%;
 
-  /* ─── NAVIGATION BAR ─── */
-  --navbar-height: 72px;
-  --navbar-bg: #FFFFFF;
-  --navbar-icon-active: #F68B1E;
-  --navbar-icon-inactive: #B7B7B7;
-  --navbar-active-bar: 3px solid #F5A623;
+   /* ─── SHADOWS ─── */
+   --shadow-none:        none;
+   --shadow-card:        0px 2px 8px rgba(0, 0, 0, 0.06);
+   --shadow-card-hover:  0px 4px 16px rgba(0, 0, 0, 0.10);
+   --shadow-button:      0px 4px 12px rgba(33, 150, 201, 0.35);
+   --shadow-button-red:  0px 4px 12px rgba(198, 40, 40, 0.30);
+   --shadow-navbar:      0px -1px 4px rgba(0, 0, 0, 0.08);
+   --shadow-header:      0px 1px 4px rgba(0, 0, 0, 0.06);
+   --shadow-input:       inset 0px 1px 3px rgba(0, 0, 0, 0.04);
 
-  /* ─── BOTTOM NAV (Mobile) ─── */
-  --bottom-nav-height: 64px;
-  --bottom-nav-bg: rgba(255, 255, 255, 0.92);
-  --bottom-nav-active-dot: #F68B1E;
-  --bottom-nav-inactive: #B7B7B7;
+   /* ─── MOTION ─── */
+   --duration-instant: 80ms;
+   --duration-fast:    150ms;
+   --duration-normal:  250ms;
+   --duration-slow:    400ms;
+   --ease-default:     cubic-bezier(0.4, 0, 0.2, 1);
+   --ease-in:          cubic-bezier(0.4, 0, 1, 1);
+   --ease-out:         cubic-bezier(0, 0, 0.2, 1);
+   --ease-spring:      cubic-bezier(0.34, 1.56, 0.64, 1);
+
+   /* ─── Z-INDEX ─── */
+   --z-base:    0;
+   --z-card:    1;
+   --z-header:  100;
+   --z-navbar:  100;
+   --z-modal:   200;
+   --z-toast:   300;
+
+    /* ─── COMPONENT SPECIFIC ─── */
+    --navbar-height:            83px;
+    --header-height:            44px;
+    --input-height:             52px;
+    --btn-primary-height:       52px;
+    --backdrop-blur:            blur(12px);
+
+    /* ─── SIDEBAR THEME ─── */
+    /* Sidebar gradient — darker, professional */
+    --sidebar-gradient: linear-gradient(180deg, #0a1628 0%, #112240 50%, #0d1b3a 100%);
+    --sidebar-text-primary: #e2e8f0;    /* slate-200 */
+    --sidebar-text-secondary: #94a3b8;  /* slate-400 */
+    --sidebar-text-muted: #64748b;      /* slate-500 */
+    --sidebar-active-bg: rgba(255, 255, 255, 0.08);
+    --sidebar-active-border: #38bdf8;   /* sky-400 accent */
+    --sidebar-hover-bg: rgba(255, 255, 255, 0.04);
 }

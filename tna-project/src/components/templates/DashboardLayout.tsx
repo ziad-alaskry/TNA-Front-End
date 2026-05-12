@@ -67,7 +67,7 @@ export function DashboardLayout({
   return (
     <div className="min-h-screen bg-surface-100">
       {/* HEADER SECTION */}
-      <div className="border-b border-neutral-200 bg-surface-200 px-5 py-8 shadow-card">
+      <div className="border border-neutral-200 bg-surface-200 px-5 py-8 shadow-card rounded-md">
         <h1 className="text-display text-neutral-900">
           {title}
         </h1>
@@ -99,11 +99,11 @@ export function DashboardLayout({
                         <p className="mt-2 text-heading text-neutral-900">
                           {stat.value}
                         </p>
-                        {stat.change && (
-                          <p className="mt-2 text-caption text-neutral-400">
-                            {stat.change}
-                          </p>
-                        )}
+                       {stat.change && (
+                           <p className="mt-2 text-caption text-neutral-400">
+                             {stat.change}
+                           </p>
+                       )}
                       </div>
                       {stat.icon && (
                         <div className="text-neutral-300 group-hover:text-primary transition-colors">{stat.icon}</div>
@@ -137,9 +137,7 @@ export function DashboardLayout({
                       )}
                     </div>
                     {item.timestamp && (
-                      <p className="text-caption text-neutral-400 whitespace-nowrap ms-4">
-                        {item.timestamp}
-                      </p>
+                      <p className="text-caption text-neutral-600 whitespace-nowrap ms-4">{item.timestamp}</p>
                     )}
                   </div>
                 </div>

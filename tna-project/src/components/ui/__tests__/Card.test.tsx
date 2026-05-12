@@ -13,11 +13,9 @@ describe('Card Component', () => {
         expect(screen.getByText('Card Content')).toBeInTheDocument();
     });
 
-    it('renders with no padding if noPadding is true', () => {
-        const { container } = render(<Card noPadding>Test</Card>);
+    it('renders with no padding if padding is false', () => {
+        const { container } = render(<Card padding={false}>Test</Card>);
         const cardDiv = container.firstChild as HTMLDivElement;
-        // ensure standard padding class is absent or it relies on component implementation
-        // For example, if it conditionally removes 'p-6'
         expect(cardDiv.className).not.toContain('p-6');
     });
 

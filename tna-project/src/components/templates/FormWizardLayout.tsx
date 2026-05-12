@@ -1,8 +1,10 @@
 'use client'
 
 import React, { ReactNode } from 'react'
-import { Check } from '@phosphor-icons/react'
+import { useRouter, useParams } from 'next/navigation'
 import { useLocale } from '@/i18n/LocaleProvider'
+import { Check } from '@phosphor-icons/react'
+import Button from '@/components/ui/Button'
 
 interface StepConfig {
   id: string
@@ -37,16 +39,16 @@ export default function FormWizardLayout({
   canProceed = true,
   showProgress = true,
 }: FormWizardLayoutProps) {
-  const { t } = useLocale()
   const isLastStep = currentStep === steps.length - 1
   const isFirstStep = currentStep === 0
+  const { t } = useLocale()
 
   return (
     <div className="min-h-screen bg-surface-100">
       {/* HEADER */}
-      <div className="border-b border-neutral-200 bg-surface-200 px-5 py-8 shadow-card">
+      <div className="border border-neutral-200 bg-surface-200 px-5 py-8 shadow-card rounded-md">
         <h1 className="text-2xl font-bold text-neutral-900">
-          {steps[currentStep]?.label || t('common.form')}
+          {steps[currentStep]?.label || 'Form'}
         </h1>
         {steps[currentStep]?.description && (
           <p className="mt-2 text-neutral-600">
@@ -117,31 +119,37 @@ export default function FormWizardLayout({
 
           {/* STICKY FOOTER ACTIONS */}
           <div className="mt-8 flex gap-4 border-t border-neutral-200 bg-surface-200 px-8 py-6">
-            <button
+            <Button
+              type="button"
+              variant="outline"
               onClick={onCancel}
-              className="flex-1 rounded-pill border-2 border-brand-secondary bg-transparent px-6 py-3 font-semibold text-brand-primary transition-colors hover:bg-neutral-50"
+              disabled={isSubmitting}
+              fullWidth
             >
               {t('common.cancel')}
-            </button>
+            </Button>
 
             {!isLastStep && (
-              <button
+              <Button
+                type="button"
+                variant="primary"
                 onClick={() => onStepChange?.(currentStep + 1)}
-                disabled={!canProceed}
-                className="flex-1 rounded-pill border-0 bg-brand-primary px-6 py-3 font-semibold text-white shadow-btn transition-all hover:shadow-modal hover:opacity-90 disabled:opacity-50"
+                disabled={!canProceed || isSubmitting}
+                fullWidth
               >
-                {t('common.continue')}
-              </button>
+                {t('common.next')}
+              </Button>
             )}
 
             {isLastStep && (
-              <button
-                onClick={onSubmit}
-                disabled={isSubmitting || !canProceed}
-                className="flex-1 rounded-pill border-0 bg-brand-primary px-6 py-3 font-semibold text-white shadow-btn transition-all hover:shadow-modal hover:opacity-90 disabled:opacity-50"
+              <Button
+                type="submit"
+                variant="primary"
+                disabled={isSubmitting}
+                fullWidth
               >
-                {isSubmitting ? t('common.submitting') : t('common.submit')}
-              </button>
+                {isSubmitting ? t('common.loading') : t('common.confirm')}
+              </Button>
             )}
           </div>
         </div>

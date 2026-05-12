@@ -9,8 +9,8 @@ export default function Card({ className, padding = true, ...props }: CardProps)
     return (
         <div
             className={cn(
-                'bg-surface-200 rounded-md shadow-card border border-neutral-200 overflow-hidden',
-                padding && 'p-4',
+                'bg-card rounded-lg shadow-card border border-divider overflow-hidden',
+                padding && 'p-6',
                 className
             )}
             {...props}

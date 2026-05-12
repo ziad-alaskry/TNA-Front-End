@@ -1,0 +1,21 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - button "arrow_forward" [ref=e5] [cursor=pointer]:
+        - generic [ref=e6]: arrow_forward
+      - heading "auth.forgot_password.title" [level=1] [ref=e7]
+    - main [ref=e8]:
+      - generic [ref=e10]:
+        - generic [ref=e11]: lock
+        - generic [ref=e12]: ؟
+      - paragraph [ref=e14]: أدخل رقم جوالك أو بريدك الإلكتروني لاستلام رمز التحقق
+      - generic [ref=e19]:
+        - generic [ref=e20]:
+          - generic:
+            - generic: mail
+          - textbox "البريد الإلكتروني" [ref=e21]
+        - button "إرسال رمز التحقق" [disabled] [ref=e22]:
+          - generic [ref=e23]: إرسال رمز التحقق
+    - contentinfo [ref=e24]:
+      - paragraph [ref=e25]: © 2024 جميع الحقوق محفوظة لبرنامج العنوان الوطني المؤقت
+  - generic "Notifications"

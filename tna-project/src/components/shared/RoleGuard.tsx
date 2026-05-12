@@ -9,22 +9,23 @@ type UserRole = 'Visitor' | 'Owner' | 'Gov' | 'Carrier'
 interface RoleGuardProps {
   children: React.ReactNode
   requiredRole: UserRole
+  requireAuth?: boolean
 }
 
 /**
  * RoleGuard - Client-side component to protect routes based on user role.
- * Redirects to the correct dashboard if the user doesn't have the required role.
+ * Redirects unauthenticated users to login, and authenticated users with wrong role
+ * to their own dashboard.
+ * 
+ * Note: This check happens client-side after hydration. For protected routes,
+ * ensure server-side auth checks are also in place.
  */
-export function RoleGuard({ children, requiredRole }: RoleGuardProps) {
+export function RoleGuard({ children, requiredRole, requireAuth = true }: RoleGuardProps) {
   const { role, token } = useAuthStore()
   const router = useRouter()
   const { locale } = useParams()
 
   useEffect(() => {
-    // 1. If not logged in, we let the app handle it (usually via middleware or login page)
-    // For now, if no token, redirect to login might be too aggressive if they are visitors
-    // but the store 'role' should be 'VISITOR' by default if we want public access to some areas.
-    
     // Map store role to requiredRole format
     const storeRoleMap: Record<string, UserRole> = {
       'VISITOR': 'Visitor',
@@ -35,8 +36,14 @@ export function RoleGuard({ children, requiredRole }: RoleGuardProps) {
 
     const currentRole = role ? storeRoleMap[role] : null
 
+    // If authentication is required but user has no token, redirect to login
+    if (requireAuth && !token) {
+      router.replace(`/${locale}/login`)
+      return
+    }
+
+    // If user is authenticated but has a different role, redirect to their dashboard
     if (token && currentRole && currentRole !== requiredRole) {
-      // Redirect to their own dashboard
       const dashboardMap: Record<UserRole, string> = {
         'Visitor': `/${locale}/visitor/home`,
         'Owner': `/${locale}/owner/home`,
@@ -45,7 +52,7 @@ export function RoleGuard({ children, requiredRole }: RoleGuardProps) {
       }
       router.replace(dashboardMap[currentRole])
     }
-  }, [role, token, requiredRole, router, locale])
+  }, [role, token, requiredRole, requireAuth, router, locale])
 
   // Optional: Show loading or nothing while checking
   return <>{children}</>

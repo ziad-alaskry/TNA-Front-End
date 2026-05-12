@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TNA Login Screen Variant 1</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;family=Noto+Sans+Arabic:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#199bd7",
+                        "primary-gradient-start": "#0CBBDB",
+                        "primary-gradient-end": "#1A73C1",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111c21",
+                        "nafath-green": "#00a651",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Sans Arabic", "Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .bg-diagonal-stripes {
+            background-color: #ffffff;
+            background-image:  linear-gradient(45deg, #f8fafc 25%, transparent 25%, transparent 50%, #f8fafc 50%, #f8fafc 75%, transparent 75%, transparent);
+            background-size: 20px 20px;
+        }
+        .text-gradient {
+            background: linear-gradient(to left, #0CBBDB, #1A73C1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .btn-gradient {
+            background: linear-gradient(to left, #0CBBDB, #1A73C1);
+        }
+    </style>
+</head>
+<body class="font-display bg-diagonal-stripes min-h-screen flex items-center justify-center p-4">
+<div class="w-full max-w-[480px] bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden">
+<!-- Top Section: Header -->
+<div class="pt-10 pb-6 px-6 text-center">
+<div class="mb-6 flex justify-center">
+<div class="size-16 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-4xl">location_on</span>
+</div>
+</div>
+<h1 class="text-[22px] font-bold leading-tight tracking-tight text-gradient mb-1">
+                العنوان الوطني المؤقت
+            </h1>
+<p class="text-sm font-semibold text-gradient opacity-90">
+                Temporary National Address
+            </p>
+</div>
+<!-- Form Section -->
+<div class="px-6 pb-10 flex flex-col gap-4">
+<!-- Input 1: Username -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-slate-700 pr-1">اسم المستخدم أو البريد الإلكتروني</label>
+<div class="relative group">
+<div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined">person</span>
+</div>
+<input class="w-full h-[56px] pr-12 pl-4 rounded-lg border border-slate-200 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-slate-50/50 text-slate-900 placeholder:text-slate-400" placeholder="أدخل اسم المستخدم" type="text"/>
+</div>
+</div>
+<!-- Input 2: Password -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-slate-700 pr-1">كلمة المرور</label>
+<div class="relative group">
+<div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined">lock</span>
+</div>
+<input class="w-full h-[56px] pr-12 pl-12 rounded-lg border border-slate-200 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-slate-50/50 text-slate-900 placeholder:text-slate-400" placeholder="أدخل كلمة المرور" type="password"/>
+<button class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400 hover:text-slate-600 transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+<div class="flex justify-start">
+<a class="text-xs font-semibold text-primary hover:underline" href="#">نسيت كلمة المرور؟</a>
+</div>
+</div>
+<!-- Action Section -->
+<div class="mt-4 flex flex-col gap-4">
+<!-- Primary CTA -->
+<button class="btn-gradient w-full h-[56px] rounded-full text-white font-bold text-lg shadow-lg shadow-primary/20 flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">login</span>
+<span>تسجيل الدخول</span>
+</button>
+<!-- Divider -->
+<div class="relative flex items-center py-4">
+<div class="flex-grow border-t border-slate-200"></div>
+<span class="flex-shrink mx-4 text-slate-400 text-sm font-medium">أو</span>
+<div class="flex-grow border-t border-slate-200"></div>
+</div>
+<!-- Nafath SSO -->
+<button class="w-full h-[56px] rounded-full border-2 border-primary bg-white text-primary font-bold text-base flex items-center justify-center gap-3 hover:bg-primary/5 transition-colors">
+<div class="size-6 bg-nafath-green rounded-md flex items-center justify-center text-white text-[10px]">
+<span class="material-symbols-outlined !text-[18px]">verified_user</span>
+</div>
+<span>تسجيل الدخول عبر النفاذ الوطني</span>
+</button>
+</div>
+<!-- Footer Links -->
+<div class="mt-8 text-center">
+<p class="text-sm text-slate-500">
+                    ليس لديك حساب؟ 
+                    <a class="text-primary font-bold hover:underline" href="#">إنشاء حساب جديد</a>
+</p>
+</div>
+</div>
+</div>
+<!-- Decorative Elements -->
+<div class="fixed bottom-0 left-0 p-8 opacity-10 pointer-events-none">
+<img class="w-48 h-48" data-alt="Subtle geometric pattern for national address" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvoSKfEe8Y15aywHmsxbx5sreIx921pte3XONYmVlR4GlHZrAXkLSy6bTsOK51gYY3REVY5m_jCdYX95igb7dR8l1SM13pz3DLUKXL4ounsV_DfXkD2TrpU7nm7lnwmUmTYbsJEktWf5ND_gZUpFgjQewWB9PVoKIFriTtzp5yE5ptA8xSNeMACqvdZWNj8XBM3TAAOBV7X3cMqY6-iW5JUxVCXgpurDzjgJJjwvIoCrn-RvvzMMWy6ikn5cvS8b_yvtAKjwUVdEow"/>
+</div>
+</body></html>

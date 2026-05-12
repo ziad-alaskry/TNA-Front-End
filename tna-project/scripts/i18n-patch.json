@@ -1,0 +1,62 @@
+{
+  "ar": {
+    "auth": {
+      "ltr_1": "rtl",
+      "ltr_2": "rtl",
+      "ltr_3": "rtl",
+      "ltr_4": "rtl",
+      "ltr_5": "rtl"
+    },
+    "shell": {
+      "ltr_1": "rtl",
+      "left0_2": "right-0"
+    },
+    "visitor": {
+      "ltr_1": "rtl"
+    },
+    "owner": {
+      "ltr_1": "rtl",
+      "ltr_2": "rtl",
+      "ltr_3": "rtl"
+    },
+    "carrier": {
+      "mr2_1": "rotate-180 ml-2",
+      "ml2_2": "rotate-180 mr-2",
+      "ml2_3": "rotate-180 ml-2",
+      "mr2_4": "rotate-180 ml-2",
+      "mr2_5": "rotate-180 ml-2",
+      "mr2_6": "rotate-180 ml-2",
+      "mr2_7": "rotate-180 ml-2"
+    }
+  },
+  "en": {
+    "auth": {
+      "ltr_1": "ltr",
+      "ltr_2": "ltr",
+      "ltr_3": "ltr",
+      "ltr_4": "ltr",
+      "ltr_5": "ltr"
+    },
+    "shell": {
+      "ltr_1": "ltr",
+      "left0_2": "left-0"
+    },
+    "visitor": {
+      "ltr_1": "ltr"
+    },
+    "owner": {
+      "ltr_1": "ltr",
+      "ltr_2": "ltr",
+      "ltr_3": "ltr"
+    },
+    "carrier": {
+      "mr2_1": "mr-2",
+      "ml2_2": "ml-2",
+      "ml2_3": "ml-2",
+      "mr2_4": "mr-2",
+      "mr2_5": "mr-2",
+      "mr2_6": "mr-2",
+      "mr2_7": "mr-2"
+    }
+  }
+}

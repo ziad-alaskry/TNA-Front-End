@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;family=Noto+Sans+Arabic:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111c21",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Sans Arabic", "Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    backgroundImage: {
+                        'blue-gradient': 'linear-gradient(135deg, #137fec 0%, #3da9f5 100%)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Noto Sans Arabic', sans-serif;
+        }
+        .bg-stripes {
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(19, 127, 236, 0.03) 20px, rgba(19, 127, 236, 0.03) 40px);
+        }
+        /* Custom focus ring styling for inputs */
+        .custom-focus:focus {
+            border-color: #137fec !important;
+            --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+            --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) rgba(19, 127, 236, 0.2);
+            box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen font-display">
+<!-- Sticky Header -->
+<header class="sticky top-0 z-50 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-4 py-4 flex items-center justify-between shadow-sm">
+<div class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">arrow_forward</span>
+</div>
+<h1 class="text-slate-900 dark:text-slate-100 text-lg font-semibold flex-1 text-center font-display">إنشاء حساب جديد</h1>
+<div class="w-10"></div> <!-- Spacer for centering -->
+</header>
+<main class="relative bg-stripes pb-12">
+<!-- Form Card -->
+<div class="mx-4 mt-6 p-6 bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+<form class="space-y-5">
+<!-- User Role Dropdown -->
+<div>
+<label class="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">نوع المستخدم</label>
+<div class="relative">
+<select class="custom-focus w-full h-14 pr-4 pl-10 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 appearance-none outline-none transition-all">
+<option disabled="" selected="" value="">اختر نوع المستخدم</option>
+<option value="visitor">زائر</option>
+<option value="owner">مالك</option>
+<option value="shipping">شركة شحن</option>
+<option value="government">جهة حكومية</option>
+</select>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Full Name -->
+<div>
+<label class="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">الأسم الثلاثي الرسمي</label>
+<div class="relative">
+<input class="custom-focus w-full h-14 pr-12 pl-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 outline-none transition-all" placeholder="أدخل اسمك الكامل" type="text"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">person</span>
+</div>
+</div>
+<!-- Email -->
+<div>
+<label class="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">البريد الإلكتروني</label>
+<div class="relative">
+<input class="custom-focus w-full h-14 pr-12 pl-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 outline-none transition-all" placeholder="example@mail.com" type="email"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">mail</span>
+</div>
+</div>
+<!-- Mobile -->
+<div>
+<label class="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">رقم الجوال</label>
+<div class="relative">
+<input class="custom-focus w-full h-14 pr-12 pl-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-left outline-none transition-all" dir="ltr" placeholder="05xxxxxxxx" type="tel"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">call</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Document Type -->
+<div>
+<label class="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">نوع الوثيقة الرسمية</label>
+<div class="relative">
+<select class="custom-focus w-full h-14 pr-4 pl-10 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 appearance-none outline-none transition-all">
+<option>الهوية الوطنية</option>
+<option>هوية مقيم</option>
+<option>سجل تجاري</option>
+</select>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Document Number -->
+<div>
+<label class="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">رقم الوثيقة الرسمية</label>
+<input class="custom-focus w-full h-14 px-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 outline-none transition-all" placeholder="رقم الوثيقة" type="text"/>
+</div>
+</div>
+<!-- Password -->
+<div>
+<label class="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">كلمة المرور</label>
+<div class="relative">
+<input class="custom-focus w-full h-14 pr-12 pl-12 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 outline-none transition-all" placeholder="••••••••" type="password"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">lock</span>
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 cursor-pointer">visibility</span>
+</div>
+</div>
+<!-- Confirm Password -->
+<div>
+<label class="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">تأكيد كلمة المرور</label>
+<div class="relative">
+<input class="custom-focus w-full h-14 pr-12 pl-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 outline-none transition-all" placeholder="••••••••" type="password"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">lock_reset</span>
+</div>
+</div>
+<!-- Checkboxes -->
+<div class="space-y-3 pt-2">
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="mt-1">
+<input class="w-5 h-5 rounded border-slate-300 text-primary focus:ring-primary/50" type="checkbox"/>
+</div>
+<span class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                            أقر بأن جميع البيانات الشخصية المدخلة صحيحة وتحت مسؤوليتي الشخصية.
+                        </span>
+</label>
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="mt-1">
+<input class="w-5 h-5 rounded border-slate-300 text-primary focus:ring-primary/50" type="checkbox"/>
+</div>
+<span class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                            أوافق على <a class="text-primary font-bold hover:underline" href="#">شروط وأحكام</a> العنوان الوطني المؤقت (TNA).
+                        </span>
+</label>
+</div>
+<!-- CTA Button -->
+<button class="w-full h-14 mt-6 bg-blue-gradient disabled:opacity-50 disabled:cursor-not-allowed disabled:grayscale text-white font-bold text-lg rounded-full shadow-lg shadow-primary/25 hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2" type="submit">
+                    إنشاء حساب مستخدم جديد
+                    <span class="material-symbols-outlined">person_add</span>
+</button>
+</form>
+</div>
+<!-- Footer -->
+<div class="mt-8 text-center px-6">
+<p class="text-slate-600 dark:text-slate-400 text-sm">
+                لديك حساب بالفعل؟
+                <a class="text-primary font-bold mr-1 hover:underline" href="#">تسجيل الدخول</a>
+</p>
+</div>
+<!-- Platform Info (Visual Decoration) -->
+<div class="mt-12 flex justify-center items-center opacity-20 px-8 grayscale">
+<div class="flex flex-col items-center">
+<div class="w-12 h-12 bg-primary rounded-xl mb-2 flex items-center justify-center">
+<span class="material-symbols-outlined text-white">lan</span>
+</div>
+<span class="text-[10px] font-bold text-slate-900 uppercase tracking-widest">TNA Platform</span>
+</div>
+</div>
+</main>
+</body></html>

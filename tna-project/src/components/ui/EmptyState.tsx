@@ -9,13 +9,11 @@ export interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {
     description: string;
     actionLabel?: string;
     onAction?: () => void;
+    cta?: string;
+    onCtaClick?: () => void;
     compact?: boolean;
 }
 
-/**
- * SPATIAL EmptyState — illustration placeholder + title + subtitle + optional CTA.
- * compact=true for inline table/section zero-data scenarios.
- */
 export default function EmptyState({
     className,
     icon: IconComponent,
@@ -23,39 +21,44 @@ export default function EmptyState({
     description,
     actionLabel,
     onAction,
+    cta,
+    onCtaClick,
     compact = false,
     ...props
 }: EmptyStateProps) {
+    const finalLabel = cta || actionLabel;
+    const finalAction = onCtaClick || onAction;
+
     return (
         <div
             className={cn(
-                'flex flex-col items-center justify-center text-center',
+                'flex flex-col items-center justify-center text-center animate-in fade-in duration-standard',
                 compact
                     ? 'py-12 px-6'
-                    : 'p-10 bg-surface-200 rounded-md border border-neutral-200 shadow-card',
+                    : 'p-12 bg-card rounded-xl border border-divider shadow-card',
                 className
             )}
             {...props}
         >
             {IconComponent && (
                 <div className={cn(
-                    'mb-5 rounded-full flex items-center justify-center',
-                    compact ? 'p-4 bg-neutral-100' : 'p-6 bg-neutral-50 border border-neutral-200'
+                    'mb-6 rounded-full flex items-center justify-center transition-transform hover:scale-110 duration-fast',
+                    compact ? 'p-4 bg-neutral-50' : 'p-8 bg-background border border-divider shadow-inner'
                 )}>
                     <IconComponent
-                        size={compact ? 36 : 48}
-                        className="text-neutral-300"
+                        size={compact ? 32 : 56}
+                        className="text-text-placeholder"
                         weight="thin"
                     />
                 </div>
             )}
-            <h3 className="text-subheading font-bold text-neutral-700 mb-2">{title}</h3>
-            <p className="text-body text-neutral-400 max-w-[280px] leading-relaxed mb-6">
+            <h3 className="text-xl font-bold text-text-primary mb-2">{title}</h3>
+            <p className="text-sm text-text-secondary max-w-[320px] leading-relaxed mb-8">
                 {description}
             </p>
-            {actionLabel && onAction && (
-                <Button variant="primary" size="md" onClick={onAction}>
-                    {actionLabel}
+            {finalLabel && finalAction && (
+                <Button variant="primary" size="md" onClick={finalAction}>
+                    {finalLabel}
                 </Button>
             )}
         </div>

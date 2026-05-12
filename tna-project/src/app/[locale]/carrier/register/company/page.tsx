@@ -13,12 +13,16 @@ import {
     Key,
     CheckCircle,
     CaretLeft,
-    WarningCircle
+    WarningCircle,
+    Copy,
+    ArrowsClockwise,
+    TreeStructure as Webhook
 } from '@phosphor-icons/react';
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { cn } from '@/lib/utils/cn';
+import { AppShell } from '@/components/layout/AppShell';
 
 const companyRegistrationSchema = z.object({
   company_name: z.string().min(3, 'اسم الشركة يجب أن يحتوي على ٣ أحرف على الأقل'),

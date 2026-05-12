@@ -1,0 +1,164 @@
+[
+  {
+    "file": "components\\modules\\auth\\RegisterTypeModule.tsx",
+    "line": 39,
+    "column": 72,
+    "arStr": "rtl",
+    "enStr": "ltr",
+    "suggestedKey": "auth.ltr_1",
+    "original": "isRTL ? 'rtl' : 'ltr'"
+  },
+  {
+    "file": "components\\modules\\auth\\RegisterPersonalModule.tsx",
+    "line": 79,
+    "column": 72,
+    "arStr": "rtl",
+    "enStr": "ltr",
+    "suggestedKey": "auth.ltr_2",
+    "original": "isRTL ? 'rtl' : 'ltr'"
+  },
+  {
+    "file": "components\\modules\\auth\\RegisterAccountModule.tsx",
+    "line": 77,
+    "column": 72,
+    "arStr": "rtl",
+    "enStr": "ltr",
+    "suggestedKey": "auth.ltr_3",
+    "original": "isRTL ? 'rtl' : 'ltr'"
+  },
+  {
+    "file": "components\\modules\\auth\\ForgotPasswordModule.tsx",
+    "line": 98,
+    "column": 17,
+    "arStr": "rtl",
+    "enStr": "ltr",
+    "suggestedKey": "auth.ltr_4",
+    "original": "isRTL ? 'rtl' : 'ltr'"
+  },
+  {
+    "file": "components\\layout\\AppShell.tsx",
+    "line": 55,
+    "column": 113,
+    "arStr": "rtl",
+    "enStr": "ltr",
+    "suggestedKey": "shell.ltr_1",
+    "original": "isRTL ? 'rtl' : 'ltr'"
+  },
+  {
+    "file": "components\\layout\\AppShell.tsx",
+    "line": 107,
+    "column": 16,
+    "arStr": "right-0",
+    "enStr": "left-0",
+    "suggestedKey": "shell.left0_2",
+    "original": "isRTL ? \"right-0\" : \"left-0\""
+  },
+  {
+    "file": "app\\[locale]\\visitor\\profile\\verify\\page.tsx",
+    "line": 139,
+    "column": 60,
+    "arStr": "rtl",
+    "enStr": "ltr",
+    "suggestedKey": "visitor.ltr_1",
+    "original": "isRTL ? 'rtl' : 'ltr'"
+  },
+  {
+    "file": "app\\[locale]\\owner\\properties\\new\\page.tsx",
+    "line": 61,
+    "column": 42,
+    "arStr": "rtl",
+    "enStr": "ltr",
+    "suggestedKey": "owner.ltr_1",
+    "original": "isRTL ? 'rtl' : 'ltr'"
+  },
+  {
+    "file": "app\\[locale]\\owner\\properties\\new\\page.tsx",
+    "line": 72,
+    "column": 42,
+    "arStr": "rtl",
+    "enStr": "ltr",
+    "suggestedKey": "owner.ltr_2",
+    "original": "isRTL ? 'rtl' : 'ltr'"
+  },
+  {
+    "file": "app\\[locale]\\owner\\properties\\new\\page.tsx",
+    "line": 77,
+    "column": 42,
+    "arStr": "rtl",
+    "enStr": "ltr",
+    "suggestedKey": "owner.ltr_3",
+    "original": "isRTL ? 'rtl' : 'ltr'"
+  },
+  {
+    "file": "app\\[locale]\\carrier\\shipments\\[id]\\page.tsx",
+    "line": 140,
+    "column": 44,
+    "arStr": "rotate-180 ml-2",
+    "enStr": "mr-2",
+    "suggestedKey": "carrier.mr2_1",
+    "original": "isRTL ? \"rotate-180 ml-2\" : \"mr-2\""
+  },
+  {
+    "file": "app\\[locale]\\carrier\\shipments\\new\\page.tsx",
+    "line": 221,
+    "column": 51,
+    "arStr": "rotate-180 mr-2",
+    "enStr": "ml-2",
+    "suggestedKey": "carrier.ml2_2",
+    "original": "isRTL ? \"rotate-180 mr-2\" : \"ml-2\""
+  },
+  {
+    "file": "app\\[locale]\\carrier\\shipments\\new\\page.tsx",
+    "line": 269,
+    "column": 51,
+    "arStr": "rotate-180 ml-2",
+    "enStr": "ml-2",
+    "suggestedKey": "carrier.ml2_3",
+    "original": "isRTL ? \"rotate-180 ml-2\" : \"ml-2\""
+  },
+  {
+    "file": "app\\[locale]\\carrier\\shipments\\new\\page.tsx",
+    "line": 359,
+    "column": 60,
+    "arStr": "rotate-180 ml-2",
+    "enStr": "mr-2",
+    "suggestedKey": "carrier.mr2_4",
+    "original": "isRTL ? \"rotate-180 ml-2\" : \"mr-2\""
+  },
+  {
+    "file": "app\\[locale]\\carrier\\driver\\confirm\\page.tsx",
+    "line": 77,
+    "column": 44,
+    "arStr": "rotate-180 ml-2",
+    "enStr": "mr-2",
+    "suggestedKey": "carrier.mr2_5",
+    "original": "isRTL ? \"rotate-180 ml-2\" : \"mr-2\""
+  },
+  {
+    "file": "app\\[locale]\\carrier\\driver\\confirm\\page.tsx",
+    "line": 136,
+    "column": 44,
+    "arStr": "rotate-180 ml-2",
+    "enStr": "mr-2",
+    "suggestedKey": "carrier.mr2_6",
+    "original": "isRTL ? \"rotate-180 ml-2\" : \"mr-2\""
+  },
+  {
+    "file": "app\\[locale]\\carrier\\driver\\confirm\\page.tsx",
+    "line": 262,
+    "column": 60,
+    "arStr": "rotate-180 ml-2",
+    "enStr": "mr-2",
+    "suggestedKey": "carrier.mr2_7",
+    "original": "isRTL ? \"rotate-180 ml-2\" : \"mr-2\""
+  },
+  {
+    "file": "app\\[locale]\\(auth)\\login\\page.tsx",
+    "line": 65,
+    "column": 16,
+    "arStr": "rtl",
+    "enStr": "ltr",
+    "suggestedKey": "auth.ltr_5",
+    "original": "isRTL ? 'rtl' : 'ltr'"
+  }
+]

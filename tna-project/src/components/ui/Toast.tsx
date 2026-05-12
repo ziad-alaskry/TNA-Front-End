@@ -30,22 +30,22 @@ const ToastContext = createContext<ToastContextValue | null>(null)
 // ─── Toast Item Component ─────────────────────────────────
 const VARIANT_STYLES: Record<ToastVariant, { container: string; icon: string; IconComponent: typeof CheckCircle }> = {
     success: {
-        container: 'bg-success-bg border-success text-success',
+        container: 'bg-success-light border-success/20 text-success',
         icon: 'text-success',
         IconComponent: CheckCircle,
     },
     error: {
-        container: 'bg-error-bg border-error text-error',
+        container: 'bg-error-light border-error/20 text-error',
         icon: 'text-error',
         IconComponent: WarningCircle,
     },
     warning: {
-        container: 'bg-warning-bg border-warning text-warning',
+        container: 'bg-warning-light border-warning/20 text-warning',
         icon: 'text-warning',
         IconComponent: WarningCircle,
     },
     info: {
-        container: 'bg-info-bg border-info text-info',
+        container: 'bg-info-light border-info/20 text-info',
         icon: 'text-info',
         IconComponent: Info,
     },
@@ -63,7 +63,7 @@ function ToastItem({ toast, onDismiss }: { toast: Toast; onDismiss: (id: string)
 
     const handleDismiss = useCallback(() => {
         setVisible(false)
-        setTimeout(() => onDismiss(toast.id), 300)
+        setTimeout(() => onDismiss(toast.id), 200)
     }, [onDismiss, toast.id])
 
     // auto-dismiss
@@ -76,27 +76,27 @@ function ToastItem({ toast, onDismiss }: { toast: Toast; onDismiss: (id: string)
     return (
         <div
             className={cn(
-                'flex items-start gap-3 p-4 rounded-md border shadow-modal max-w-sm w-full',
-                'transition-all duration-300',
-                visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2',
+                'flex items-start gap-4 p-5 rounded-lg border shadow-popover max-w-sm w-full backdrop-blur-sm',
+                'transition-all duration-fast',
+                visible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-2 scale-95',
                 container
             )}
             role="alert"
             aria-live="polite"
         >
-            <IconComponent size={20} weight="fill" className={cn('shrink-0 mt-0.5', icon)} />
+            <IconComponent size={24} weight="fill" className={cn('shrink-0 mt-0.5', icon)} />
             <div className="flex-1 min-w-0">
                 {toast.title && (
-                    <p className="text-label font-bold mb-0.5 text-neutral-900">{toast.title}</p>
+                    <p className="text-sm font-bold mb-1 text-text-primary">{toast.title}</p>
                 )}
-                <p className="text-label font-medium text-neutral-700 leading-relaxed">{toast.message}</p>
+                <p className="text-sm font-medium text-text-secondary leading-relaxed ps-0.5">{toast.message}</p>
             </div>
             <button
                 onClick={handleDismiss}
-                className="shrink-0 text-neutral-400 hover:text-neutral-700 transition-colors"
+                className="shrink-0 text-text-placeholder hover:text-text-primary transition-colors"
                 aria-label="إغلاق"
             >
-                <X size={16} weight="bold" />
+                <X size={18} weight="bold" />
             </button>
         </div>
     )

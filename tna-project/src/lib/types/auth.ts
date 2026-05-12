@@ -5,6 +5,9 @@ export interface User {
     username: string;
     email: string;
     user_role: UserRole;
+    full_name?: string;
+    document_number?: string;
+    nationality?: string;
     is_active: boolean;
     last_login_at?: string;
     created_at: string;

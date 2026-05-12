@@ -7,17 +7,17 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export default function Badge({ className, variant = 'unlinked', ...props }: BadgeProps) {
     const variants = {
-        success: 'bg-success-bg text-success',
-        pending: 'bg-pending-bg text-pending',
-        warning: 'bg-warning-bg text-warning',
-        unlinked: 'bg-neutral-100 text-neutral-500',
-        error: 'bg-error-bg text-error',
+        success: 'bg-success-light text-success',
+        pending: 'bg-pending-light text-pending',
+        warning: 'bg-warning-light text-warning',
+        unlinked: 'bg-neutral-50 text-text-placeholder border border-divider',
+        error: 'bg-error-light text-error',
     };
 
     return (
         <div
             className={cn(
-                'inline-flex items-center rounded-xs px-2 py-1 text-label font-bold',
+                'inline-flex items-center rounded-md px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider',
                 variants[variant],
                 className
             )}

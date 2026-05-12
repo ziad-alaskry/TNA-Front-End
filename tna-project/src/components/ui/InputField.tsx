@@ -9,14 +9,15 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
     error?: string;
     label?: string;
     helperText?: string;
+    inputClassName?: string;
 }
 
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
-    ({ icon: IconComponent, error, label, helperText, className = '', ...props }, ref) => {
+    ({ icon: IconComponent, error, label, helperText, className = '', inputClassName = '', ...props }, ref) => {
         return (
-            <div className="w-full space-y-1.5">
+            <div className="w-full space-y-2">
                 {label && (
-                    <label className="block text-label font-bold text-neutral-700 ps-1">
+                    <label className="block text-sm font-bold text-text-primary ps-1">
                         {label}
                     </label>
                 )}
@@ -24,29 +25,30 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
                     <input
                         ref={ref}
                         className={cn(
-                            'w-full h-input bg-surface-200 border rounded-sm px-4 text-start text-neutral-900 placeholder:text-neutral-400 focus:outline-none transition-all duration-200',
+                            'w-full h-input bg-surface-200 border border-divider rounded-sm px-4 text-start text-text-primary placeholder:text-text-placeholder focus:outline-none transition-all duration-fast',
                             error
                                 ? 'border-error ring-1 ring-error/20'
-                                : 'border-neutral-300 group-focus-within:border-primary group-focus-within:ring-2 group-focus-within:ring-primary/15',
+                                : 'group-focus-within:border-primary group-focus-within:ring-2 group-focus-within:ring-primary/10',
                             IconComponent && 'ps-12',
+                            inputClassName,
                             className
                         )}
                         {...props}
                     />
                     {IconComponent && (
                         <div className={cn(
-                            'absolute start-4 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none transition-colors duration-200',
+                            'absolute start-4 top-1/2 -translate-y-1/2 text-text-placeholder pointer-events-none transition-colors duration-fast',
                             !error && 'group-focus-within:text-primary'
                         )}>
-                            <IconComponent size={22} weight="regular" />
+                            <IconComponent size={20} weight="regular" />
                         </div>
                     )}
                 </div>
                 {error && (
-                    <p className="text-caption text-error ps-1 font-medium">{error}</p>
+                    <p className="text-xs text-error ps-1 font-medium">{error}</p>
                 )}
                 {!error && helperText && (
-                    <p className="text-caption text-neutral-400 ps-1">{helperText}</p>
+                    <p className="text-xs text-text-placeholder ps-1">{helperText}</p>
                 )}
             </div>
         );

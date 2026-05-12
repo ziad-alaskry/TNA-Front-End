@@ -1,0 +1,31 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - heading "إنشاء حساب جديد" [level=1] [ref=e6]
+      - button [ref=e7] [cursor=pointer]:
+        - img [ref=e8]
+    - paragraph [ref=e11]: تحديد نوع الحساب
+    - main [ref=e18]:
+      - paragraph [ref=e19]: اختر نوع الحساب المناسب لك للبدء في استخدام خدمات العنوان الوطني المؤقت
+      - generic [ref=e20]:
+        - button "زائر / سائح الحصول على عنوان وطني مؤقت للشحنات" [ref=e21] [cursor=pointer]:
+          - img [ref=e23]
+          - generic [ref=e25]:
+            - heading "زائر / سائح" [level=3] [ref=e26]
+            - paragraph [ref=e27]: الحصول على عنوان وطني مؤقت للشحنات
+          - img [ref=e29]
+        - button "مالك عقار تأجير المساحات البريدية للزوار" [ref=e31] [cursor=pointer]:
+          - img [ref=e33]
+          - generic [ref=e35]:
+            - heading "مالك عقار" [level=3] [ref=e36]
+            - paragraph [ref=e37]: تأجير المساحات البريدية للزوار
+        - button "موظف ناقل إدارة وتوصيل الشحنات للزوار" [ref=e39] [cursor=pointer]:
+          - img [ref=e41]
+          - generic [ref=e43]:
+            - heading "موظف ناقل" [level=3] [ref=e44]
+            - paragraph [ref=e45]: إدارة وتوصيل الشحنات للزوار
+    - contentinfo [ref=e47]:
+      - button "التالي" [ref=e48] [cursor=pointer]:
+        - generic [ref=e49]: التالي
+        - img [ref=e50]
+  - generic "Notifications"

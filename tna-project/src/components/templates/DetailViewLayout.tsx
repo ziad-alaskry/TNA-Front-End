@@ -38,7 +38,7 @@ export function DetailViewLayout({
   return (
     <div className="min-h-screen bg-surface-100">
       {/* HEADER WITH BREADCRUMB */}
-      <div className="border-b border-neutral-200 bg-surface-200 px-5 py-8 shadow-card">
+      <div className="border border-neutral-200 bg-surface-200 px-5 py-8 shadow-card rounded-md">
         <div className="flex items-center gap-3">
           {onBack && (
             <button

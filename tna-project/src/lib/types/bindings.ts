@@ -17,6 +17,8 @@ export interface Binding {
     tna_code?: string;
     na_id?: string; // from task.md
     visitor_id?: string; // from task.md
+    sub_address_label?: string;
+    net_owner_amount?: number;
 }
 
 export interface BindingResponse {

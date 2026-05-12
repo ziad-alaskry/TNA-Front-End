@@ -3,10 +3,10 @@
 import React, { useState } from 'react'
 import { AppShell } from '@/components/layout/AppShell'
 import { 
-    Api, 
+    Code as Api, 
     Link, 
     Key, 
-    Webhook, 
+    TreeStructure as Webhook, 
     Copy, 
     CheckCircle, 
     WarningCircle,
@@ -40,17 +40,17 @@ export default function CarrierIntegrationPage() {
         <AppShell role="Carrier" header="إعدادات الربط التقني (API)">
             <div className="max-w-4xl space-y-8 pb-20" dir="rtl">
                 {/* Connection Status Card */}
-                <div className="p-6 rounded-md border border-success/20 bg-success-bg flex items-center justify-between animate-in fade-in duration-500">
+                <div className="p-6 rounded-lg border border-success/10 bg-success-light flex items-center justify-between animate-in fade-in duration-standard">
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-full bg-success text-white flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-full bg-success text-white flex items-center justify-center shadow-sm">
                             <ShieldCheck size={24} weight="fill" />
                         </div>
                         <div>
-                            <h3 className="text-lg font-bold text-neutral-900">حالة الربط: متصل</h3>
-                            <p className="text-xs text-neutral-500 font-medium">نظامكم البريدي يستقبل التحديثات بشكل صحيح عبر الويب هوك.</p>
+                            <h3 className="text-lg font-bold text-text-primary">حالة الربط: متصل</h3>
+                            <p className="text-xs text-text-secondary font-medium">نظامكم البريدي يستقبل التحديثات بشكل صحيح عبر الويب هوك.</p>
                         </div>
                     </div>
-                    <div className="flex items-center gap-2 px-3 py-1 bg-white/50 rounded-pill text-[10px] font-bold text-success border border-success/10">
+                    <div className="flex items-center gap-2 px-3 py-1 bg-white/50 rounded-full text-[10px] font-bold text-success border border-success/10">
                         <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
                         Live Endpoint
                     </div>

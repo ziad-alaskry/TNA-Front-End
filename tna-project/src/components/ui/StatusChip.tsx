@@ -10,31 +10,31 @@ export interface StatusChipProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export default function StatusChip({ className, status, label, ...props }: StatusChipProps) {
     const statusStyles = {
-        success: 'bg-success-bg text-success',
-        pending: 'bg-pending-bg text-pending',
-        unlinked: 'bg-neutral-100 text-neutral-500',
-        warning: 'bg-warning-bg text-warning',
-        error: 'bg-error-bg text-error',
+        success: 'bg-success-light text-success border-success/10',
+        pending: 'bg-pending-light text-pending border-pending/10',
+        unlinked: 'bg-neutral-50 text-text-placeholder border-divider',
+        warning: 'bg-warning-light text-warning border-warning/10',
+        error: 'bg-error-light text-error border-error/10',
     };
 
     return (
         <div
             className={cn(
-                'inline-flex items-center gap-1.5 px-3 py-1 rounded-xs text-label font-bold transition-all shadow-sm',
+                'inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold transition-all border',
                 statusStyles[status],
                 className
             )}
             {...props}
         >
             <span className={cn(
-                'h-1.5 w-1.5 rounded-full',
+                'h-2 w-2 rounded-full shadow-inner',
                 status === 'success' && 'bg-success',
                 status === 'pending' && 'bg-pending',
-                status === 'unlinked' && 'bg-neutral-400',
+                status === 'unlinked' && 'bg-text-placeholder',
                 status === 'warning' && 'bg-warning',
                 status === 'error' && 'bg-error'
             )} />
-            {label}
+            <span className="uppercase tracking-wider">{label}</span>
         </div>
     );
 }

@@ -4,11 +4,12 @@ import { useRouter, usePathname } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { useLocale } from '@/i18n/LocaleProvider';
 import { locales, type Locale } from '@/i18n/config';
+import Button from '@/components/ui/Button';
 import React, { useEffect, useState } from 'react';
 
 const LOCAL_STORAGE_KEY = 'tna-locale';
 
-export function LanguageSwitcher() {
+export function LanguageSwitcher({ variant = 'ghost' as const }: { variant?: 'ghost' }) {
   const router = useRouter();
   const pathname = usePathname();
   const { locale: currentLocale } = useLocale();
@@ -36,23 +37,25 @@ export function LanguageSwitcher() {
   };
 
   if (!mounted) {
-    return <div className="h-8 w-24 bg-slate-100 rounded-md animate-pulse" />;
+    return <div className="h-8 w-20 bg-surface-200 rounded-sm animate-pulse" />;
   }
 
   return (
-    <div className="flex items-center gap-1 rounded-md border border-slate-200 bg-slate-100/50 p-1">
+    <div className="flex items-center gap-1 rounded-md border border-neutral-200 bg-surface-200/50 p-1">
       {locales.map((locale) => (
-        <button
+        <Button
           key={locale}
+          variant="ghost"
+          size="sm"
           onClick={() => handleChange(locale)}
-          className={`rounded-sm px-3 py-1 text-xs font-bold transition-all duration-200 ${
+          className={`min-w-[2.5rem] text-xs font-bold uppercase tracking-widest ${
             currentLocale === locale
-              ? 'bg-primitive-navy text-white shadow-sm'
-              : 'text-slate-500 hover:bg-white hover:text-slate-900'
+              ? 'bg-primary text-white shadow-sm'
+              : 'text-neutral-500 hover:bg-neutral-50 hover:text-neutral-900'
           }`}
         >
-          {locale.toUpperCase()}
-        </button>
+          {locale}
+        </Button>
       ))}
     </div>
   );

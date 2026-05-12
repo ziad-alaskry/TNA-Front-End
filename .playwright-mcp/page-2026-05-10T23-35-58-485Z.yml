@@ -1,0 +1,54 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e8]: location_on
+        - heading "العنوان الوطني المؤقت" [level=1] [ref=e9]
+        - paragraph [ref=e10]: Temporary National Address
+      - generic [ref=e11]:
+        - generic [ref=e12]:
+          - generic [ref=e13]: تسجيل الدخول كـ
+          - generic [ref=e14]:
+            - button "home مالك" [ref=e15] [cursor=pointer]:
+              - generic [ref=e16]: home
+              - generic [ref=e17]: مالك
+            - button "local_shipping ناقل" [ref=e18] [cursor=pointer]:
+              - generic [ref=e19]: local_shipping
+              - generic [ref=e20]: ناقل
+            - button "account_balance جهة حكومية" [ref=e21] [cursor=pointer]:
+              - generic [ref=e22]: account_balance
+              - generic [ref=e23]: جهة حكومية
+            - button "person_outline زائر" [ref=e24] [cursor=pointer]:
+              - generic [ref=e25]: person_outline
+              - generic [ref=e26]: زائر
+        - generic [ref=e27]:
+          - generic [ref=e28]: اسم المستخدم أو البريد الإلكتروني
+          - generic [ref=e29]:
+            - generic:
+              - generic: person
+            - textbox "أدخل اسم المستخدم" [ref=e30]
+        - generic [ref=e31]:
+          - generic [ref=e32]: كلمة المرور
+          - generic [ref=e33]:
+            - generic:
+              - generic: lock
+            - textbox "أدخل كلمة المرور" [ref=e34]
+            - button "visibility" [ref=e35] [cursor=pointer]:
+              - generic [ref=e36]: visibility
+          - link "نسيت كلمة المرور؟" [ref=e38] [cursor=pointer]:
+            - /url: /en/auth/forgot-password
+        - generic [ref=e39]:
+          - button "login تسجيل الدخول كـ مالك" [ref=e40] [cursor=pointer]:
+            - generic [ref=e41]: login
+            - generic [ref=e42]: تسجيل الدخول كـ مالك
+          - generic [ref=e45]: أو
+          - button "verified_user تسجيل الدخول عبر النفاذ الوطني" [ref=e47] [cursor=pointer]:
+            - generic [ref=e49]: verified_user
+            - generic [ref=e50]: تسجيل الدخول عبر النفاذ الوطني
+        - paragraph [ref=e52]:
+          - text: ليس لديك حساب كـ مالك؟
+          - link "إنشاء حساب جديد" [ref=e53] [cursor=pointer]:
+            - /url: /en/register/type
+    - generic:
+      - img "Subtle geometric pattern for national address"
+  - generic "Notifications"

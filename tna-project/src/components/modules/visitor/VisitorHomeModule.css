@@ -1,0 +1,174 @@
+/* Visitor Home Module - Urgent Widget Styles */
+
+.urgent-widget {
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  border-width: 1px;
+}
+
+.urgent-widget-high {
+  background-color: rgba(245, 166, 35, 0.1);
+  border-color: rgba(245, 166, 35, 0.3);
+}
+
+.urgent-widget-medium {
+  background-color: rgba(33, 150, 201, 0.1);
+  border-color: rgba(33, 150, 201, 0.3);
+}
+
+.urgent-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1A1A1A;
+  margin-bottom: 0.75rem;
+}
+
+.urgent-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+}
+
+.urgent-icon {
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.urgent-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.urgent-title-text {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.urgent-desc-text {
+  font-size: 11px;
+  color: #777777;
+  margin-top: 0.125rem;
+}
+
+/* Active Proxy Card */
+.active-proxy-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  border-width: 1px;
+  background-color: rgba(33, 150, 201, 0.1);
+  border-color: rgba(33, 150, 201, 0.2);
+}
+
+.active-proxy-icon-wrap {
+  @apply w-10 h-10 rounded-md flex items-center justify-center text-white shadow-card;
+  background-color: var(--color-primary);
+}
+
+/* Status Cards */
+.status-card {
+  background-color: var(--color-surface-200, #F2F2F7);
+  border-radius: 0.25rem;
+  border-width: 1px;
+  border-color: var(--color-divider, #E0E0E0);
+  padding: 0.75rem;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.status-card-icon-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.status-card-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1A1A1A;
+}
+
+.status-card-label {
+  font-size: 10px;
+  color: #777777;
+}
+
+/* Shipment Feed */
+.shipment-feed-item {
+  background-color: var(--color-surface-200, #F2F2F7);
+  border-width: 1px;
+  border-color: var(--color-border-light, #EEEEEE);
+  border-radius: 0.25rem;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease-out;
+}
+.shipment-feed-item:hover {
+  border-color: rgba(33, 150, 201, 0.3);
+}
+
+.shipment-icon-wrap {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary, #2196C9);
+  background-color: rgba(33, 150, 201, 0.1);
+}
+
+.quick-action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  background-color: var(--color-surface-200, #F2F2F7);
+  border-width: 1px;
+  border-color: var(--color-border-light, #EEEEEE);
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.06);
+  transition: border-color 0.2s ease-out, background-color 0.2s ease-out;
+}
+.quick-action-btn:hover {
+  border-color: rgba(33, 150, 201, 0.3);
+  background-color: rgba(33, 150, 201, 0.05);
+}
+
+/* group hover effects applied inline via group class on parent */
+
+.quick-action-icon-wrap {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary, #2196C9);
+  background-color: rgba(33, 150, 201, 0.1);
+  transition: background-color 0.2s ease-out, color 0.2s ease-out;
+}
+.group:hover .quick-action-icon-wrap {
+  background-color: var(--color-primary, #2196C9);
+  color: #FFFFFF;
+}
+
+/* Critical Alert */
+.critical-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  border-width: 1px;
+  background-color: rgba(245, 166, 35, 0.1);
+  border-color: rgba(245, 166, 35, 0.3);
+}

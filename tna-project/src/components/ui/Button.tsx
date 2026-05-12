@@ -1,42 +1,62 @@
 import React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils/cn';
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    variant?: 'primary' | 'outline' | 'ghost' | 'success' | 'danger' | 'nafath';
-    size?: 'sm' | 'md' | 'lg' | 'xl';
-    fullWidth?: boolean;
+const buttonVariants = cva(
+    'inline-flex items-center justify-center transition-all duration-fast active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none font-bold select-none',
+    {
+        variants: {
+            variant: {
+                primary: 'bg-primary-gradient text-white shadow-button hover:brightness-110',
+                secondary: 'bg-secondary text-white shadow-button hover:brightness-110',
+                accent: 'bg-accent text-white shadow-button hover:brightness-110',
+                outline: 'border border-divider bg-card text-primary hover:bg-neutral-50',
+                ghost: 'text-neutral-500 hover:bg-neutral-50 hover:text-primary',
+                danger: 'bg-error text-white shadow-button hover:brightness-110',
+                nafath: 'border border-success text-success bg-white hover:bg-success-light',
+            },
+            size: {
+                sm: 'h-9 px-4 text-xs rounded-md',
+                md: 'h-button px-8 text-sm rounded-md',
+                lg: 'h-button-lg px-10 text-base rounded-lg',
+                icon: 'h-11 w-11 rounded-md',
+            },
+            fullWidth: {
+                true: 'w-full',
+            },
+        },
+        defaultVariants: {
+            variant: 'primary',
+            size: 'md',
+        },
+    }
+);
+
+export interface ButtonProps
+    extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+        VariantProps<typeof buttonVariants> {
+    isLoading?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, variant = 'primary', size = 'md', fullWidth, ...props }, ref) => {
-        const variants = {
-            primary: 'bg-btn-primary text-white shadow-btn hover:opacity-95',
-            outline: 'border-2 border-primary text-primary hover:bg-primary/5',
-            ghost: 'text-neutral-600 hover:bg-neutral-100',
-            success: 'bg-success text-white shadow-sm',
-            danger: 'bg-error text-white shadow-sm',
-            nafath: 'border border-success text-success bg-white hover:bg-success-bg',
-        };
-
-        const sizes = {
-            sm: 'px-3 py-1.5 text-caption',
-            md: 'px-6 h-btn-md text-body font-bold',
-            lg: 'px-6 h-btn-lg text-body font-bold',
-            xl: 'px-8 py-5 text-heading font-bold',
-        };
-
+    ({ className, variant, size, fullWidth, isLoading, children, ...props }, ref) => {
         return (
             <button
                 ref={ref}
+                disabled={isLoading || props.disabled}
                 className={cn(
-                    'inline-flex items-center justify-center rounded-pill transition-all active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none',
-                    variants[variant],
-                    sizes[size],
-                    fullWidth && 'w-full',
-                    className
+                    buttonVariants({ variant, size, fullWidth, className }),
+                    isLoading && "relative text-transparent transition-none hover:text-transparent"
                 )}
                 {...props}
-            />
+            >
+                {isLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                    </div>
+                )}
+                {children}
+            </button>
         );
     }
 );
@@ -44,3 +64,4 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = 'Button';
 
 export default Button;
+export { buttonVariants };
