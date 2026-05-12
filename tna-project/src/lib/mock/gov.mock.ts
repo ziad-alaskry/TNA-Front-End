@@ -80,6 +80,33 @@ export const mockSubAddressQueue = [
   },
 ];
 
+export const mockTNARequestDetails: Record<string, any> = {
+  'req-pending-1': {
+    request_id: 'req-pending-1',
+    visitor: { name: 'Abdullah Al-Ghamdi', nationality: 'Saudi Arabia', national_id: '1092837465', visa_status: 'VALID' },
+    eligibility: { visa_valid: true, iqama_valid: true, max_tnas_reached: false, risk_score: 'LOW' },
+    documents: [{ type: 'passport_entry', status: 'UPLOADED' }, { type: 'id_copy', status: 'UPLOADED' }],
+  },
+  'req-pending-2': {
+    request_id: 'req-pending-2',
+    visitor: { name: 'Sara Ahmed', nationality: 'Egypt', national_id: '1092837465', visa_status: 'VALID' },
+    eligibility: { visa_valid: true, iqama_valid: true, max_tnas_reached: false, risk_score: 'MEDIUM' },
+    documents: [{ type: 'passport_entry', status: 'UPLOADED' }, { type: 'residence_permit', status: 'UPLOADED' }],
+  },
+  'req-pending-3': {
+    request_id: 'req-pending-3',
+    visitor: { name: 'Michael Smith', nationality: 'UK', national_id: '1092837465', visa_status: 'VALID' },
+    eligibility: { visa_valid: true, iqama_valid: false, max_tnas_reached: false, risk_score: 'HIGH' },
+    documents: [{ type: 'passport_entry', status: 'UPLOADED' }, { type: 'id_copy', status: 'PENDING' }],
+  },
+  'req-pending-4': {
+    request_id: 'req-pending-4',
+    visitor: { name: 'Fatima Zahra', nationality: 'Morocco', national_id: '1092837465', visa_status: 'EXPIRED' },
+    eligibility: { visa_valid: false, iqama_valid: true, max_tnas_reached: false, risk_score: 'LOW' },
+    documents: [{ type: 'passport_entry', status: 'PENDING' }, { type: 'id_copy', status: 'UPLOADED' }],
+  },
+};
+
 export const mockSubAddressDetails: Record<string, any> = {
   'sub-001': {
     sub_address_id: 'sub-001',
