@@ -21,7 +21,7 @@ import { useLocale } from '@/i18n/LocaleProvider';
 import { useMock } from '@/lib/hooks/useMock';
 import { mockProperties } from '@/lib/mock/properties.mock';
 import { mockBindings } from '@/lib/mock/bindings.mock';
-import { mockBalances } from '@/lib/mock/financials.mock';
+import { mockBalances, mockWeeklyRevenue } from '@/lib/mock/financials.mock';
 import { cn } from '@/lib/utils/cn';
 import Button from '@/components/ui/Button';
 
@@ -173,36 +173,42 @@ export default function OwnerHomeModule() {
             </div>
           </section>
 
-          {/* QUICK PERFORMANCE CHART */}
-          <section className="bg-surface-200 rounded-3xl border border-neutral-200 p-6 space-y-4">
-            <div className="flex items-center gap-2">
-              <ChartLineUp size={20} className="text-success" />
-              <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest">Weekly Revenue</h3>
-            </div>
-            
-            <div className="h-32 flex items-end gap-2">
-              {[40, 60, 35, 75, 90, 55, 80].map((h, i) => (
-                <div 
-                  key={i} 
-                  className="flex-1 bg-primary/20 rounded-t-lg transition-all hover:bg-primary cursor-pointer group relative"
-                  style={{ height: `${h}%` }}
-                >
-                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-neutral-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                    SAR {h * 10}
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="flex justify-between text-[10px] font-bold text-neutral-400 uppercase tracking-tighter">
-              <span>Sun</span>
-              <span>Mon</span>
-              <span>Tue</span>
-              <span>Wed</span>
-              <span>Thu</span>
-              <span>Fri</span>
-              <span>Sat</span>
-            </div>
-          </section>
+           {/* QUICK PERFORMANCE CHART */}
+           <section className="bg-surface-200 rounded-3xl border border-neutral-200 p-6 space-y-4">
+             <div className="flex items-center gap-2">
+               <ChartLineUp size={20} className="text-success" />
+               <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest">Weekly Revenue</h3>
+             </div>
+             
+             <div className="h-32 flex items-end gap-2">
+               {mockWeeklyRevenue.map((revenue, i) => {
+                 // Calculate percentage based on max revenue for scaling
+                 const maxRevenue = Math.max(...mockWeeklyRevenue);
+                 const percentage = (revenue / maxRevenue) * 100;
+                 
+                 return (
+                   <div 
+                     key={i} 
+                     className="flex-1 bg-primary/20 rounded-t-lg transition-all hover:bg-primary cursor-pointer group relative"
+                     style={{ height: `${percentage}%` }}
+                   >
+                     <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-neutral-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                       SAR {revenue}
+                     </div>
+                   </div>
+                 );
+               })}
+             </div>
+             <div className="flex justify-between text-[10px] font-bold text-neutral-400 uppercase tracking-tighter">
+               <span>Sun</span>
+               <span>Mon</span>
+               <span>Tue</span>
+               <span>Wed</span>
+               <span>Thu</span>
+               <span>Fri</span>
+               <span>Sat</span>
+             </div>
+           </section>
 
         </div>
       </div>

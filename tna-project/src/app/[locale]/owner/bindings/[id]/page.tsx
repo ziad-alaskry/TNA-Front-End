@@ -10,7 +10,6 @@ import { useLocale } from '@/i18n/LocaleProvider'
 import Button from '@/components/ui/Button'
 import { cn } from '@/lib/utils/cn'
 import { 
-import { useTranslation } from 'react-i18next';
   CheckCircle, 
   XCircle, 
   Info 
@@ -19,7 +18,7 @@ import { useTranslation } from 'react-i18next';
 export default function BindingDetailPage() {
   const { id } = useParams<{ id: string }>()
   const router = useRouter()
-  /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  locale, isRTL , t } = useLocale()
+  const { locale, isRTL, t: globalT } = useLocale()
 
   const { data: bindings, isLoading: bindingsLoading } = useMock(mockBindings)
   const { data: rentContracts, isLoading: contractsLoading } = useMock(mockRentContracts)
@@ -42,44 +41,44 @@ export default function BindingDetailPage() {
 
   const t = (key: string, param?: string): string => {
     const translations: Record<string, string> = {
-      'bindingInformation': t('owner.binding_information_54'),
-      'bindingDetailsDesc': t('owner.details_of_the_binding_request_between_t_55'),
-      'financialContract': t('owner.financial_contract_56'),
-      'financialDetailsDesc': t('owner.breakdown_of_the_financial_distribution__57'),
-      'tnaCode': t('owner.tna_code_58'),
-      'unit': t('owner.unit_59'),
-      'property': t('owner.property_60'),
-      'visitor': t('owner.visitor_61'),
-      'status': t('owner.status_62'),
-      'startDate': t('owner.start_date_63'),
-      'endDate': t('owner.end_date_64'),
-      'createdAt': t('owner.created_at_65'),
-      'grossAmount': t('owner.gross_amount_66'),
-      'platformFee': t('owner.platform_fee_67'),
-      'authorityShare': t('owner.authority_share_68'),
-      'netOwnerAmount': t('owner.net_owner_amount_69'),
-      'approve': t('owner.approve_70'),
-      'reject': t('owner.reject_71'),
-      'terminate': t('owner.terminate_72'),
-      'actions': t('owner.actions_73'),
-      'note': t('owner.note_74'),
+      'bindingInformation': globalT('owner.binding_information_54'),
+      'bindingDetailsDesc': globalT('owner.details_of_the_binding_request_between_t_55'),
+      'financialContract': globalT('owner.financial_contract_56'),
+      'financialDetailsDesc': globalT('owner.breakdown_of_the_financial_distribution__57'),
+      'tnaCode': globalT('owner.tna_code_58'),
+      'unit': globalT('owner.unit_59'),
+      'property': globalT('owner.property_60'),
+      'visitor': globalT('owner.visitor_61'),
+      'status': globalT('owner.status_62'),
+      'startDate': globalT('owner.start_date_63'),
+      'endDate': globalT('owner.end_date_64'),
+      'createdAt': globalT('owner.created_at_65'),
+      'grossAmount': globalT('owner.gross_amount_66'),
+      'platformFee': globalT('owner.platform_fee_67'),
+      'authorityShare': globalT('owner.authority_share_68'),
+      'netOwnerAmount': globalT('owner.net_owner_amount_69'),
+      'approve': globalT('owner.approve_70'),
+      'reject': globalT('owner.reject_71'),
+      'terminate': globalT('owner.terminate_72'),
+      'actions': globalT('owner.actions_73'),
+      'note': globalT('owner.note_74'),
       'financialNote': isRTL ? 
         'تظهر تفاصيل المالية المبلغ النهائي الذي سيستلمه المالك بعد خصم جميع الرسوم.' : 
         'Financial details show the final amount the owner will receive after deducting all fees.',
-      'statusTimeline': t('owner.status_timeline_75'),
-      'requestCreated': t('owner.binding_request_created_76'),
-      'awaitingApproval': t('owner.awaiting_owner_approval_77'),
-      'requestApproved': t('owner.request_approved_78'),
-      'bindingActivated': t('owner.binding_activated_79'),
-      'bindingTerminated': t('owner.binding_terminated_80'),
-      'terminatedByAgreement': t('owner.binding_terminated_by_agreement_81'),
+      'statusTimeline': globalT('owner.status_timeline_75'),
+      'requestCreated': globalT('owner.binding_request_created_76'),
+      'awaitingApproval': globalT('owner.awaiting_owner_approval_77'),
+      'requestApproved': globalT('owner.request_approved_78'),
+      'bindingActivated': globalT('owner.binding_activated_79'),
+      'bindingTerminated': globalT('owner.binding_terminated_80'),
+      'terminatedByAgreement': globalT('owner.binding_terminated_by_agreement_81'),
     }
     
     const result = translations[key] || key
     
     // Handle terminationReason with parameter
     if (key === 'terminationReason' && param) {
-      return t('owner.reason_param_82')
+      return globalT('owner.reason_param_82')
     }
     
     return result
@@ -258,7 +257,7 @@ export default function BindingDetailPage() {
   )
 
   return (
-    <AppShell role="Owner" header={t('owner.binding_details_83')}>
+    <AppShell role="Owner" header={globalT('owner.binding_details_83')}>
       <DetailViewLayout
         title={`${binding.tna_code} - ${subAddress?.label}`}
         mainContent={sections}

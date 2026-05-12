@@ -93,15 +93,17 @@ export default function ForgotPasswordModule() {
     };
 
     return (
-        <div 
-            className="min-h-screen flex flex-col font-display items-center bg-surface-100" 
+        <div
+            className="min-h-screen flex flex-col font-display items-center bg-surface-100"
             dir={isRTL ? 'rtl' : 'ltr'}
-            style={{
-                backgroundImage: 'repeating-linear-gradient(45deg, #ffffff, #ffffff 10px, #f9fafb 10px, #f9fafb 20px)'
-            }}
         >
+            {/* Background pattern layer - hidden on mobile, reduced on tablet, full on desktop */}
+            <div
+                className="fixed inset-0 auth-bg-pattern pointer-events-none hidden sm:block opacity-30 lg:opacity-100"
+                aria-hidden="true"
+            />
             {/* Header */}
-            <header className="w-full max-w-[480px] h-16 flex items-center justify-between px-6 sticky top-0 bg-white/80 backdrop-blur-md z-10 border-b border-gray-100">
+            <header className="w-full max-w-full sm:max-w-[520px] lg:max-w-[480px] h-16 flex items-center justify-between px-4 sm:px-6 sticky top-0 bg-white/80 backdrop-blur-md z-10 border-b border-gray-100">
                 <button
                     type="button"
                     onClick={() => {
@@ -118,7 +120,7 @@ export default function ForgotPasswordModule() {
 
             {/* STEP 1 */}
             {step === 1 && (
-                <main className="w-full max-w-[480px] flex-1 flex flex-col items-center px-6 py-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <main className="w-full max-w-full sm:max-w-[520px] lg:max-w-[480px] flex-1 flex flex-col items-center px-4 sm:px-6 py-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                     <div className="mb-8 flex items-center justify-center">
                         <div className="relative w-20 h-20 bg-[#199bd7]/10 rounded-full flex items-center justify-center text-[#199bd7]">
                             <LockKey size={48} weight="fill" />
@@ -166,7 +168,7 @@ export default function ForgotPasswordModule() {
 
             {/* STEP 2 */}
             {step === 2 && (
-                <main className="flex-1 flex w-full max-w-[480px] items-start pt-8 justify-center p-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <main className="flex-1 flex w-full max-w-full sm:max-w-[520px] lg:max-w-[480px] items-start pt-8 justify-center p-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
                     <div className="w-full bg-white rounded-3xl shadow-xl border border-slate-50 p-8">
                         <div className="flex justify-center items-center gap-3 mb-10">
                             <div className="w-2.5 h-2.5 rounded-full bg-slate-200"></div>
@@ -221,7 +223,7 @@ export default function ForgotPasswordModule() {
 
             {/* STEP 3 */}
             {step === 3 && (
-                <main className="flex-1 flex w-full max-w-[480px] items-start pt-8 justify-center p-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <main className="flex-1 flex w-full max-w-full sm:max-w-[520px] lg:max-w-[480px] items-start pt-8 justify-center p-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
                     <div className="w-full bg-white rounded-3xl shadow-xl border border-slate-50 p-8">
                         <div className="flex justify-center items-center gap-3 mb-10">
                             <div className="w-2.5 h-2.5 rounded-full bg-slate-200"></div>
@@ -278,7 +280,7 @@ export default function ForgotPasswordModule() {
                 </main>
             )}
 
-            <footer className="w-full max-w-[480px] p-8 text-center text-gray-400 text-xs mt-auto">
+            <footer className="w-full max-w-full sm:max-w-[520px] lg:max-w-[480px] p-8 text-center text-gray-400 text-xs mt-auto">
                 <p>{t('common.copyright')}</p>
             </footer>
         </div>

@@ -15,22 +15,25 @@ import {
   Users,
   CaretRight,
   Buildings,
-  CurrencyDollar
+  CurrencyDollar,
+  TrendUp,
+  TrendDown
 } from '@phosphor-icons/react';
 import { useLocale } from '@/i18n/LocaleProvider';
 import { useMock } from '@/lib/hooks/useMock';
-import { mockGovQueue, mockSubAddressQueue, mockGovAdjustments } from '@/lib/mock/gov.mock';
+import { mockGovQueue, mockSubAddressQueue, mockGovAdjustments, mockRegionStats } from '@/lib/mock/gov.mock';
 import { cn } from '@/lib/utils/cn';
 import Button from '@/components/ui/Button';
 import { useTranslation } from 'react-i18next';
 
 export default function GovHomeModule() {
    const router = useRouter();
-   /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  locale, isRTL , t } = useLocale();
+   const { locale, isRTL, t } = useLocale();
 
    const { data: tnaQueue, isLoading: tnaQueueLoading } = useMock(mockGovQueue);
    const { data: addressQueue, isLoading: addressQueueLoading } = useMock(mockSubAddressQueue);
    const { data: adjustments, isLoading: adjustmentsLoading } = useMock(mockGovAdjustments);
+   const { data: regionStats, isLoading: regionStatsLoading } = useMock(mockRegionStats);
 
    const pendingTNARequests = tnaQueue?.filter(q => q.status === 'PENDING_REVIEW') || [];
    const pendingAddressRequests = addressQueue?.filter(a => a.status === 'PENDING') || [];
@@ -92,6 +95,34 @@ export default function GovHomeModule() {
                   </span>
                 ))}
               </div>
+            </div>
+          </section>
+
+          {/* REGION DISTRIBUTION - Grid of region cards */}
+          <section className="space-y-4 text-start">
+            <div className="flex items-center justify-between">
+              <h3 className="text-xl font-black text-neutral-900 tracking-tight">التوزيع الجغرافي للطلبات</h3>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {(regionStats || []).map((region) => (
+                <div key={region.region} className="bg-white rounded-2xl border border-neutral-100 p-5 space-y-3 hover:border-primary/20 transition-all">
+                  <div className="flex items-center justify-between">
+                    <h4 className="font-bold text-neutral-900">{region.region}</h4>
+                    {region.trend === 'up' ? (
+                      <TrendUp size={20} className="text-success" weight="bold" />
+                    ) : (
+                      <TrendDown size={20} className="text-error" weight="bold" />
+                    )}
+                  </div>
+                  <p className="text-2xl font-black text-primary">{region.count}</p>
+                  <p className={cn(
+                    "text-xs font-bold",
+                    region.trend === 'up' ? "text-success" : "text-error"
+                  )}>
+                    {region.trend === 'up' ? '+' : '-'}{region.trendPercent}%
+                  </p>
+                </div>
+              ))}
             </div>
           </section>
 

@@ -91,7 +91,7 @@ export default function RegisterAccountModule() {
 
             <ProgressStepper currentStep={3} label={t('auth.register.account.steps.account_label')} />
 
-            <main className="flex-1 px-6 pt-8 pb-32 space-y-6">
+            <main className="flex-1 px-4 sm:px-6 pt-8 pb-32 space-y-6">
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                     <InputField
                         label={t('auth.register.account.labels.username')}

@@ -6,14 +6,18 @@ import { cn } from '@/lib/utils/cn';
 interface NotificationBellProps {
   count?: number;
   className?: string;
+  onClick?: () => void;
 }
 
-export function NotificationBell({ count = 0, className }: NotificationBellProps) {
+export function NotificationBell({ count = 0, className, onClick }: NotificationBellProps) {
   const hasNotifications = count > 0;
 
   return (
     <div className={cn('relative', className)}>
-      <button className="p-2 rounded-full hover:bg-surface-200 transition-colors">
+      <button 
+        onClick={onClick}
+        className="p-2 rounded-full hover:bg-surface-200 transition-colors"
+      >
         <Bell 
           size={20} 
           className="text-text-secondary hover:text-text-primary transition-colors" 

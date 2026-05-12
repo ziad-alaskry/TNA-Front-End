@@ -10,6 +10,11 @@ interface UIState {
   isSidebarOpen: boolean;
   toggleSidebar: () => void;
   setSidebarOpen: (isOpen: boolean) => void;
+  isNotificationPanelOpen: boolean;
+  toggleNotificationPanel: () => void;
+  setNotificationPanelOpen: (isOpen: boolean) => void;
+  unreadNotificationCount: number;
+  setUnreadNotificationCount: (count: number) => void;
   toasts: Toast[];
   addToast: (message: string, type: Toast['type']) => void;
   removeToast: (id: string) => void;
@@ -22,6 +27,11 @@ export const useUIStore = create<UIState>((set) => ({
   isSidebarOpen: false,
   toggleSidebar: () => set((state) => ({ isSidebarOpen: !state.isSidebarOpen })),
   setSidebarOpen: (isOpen) => set({ isSidebarOpen: isOpen }),
+  isNotificationPanelOpen: false,
+  toggleNotificationPanel: () => set((state) => ({ isNotificationPanelOpen: !state.isNotificationPanelOpen })),
+  setNotificationPanelOpen: (isOpen) => set({ isNotificationPanelOpen: isOpen }),
+  unreadNotificationCount: 0,
+  setUnreadNotificationCount: (count) => set({ unreadNotificationCount: count }),
   toasts: [],
   addToast: (message, type) => set((state) => ({
     toasts: [...state.toasts, { id: Math.random().toString(36).substr(2, 9), message, type }]

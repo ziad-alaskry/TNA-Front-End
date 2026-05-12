@@ -133,3 +133,30 @@ export const issuancePolicyConfig = {
     auto_approve_if_iqama_valid: true,
     route_to_review_if_max_exceeded: true,
 };
+
+export const mockRegionStats = [
+  {
+    region: 'Riyadh',
+    count: 124,
+    trend: 'up' as const,
+    trendPercent: 12,
+  },
+  {
+    region: 'Jeddah',
+    count: 89,
+    trend: 'down' as const,
+    trendPercent: 3,
+  },
+  {
+    region: 'Dammam',
+    count: 67,
+    trend: 'up' as const,
+    trendPercent: 8,
+  },
+  {
+    region: 'Makkah',
+    count: 94,
+    trend: 'up' as const,
+    trendPercent: 15,
+  },
+];

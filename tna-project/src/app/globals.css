@@ -240,10 +240,20 @@
     background: var(--color-primary-gradient);
   }
 
-  .shadow-glow-primary {
-    box-shadow: var(--shadow-button);
-  }
-}
+   .shadow-glow-primary {
+     box-shadow: var(--shadow-button);
+   }
+
+   .auth-bg-pattern {
+     background-image: repeating-linear-gradient(45deg, #ffffff, #ffffff 10px, #f9fafb 10px, #f9fafb 20px);
+   }
+   @media (max-width: 639px) {
+     .auth-bg-pattern {
+       display: none;
+       opacity: 0;
+     }
+   }
+ }
 
 @layer utilities {
   .mirror-directional {

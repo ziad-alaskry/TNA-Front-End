@@ -252,30 +252,26 @@ export const BindingProvider = ({ children }: { children: ReactNode }) => {
 
   const getActiveShipmentsForTNA = (tnaId: string) => [];
 
-  const terminateBinding = async (bindingId: string) => {
-    const binding = pendingBindings.find(b => b.binding_id === bindingId);
-    if (!binding) { return { success: false, error: 'Binding not found' }; }
-    const inTransitShipments = getActiveShipmentsForTNA(binding.tna_id);
-    if (inTransitShipments.length > 0) {
-      return { success: false, error: 'Cannot unlink: Active deliveries in progress (409 Conflict)' };
-    }
-    setVisitorTnas(current =>
-      current.map(tna => tna.tna_id === binding.tna_id ? { ...tna, status: 'UNLINKED' as TNAStatus } : tna)
-    );
-    setPendingBindings(current =>
-      current.map(b => b.binding_id === bindingId
-        ? { ...b, status: 'TERMINATED' as 'TERMINATED', termination_reason: 'User requested', updated_at: new Date().toISOString() }
-        : b
-      )
-    );
-    return { success: true };
-  };
+   const terminateBinding = async (bindingId: string) => {
+     const binding = pendingBindings.find(b => b.binding_id === bindingId);
+     if (!binding) { return { success: false, error: 'Binding not found' }; }
+     const inTransitShipments = getActiveShipmentsForTNA(binding.tna_id);
+     if (inTransitShipments.length > 0) {
+       return { success: false, error: 'Cannot unlink: Active deliveries in progress (409 Conflict)' };
+     }
+     setVisitorTnas(current =>
+       current.map(tna => tna.tna_id === binding.tna_id ? { ...tna, status: 'UNLINKED' as TNAStatus } : tna)
+     );
+     setPendingBindings(current =>
+       current.map(b => b.binding_id === bindingId
+         ? { ...b, status: 'TERMINATED' as 'TERMINATED', termination_reason: 'User requested', updated_at: new Date().toISOString() }
+         : b
+       )
+     );
+     return { success: true };
+   };
 
-  const addPendingBinding = (binding: Binding) => {
-    setPendingBindings(prev => [binding, ...prev]);
-  };
-
-  const acceptBindingRequest = (id: string, fee: number) => {
+   const acceptBindingRequest = (id: string, fee: number) => {
     setPendingBindings(current =>
       current.map(b => b.binding_id === id ? { ...b, status: 'ACTIVE' } : b)
     );

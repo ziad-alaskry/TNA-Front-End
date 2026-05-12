@@ -1,7 +1,7 @@
 {
   "common": {
     "next": "التالي",
-    "back": "رجوع",
+    "back": "الرجوع",
     "confirm": "تأكيد",
     "cancel": "إلغاء",
     "loading": "جاري التحميل...",
@@ -10,44 +10,39 @@
     "edit": "تعديل",
     "view_all": "عرض الكل",
     "menu": "القائمة",
-    "support": "الدعم الفني",
-    "logged_in_as": "مسجل الدخول بصفتك {role}",
-    "view_profile": "الملف الشخصي",
+    "support": "الدعم",
+    "logged_in_as": "مسجل الدخول كـ {role}",
+    "view_profile": "عرض الملف الشخصي",
     "wallet_balance": "رصيد المحفظة",
     "total_records": "الإجمالي: {count} سجلات",
-    "search_placeholder": "بحث...",
-    "page_of": "صفحة {current} من {total}",
+    "search_placeholder": "ابحث...",
+    "page_of": "الصفحة {current} من {total}",
     "no_data": "لا توجد بيانات",
-    "no_data_desc": "لم نتمكن من العثور على أي سجلات تطابق معاييرك.",
-    "roles": {
-      "Visitor": {
-        "overview": "الرئيسية",
-        "address_search": "البحث عن عنوان",
-        "wallet": "المحفظة الرقمية",
-        "codes": "أكواد TNA",
-        "shipments": "تتبع الشحنات",
-        "profile": "الملف الشخصي"
-      },
-      "Owner": {
-        "overview": "لوحة التحكم",
-        "properties": "إدارة العقارات",
-        "bindings": "طلبات الربط",
-        "earnings": "الأرباح"
-      },
-      "Carrier": {
-        "overview": "مركز القيادة",
-        "fleet": "الأسطول",
-        "shipments": "إدارة الشحنات",
-        "tasks": "مهام السائقين",
-        "reports": "التقارير"
-      },
-      "Gov": {
-        "overview": "مؤشرات الأنظمة",
-        "queue": "طلبات المراجعة",
-        "audit": "سجل التدقيق",
-        "agencies": "الجهات الحكومية",
-        "policy": "إعدادات السياسة"
-      }
+    "no_data_desc": "لم نتمكن من العثور على أي سجلات تطابق معايير البحث.",
+    "currency": "SAR",
+    "goBack": "الرجوع",
+    "Owner": {
+      "overview": "لوحة التحكم",
+      "properties": "إدارة العقارات",
+      "bindings": "طلبات الربط",
+      "earnings": "الأرباح",
+      "profile": "الملف الشخصي"
+    },
+    "Carrier": {
+      "overview": "مركز القيادة",
+      "fleet": "الأسطول",
+      "shipments": "إدارة الشحنات",
+      "tasks": "مهام السائقين",
+      "reports": "التقارير",
+      "profile": "الملف الشخصي"
+    },
+    "Gov": {
+      "overview": "مؤشرات الأنظمة",
+      "queue": "طلبات المراجعة",
+      "audit": "سجل التدقيق",
+      "agencies": "الجهات الحكومية",
+      "policy": "إعدادات السياسة",
+      "profile": "الملف الشخصي"
     },
     "statuses": {
       "ACTIVE": "نشط",
@@ -57,7 +52,13 @@
       "SUSPENDED": "موقوف",
       "UNLINKED": "غير مرتبط"
     },
-    "copyright": "© 2024 جميع الحقوق محفوظة لبرنامج العنوان الوطني المؤقت"
+    "copyright": "© 2024 جميع الحقوق محفوظة لبرنامج العنوان الوطني المؤقت",
+    "right0_1": "left-0",
+    "mdmr4_2": "md:ml-4",
+    "notifications_3": "الإشعارات",
+    "mark_all_read_4": "تحديد الكل كمقروء",
+    "no_notifications_5": "لا توجد إشعارات",
+    "you_are_all_caught_up_6": "أنت كل شيء جيد"
   },
   "auth": {
     "login": {
@@ -190,8 +191,16 @@
       "confirm_password_placeholder": "تأكيد كلمة المرور",
       "save_login": "حفظ وتسجيل الدخول",
       "reset_success": "تم إعادة تعيين كلمة المرور بنجاح!"
-    }
-  },
+    },
+     "ltr_1": "rtl",
+     "ltr_2": "rtl",
+     "ltr_3": "rtl",
+     "ltr_4": "rtl",
+     "ltr_5": "rtl",
+     "validation": {
+       "field_required": "هذا الحقل مطلوب"
+     }
+   },
   "visitor": {
     "home": {
       "title": "العنوان الوطني المؤقت",
@@ -256,7 +265,8 @@
     "address_35": "العنوان",
     "city_36": "المدينة",
     "unit_37": "رقم الوحدة",
-    "unbind_tna_address_38": "إلغاء ربط TNA"
+    "unbind_tna_address_38": "إلغاء ربط TNA",
+    "ltr_1": "rtl"
   },
   "owner": {
     "property": {
@@ -355,7 +365,10 @@
     "binding_terminated_80": "تم إنهاء الربط",
     "binding_terminated_by_agreement_81": "تم إنهاء الربط بالاتفاق",
     "reason_param_82": "السبب: ${param}",
-    "binding_details_83": "تفاصيل الربط"
+    "binding_details_83": "تفاصيل الربط",
+    "ltr_1": "rtl",
+    "ltr_2": "rtl",
+    "ltr_3": "rtl"
   },
   "carrier": {
     "resolve": {
@@ -455,7 +468,14 @@
     "confirm_delivery_99": "تأكيد التوصيل",
     "important_note_100": "ملاحظة هامة",
     "bind_address": "ربط العنوان",
-    "view_details": "عرض التفاصيل"
+    "view_details": "عرض التفاصيل",
+    "mr2_1": "rotate-180 ml-2",
+    "ml2_2": "rotate-180 mr-2",
+    "ml2_3": "rotate-180 ml-2",
+    "mr2_4": "rotate-180 ml-2",
+    "mr2_5": "rotate-180 ml-2",
+    "mr2_6": "rotate-180 ml-2",
+    "mr2_7": "rotate-180 ml-2"
   },
   "gov": {
     "home": {
@@ -732,6 +752,100 @@
     }
   },
   "checkout": {
-    "payment_blocked": "الدفع محظور - تم معالجة الربط بالفعل"
+    "payment_blocked": "الدفع محظور - تم معالجة الربط بالفعل",
+    "title": "الدفع",
+    "order_summary": "ملخص الطلب",
+    "binding_request": "طلب ربط TNA",
+    "gross_amount": "المبلغ الإجمالي",
+    "platform_fee": "رسوم المنصة",
+    "authority_share": "حصة الجهة",
+    "total_payable": "المبلغ المطلوب دفعه",
+    "owner_net": "المالك يتلقى",
+    "secure_checkout": "دفع آمن",
+    "escrow_notice": "يتم معالجة دفعتك بأمان. تُحتجز الأموال حتى تأكيد الربط من قبل مالك العقار.",
+    "payment_method": "طريقة الدفع",
+    "wallet_balance": "المحفظة الرقمية",
+    "available_balance": "الرصيد المتاح",
+    "insufficient": "غير كافي",
+    "insufficient_funds": "تحتاج إلى مبلغ إضافي قدره SAR {amount} لإكمال هذه المعاملة.",
+    "top_up": "شحن المحفظة",
+    "pay_amount": "دفع SAR {amount}",
+    "processing": "جاري المعالجة...",
+    "pay": "دفع",
+    "terms_notice": "بالنقر على دفع، فإنك توافق على شروط الخدمة وسياسة الاسترداد.",
+    "top_up_title": "شحن المحفظة الرقمية",
+    "top_up_amount": "المبلغ المراد إضافته (SAR)",
+    "select_payment_method": "اختر طريقة الدفع",
+    "complete_top_up": "إكمال الشحن",
+    "payment_success": "تم الدفع بنجاح!",
+    "payment_success_message": "تم إرسال طلب الربط الخاص بك وينتظر موافقة مالك العقار.",
+    "redirect_message": "سيتم توجيهك إلى تفاصيل TNA الخاص بك خلال 3 ثوانٍ..."
+  },
+   "payment": {
+     "method": "طريقة الدفع",
+     "credit_card": "بطاقة ائتمان",
+     "apple_pay": "Apple Pay",
+     "stc_pay": "STC Pay",
+     "coming_soon": "قريباً",
+     "coming_soon_action": "قريباً",
+     "card_details": "بيانات البطاقة",
+     "card_number": "رقم البطاقة",
+     "expiry": "تاريخ الانتهاء",
+     "cvv": "رمز الأمان",
+     "cardholder_name": "اسم حامل البطاقة",
+     "top_up": "إضافة رصيد",
+     "top_up_success": "{amount} ريال تم إضافتها إلى المحفظة",
+     "top_up_title": "إضافة أموال",
+     "cardholder_placeholder": "أدخل اسم حامل البطاقة",
+     "invalid_card": "رقم البطاقة غير صالح",
+     "invalid_card_length": "رقم البطاقة يجب أن يكون 16 رقم",
+     "invalid_expiry": "البطاقة منتهية أو التاريخ غير صالح",
+     "invalid_cvv": "رمز الأمان يجب أن يكون 3 أرقام على الأقل",
+     "name_required": "اسم حامل البطاقة مطلوب"
+   },
+  "shell": {
+    "ltr_1": "rtl",
+    "left0_2": "right-0"
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "markAllRead": "تحديد الكل كمقروء",
+    "empty": {
+      "title": "لا توجد إشعارات",
+      "subtitle": "أنت كل شيء جيد"
+    }
+  },
+  "roles": {
+    "Owner": {
+      "profile": "الملف الشخصي"
+    },
+    "Carrier": {
+      "profile": "الملف الشخصي"
+    },
+    "Gov": {
+      "profile": "الملف الشخصي"
+    }
+  },
+  "profile": {
+    "kycStatus": {
+      "title": "حالة الهوية",
+      "verified": "موثق عبر نفاذ"
+    },
+    "wallet": {
+      "title": "رصيد المحفظة",
+      "available": "متاح للمعاملات"
+    },
+    "properties": {
+      "title": "العقارات",
+      "count": "{count} عقار مسجل"
+    },
+    "fleet": {
+      "title": "حجم الأسطول",
+      "count": "{count} مركبات نشطة"
+    },
+    "department": {
+      "title": "القسم"
+    },
+    "logout": "تسجيل الخروج"
   }
 }

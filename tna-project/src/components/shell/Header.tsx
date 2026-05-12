@@ -1,12 +1,11 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { List, MagnifyingGlass } from '@phosphor-icons/react'
 import { usePathname, useRouter } from 'next/navigation'
-import { MagnifyingGlass, List } from '@phosphor-icons/react'
 import { useLocale } from '@/i18n/LocaleProvider'
-import { locales, type Locale } from '@/i18n/config'
 import Breadcrumbs from '@/components/shared/Breadcrumbs'
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher'
 import { NotificationBell } from '@/components/ui/NotificationBell'
@@ -15,28 +14,23 @@ import InputField from '@/components/ui/InputField'
 import { cn } from '@/lib/utils/cn'
 import { WalletBalanceChip } from '@/components/ui/WalletBalanceChip'
 import { mockBalances } from '@/lib/mock'
+import { useUIStore } from '@/lib/store/useUIStore'
+import { getUnreadCount } from '@/lib/mock/notifications.mock'
 
 export default function Header({ title, onMenuClick }: { title?: React.ReactNode; onMenuClick?: () => void }) {
   const pathname = usePathname()
   const router = useRouter()
   const { locale: currentLocale } = useLocale()
   const [searchQuery, setSearchQuery] = useState('')
-  const [isSearching, setIsSearching] = useState(false)
+  const { toggleNotificationPanel, unreadNotificationCount, setUnreadNotificationCount } = useUIStore()
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!searchQuery.trim()) return
-    setIsSearching(true)
-    const segments = pathname.split('/')
-    segments[1] = currentLocale
-    const basePath = segments.slice(0, 3).join('/') // /locale/role
-    router.push(`${basePath}/search?q=${encodeURIComponent(searchQuery)}`)
-    setIsSearching(false)
+    if (searchQuery.trim()) {
+      console.log('Search:', searchQuery)
+    }
   }
 
-  const shouldShowSearch = pathname.includes('/visitor') || pathname.includes('/owner') || 
-                          pathname.includes('/carrier') || pathname.includes('/gov')
-                          
   // Logic to determine role and balance for display
   const isOwner = pathname.includes('/owner')
   const isVisitor = pathname.includes('/visitor')
@@ -44,10 +38,30 @@ export default function Header({ title, onMenuClick }: { title?: React.ReactNode
   const isGov = pathname.includes('/gov')
 
   const balance = isOwner ? mockBalances['user-owner-1'] : 
-                 isVisitor ? mockBalances['user-visitor-1'] : 
-                 isCarrier ? mockBalances['user-carrier-1'] : 0
+                  isVisitor ? mockBalances['user-visitor-1'] : 
+                  isCarrier ? mockBalances['user-carrier-1'] : 0
 
   const shouldShowBalance = isVisitor || isOwner
+  
+  const shouldShowSearch = isVisitor || isOwner || isCarrier || isGov
+
+  // Determine role for navigation and notifications
+  const rolePath = isOwner ? 'owner' : 
+                   isVisitor ? 'visitor' : 
+                   isCarrier ? 'carrier' : 
+                   isGov ? 'gov' : 'visitor';
+
+  // Determine uppercase role for notifications
+  const userRole = isOwner ? 'Owner' : 
+                   isVisitor ? 'Visitor' : 
+                   isCarrier ? 'Carrier' : 
+                   isGov ? 'Gov' : 'Visitor';
+
+  // Set initial unread notification count based on role
+  useEffect(() => {
+    const count = getUnreadCount(userRole)
+    setUnreadNotificationCount(count)
+  }, [userRole, setUnreadNotificationCount])
 
   return (
     <header 
@@ -128,7 +142,10 @@ export default function Header({ title, onMenuClick }: { title?: React.ReactNode
           <LanguageSwitcher variant="ghost" />
           
           {/* Notification Bell */}
-          <NotificationBell count={3} />
+          <NotificationBell 
+            count={unreadNotificationCount} 
+            onClick={toggleNotificationPanel}
+          />
           
           {/* User Avatar */}
           <UserAvatar 
@@ -138,6 +155,9 @@ export default function Header({ title, onMenuClick }: { title?: React.ReactNode
                     isCarrier ? 'ناقل المثال' :
                     isGov ? 'جهة حكومية' : undefined,
               avatar: undefined
+            }}
+            onClick={() => {
+              router.push(`/${currentLocale}/${rolePath}/profile`)
             }}
           />
         </div>

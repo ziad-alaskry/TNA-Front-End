@@ -17,11 +17,12 @@ import {
   CheckCircle,
   TrendUp
 } from '@phosphor-icons/react';
-import { useLocale } from '@/i18n/LocaleProvider';
-import { useMock } from '@/lib/hooks/useMock';
-import { mockShipments } from '@/lib/mock/shipments.mock';
-import { cn } from '@/lib/utils/cn';
-import Button from '@/components/ui/Button';
+ import { useLocale } from '@/i18n/LocaleProvider';
+ import { useMock } from '@/lib/hooks/useMock';
+ import { mockShipments } from '@/lib/mock/shipments.mock';
+ import { mockFleetUtilization, mockTaskDistribution } from '@/lib/mock/carriers.mock';
+ import { cn } from '@/lib/utils/cn';
+ import Button from '@/components/ui/Button';
 
 export default function CarrierHomeModule() {
   const router = useRouter();
@@ -133,33 +134,60 @@ export default function CarrierHomeModule() {
         {/* SIDEBAR OPS */}
         <div className="space-y-8">
           
-          {/* OPERATIONS overview */}
-          <section className="bg-white rounded-3xl border border-neutral-200 shadow-xl p-6 space-y-6">
-            <div className="flex items-center gap-2">
-              <ChartBar size={20} className="text-primary" weight="fill" />
-              <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest">Operations Overview</h3>
-            </div>
-            
-            <div className="space-y-4">
+         {/* OPERATIONS overview */}
+           <section className="bg-white rounded-3xl border border-neutral-200 shadow-xl p-6 space-y-6">
+             <div className="flex items-center gap-2">
+               <ChartBar size={20} className="text-primary" weight="fill" />
+               <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest">Operations Overview</h3>
+             </div>
+             
+             <div className="space-y-4">
                <div className="space-y-1.5">
                  <div className="flex justify-between text-[10px] font-black uppercase">
-                   <span className="text-neutral-500">Active Drivers</span>
-                   <span className="text-primary">85%</span>
+                   <span className="text-neutral-500">Fleet Utilization</span>
+                   <span className="text-primary">{mockFleetUtilization}%</span>
                  </div>
-                <div className="h-2 w-full bg-neutral-100 rounded-full overflow-hidden">
-                  <div className="h-full bg-primary rounded-full transition-all duration-1000" style={{ width: '85%' }} />
-                </div>
-              </div>
-              <div className="space-y-1.5">
-                <div className="flex justify-between text-[10px] font-black uppercase">
-                  <span className="text-neutral-500">Driver Availability</span>
-                  <span className="text-secondary">72%</span>
-                </div>
-                <div className="h-2 w-full bg-neutral-100 rounded-full overflow-hidden">
-                  <div className="h-full bg-secondary rounded-full transition-all duration-1000" style={{ width: '72%' }} />
-                </div>
-              </div>
-            </div>
+                 <div className="h-2 w-full bg-neutral-100 rounded-full overflow-hidden">
+                   <div className="h-full bg-primary rounded-full transition-all duration-1000" style={{ width: `${mockFleetUtilization}%` }} />
+                 </div>
+               </div>
+               <div className="space-y-1.5">
+                 <div className="flex justify-between text-[10px] font-black uppercase">
+                   <span className="text-neutral-500">Task Distribution</span>
+                 </div>
+                 <div className="grid grid-cols-3 gap-2">
+                   <div className="bg-neutral-100 rounded-full h-2.5 w-full">
+                     <div className="h-full bg-primary rounded-full transition-all duration-1000" style={{ width: `${mockTaskDistribution.pending}%` }} />
+                   </div>
+                   <div className="bg-neutral-100 rounded-full h-2.5 w-full">
+                     <div className="h-full bg-success rounded-full transition-all duration-1000" style={{ width: `${mockTaskDistribution.in_transit}%` }} />
+                   </div>
+                   <div className="bg-neutral-100 rounded-full h-2.5 w-full">
+                     <div className="h-full bg-warning rounded-full transition-all duration-1000" style={{ width: `${mockTaskDistribution.delivered}%` }} />
+                   </div>
+                 </div>
+                 <div className="flex justify-between text-[10px] font-bold text-neutral-400 uppercase tracking-tighter">
+                   <span>Pending</span>
+                   <span>In Transit</span>
+                   <span>Delivered</span>
+                 </div>
+                 <div className="grid grid-cols-2 gap-2 mt-4">
+                   <Button 
+                     variant="outline"
+                     size="sm"
+                     onClick={() => router.push(`/${locale}/carrier/fleet-map`)}
+                   >
+                     Show Map
+                   </Button>
+                   <Button 
+                     variant="outline"
+                     size="sm"
+                     onClick={() => router.push(`/${locale}/carrier/analytics`)}>
+                     View Analytics
+                   </Button>
+                 </div>
+               </div>
+             </div>
 
             <div className="h-px bg-neutral-100" />
 

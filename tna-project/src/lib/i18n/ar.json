@@ -175,26 +175,149 @@
             }
         }
     },
-    "gov": {
-        "home": {
-            "header": "مركز التحكم والرقابة",
-            "title": "نظرة عامة على النظام",
-            "subtitle": "متابعة أداء العناوين الوطنية المؤقتة وحالات التحقق والسياسات العامة عبر المملكة.",
-            "stats": {
-                "total_tnas": "إجمالي عناوين TNA",
-                "pending_verification": "طلبات قيد المراجعة",
-                "daily_issuance": "معدل الإصدار اليومي",
-                "critical_alerts": "تنبيهات حرجة"
-            },
-            "map": {
-                "title": "التوزيع الجغرافي للطلبات",
-                "view_full": "عرض كامل الخارطة"
-            },
-            "actions": {
-                "title": "إجراءات سريعة",
-                "policy_config": "تعديل السياسات",
-                "audit_logs": "سجلات التدقيق"
+"gov": {
+    "overview": "مؤشرات الأنظمة",
+    "queue": "طلبات المراجعة",
+    "audit": "سجل التدقيق",
+    "agencies": {
+        "title": "الجهات الحكومية",
+        "add_new": "إضافة جهة جديدة",
+        "tab": "الجهات",
+        "table": {
+            "headers": {
+                "name": "اسم الجهة",
+                "region": "المنطقة",
+                "department": "الإدارة",
+                "admin_user": "مدير النظام",
+                "staff_count": "عدد الموظفين"
+            }
+        },
+        "modal": {
+            "title": "إضافة جهة حكومية جديدة",
+            "fields": {
+                "name": "اسم الجهة",
+                "region": "المنطقة",
+                "department": "القسم المسؤول",
+                "admin_user": "مدير النظام المرشح",
+                "name_placeholder": "مثلاً: وزارة السياحة",
+                "department_placeholder": "مثلاً: قسم التدقيق",
+                "admin_user_placeholder": "الاسم الكامل",
+                "regions": {
+                    "riyadh": "الرياض",
+                    "jeddah": "جدة"
+                }
             }
         }
+    },
+    "staff": {
+        "title": "الموظفين",
+        "add_new": "إضافة موظف",
+        "tab": "الموظفين",
+        "table": {
+            "headers": {
+                "name": "اسم الموظف",
+                "department": "القسم",
+                "permissions": "الصلاحيات",
+                "status": "الحالة"
+            },
+            "permissions": {
+                "VERIFY": "التحقق من الطلبات",
+                "MANAGE_POLICY": "إدارة السياسات",
+                "AUDIT": "سجل التدقيق",
+                "READ_ONLY": "قراءة فقط"
+            }
+        },
+        "modal": {
+            "title": "إضافة موظف حكومي جديد",
+            "fields": {
+                "name": "اسم الموظف",
+                "agency": "الجهة",
+                "email": "البريد الإلكتروني الحكومي",
+                "permissions": "الصلاحيات",
+                "name_placeholder": "الاسم الكامل",
+                "email_placeholder": "name@agency.gov.sa"
+            }
+        }
+    },
+    "policy": "إعدادات السياسة",
+    "home": {
+        "header": "مركز التحكم والرقابة",
+        "title": "نظرة عامة على النظام",
+        "subtitle": "متابعة أداء العناوين الوطنية المؤقتة وحالات التحقق والسياسات العامة عبر المملكة.",
+        "stats": {
+            "total_tnas": "إجمالي عناوين TNA",
+            "pending_verification": "طلبات قيد المراجعة",
+            "daily_issuance": "معدل الإصدار اليومي",
+            "critical_alerts": "تنبيهات حرجة"
+        },
+        "map": {
+            "title": "التوزيع الجغرافي للطلبات",
+            "view_full": "عرض كامل الخارطة"
+        },
+        "actions": {
+            "title": "إجراءات سريعة",
+            "policy_config": "تعديل السياسات",
+            "audit_logs": "سجلات التدقيق"
+        }
     }
+}
+        },
+        "modal": {
+            "title": "إضافة جهة حكومية جديدة",
+            "fields": {
+                "name": "اسم الجهة",
+                "region": "المنطقة",
+                "department": "القسم المسؤول",
+                "admin_user": "مدير النظام المرشح",
+                "name_placeholder": "مثلاً: وزارة السياحة",
+                "department_placeholder": "مثلاً: قسم التدقيق",
+                "admin_user_placeholder": "الاسم الكامل",
+                "regions": {
+                    "riyadh": "الرياض",
+                    "jeddah": "جدة"
+                }
+            }
+        }
+    },
+    "staff": {
+        "title": "الموظفين",
+        "add_new": "إضافة موظف",
+        "tab": "الموظفين",
+        "table": {
+            "headers": {
+                "name": "اسم الموظف",
+                "department": "القسم",
+                "permissions": "الصلاحيات",
+                "status": "الحالة"
+            },
+            "permissions": {
+                "VERIFY": "التحقق من الطلبات",
+                "MANAGE_POLICY": "إدارة السياسات",
+                "AUDIT": "سجل التدقيق",
+                "READ_ONLY": "قراءة فقط"
+            }
+        }
+    },
+    "policy": "إعدادات السياسة",
+    "home": {
+        "header": "مركز التحكم والرقابة",
+        "title": "نظرة عامة على النظام",
+        "subtitle": "متابعة أداء العناوين الوطنية المؤقتة وحالات التحقق والسياسات العامة عبر المملكة.",
+        "stats": {
+            "total_tnas": "إجمالي عناوين TNA",
+            "pending_verification": "طلبات قيد المراجعة",
+            "daily_issuance": "معدل الإصدار اليومي",
+            "critical_alerts": "تنبيهات حرجة"
+        },
+        "map": {
+            "title": "التوزيع الجغرافي للطلبات",
+            "view_full": "عرض كامل الخارطة"
+        },
+        "actions": {
+            "title": "إجراءات سريعة",
+            "policy_config": "تعديل السياسات",
+            "audit_logs": "سجلات التدقيق"
+        }
+    }
+}
 }

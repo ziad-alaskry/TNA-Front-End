@@ -9,10 +9,11 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
     error?: string;
     label?: string;
     helperText?: string;
+    inputClassName?: string;
 }
 
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
-    ({ icon: IconComponent, error, label, helperText, className = '', ...props }, ref) => {
+    ({ icon: IconComponent, error, label, helperText, className = '', inputClassName = '', ...props }, ref) => {
         return (
             <div className="w-full space-y-2">
                 {label && (
@@ -29,6 +30,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
                                 ? 'border-error ring-1 ring-error/20'
                                 : 'group-focus-within:border-primary group-focus-within:ring-2 group-focus-within:ring-primary/10',
                             IconComponent && 'ps-12',
+                            inputClassName,
                             className
                         )}
                         {...props}

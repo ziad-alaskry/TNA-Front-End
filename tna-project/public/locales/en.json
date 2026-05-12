@@ -19,35 +19,30 @@
     "page_of": "Page {current} of {total}",
     "no_data": "No data found",
     "no_data_desc": "We couldn't find any records matching your criteria.",
-    "roles": {
-      "Visitor": {
-        "overview": "Overview",
-        "address_search": "Search Address",
-        "wallet": "Digital Wallet",
-        "codes": "TNA Codes",
-        "shipments": "Track Shipments",
-        "profile": "Profile"
-      },
-      "Owner": {
-        "overview": "Dashboard",
-        "properties": "Manage Properties",
-        "bindings": "Linking Requests",
-        "earnings": "Earnings"
-      },
-      "Carrier": {
-        "overview": "Command Center",
-        "fleet": "Fleet Management",
-        "shipments": "Shipments",
-        "tasks": "Driver Tasks",
-        "reports": "Reports"
-      },
-      "Gov": {
-        "overview": "System Metrics",
-        "queue": "Review Queue",
-        "audit": "Audit Logs",
-        "agencies": "Gov Agencies",
-        "policy": "Policy Config"
-      }
+    "currency": "SAR",
+    "goBack": "Go Back",
+    "Owner": {
+      "overview": "Dashboard",
+      "properties": "Manage Properties",
+      "bindings": "Linking Requests",
+      "earnings": "Earnings",
+      "profile": "Profile"
+    },
+    "Carrier": {
+      "overview": "Command Center",
+      "fleet": "Fleet Management",
+      "shipments": "Shipments",
+      "tasks": "Driver Tasks",
+      "reports": "Reports",
+      "profile": "Profile"
+    },
+    "Gov": {
+      "overview": "System Metrics",
+      "queue": "Review Queue",
+      "audit": "Audit Logs",
+      "agencies": "Gov Agencies",
+      "policy": "Policy Config",
+      "profile": "Profile"
     },
     "statuses": {
       "ACTIVE": "Active",
@@ -57,7 +52,13 @@
       "SUSPENDED": "Suspended",
       "UNLINKED": "Unlinked"
     },
-    "copyright": "© 2024 all rights reserved for the Temporary National Address program"
+    "copyright": "© 2024 all rights reserved for the Temporary National Address program",
+    "right0_1": "right-0",
+    "mdmr4_2": "md:mr-4",
+    "notifications_3": "Notifications",
+    "mark_all_read_4": "Mark all read",
+    "no_notifications_5": "No notifications",
+    "you_are_all_caught_up_6": "You are all caught up"
   },
   "auth": {
     "login": {
@@ -190,8 +191,16 @@
       "confirm_password_placeholder": "Confirm Password",
       "save_login": "Save and Login",
       "reset_success": "Password reset successfully!"
-    }
-  },
+    },
+     "ltr_1": "ltr",
+     "ltr_2": "ltr",
+     "ltr_3": "ltr",
+     "ltr_4": "ltr",
+     "ltr_5": "ltr",
+     "validation": {
+       "field_required": "This field is required"
+     }
+   },
   "visitor": {
     "home": {
       "title": "Temporary National Address",
@@ -256,7 +265,8 @@
     "address_35": "Address",
     "city_36": "City",
     "unit_37": "Unit",
-    "unbind_tna_address_38": "Unbind TNA Address"
+    "unbind_tna_address_38": "Unbind TNA Address",
+    "ltr_1": "ltr"
   },
   "owner": {
     "property": {
@@ -355,7 +365,10 @@
     "binding_terminated_80": "Binding terminated",
     "binding_terminated_by_agreement_81": "Binding terminated by agreement",
     "reason_param_82": "Reason: ${param}",
-    "binding_details_83": "Binding Details"
+    "binding_details_83": "Binding Details",
+    "ltr_1": "ltr",
+    "ltr_2": "ltr",
+    "ltr_3": "ltr"
   },
   "carrier": {
     "resolve": {
@@ -455,7 +468,14 @@
     "confirm_delivery_99": "Confirm Delivery",
     "important_note_100": "Important Note",
     "bind_address": "Bind Address",
-    "view_details": "View Details"
+    "view_details": "View Details",
+    "mr2_1": "mr-2",
+    "ml2_2": "ml-2",
+    "ml2_3": "ml-2",
+    "mr2_4": "mr-2",
+    "mr2_5": "mr-2",
+    "mr2_6": "mr-2",
+    "mr2_7": "mr-2"
   },
   "gov": {
     "home": {
@@ -732,6 +752,100 @@
     }
   },
   "checkout": {
-    "payment_blocked": "Payment blocked - binding already processed"
+    "payment_blocked": "Payment blocked - binding already processed",
+    "title": "Checkout",
+    "order_summary": "Order Summary",
+    "binding_request": "TNA Binding Request",
+    "gross_amount": "Gross Amount",
+    "platform_fee": "Platform Fee",
+    "authority_share": "Authority Share",
+    "total_payable": "Total Payable",
+    "owner_net": "Owner Receives",
+    "secure_checkout": "Secure Checkout",
+    "escrow_notice": "Your payment is processed securely. Funds are held in escrow until the binding is confirmed by the property owner.",
+    "payment_method": "Payment Method",
+    "wallet_balance": "Digital Wallet",
+    "available_balance": "Available Balance",
+    "insufficient": "INSUFFICIENT",
+    "insufficient_funds": "You need an additional SAR {amount} to complete this transaction.",
+    "top_up": "Top Up Wallet",
+    "pay_amount": "Pay SAR {amount}",
+    "processing": "Processing...",
+    "pay": "Pay",
+    "terms_notice": "By clicking Pay, you agree to our Terms of Service and Refund Policy.",
+    "top_up_title": "Top Up Digital Wallet",
+    "top_up_amount": "Amount to Add (SAR)",
+    "select_payment_method": "Select Payment Method",
+    "complete_top_up": "Complete Top Up",
+    "payment_success": "Payment Successful!",
+    "payment_success_message": "Your binding request has been submitted and is awaiting owner approval.",
+    "redirect_message": "Redirecting to your TNA details in 3 seconds..."
+  },
+   "payment": {
+     "method": "Payment Method",
+     "credit_card": "Credit Card",
+     "apple_pay": "Apple Pay",
+     "stc_pay": "STC Pay",
+     "coming_soon": "Coming Soon",
+     "coming_soon_action": "Coming Soon",
+     "card_details": "Card Details",
+     "card_number": "Card Number",
+     "expiry": "Expiry Date",
+     "cvv": "CVV",
+     "cardholder_name": "Cardholder Name",
+     "top_up": "Top Up Wallet",
+     "top_up_success": "{amount} SAR added to wallet",
+     "top_up_title": "Add Funds",
+     "cardholder_placeholder": "Enter cardholder name",
+     "invalid_card": "Invalid card number",
+     "invalid_card_length": "Card number must be 16 digits",
+     "invalid_expiry": "Card expired or invalid date",
+     "invalid_cvv": "CVV must be at least 3 digits",
+     "name_required": "Cardholder name is required"
+   },
+  "shell": {
+    "ltr_1": "ltr",
+    "left0_2": "left-0"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all read",
+    "empty": {
+      "title": "No notifications",
+      "subtitle": "You are all caught up"
+    }
+  },
+  "roles": {
+    "Owner": {
+      "profile": "Profile"
+    },
+    "Carrier": {
+      "profile": "Profile"
+    },
+    "Gov": {
+      "profile": "Profile"
+    }
+  },
+  "profile": {
+    "kycStatus": {
+      "title": "KYC Status",
+      "verified": "Verified via Nafass"
+    },
+    "wallet": {
+      "title": "Wallet Balance",
+      "available": "Available for transactions"
+    },
+    "properties": {
+      "title": "Properties",
+      "count": "{count} Registered properties"
+    },
+    "fleet": {
+      "title": "Fleet Size",
+      "count": "{count} Active vehicles"
+    },
+    "department": {
+      "title": "Department"
+    },
+    "logout": "Logout"
   }
 }

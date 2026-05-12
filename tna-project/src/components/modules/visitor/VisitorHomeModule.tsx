@@ -23,6 +23,7 @@ import { mockShipments } from '@/lib/mock/shipments.mock';
 import { mockBalances } from '@/lib/mock/financials.mock';
 import { cn } from '@/lib/utils/cn';
 import Button from '@/components/ui/Button';
+import { SkeletonCard } from '@/components/ui/SkeletonCard';
 
 export default function VisitorHomeModule() {
   const router = useRouter();
@@ -68,11 +69,10 @@ export default function VisitorHomeModule() {
       setActiveSlide(prev => (prev + 1) % slides.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [slides.length]);
 
   return (
     <div className="space-y-8 pb-12 animate-in fade-in duration-700">
-      
       {/* HERO BANNER CAROUSEL */}
       <section className="relative h-64 md:h-80 rounded-3xl overflow-hidden shadow-2xl group">
         {slides.map((slide, i) => (
@@ -153,54 +153,55 @@ export default function VisitorHomeModule() {
         </div>
       </div>
 
-      {/* MY TNAS SECTION */}
-      <section className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-black text-neutral-900 tracking-tight">My Active Addresses</h2>
-          <button 
-            onClick={() => router.push(`/${locale}/visitor/tnas`)}
-            className="text-sm font-bold text-primary flex items-center gap-1 hover:underline"
-          >
-            Manage Addresses
-            <CaretRight size={14} className={isRTL ? "rotate-180" : ""} />
-          </button>
-        </div>
-
-        <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar -mx-4 px-4 snap-x">
-          {activeTnas.map((tna) => (
-            <div 
-              key={tna.tna_id}
-              className="min-w-[280px] snap-start bg-white rounded-2xl border border-neutral-200 shadow-sm p-5 space-y-4 hover:border-primary/50 transition-colors cursor-pointer group"
-              onClick={() => router.push(`/${locale}/visitor/tnas/${tna.tna_id}`)}
-            >
-              <div className="flex justify-between items-start">
-                <p className="text-lg font-black font-mono text-primary group-hover:scale-105 transition-transform">{tna.tna_code}</p>
-                <span className="px-2 py-0.5 bg-success/10 text-success text-[10px] font-bold rounded-full border border-success/20">
-                  {tna.status}
-                </span>
-              </div>
-              <div className="space-y-1">
-                <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">Expires On</p>
-                <p className="text-xs font-bold text-neutral-600">{new Date(tna.expires_at).toLocaleDateString()}</p>
-              </div>
-              <div className="pt-2 flex items-center gap-2 text-xs font-bold text-primary">
-                View Details
-                <ArrowRight size={14} className={isRTL ? "rotate-180" : ""} />
-              </div>
-            </div>
-          ))}
-          
-          <button 
-            onClick={() => router.push(`/${locale}/visitor/tna/new`)}
-            className="min-w-[280px] snap-start bg-primary/5 rounded-2xl border-2 border-dashed border-primary/20 flex flex-col items-center justify-center p-5 gap-3 hover:bg-primary/10 transition-all group"
-          >
-            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-              <PlusCircle size={32} weight="fill" />
-            </div>
-            <p className="text-sm font-black text-primary">{t('visitor.home.actions.create_new') || 'Request New TNA'}</p>
-          </button>
-        </div>
-      </section>
+       {/* MY TNAS SECTION */}
+       <section className="space-y-4">
+         <div className="flex items-center justify-between">
+           <h2 className="text-xl font-black text-neutral-900 tracking-tight">My Active Addresses</h2>
+           <button 
+             onClick={() => router.push(`/${locale}/visitor/tnas`)}
+             className="text-sm font-bold text-primary flex items-center gap-1 hover:underline"
+           >
+             Manage Addresses
+             <CaretRight size={14} className={isRTL ? "rotate-180" : ""} />
+           </button>
+         </div>
+         
+         {tnasLoading ? (
+           <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar -mx-4 px-4 snap-x">
+             {[1, 2, 3].map((i) => (
+               <SkeletonCard 
+                 key={i}
+                 className="min-w-[280px] snap-start"
+               />
+             ))}
+           </div>
+         ) : (
+           <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar -mx-4 px-4 snap-x">
+             {activeTnas.map((tna) => (
+               <div 
+                 key={tna.tna_id}
+                 className="min-w-[280px] snap-start bg-white rounded-2xl border border-neutral-200 shadow-sm p-5 space-y-4 hover:border-primary/50 transition-colors cursor-pointer group"
+                 onClick={() => router.push(`/${locale}/visitor/tnas/${tna.tna_id}`)}
+               >
+                 <div className="flex justify-between items-start">
+                   <p className="text-lg font-black font-mono text-primary group-hover:scale-105 transition-transform">{tna.tna_code}</p>
+                   <span className="px-2 py-0.5 bg-success/10 text-success text-[10px] font-bold rounded-full border border-success/20">
+                     {tna.status}
+                   </span>
+                 </div>
+                 <div className="space-y-1">
+                   <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">Expires On</p>
+                   <p className="text-xs font-bold text-neutral-600">{new Date(tna.expires_at).toLocaleDateString()}</p>
+                 </div>
+                 <div className="pt-2 flex items-center gap-2 text-xs font-bold text-primary">
+                   View Details
+                   <ArrowRight size={14} className={isRTL ? "rotate-180" : ""} />
+                 </div>
+               </div>
+             ))}
+           </div>
+         )}
+       </section>
 
       {/* RECENT SHIPMENTS SECTION */}
       <section className="space-y-4">
@@ -215,47 +216,58 @@ export default function VisitorHomeModule() {
           </button>
         </div>
 
-        <div className="space-y-3">
-          {recentShipments.map((shipment) => (
-            <div 
-              key={shipment.shipment_id}
-              className="bg-white rounded-2xl border border-neutral-100 shadow-sm p-4 flex items-center gap-4 hover:border-secondary/30 transition-all cursor-pointer group"
-              onClick={() => router.push(`/${locale}/visitor/shipments`)}
-            >
-              <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary group-hover:scale-110 transition-transform">
-                <Package size={24} weight="bold" />
-              </div>
-              <div className="flex-1">
-                <div className="flex justify-between items-start">
-                  <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">{shipment.carrier}</p>
-                  <span className="text-[10px] font-bold text-neutral-500">{shipment.expected_at ? new Date(shipment.expected_at).toLocaleDateString() : ''}</span>
-                </div>
-                <p className="font-mono font-bold text-neutral-900">{shipment.tracking_no}</p>
-                <div className="flex items-center gap-1.5 mt-1">
-                  <MapPin size={12} className="text-neutral-400" />
-                  <p className="text-[10px] text-neutral-500 font-medium">To: <span className="text-primary font-bold">{shipment.tna_code}</span></p>
-                </div>
-              </div>
-              <ArrowSquareOut size={20} className="text-neutral-300 group-hover:text-secondary transition-colors" />
-            </div>
-          ))}
-
-          {recentShipments.length === 0 && (
-            <div className="p-8 bg-neutral-50 rounded-2xl border border-dashed border-neutral-200 text-center space-y-3">
-              <div className="mx-auto w-12 h-12 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-400">
-                <Info size={24} />
-              </div>
-              <p className="text-sm text-neutral-500 font-medium">No active shipments found.</p>
-              <Button 
-                variant="outline" 
-                size="sm"
-                onClick={() => router.push(`/${locale}/visitor/shipments/order`)}
+        {shipmentsLoading ? (
+          <div className="space-y-3">
+            {[1, 2, 3].map((i) => (
+              <SkeletonCard 
+                key={i}
+                className="min-w-full"
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {recentShipments.map((shipment) => (
+              <div 
+                key={shipment.shipment_id}
+                className="bg-white rounded-2xl border border-neutral-100 shadow-sm p-4 flex items-center gap-4 hover:border-secondary/30 transition-all cursor-pointer group"
+                onClick={() => router.push(`/${locale}/visitor/shipments`)}
               >
-                Order Your First Shipment
-              </Button>
+                <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary group-hover:scale-110 transition-transform">
+                  <Package size={24} weight="bold" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex justify-between items-start">
+                    <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">{shipment.carrier}</p>
+                    <span className="text-[10px] font-bold text-neutral-500">{shipment.expected_at ? new Date(shipment.expected_at).toLocaleDateString() : ''}</span>
+                  </div>
+                  <p className="font-mono font-bold text-neutral-900">{shipment.tracking_no}</p>
+                  <div className="flex items-center gap-1.5 mt-1">
+                    <MapPin size={12} className="text-neutral-400" />
+                    <p className="text-[10px] text-neutral-500 font-medium">To: <span className="text-primary font-bold">{shipment.tna_code}</span></p>
+                  </div>
+                </div>
+                <ArrowSquareOut size={20} className="text-neutral-300 group-hover:text-secondary transition-colors" />
+              </div>
+            ))}
+          </div>
+        )}
+
+        {!shipmentsLoading && recentShipments.length === 0 && (
+          <div className="p-8 bg-neutral-50 rounded-2xl border border-dashed border-neutral-200 text-center space-y-3">
+            <div className="mx-auto w-12 h-12 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-400">
+              <Info size={24} />
             </div>
-          )}
-        </div>
+            <p className="text-sm text-neutral-500 font-medium">No active shipments found.</p>
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => router.push(`/${locale}/visitor/shipments/order`)}
+            >
+              Order Your First Shipment
+            </Button>
+          </div>
+        )}
       </section>
 
     </div>

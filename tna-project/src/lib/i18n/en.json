@@ -175,26 +175,90 @@
             }
         }
     },
-    "gov": {
-        "home": {
-            "header": "Control & Monitoring Center",
-            "title": "System Overview",
-            "subtitle": "Monitor TNA performance, verification statuses, and general policies across the Kingdom.",
-            "stats": {
-                "total_tnas": "Total TNA Addresses",
-                "pending_verification": "Pending Review",
-                "daily_issuance": "Daily Issuance Rate",
-                "critical_alerts": "Critical Alerts"
-            },
-            "map": {
-                "title": "Geographical Distribution of Requests",
-                "view_full": "View Full Map"
-            },
-            "actions": {
-                "title": "Quick Actions",
-                "policy_config": "Modify Policies",
-                "audit_logs": "Audit Logs"
+"gov": {
+    "overview": "System Metrics",
+    "queue": "Review Queue",
+    "audit": "Audit Logs",
+    "agencies": {
+        "title": "Government Agencies",
+        "add_new": "Add New Agency",
+        "tab": "Agencies",
+        "table": {
+            "headers": {
+                "name": "Agency Name",
+                "region": "Region",
+                "department": "Department",
+                "admin_user": "System Administrator",
+                "staff_count": "Staff Count"
+            }
+        },
+        "modal": {
+            "title": "Add New Government Agency",
+            "fields": {
+                "name": "Agency Name",
+                "region": "Region",
+                "department": "Responsible Department",
+                "admin_user": "System Administrator Nominee",
+                "name_placeholder": "e.g.: Ministry of Tourism",
+                "department_placeholder": "e.g.: Audit Department",
+                "admin_user_placeholder": "Full Name",
+                "regions": {
+                    "riyadh": "Riyadh",
+                    "jeddah": "Jeddah"
+                }
             }
         }
+    },
+    "staff": {
+        "title": "Government Staff",
+        "add_new": "Add New Staff",
+        "tab": "Personnel",
+        "table": {
+            "headers": {
+                "name": "Employee Name",
+                "department": "Department",
+                "permissions": "Permissions",
+                "status": "Status"
+            },
+            "permissions": {
+                "VERIFY": "Verify Requests",
+                "MANAGE_POLICY": "Manage Policies",
+                "AUDIT": "Audit Logs",
+                "READ_ONLY": "Read Only"
+            }
+        },
+        "modal": {
+            "title": "Add New Government Staff",
+            "fields": {
+                "name": "Employee Name",
+                "agency": "Agency",
+                "email": "Government Email",
+                "permissions": "Permissions",
+                "name_placeholder": "Full Name",
+                "email_placeholder": "name@agency.gov.sa"
+            }
+        }
+    },
+    "policy": "Policy Config",
+    "home": {
+        "header": "Control & Monitoring Center",
+        "title": "System Overview",
+        "subtitle": "Monitor TNA performance, verification statuses, and general policies across the Kingdom.",
+        "stats": {
+            "total_tnas": "Total TNA Addresses",
+            "pending_verification": "Pending Review",
+            "daily_issuance": "Daily Issuance Rate",
+            "critical_alerts": "Critical Alerts"
+        },
+        "map": {
+            "title": "Geographical Distribution of Requests",
+            "view_full": "View Full Map"
+        },
+        "actions": {
+            "title": "Quick Actions",
+            "policy_config": "Modify Policies",
+            "audit_logs": "Audit Logs"
+        }
     }
+}
 }

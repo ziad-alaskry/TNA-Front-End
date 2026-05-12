@@ -24,20 +24,20 @@ type SubAddressInputs = z.infer<typeof subAddressSchema>
 export default function AddSubAddressPage() {
   const { id: na_id } = useParams<{ id: string }>()
   const router = useRouter()
-  /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  isRTL , t } = useLocale()
+  const { isRTL, t: globalT } = useLocale()
   const [existingSubAddresses, setExistingSubAddresses] = useState<Array<{ suffix_code: string }>>([])
   const [isLoading, setIsLoading] = useState(true)
 
   const t = (key: string): string => {
     const translations: Record<string, string> = {
-      'suffixCode': t('owner.suffix_code_33'),
-      'suffixCodeDescription': t('owner.4_unique_characters_for_the_unit_eg_room_34'),
-      'label': t('owner.label_35'),
-      'labelDescription': t('owner.unit_name_36'),
-      'description': t('owner.description_37'),
-      'descriptionDescription': t('owner.optional_unit_description_38'),
-      'createSubAddress': t('owner.create_unit_39'),
-      'loading': t('owner.loading_40'),
+      'suffixCode': globalT('owner.suffix_code_33'),
+      'suffixCodeDescription': globalT('owner.4_unique_characters_for_the_unit_eg_room_34'),
+      'label': globalT('owner.label_35'),
+      'labelDescription': globalT('owner.unit_name_36'),
+      'description': globalT('owner.description_37'),
+      'descriptionDescription': globalT('owner.optional_unit_description_38'),
+      'createSubAddress': globalT('owner.create_unit_39'),
+      'loading': globalT('owner.loading_40'),
     }
     return translations[key] || key
   }

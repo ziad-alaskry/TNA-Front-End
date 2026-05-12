@@ -37,3 +37,11 @@ export const mockVehicles: CarrierVehicle[] = [
     updated_at: '2024-01-01T00:00:00Z',
   }
 ];
+
+// Mock data for dashboard widgets
+export const mockFleetUtilization = 75; // Percentage
+export const mockTaskDistribution = {
+  pending: 40,
+  in_transit: 35,
+  delivered: 25
+};

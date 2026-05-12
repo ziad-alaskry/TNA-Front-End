@@ -1,6 +1,6 @@
 'use client'
 
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode, useState, useEffect } from 'react'
 import { List, X } from '@phosphor-icons/react'
 
 import { SidebarContent } from './RoleSidebar'
@@ -8,6 +8,7 @@ import { useLocale } from '@/i18n/LocaleProvider'
 import Breadcrumbs from '@/components/shared/Breadcrumbs'
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher'
 import { BottomNav } from './BottomNav'
+import { NotificationPanel } from '@/components/ui/NotificationPanel'
 import { cn } from '@/lib/utils/cn'
 import Header from '@/components/shell/Header'
 import { useMounted } from '@/lib/hooks/useMounted'
@@ -34,8 +35,19 @@ export function AppShell({
   showBottomNav = true,
 }: AppShellProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [collapsed, setCollapsed] = useState(true) // Sidebar defaults to collapsed (icon-only)
+  const [isDesktop, setIsDesktop] = useState(false)
   const { isRTL, t } = useLocale()
   const mounted = useMounted()
+
+  useEffect(() => {
+    const checkIfDesktop = () => {
+      setIsDesktop(window.innerWidth >= 768) // md breakpoint
+    }
+    checkIfDesktop()
+    window.addEventListener('resize', checkIfDesktop)
+    return () => window.removeEventListener('resize', checkIfDesktop)
+  }, [])
 
   if (!mounted) return null
 
@@ -49,9 +61,14 @@ export function AppShell({
       <div className="flex flex-1 overflow-hidden">
 
         {/* DESKTOP SIDEBAR */}
-        <aside className="hidden w-64 shrink-0 md:flex flex-col bg-primary-gradient border-e border-white/10 h-[calc(100vh-var(--navbar-height))] sticky top-navbar">
+        <aside className={cn(
+          'hidden shrink-0 md:flex flex-col bg-primary-gradient border-e border-white/10 h-[calc(100vh-var(--navbar-height))] sticky top-navbar',
+          !isDesktop ? 'hidden' : '', // Hide on mobile
+          collapsed ? 'w-[72px]' : 'w-64', // Width based on collapsed state
+          'transition-all duration-300'
+        )}>
           <nav className="flex-1 overflow-y-auto px-4 py-8 text-start no-scrollbar">
-            <SidebarContent role={role} />
+            <SidebarContent role={role} collapsed={collapsed} />
           </nav>
         </aside>
 
@@ -116,6 +133,9 @@ export function AppShell({
           </div>
         </footer>
       )}
+
+      {/* Global Notification Panel */}
+      <NotificationPanel />
     </div>
   )
 }

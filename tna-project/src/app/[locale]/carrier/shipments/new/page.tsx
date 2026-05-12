@@ -14,7 +14,6 @@ import { useLocale } from '@/i18n/LocaleProvider'
 import { resolverApi } from '@/lib/api/resolver'
 import type { TNAResolutionResult } from '@/lib/api/resolver'
 import {
-import { useTranslation } from 'react-i18next';
   Package,
   Truck,
   User,

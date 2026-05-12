@@ -20,7 +20,6 @@ import { RoleGuard } from '@/components/shared/RoleGuard'
 import { formatDate } from '@/lib/utils/formatDate'
 import { deliveriesApi } from '@/lib/api/deliveries'
 import type { Shipment } from '@/lib/types/deliveries'
-import { useTranslation } from 'react-i18next';
 
 function DeliveryConfirmationContent() {
   const router = useRouter()

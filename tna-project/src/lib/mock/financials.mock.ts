@@ -41,6 +41,11 @@ export const mockTransactions: FinancialTransaction[] = [
 ];
 
 /**
+ * Mock weekly revenue data for dashboard charts
+ */
+export const mockWeeklyRevenue: number[] = [12000, 15000, 8000, 18000, 22000, 19000, 14000];
+
+/**
  * Mock rent_contracts aligned with data model v2.1
  */
 export const mockRentContracts: RentContract[] = [
