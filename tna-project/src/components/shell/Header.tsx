@@ -29,7 +29,7 @@ export default function Header({
 }) {
   const router = useRouter()
   const pathname = usePathname()
-  const { locale: currentLocale } = useLocale()
+  const { locale: currentLocale, t } = useLocale()
   const { toggleNotificationPanel, unreadNotificationCount, isNotificationPanelOpen, setUnreadNotificationCount, setNotificationPanelOpen } = useUIStore()
 
   // Logic to determine role and balance for display
@@ -101,7 +101,7 @@ export default function Header({
                 <button
                   className="p-2 -mx-2 text-text-secondary hover:bg-neutral-50 rounded-md transition-colors"
                   onClick={onMenuClick}
-                  aria-label={showCloseIcon ? "إغلاق القائمة" : "القائمة"}
+                  aria-label={showCloseIcon ? t('common.close_menu') : t('common.menu')}
                   aria-expanded={isMenuOpen}
                 >
                   {showCloseIcon ? (
