@@ -76,59 +76,11 @@ export default function Header({
        >
           {/* Main Header Container */}
           <div className="h-full flex items-center justify-between px-[var(--space-4)] md:px-[var(--space-5)] lg:px-[var(--space-6)]">
-
-           {/* Start group (RTL right / LTR left): User controls */}
-           <div className="flex-shrink-0 flex items-center gap-[var(--space-3)]">
-
-             {/* Wallet Balance Chip */}
-             {shouldShowBalance && (
-               <div className="hidden sm:block">
-                  <WalletBalanceChip
-                    balance={balance}
-                    onClick={() => router.push(`/${currentLocale}/visitor/wallet`)}
-                  />
-               </div>
-             )}
-
-             {/* Language Switcher */}
-             <LanguageSwitcher variant="ghost" />
-
-             {/* Notification Bell with Wrapper (anchor for panel) */}
-             <div className="notif-wrapper" ref={bellRef}>
-               <NotificationBell
-                 count={unreadNotificationCount}
-                 isOpen={isNotificationPanelOpen}
-                 onClick={toggleNotificationPanel}
-               />
-             </div>
-
-             {/* User Avatar */}
-             <UserAvatar
-               isVisitor={isVisitor}
-               user={{
-                 name: isOwner ? 'أحمد المالك' :
-                       isCarrier ? 'ناقل المثال' :
-                       isGov ? 'جهة حكومية' : undefined,
-                 avatar: undefined
-               }}
-               onClick={() => {
-                 router.push(`/${currentLocale}/${rolePath}/profile`)
-               }}
-             />
-           </div>
-
-           {/* Center group: Page title */}
-           {title && (
-             <div className="flex-1 min-w-0 px-4 flex items-center justify-center">
-               <h1 className="text-sm font-semibold text-[#1a2736] whitespace-nowrap overflow-hidden text-ellipsis max-w-full">
-                 {title}
-               </h1>
-             </div>
-           )}
-
-            {/* End group (RTL left / LTR right): Logo + Hamburger */}
-            <div className="flex-shrink-0 flex items-center gap-[var(--space-3)]">
-              {/* Logo */}
+            
+            {/* Section: Page Identity & Navigation Controls */}
+            <div className="flex items-center gap-[var(--space-3)]">
+              
+              {/* Platform Logo - Anchors the sidebar column in RTL */}
               <Link href={`/${currentLocale}/${rolePath}/home`} className="header-logo-link" aria-label="Go to home">
                 <svg viewBox="0 0 155 153" width="36" height="36">
                   <path fill="#29BBE3" d="M91.923096,74.412758 C92.011192,72.330902 92.483940,70.536263 92.014168,69.036934 C89.763351,61.853386 94.730690,58.297337 99.266914,54.810966 C100.399475,53.940525 103.616158,54.160423 104.732498,55.157841 C111.163475,60.903744 117.251717,67.033287 123.453949,73.035034 C123.692322,73.265709 123.985786,73.481956 124.123810,73.767632 C127.273087,80.285728 123.066048,85.552170 120.941574,91.064507 C119.538445,94.705208 117.849060,98.223228 112.516518,97.975098 C103.732346,97.566376 94.910515,98.018417 86.115845,97.744713 C84.165695,97.684021 81.143486,96.562157 80.573593,95.142593 C79.430595,92.295456 79.473679,88.874702 82.955864,86.886391 C87.688324,84.184158 90.568054,80.086647 91.923096,74.412758 z"/>
@@ -144,10 +96,10 @@ export default function Header({
                 </svg>
               </Link>
 
-              {/* Hamburger Button — toggles sidebar collapsed (desktop) or open (mobile) */}
+              {/* Hamburger Button — Primary toggle for sidebar */}
               {onMenuClick && (
                 <button
-                  className="p-2 -me-2 text-text-secondary hover:bg-neutral-50 rounded-md transition-colors"
+                  className="p-2 -mx-2 text-text-secondary hover:bg-neutral-50 rounded-md transition-colors"
                   onClick={onMenuClick}
                   aria-label={showCloseIcon ? "إغلاق القائمة" : "القائمة"}
                   aria-expanded={isMenuOpen}
@@ -159,6 +111,55 @@ export default function Header({
                   )}
                 </button>
               )}
+
+              {/* Page Title - Visible on all screens */}
+              {title && (
+                <div className="mx-2 min-w-0">
+                  <h1 className="text-sm font-semibold text-[#1a2736] whitespace-nowrap overflow-hidden text-ellipsis max-w-[150px] sm:max-w-none">
+                    {title}
+                  </h1>
+                </div>
+              )}
+            </div>
+
+            {/* Section: User Account & System Controls */}
+            <div className="flex items-center gap-[var(--space-3)]">
+              
+              {/* Wallet Status Chip */}
+              {shouldShowBalance && (
+                <div className="hidden sm:block">
+                   <WalletBalanceChip
+                     balance={balance}
+                     onClick={() => router.push(`/${currentLocale}/visitor/wallet`)}
+                   />
+                </div>
+              )}
+
+              {/* Language Selection */}
+              <LanguageSwitcher variant="ghost" />
+
+              {/* Notification Center */}
+              <div className="notif-wrapper" ref={bellRef}>
+                <NotificationBell
+                  count={unreadNotificationCount}
+                  isOpen={isNotificationPanelOpen}
+                  onClick={toggleNotificationPanel}
+                />
+              </div>
+
+              {/* Profile / Avatar */}
+              <UserAvatar
+                isVisitor={isVisitor}
+                user={{
+                  name: isOwner ? 'أحمد المالك' :
+                        isCarrier ? 'ناقل المثال' :
+                        isGov ? 'جهة حكومية' : undefined,
+                  avatar: undefined
+                }}
+                onClick={() => {
+                  router.push(`/${currentLocale}/${rolePath}/profile`)
+                }}
+              />
             </div>
           </div>
         </header>

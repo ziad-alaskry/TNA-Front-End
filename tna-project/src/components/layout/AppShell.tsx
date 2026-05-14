@@ -1,13 +1,11 @@
 'use client'
 
 import React, { ReactNode, useState, useEffect } from 'react'
-import { List } from '@phosphor-icons/react'
 import Image from 'next/image'
 
 import { SidebarContent } from './RoleSidebar'
 import { useLocale } from '@/i18n/LocaleProvider'
 import Breadcrumbs from '@/components/shared/Breadcrumbs'
-import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher'
 import { BottomNav } from './BottomNav'
 import { cn } from '@/lib/utils/cn'
 import Header from '@/components/shell/Header'
@@ -78,7 +76,7 @@ export function AppShell({
   return (
     <div suppressHydrationWarning className="flex h-screen w-full flex-col bg-surface-100 text-neutral-900" dir={t('common.dir') as any}>
 
-      {/* ── HEADER (Enterprise Header with Bell, Search, Avatar) ────────────── */}
+      {/* ── HEADER (Enterprise Header) ── */}
         <Header 
           title={header} 
           isMenuOpen={isMenuOpen}
@@ -92,12 +90,12 @@ export function AppShell({
           }} 
         />
 
-      {/* ── BODY ─────────────────────────────────────────────── */}
+      {/* ── BODY ── */}
       <div className="flex flex-1 overflow-hidden">
 
         {/* DESKTOP SIDEBAR */}
         <aside className={cn(
-          'hidden shrink-0 md:flex flex-col border-e border-[var(--divider-strong)] h-[calc(100vh-var(--navbar-height))] sticky top-navbar z-[40]',
+          'hidden shrink-0 md:flex flex-col border-e border-[var(--divider-strong)] h-[calc(100vh-var(--navbar-height))] sticky top-[var(--navbar-height)] z-[40]',
           !isDesktop ? 'hidden' : '', // Hide on mobile
           collapsed ? 'w-[72px]' : 'w-64', // Width based on collapsed state
           'transition-all duration-300 ease-in-out bg-white shadow-xl'
@@ -107,7 +105,7 @@ export function AppShell({
           </nav>
         </aside>
 
-        {/* MAIN CONTENT — constrained to 1280px */}
+        {/* MAIN CONTENT */}
         <main className="flex-1 min-w-0 overflow-y-auto text-start p-6 md:p-10 pb-28 md:pb-10 no-scrollbar">
           <div className="ui-content-container mx-auto">
             <Breadcrumbs />
@@ -118,7 +116,7 @@ export function AppShell({
         </main>
       </div>
 
-       {/* MOBILE SIDEBAR — dark surface overlay per SPATIAL */}
+       {/* MOBILE SIDEBAR */}
        <div className={cn(
            "fixed inset-0 transition-all duration-300 md:hidden",
            sidebarOpen ? "visible" : "invisible pointer-events-none"
@@ -152,12 +150,11 @@ export function AppShell({
                         <span className="text-xs text-white/70 mt-0.5 uppercase font-semibold tracking-wide">{role}</span>
                       </div>
                     </div>
-                    {/* Close button removed per P1 — hamburger is sole toggle */}
                  </div>
-             <nav className="flex-1 overflow-hidden px-4 py-8 text-start">
-               <SidebarContent role={role} />
-             </nav>
-           </aside>
+              <nav className="flex-1 overflow-hidden px-4 py-8 text-start">
+                <SidebarContent role={role} />
+              </nav>
+            </aside>
        </div>
 
       {/* BOTTOM NAV (Mobile) */}
