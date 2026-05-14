@@ -39,14 +39,23 @@ export function AppShell({
   const { isRTL, t } = useLocale()
   const mounted = useMounted()
 
-  useEffect(() => {
-    const checkIfDesktop = () => {
-      setIsDesktop(window.innerWidth >= 768) // md breakpoint
-    }
-    checkIfDesktop()
-    window.addEventListener('resize', checkIfDesktop)
-    return () => window.removeEventListener('resize', checkIfDesktop)
-  }, [])
+   useEffect(() => {
+     const checkIfDesktop = () => {
+       setIsDesktop(window.innerWidth >= 768) // md breakpoint
+     }
+     checkIfDesktop()
+     window.addEventListener('resize', checkIfDesktop)
+     return () => window.removeEventListener('resize', checkIfDesktop)
+   }, [])
+
+   // Body scroll lock for mobile sidebar
+   useEffect(() => {
+     if (isDesktop) return
+     document.body.style.overflow = sidebarOpen ? 'hidden' : ''
+     return () => {
+       document.body.style.overflow = ''
+     }
+   }, [sidebarOpen, isDesktop])
 
   if (!mounted) return null
 
@@ -75,7 +84,7 @@ export function AppShell({
           collapsed ? 'w-[72px]' : 'w-64', // Width based on collapsed state
           'transition-all duration-300 ease-in-out bg-[var(--sidebar-gradient)] shadow-xl'
         )}>
-          <nav className="flex-1 overflow-y-auto py-8 text-start no-scrollbar">
+           <nav className="flex-1 overflow-hidden py-8 text-start no-scrollbar">
             <SidebarContent role={role} collapsed={collapsed} />
           </nav>
         </aside>
@@ -93,13 +102,13 @@ export function AppShell({
 
       {/* MOBILE SIDEBAR — dark surface overlay per SPATIAL */}
       <div className={cn(
-          "fixed inset-0 z-50 transition-all duration-300 md:hidden",
+          "fixed inset-0 z-[51] transition-all duration-300 md:hidden",
           sidebarOpen ? "visible" : "invisible pointer-events-none"
       )}>
           {/* Overlay */}
           <div
             className={cn(
-                "absolute inset-0 bg-primary-dark/60 backdrop-blur-sm transition-opacity duration-300",
+                "absolute inset-0 z-[50] bg-black/35 transition-opacity duration-300",
                 sidebarOpen ? "opacity-100" : "opacity-0"
             )}
             onClick={() => setSidebarOpen(false)}
@@ -108,14 +117,14 @@ export function AppShell({
           {/* Drawer */}
           <aside
             className={cn(
-                "absolute inset-y-0 w-72 bg-primary-gradient shadow-modal transition-transform duration-300 ease-out flex flex-col",
+                "fixed top-0 bottom-0 z-[52] w-72 bg-white shadow-modal transition-transform duration-300 ease-out flex flex-col",
                 isRTL 
                     ? (sidebarOpen ? "translate-x-0" : "translate-x-full") 
                     : (sidebarOpen ? "translate-x-0" : "-translate-x-full"),
                 isRTL ? "right-0" : "left-0"
             )}
           >
-             <div className="flex items-center justify-between p-5 border-b border-white/10 bg-black/10">
+             <div className="flex items-center justify-between p-5 border-b border-white/10 bg-gradient-to-r from-primary to-primary-dark">
                 <span className="font-bold text-white tracking-tight">{t('common.menu')}</span>
                 <button 
                   className="lg:hidden p-2 -ms-2 text-white/70 hover:text-white hover:bg-white/10 rounded-md transition-colors"
@@ -124,7 +133,7 @@ export function AppShell({
                   <X size={22} weight="bold" />
                 </button>
              </div>
-            <nav className="flex-1 overflow-y-auto px-4 py-8 text-start">
+            <nav className="flex-1 overflow-hidden px-4 py-8 text-start">
               <SidebarContent role={role} />
             </nav>
           </aside>

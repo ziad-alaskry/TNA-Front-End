@@ -12,6 +12,7 @@
         "menu": "Menu",
         "support": "Support",
         "logged_in_as": "Logged in as {role}",
+        "signOut": "Sign Out",
         "roles": {
             "Visitor": {
                 "overview": "Overview",

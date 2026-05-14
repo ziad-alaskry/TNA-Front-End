@@ -12,53 +12,31 @@ import {
     Truck as TruckIcon, 
     ShieldCheck as ShieldCheckIcon, 
     ChartBar as ChartBarIcon, 
-    Gear as GearIcon, 
-    Question as QuestionIcon,
+    Gear as GearIcon,
     NavigationArrow as NavigationArrowIcon,
     Fingerprint as FingerprintIcon,
     Users as UsersIcon,
     Package as PackageIcon,
     Link as LinkIcon,
-    MapPin as MapPinIcon
+    MapPin as MapPinIcon,
+    SignOut
 } from '@phosphor-icons/react'
 import Image from 'next/image'
 import { useLocale } from '@/i18n/LocaleProvider'
 import { useAuthStore } from '@/lib/store/useAuthStore'
-import { useWallet } from '@/lib/hooks/useWallet'
-import { UserAvatar } from '@/components/ui/UserAvatar'
 import { cn } from '@/lib/utils/cn'
+import { useRouter } from 'next/navigation'
 
 interface SidebarProps {
   role: 'Visitor' | 'Owner' | 'Gov' | 'Carrier'
   collapsed?: boolean
 }
 
-function SidebarProfile({ role }: { role: string }) {
-  const { user } = useAuthStore()
-  const { balance } = useWallet()
-  
-  return (
-    <div className="px-4 py-4 border-b border-white/5 bg-white/5 mx-3 rounded-lg mb-4">
-      <div className="flex items-center gap-3">
-        <UserAvatar 
-          user={{ name: user?.full_name || 'User', avatar: undefined }}
-          isVisitor={role === 'Visitor'}
-          className="h-10 w-10"
-        />
-        <div className="flex flex-col min-w-0">
-          <span className="text-sm font-bold text-white truncate">{user?.full_name || 'Default User'}</span>
-          <span className="text-[10px] text-sky-400 font-black uppercase tracking-wider">
-            {role === 'Owner' ? `${balance.toLocaleString()} SAR` : role}
-          </span>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 export function SidebarContent({ role, collapsed = false }: SidebarProps) {
   const pathname = usePathname()
   const { locale, t } = useLocale()
+  const router = useRouter()
+  const { logout } = useAuthStore()
 
   const menuConfigs = {
     Visitor: [
@@ -102,14 +80,16 @@ export function SidebarContent({ role, collapsed = false }: SidebarProps) {
     href: string;
   }
 
-  const menuItems: MenuItem[] = (menuConfigs as any)[role] || (menuConfigs as any)[{
-    VISITOR: 'Visitor',
-    OWNER: 'Owner',
-    CARRIER_STAFF: 'Carrier',
-    GOV_USER: 'Gov'
-  }[role as string] || 'Visitor'] || []
-  
-  return (
+   const menuItems: MenuItem[] = (menuConfigs as any)[role] || (menuConfigs as any)[{
+     VISITOR: 'Visitor',
+     OWNER: 'Owner',
+     CARRIER_STAFF: 'Carrier',
+     GOV_USER: 'Gov'
+   }[role as string] || 'Visitor'] || []
+
+   const isCompact = role === 'Carrier' || role === 'Gov'
+   
+   return (
     <div className="flex h-full flex-col text-start font-english">
       {/* Header Block with Logo + Role Badge (hidden when collapsed) */}
       {!collapsed && (
@@ -131,16 +111,13 @@ export function SidebarContent({ role, collapsed = false }: SidebarProps) {
             </div>
           </div>
         </div>
-      )}
-      
-      {/* Profile Section - Dynamically injected for Owner (hidden when collapsed) */}
-      {!collapsed && <SidebarProfile role={role} />}
-
-      {/* Navigation Menu */}
-      <nav className={cn(
-        "flex-1 py-2 space-y-1 overflow-y-auto no-scrollbar transition-all",
-        collapsed ? "px-2" : "px-3"
-      )}>
+       )}
+       
+       {/* Navigation Menu */}
+       <nav className={cn(
+         "flex-1 py-2 transition-all overflow-hidden",
+         isCompact ? "space-y-0.5 px-3" : (collapsed ? "px-2 space-y-1" : "px-3 space-y-1")
+       )}>
         {menuItems.map((item) => {
           const localizedHref = `/${locale}${item.href}`
           const isActive = pathname === localizedHref || (item.href !== '/visitor/home' && item.href !== '/owner/home' && pathname.startsWith(`${localizedHref}/`))
@@ -174,18 +151,36 @@ export function SidebarContent({ role, collapsed = false }: SidebarProps) {
         })}
       </nav>
 
-      {/* Bottom Support Section (hidden when collapsed) */}
+      {/* Sign-Out Footer (hidden when collapsed) */}
       {!collapsed && (
-        <div className="p-4 border-t border-white/10">
-          <div className="rounded-md bg-white/5 p-3 border border-white/5 shadow-inner">
-            <div className="flex items-center gap-2 mb-2">
-              <QuestionIcon size={16} className="text-neutral-400" weight="fill" />
-              <p className="text-[10px] font-semibold text-neutral-500 uppercase tracking-wider">{t('common.support')}</p>
-            </div>
-            <p className="text-xs text-neutral-300 font-medium leading-relaxed">
-              {t('common.logged_in_as').replace('{role}', t(`common.roles.${role}.overview`))}
-            </p>
-          </div>
+        <div className="p-3 border-t border-white/10">
+          <button
+            onClick={() => {
+              logout()
+              router.push(`/${locale}/visitor/home`)
+            }}
+            className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-[#d94f4f] hover:bg-[#fdf0f0] rounded-md transition-colors w-full"
+          >
+            <SignOut size={22} weight="bold" className="text-[#d94f4f]" />
+            <span>{t('common.signOut')}</span>
+          </button>
+        </div>
+      )}
+
+      {/* Sign-Out Button (collapsed state - icon only) */}
+      {collapsed && (
+        <div className="p-3 border-t border-white/10 flex justify-center">
+          <button
+            onClick={() => {
+              logout()
+              router.push(`/${locale}/visitor/home`)
+            }}
+            className="flex items-center justify-center px-2 py-2 text-sm font-medium text-[#d94f4f] hover:bg-[#fdf0f0] rounded-md transition-colors"
+            aria-label={t('common.signOut')}
+          >
+            <SignOut size={22} weight="bold" className="text-[#d94f4f]" />
+            <span className="sr-only">{t('common.signOut')}</span>
+          </button>
         </div>
       )}
     </div>
