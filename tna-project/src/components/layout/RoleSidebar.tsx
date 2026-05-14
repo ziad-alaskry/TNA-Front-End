@@ -91,27 +91,27 @@ export function SidebarContent({ role, collapsed = false }: SidebarProps) {
    
    return (
     <div className="flex h-full flex-col text-start font-english">
-      {/* Header Block with Logo + Role Badge (hidden when collapsed) */}
-      {!collapsed && (
-        <div className="px-4 py-6 border-b border-white/10 mb-2">
-          <div className="flex items-center gap-3">
-            {/* TNA Logo Image */}
-            <div className="h-10 w-10 rounded-lg bg-white/10 flex items-center justify-center shadow-sm">
-              <Image
-                src="/brand/logo.svg"
-                alt="TNA Logo"
-                width={28}
-                height={28}
-                className="drop-shadow-sm"
-              />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-bold text-white text-lg leading-none tracking-tight">TNA</span>
-              <span className="text-xs text-white/70 mt-0.5 uppercase font-semibold tracking-wide">{role}</span>
-            </div>
-          </div>
-        </div>
-       )}
+       {/* Header Block with Logo + Role Badge (hidden when collapsed) */}
+       {!collapsed && (
+         <div className="px-4 py-6 border-b border-white/20 mb-2 bg-gradient-to-r from-primary to-primary-dark">
+           <div className="flex items-center gap-3">
+             {/* TNA Logo Image */}
+             <div className="h-10 w-10 rounded-lg bg-white/10 flex items-center justify-center shadow-sm">
+               <Image
+                 src="/brand/logo.svg"
+                 alt="TNA Logo"
+                 width={28}
+                 height={28}
+                 className="drop-shadow-sm"
+               />
+             </div>
+             <div className="flex flex-col">
+               <span className="font-bold text-white text-lg leading-none tracking-tight">TNA</span>
+               <span className="text-xs text-white/70 mt-0.5 uppercase font-semibold tracking-wide">{role}</span>
+             </div>
+           </div>
+         </div>
+        )}
        
        {/* Navigation Menu */}
        <nav className={cn(
@@ -130,13 +130,13 @@ export function SidebarContent({ role, collapsed = false }: SidebarProps) {
                 "flex items-center gap-3 rounded-md py-2.5 text-sm font-medium transition-all duration-300",
                 collapsed ? "justify-center px-0" : "px-3",
                 isActive
-                  ? 'bg-white/10 text-white border-s-3 border-sky-400 shadow-[0_0_12px_rgba(56,189,248,0.3)]'
-                  : 'text-neutral-400 hover:bg-white/5 hover:text-white border-s-3 border-transparent'
+                  ? 'bg-[#e6f4fb] text-[#0E8FD1] border-s-3 border-[#0E8FD1]'
+                  : 'text-[#374151] hover:bg-[#f2f7fb] hover:text-[#1a2736] border-s-3 border-transparent'
               )}
             >
               <span className={cn(
                 "transition-transform duration-300 flex items-center shrink-0",
-                isActive ? 'text-sky-400 scale-110' : 'text-neutral-400'
+                isActive ? 'text-[#0E8FD1] scale-110' : 'text-[#374151]'
               )}>
                 {item.icon}
               </span>
@@ -153,15 +153,15 @@ export function SidebarContent({ role, collapsed = false }: SidebarProps) {
 
       {/* Sign-Out Footer (hidden when collapsed) */}
       {!collapsed && (
-        <div className="p-3 border-t border-white/10">
+        <div className="p-3 border-t border-[var(--divider-strong)]">
           <button
             onClick={() => {
               logout()
               router.push(`/${locale}/visitor/home`)
             }}
-            className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-[#d94f4f] hover:bg-[#fdf0f0] rounded-md transition-colors w-full"
+            className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-[#b91c1c] hover:bg-[#fef2f2] rounded-md transition-colors w-full"
           >
-            <SignOut size={22} weight="bold" className="text-[#d94f4f]" />
+            <SignOut size={22} weight="bold" className="text-[#b91c1c]" />
             <span>{t('common.signOut')}</span>
           </button>
         </div>
@@ -169,16 +169,16 @@ export function SidebarContent({ role, collapsed = false }: SidebarProps) {
 
       {/* Sign-Out Button (collapsed state - icon only) */}
       {collapsed && (
-        <div className="p-3 border-t border-white/10 flex justify-center">
+        <div className="p-3 border-t border-[var(--divider-strong)] flex justify-center">
           <button
             onClick={() => {
               logout()
               router.push(`/${locale}/visitor/home`)
             }}
-            className="flex items-center justify-center px-2 py-2 text-sm font-medium text-[#d94f4f] hover:bg-[#fdf0f0] rounded-md transition-colors"
+            className="flex items-center justify-center px-2 py-2 text-sm font-medium text-[#b91c1c] hover:bg-[#fef2f2] rounded-md transition-colors"
             aria-label={t('common.signOut')}
           >
-            <SignOut size={22} weight="bold" className="text-[#d94f4f]" />
+            <SignOut size={22} weight="bold" className="text-[#b91c1c]" />
             <span className="sr-only">{t('common.signOut')}</span>
           </button>
         </div>

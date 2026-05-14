@@ -1,7 +1,8 @@
 'use client'
 
 import React, { ReactNode, useState, useEffect } from 'react'
-import { List, X } from '@phosphor-icons/react'
+import { List } from '@phosphor-icons/react'
+import Image from 'next/image'
 
 import { SidebarContent } from './RoleSidebar'
 import { useLocale } from '@/i18n/LocaleProvider'
@@ -33,11 +34,15 @@ export function AppShell({
   footer,
   showBottomNav = true,
 }: AppShellProps) {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [collapsed, setCollapsed] = useState(true) // Sidebar defaults to collapsed (icon-only)
-  const [isDesktop, setIsDesktop] = useState(false)
-  const { isRTL, t } = useLocale()
-  const mounted = useMounted()
+   const [sidebarOpen, setSidebarOpen] = useState(false)
+   const [collapsed, setCollapsed] = useState(true) // Sidebar defaults to collapsed (icon-only)
+   const [isDesktop, setIsDesktop] = useState(false)
+   const { isRTL, t } = useLocale()
+   const mounted = useMounted()
+
+   const isMobile = !isDesktop
+   const isMenuOpen = isMobile ? sidebarOpen : !collapsed
+   const showCloseIcon = isMobile && sidebarOpen
 
    useEffect(() => {
      const checkIfDesktop = () => {
@@ -48,14 +53,25 @@ export function AppShell({
      return () => window.removeEventListener('resize', checkIfDesktop)
    }, [])
 
-   // Body scroll lock for mobile sidebar
-   useEffect(() => {
-     if (isDesktop) return
-     document.body.style.overflow = sidebarOpen ? 'hidden' : ''
-     return () => {
-       document.body.style.overflow = ''
-     }
-   }, [sidebarOpen, isDesktop])
+    // Body scroll lock for mobile sidebar
+    useEffect(() => {
+      if (isDesktop) return
+      document.body.style.overflow = sidebarOpen ? 'hidden' : ''
+      return () => {
+        document.body.style.overflow = ''
+      }
+    }, [sidebarOpen, isDesktop])
+
+    // Escape key to close mobile sidebar
+    useEffect(() => {
+      const handleEscape = (e: KeyboardEvent) => {
+        if (e.key === 'Escape' && sidebarOpen) {
+          setSidebarOpen(false)
+        }
+      }
+      document.addEventListener('keydown', handleEscape)
+      return () => document.removeEventListener('keydown', handleEscape)
+    }, [sidebarOpen])
 
   if (!mounted) return null
 
@@ -63,26 +79,28 @@ export function AppShell({
     <div suppressHydrationWarning className="flex h-screen w-full flex-col bg-surface-100 text-neutral-900" dir={t('common.dir') as any}>
 
       {/* ── HEADER (Enterprise Header with Bell, Search, Avatar) ────────────── */}
-      <Header 
-        title={header} 
-        onMenuClick={() => {
-          if (isDesktop) {
-            setCollapsed(!collapsed)
-          } else {
-            setSidebarOpen(true)
-          }
-        }} 
-      />
+        <Header 
+          title={header} 
+          isMenuOpen={isMenuOpen}
+          showCloseIcon={showCloseIcon}
+          onMenuClick={() => {
+            if (isDesktop) {
+              setCollapsed(!collapsed)
+            } else {
+              setSidebarOpen(prev => !prev)
+            }
+          }} 
+        />
 
       {/* ── BODY ─────────────────────────────────────────────── */}
       <div className="flex flex-1 overflow-hidden">
 
         {/* DESKTOP SIDEBAR */}
         <aside className={cn(
-          'hidden shrink-0 md:flex flex-col border-e border-white/10 h-[calc(100vh-var(--navbar-height))] sticky top-navbar z-[40]',
+          'hidden shrink-0 md:flex flex-col border-e border-[var(--divider-strong)] h-[calc(100vh-var(--navbar-height))] sticky top-navbar z-[40]',
           !isDesktop ? 'hidden' : '', // Hide on mobile
           collapsed ? 'w-[72px]' : 'w-64', // Width based on collapsed state
-          'transition-all duration-300 ease-in-out bg-[var(--sidebar-gradient)] shadow-xl'
+          'transition-all duration-300 ease-in-out bg-white shadow-xl'
         )}>
            <nav className="flex-1 overflow-hidden py-8 text-start no-scrollbar">
             <SidebarContent role={role} collapsed={collapsed} />
@@ -100,44 +118,47 @@ export function AppShell({
         </main>
       </div>
 
-      {/* MOBILE SIDEBAR — dark surface overlay per SPATIAL */}
-      <div className={cn(
-          "fixed inset-0 z-[51] transition-all duration-300 md:hidden",
-          sidebarOpen ? "visible" : "invisible pointer-events-none"
-      )}>
-          {/* Overlay */}
-          <div
-            className={cn(
-                "absolute inset-0 z-[50] bg-black/35 transition-opacity duration-300",
-                sidebarOpen ? "opacity-100" : "opacity-0"
-            )}
-            onClick={() => setSidebarOpen(false)}
-          />
-          
-          {/* Drawer */}
-          <aside
-            className={cn(
-                "fixed top-0 bottom-0 z-[52] w-72 bg-white shadow-modal transition-transform duration-300 ease-out flex flex-col",
-                isRTL 
-                    ? (sidebarOpen ? "translate-x-0" : "translate-x-full") 
-                    : (sidebarOpen ? "translate-x-0" : "-translate-x-full"),
-                isRTL ? "right-0" : "left-0"
-            )}
-          >
-             <div className="flex items-center justify-between p-5 border-b border-white/10 bg-gradient-to-r from-primary to-primary-dark">
-                <span className="font-bold text-white tracking-tight">{t('common.menu')}</span>
-                <button 
-                  className="lg:hidden p-2 -ms-2 text-white/70 hover:text-white hover:bg-white/10 rounded-md transition-colors"
-                  onClick={() => setSidebarOpen(false)}
-                >
-                  <X size={22} weight="bold" />
-                </button>
-             </div>
-            <nav className="flex-1 overflow-hidden px-4 py-8 text-start">
-              <SidebarContent role={role} />
-            </nav>
-          </aside>
-      </div>
+       {/* MOBILE SIDEBAR — dark surface overlay per SPATIAL */}
+       <div className={cn(
+           "fixed inset-0 transition-all duration-300 md:hidden",
+           sidebarOpen ? "visible" : "invisible pointer-events-none"
+       )}>
+           {/* Overlay */}
+           <div
+             className={cn(
+                 "absolute inset-0 z-[var(--z-overlay)] bg-transparent",
+                 sidebarOpen ? "opacity-100" : "opacity-0"
+             )}
+             onClick={() => setSidebarOpen(false)}
+           />
+           
+            {/* Drawer */}
+            <aside
+              className={cn(
+                  "fixed top-0 bottom-0 z-[var(--z-sidebar)] w-[min(280px,85vw)] bg-white shadow-modal transition-transform duration-300 ease-out flex flex-col",
+                  isRTL 
+                      ? (sidebarOpen ? "translate-x-0" : "translate-x-full") 
+                      : (sidebarOpen ? "translate-x-0" : "-translate-x-full"),
+                  isRTL ? "right-0" : "left-0"
+              )}
+            >
+                 <div className="flex items-center justify-between p-5 border-b border-[var(--divider-on-blue)] bg-gradient-to-r from-primary to-primary-dark">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-lg bg-white/10 flex items-center justify-center shadow-sm">
+                        <Image src="/brand/logo.svg" alt="TNA Logo" width={28} height={28} className="drop-shadow-sm" />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="font-bold text-white text-lg leading-none tracking-tight">TNA</span>
+                        <span className="text-xs text-white/70 mt-0.5 uppercase font-semibold tracking-wide">{role}</span>
+                      </div>
+                    </div>
+                    {/* Close button removed per P1 — hamburger is sole toggle */}
+                 </div>
+             <nav className="flex-1 overflow-hidden px-4 py-8 text-start">
+               <SidebarContent role={role} />
+             </nav>
+           </aside>
+       </div>
 
       {/* BOTTOM NAV (Mobile) */}
       {showBottomNav && <BottomNav role={role} />}

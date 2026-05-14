@@ -94,7 +94,8 @@
     "notifications_3": "الإشعارات",
     "mark_all_read_4": "تحديد الكل كمقروء",
     "no_notifications_5": "لا توجد إشعارات",
-    "you_are_all_caught_up_6": "أنت كل شيء جيد"
+    "you_are_all_caught_up_6": "أنت كل شيء جيد",
+    "signOut": "تسجيل الخروج"
   },
   "auth": {
     "login": {

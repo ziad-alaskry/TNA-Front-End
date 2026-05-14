@@ -94,7 +94,8 @@
     "notifications_3": "Notifications",
     "mark_all_read_4": "Mark all read",
     "no_notifications_5": "No notifications",
-    "you_are_all_caught_up_6": "You are all caught up"
+    "you_are_all_caught_up_6": "You are all caught up",
+    "signOut": "Sign Out"
   },
   "auth": {
     "login": {
