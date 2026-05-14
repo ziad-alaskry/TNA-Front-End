@@ -1,0 +1,16 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - generic [ref=e5]:
+      - heading "العنوان الوطني المؤقت" [level=1] [ref=e6]
+      - heading "Temporary National Address" [level=2] [ref=e7]
+    - generic [ref=e8]:
+      - button "تسجيل الدخول" [ref=e9] [cursor=pointer]:
+        - img [ref=e10]
+        - generic [ref=e13]: تسجيل الدخول
+      - button "تسجيل الدخول من خلال النفاذ الوطني الموحد" [ref=e14] [cursor=pointer]:
+        - generic [ref=e16]: تسجيل الدخول من خلال النفاذ الوطني الموحد
+        - img [ref=e18]
+      - button "إنشاء حساب مستخدم جديد" [ref=e23] [cursor=pointer]:
+        - img [ref=e24]
+        - generic [ref=e27]: إنشاء حساب مستخدم جديد
+  - generic "Notifications"

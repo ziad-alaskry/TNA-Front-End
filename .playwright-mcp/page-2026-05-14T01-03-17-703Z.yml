@@ -1,0 +1,120 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - button "القائمة" [ref=e6] [cursor=pointer]:
+            - img [ref=e7]
+          - navigation "Breadcrumb" [ref=e10]:
+            - link [ref=e11] [cursor=pointer]:
+              - /url: /en
+              - img [ref=e12]
+            - img [ref=e14]
+            - link "Overview" [ref=e16] [cursor=pointer]:
+              - /url: /en/visitor
+            - img [ref=e17]
+            - generic [ref=e19]: Home
+        - generic [ref=e20]:
+          - link "Go to home" [ref=e21] [cursor=pointer]:
+            - /url: /en/visitor/home
+            - img [ref=e22]
+          - generic [ref=e34] [cursor=pointer]:
+            - img [ref=e36]
+            - generic [ref=e38]:
+              - generic [ref=e39]: Balance
+              - generic [ref=e40]: 450.00 SAR
+          - generic [ref=e41]:
+            - button "en" [ref=e42] [cursor=pointer]
+            - button "ar" [ref=e43] [cursor=pointer]
+          - generic [ref=e45]:
+            - button [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - generic [ref=e50]: "2"
+          - button [ref=e51] [cursor=pointer]:
+            - img [ref=e53]
+    - generic [ref=e57]:
+      - complementary [ref=e58]:
+        - navigation [ref=e59]:
+          - navigation [ref=e61]:
+            - link "Overview" [ref=e62] [cursor=pointer]:
+              - /url: /en/visitor/home
+              - img [ref=e64]
+              - generic [ref=e66]: Overview
+            - link "Address Search" [ref=e67] [cursor=pointer]:
+              - /url: /en/visitor/search
+              - img [ref=e69]
+              - generic [ref=e71]: Address Search
+            - link "My TNA Codes" [ref=e72] [cursor=pointer]:
+              - /url: /en/visitor/tnas
+              - img [ref=e74]
+              - generic [ref=e76]: My TNA Codes
+            - link "My Shipments" [ref=e77] [cursor=pointer]:
+              - /url: /en/visitor/shipments
+              - img [ref=e79]
+              - generic [ref=e81]: My Shipments
+            - link "My Profile" [ref=e82] [cursor=pointer]:
+              - /url: /en/visitor/profile
+              - img [ref=e84]
+              - generic [ref=e86]: My Profile
+      - main [ref=e87]:
+        - generic [ref=e88]:
+          - navigation "Breadcrumb" [ref=e89]:
+            - link [ref=e90] [cursor=pointer]:
+              - /url: /en
+              - img [ref=e91]
+            - img [ref=e93]
+            - link "Overview" [ref=e95] [cursor=pointer]:
+              - /url: /en/visitor
+            - img [ref=e96]
+            - generic [ref=e98]: Home
+          - generic [ref=e100]:
+            - generic [ref=e101]:
+              - generic [ref=e103]:
+                - heading "Saudi National Address Proxy" [level=1] [ref=e104]
+                - paragraph [ref=e105]: Get your temporary national address today and receive shipments anywhere in the Kingdom with ease and security.
+                - button "Request TNA" [ref=e107] [cursor=pointer]:
+                  - text: Request TNA
+                  - img [ref=e108]
+              - generic [ref=e111]:
+                - heading "Secure & Reliable" [level=1] [ref=e112]
+                - paragraph [ref=e113]: Our system ensures your privacy and security throughout the shipping process.
+                - button "Find Address" [ref=e115] [cursor=pointer]:
+                  - text: Find Address
+                  - img [ref=e116]
+              - generic [ref=e119]:
+                - heading "Instant Verification" [level=1] [ref=e120]
+                - paragraph [ref=e121]: Quick administrative review and autonomous issuance for eligible users.
+                - button "Start Now" [ref=e123] [cursor=pointer]:
+                  - text: Start Now
+                  - img [ref=e124]
+              - generic [ref=e126]:
+                - button [ref=e127] [cursor=pointer]
+                - button [ref=e128] [cursor=pointer]
+                - button [ref=e129] [cursor=pointer]
+            - generic [ref=e130]:
+              - generic [ref=e131]:
+                - generic [ref=e132]:
+                  - img [ref=e134]
+                  - generic [ref=e136]:
+                    - paragraph [ref=e137]: Active TNAs
+                    - paragraph [ref=e138]: "0"
+                - img [ref=e139]
+              - generic [ref=e141]:
+                - generic [ref=e142]:
+                  - img [ref=e144]
+                  - generic [ref=e146]:
+                    - paragraph [ref=e147]: Shipments
+                    - paragraph [ref=e148]: "0"
+                - img [ref=e149]
+            - generic [ref=e152]:
+              - heading "My Active Addresses" [level=2] [ref=e153]
+              - button "Manage Addresses" [ref=e154] [cursor=pointer]:
+                - text: Manage Addresses
+                - img [ref=e155]
+            - generic [ref=e198]:
+              - heading "Recent Shipments" [level=2] [ref=e199]
+              - button "View All" [ref=e200] [cursor=pointer]:
+                - text: View All
+                - img [ref=e201]
+  - generic "Notifications"
+  - alert [ref=e243]

@@ -1,0 +1,82 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  e2e:
+    name: Playwright E2E
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: tna-project/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./tna-project
+        run: npm ci
+
+      - name: Install Playwright browsers
+        working-directory: ./tna-project
+        run: npx playwright install --with-deps
+
+      - name: Start dev server
+        working-directory: ./tna-project
+        run: npm run dev &
+        env:
+          NEXTAUTH_SECRET: test-secret
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
+
+      - name: Wait for server
+        working-directory: ./tna-project
+        run: npx wait-on http://localhost:3000 --timeout=120000
+
+      - name: Run Playwright tests
+        working-directory: ./tna-project
+        run: npx playwright test
+        env:
+          CI: true
+
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: tna-project/test-results/
+          retention-days: 30
+
+      - name: Upload traces
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: tna-project/test-results/traces/
+          retention-days: 7
+
+      - name: Upload screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-screenshots
+          path: tna-project/test-results/screenshots/
+          retention-days: 7
