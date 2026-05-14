@@ -35,7 +35,7 @@ interface SettlementAdjustment {
 
 export default function GovAdjustmentsPage() {
     const router = useRouter();
-    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  locale, isRTL , t } = useLocale();
+    const {  locale, isRTL , t } = useLocale();
     const { data: adjustments, isLoading } = useMock(mockGovAdjustments);
     const [selectedAdjustment, setSelectedAdjustment] = useState<SettlementAdjustment | null>(null);
     const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
@@ -111,7 +111,7 @@ export default function GovAdjustmentsPage() {
                         className="h-9 px-4 border-neutral-200"
                     >
                         {t('gov.review_104')}
-                        <ArrowRight size={16} className={isRTL ? "rotate-180" : ""} />
+                        <ArrowRight size={16} className={cn(isRTL && "rotate-180")} />
                     </Button>
                 </div>
             )
@@ -127,7 +127,7 @@ export default function GovAdjustmentsPage() {
     };
 
     return (
-        <AppShell role="Gov" header={t('gov.settlement_adjustment_approval_105')}>
+        <AppShell role="Gov">
             <DataTableLayout
                 title={t('gov.pending_adjustment_requests_106')}
                 columns={columns}

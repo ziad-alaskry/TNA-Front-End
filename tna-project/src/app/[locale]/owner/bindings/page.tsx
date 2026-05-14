@@ -50,7 +50,7 @@ const t = (key: string, params?: Record<string, string>): string => {
 
 export default function OwnerBindingsPage() {
     const router = useRouter();
-    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  locale, isRTL , t } = useLocale();
+    const {  locale, isRTL , t } = useLocale();
     const [filter, setFilter] = useState<'all' | 'PENDING' | 'ACTIVE' | 'COMPLETED' | 'TERMINATED'>('all');
     const { data: bindings, isLoading } = useMock(mockBindings);
 
@@ -76,6 +76,7 @@ export default function OwnerBindingsPage() {
             label: t('owner.period_49'),
             width: '20%',
             render: (row) => {
+                if (!row || !row.start_at || !row.end_at) return null;
                 const start = new Date(row.start_at);
                 const end = new Date(row.end_at);
                 const formattedStart = start.toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' });
@@ -164,7 +165,7 @@ export default function OwnerBindingsPage() {
     ];
 
     return (
-        <AppShell role="Owner" header={t('owner.linking_requests_53')}>
+        <AppShell role="Owner">
             <div className="mt-6 flex flex-wrap gap-3">
                 {[ 'all', 'PENDING', 'ACTIVE', 'COMPLETED', 'TERMINATED' ].map((status) => (
                     <Button

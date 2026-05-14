@@ -90,7 +90,7 @@ export default function VisitorWalletPage() {
   ];
 
   return (
-    <AppShell role="Visitor" header={t('visitor.wallet') || 'Wallet'}>
+    <AppShell role="Visitor">
       <div className="space-y-8">
         {/* Balance Card */}
         <div className="relative overflow-hidden p-8 rounded-md bg-primary-dark text-white shadow-card flex flex-col md:flex-row md:items-center justify-between gap-6">

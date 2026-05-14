@@ -19,7 +19,7 @@ import { cn } from '@/lib/utils/cn'
 import { useTranslation } from 'react-i18next';
 
 export default function GovAuditPage() {
-    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  isRTL , t } = useLocale();
+    const {  isRTL , t } = useLocale();
     const { data: tnas, isLoading } = useMock(mockTNAs);
 
     const columns: DataTableColumn<any>[] = [
@@ -60,7 +60,7 @@ export default function GovAuditPage() {
     ];
 
     return (
-        <AppShell role="Gov" header={t('gov.system_audit_logs_93')}>
+        <AppShell role="Gov">
             <div className="mb-8 p-6 bg-neutral-900 text-white rounded-3xl shadow-2xl relative overflow-hidden">
                 <div className="relative z-10 space-y-2">
                     <div className="flex items-center gap-2 text-primary-light">

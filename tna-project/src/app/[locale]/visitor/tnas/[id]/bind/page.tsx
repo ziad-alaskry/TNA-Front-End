@@ -11,7 +11,7 @@ export default function BindTNAPage() {
 
   return (
     <RoleGuard requiredRole="Visitor">
-      <AppShell role="Visitor" header={t('binding.title') || 'Link TNA to Address'}>
+      <AppShell role="Visitor">
         <TNABindingWizard />
       </AppShell>
     </RoleGuard>

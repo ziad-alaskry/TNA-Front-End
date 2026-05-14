@@ -40,12 +40,16 @@ export default function CarrierHomeModule() {
       {/* PERFORMANCE OVERVIEW */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: 'Pending Pickups', value: pendingPickups.length, icon: Clock, color: 'text-warning', bg: 'bg-warning/10' },
-          { label: 'In Transit', value: inTransit.length, icon: Truck, color: 'text-primary', bg: 'bg-primary/10' },
-          { label: 'Delivered Today', value: deliveredToday.length, icon: CheckCircle, color: 'text-success', bg: 'bg-success/10' },
-          { label: 'Active Drivers', value: '18', icon: Users, color: 'text-secondary', bg: 'bg-secondary/10' },
+          { label: 'Pending Pickups', value: pendingPickups.length, icon: Clock, color: 'text-warning', bg: 'bg-warning/10', path: 'shipments' },
+          { label: 'In Transit', value: inTransit.length, icon: Truck, color: 'text-primary', bg: 'bg-primary/10', path: 'shipments' },
+          { label: 'Delivered Today', value: deliveredToday.length, icon: CheckCircle, color: 'text-success', bg: 'bg-success/10', path: 'shipments' },
+          { label: 'Active Drivers', value: '18', icon: Users, color: 'text-secondary', bg: 'bg-secondary/10', path: 'staff' },
         ].map((stat, i) => (
-          <div key={i} className="bg-white p-6 rounded-2xl border border-neutral-100 shadow-sm flex items-center gap-4 group hover:border-primary/20 transition-all">
+          <div 
+            key={i} 
+            onClick={() => router.push(`/${locale}/carrier/${stat.path}`)}
+            className="bg-white p-6 rounded-2xl border border-neutral-100 shadow-sm flex items-center gap-4 group hover:border-primary/20 transition-all cursor-pointer"
+          >
             <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center transition-all", stat.bg, stat.color)}>
               <stat.icon size={28} weight="bold" />
             </div>
@@ -91,7 +95,7 @@ export default function CarrierHomeModule() {
                 className="text-sm font-bold text-primary flex items-center gap-1 hover:underline"
               >
                 Manage All
-                <CaretRight size={14} className={isRTL ? "rotate-180" : ""} />
+                <CaretRight size={14} className={cn(isRTL && "rotate-180")} />
               </button>
             </div>
 
@@ -200,12 +204,13 @@ export default function CarrierHomeModule() {
           {/* QUICK LINKS */}
           <section className="space-y-3">
             {[
-              { label: 'Manage Routes', icon: MapPin },
-              { label: 'Staff Management', icon: Users },
-              { label: 'Vehicle Maintenance', icon: Truck },
+              { label: 'Manage Routes', icon: MapPin, path: 'fleet' },
+              { label: 'Staff Management', icon: Users, path: 'staff' },
+              { label: 'Vehicle Maintenance', icon: Truck, path: 'fleet' },
             ].map((link, i) => (
               <button 
                 key={i}
+                onClick={() => router.push(`/${locale}/carrier/${link.path}`)}
                 className="w-full p-4 bg-surface-200 border border-neutral-200 rounded-2xl flex items-center justify-between hover:border-primary/30 hover:bg-white transition-all group"
               >
                 <div className="flex items-center gap-3">

@@ -108,7 +108,7 @@ export default function RequestTnaPage() {
             <div className="p-4 flex justify-between items-center">
                 <span className="text-sm text-neutral-500 font-medium">المدة المختارة</span>
                 <span className="text-sm font-bold text-neutral-900">
-                    {watch('selectedDuration') ? durations.find(d => d.value === watch('selectedDuration'))?.label : 'لم يتم الاختيار'}
+                    {watch('selectedDuration') ? durations.find((d: any) => d.value === watch('selectedDuration'))?.label : 'لم يتم الاختيار'}
                 </span>
             </div>
             <div className="p-4 bg-neutral-50 flex justify-between items-center">

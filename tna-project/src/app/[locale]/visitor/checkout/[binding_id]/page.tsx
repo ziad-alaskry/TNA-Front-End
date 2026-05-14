@@ -192,7 +192,7 @@ export default function CheckoutPage() {
   if (loading) {
     return (
       <RoleGuard requiredRole="Visitor">
-        <AppShell role="Visitor" header={t('checkout.title') || 'Checkout'}>
+        <AppShell role="Visitor">
           <div className="flex items-center justify-center min-h-[400px]">
             <p className="text-neutral-500">{t('common.loading') || 'Loading...'}</p>
           </div>
@@ -204,7 +204,7 @@ export default function CheckoutPage() {
   if (error || !binding || !rentContract) {
     return (
       <RoleGuard requiredRole="Visitor">
-        <AppShell role="Visitor" header={t('checkout.title') || 'Checkout'}>
+        <AppShell role="Visitor">
           <div className="max-w-md mx-auto py-12">
             <ErrorAlert message={error || 'Checkout data not available'} />
           </div>

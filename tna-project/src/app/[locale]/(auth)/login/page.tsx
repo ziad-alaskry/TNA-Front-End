@@ -70,13 +70,8 @@ export default function LoginPage() {
 
   return (
     <div
-      className="font-display min-h-screen flex items-center justify-center p-4 bg-surface-100"
-      style={{
-        backgroundImage:
-          "var(--geometric-pattern, linear-gradient(45deg, #f8fafc 25%, transparent 25%, transparent 50%, #f8fafc 50%, #f8fafc 75%, transparent 75%, transparent))",
-        backgroundSize: "20px 20px",
-      }}
-      dir={isRTL ? "rtl" : "ltr"}
+      className="font-display min-h-screen flex items-center justify-center p-4 bg-surface-100 auth-bg-pattern"
+      dir={t('common.dir') as any}
     >
       <div className="w-full max-w-sm sm:max-w-[520px] lg:max-w-[480px] bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden relative z-10 transition-all duration-300 transform scale-100 px-4 sm:px-0">
         {/* Top Section: Header */}
@@ -86,7 +81,7 @@ export default function LoginPage() {
           </div>
           <div className="mb-4 sm:mb-6 flex justify-center">
             <div className="size-14 sm:size-16 bg-primary/10 rounded-full flex items-center justify-center text-primary">
-              <MapPin size={28} className="sm:size-32" weight="fill" />
+              <MapPin size={28} className="sm:size-10" weight="fill" />
             </div>
           </div>
           <h1
@@ -134,7 +129,7 @@ export default function LoginPage() {
                   >
                     <r.icon
                       size={18}
-                      className="sm:size-20"
+                      className="sm:size-6"
                       weight={role === r.id ? "fill" : "regular"}
                     />
                   </span>
@@ -151,7 +146,7 @@ export default function LoginPage() {
             </label>
             <div className="relative group">
               <div className="absolute inset-y-0 right-0 pr-3 sm:pr-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
-                <UserIcon size={18} className="sm:size-20" />
+                <UserIcon size={18} className="sm:size-6" />
               </div>
               <input
                 className="w-full h-12 sm:h-[56px] pr-10 sm:pr-12 pl-4 rounded-lg border border-slate-200 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-slate-50/50 text-slate-900 placeholder:text-slate-400 outline-none"
@@ -168,7 +163,7 @@ export default function LoginPage() {
             </label>
             <div className="relative group">
               <div className="absolute inset-y-0 right-0 pr-3 sm:pr-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
-                <Lock size={18} className="sm:size-20" />
+                <Lock size={18} className="sm:size-6" />
               </div>
               <input
                 className="w-full h-12 sm:h-[56px] pr-10 sm:pr-12 pl-10 sm:pl-12 rounded-lg border border-slate-200 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-slate-50/50 text-slate-900 placeholder:text-slate-400 outline-none"
@@ -181,9 +176,9 @@ export default function LoginPage() {
                 className="absolute inset-y-0 left-0 pl-3 sm:pl-4 flex items-center text-slate-400 hover:text-slate-600 transition-colors"
               >
                 {showPassword ? (
-                  <EyeSlash size={18} className="sm:size-20" />
+                  <EyeSlash size={18} className="sm:size-6" />
                 ) : (
-                  <Eye size={18} className="sm:size-20" />
+                  <Eye size={18} className="sm:size-6" />
                 )}
               </button>
             </div>
@@ -207,7 +202,7 @@ export default function LoginPage() {
                 background: "linear-gradient(to left, #0CBBDB, #1A73C1)",
               }}
             >
-              <SignIn size={20} className="sm:size-24" weight="bold" />
+              <SignIn size={20} className="sm:size-7" weight="bold" />
               <span>
                 {t("auth.login.login_button", { role: currentRoleLabel })}
               </span>
@@ -225,7 +220,7 @@ export default function LoginPage() {
             {/* Nafath SSO */}
             <button className="w-full h-12 sm:h-[56px] rounded-full border-2 border-primary bg-white text-primary font-bold text-sm sm:text-base flex items-center justify-center gap-2 sm:gap-3 hover:bg-primary/5 transition-colors">
               <div className="size-5 sm:size-6 bg-[#00a651] rounded-md flex items-center justify-center text-white text-[9px] sm:text-[10px]">
-                <ShieldCheck size={14} className="sm:size-16" weight="fill" />
+                <ShieldCheck size={14} className="sm:size-4" weight="fill" />
               </div>
               <span>{t("auth.login.sso_button")}</span>
             </button>

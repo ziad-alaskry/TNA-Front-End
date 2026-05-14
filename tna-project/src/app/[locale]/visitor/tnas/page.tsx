@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 export default function VisitorTnasPage() {
   const router = useRouter();
   const { locale } = useParams();
-  /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const { t, isRTL } = useLocale();
+  const { t, isRTL } = useLocale();
 
   const { data: tnas, isLoading } = useMock(mockTNAs);
   const [statusFilter, setStatusFilter] = useState<string>('ALL');
@@ -86,7 +86,7 @@ export default function VisitorTnasPage() {
   ]
 
   return (
-    <AppShell role="Visitor" header={t('visitor.my_tnas_9')}>
+    <AppShell role="Visitor">
       <div className="space-y-6">
         {/* Filter Controls */}
         <div className="flex items-center gap-3">

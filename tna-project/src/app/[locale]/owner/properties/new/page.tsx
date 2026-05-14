@@ -58,7 +58,7 @@ export default function AddPropertyPage() {
         onSubmit={methods.handleSubmit(onSubmit)}
       >
         {currentStep === 0 && (
-          <div className="space-y-4" dir={isRTL ? 'rtl' : 'ltr'}>
+          <div className="space-y-4" dir={t('common.dir') as any}>
             <InputField label={t('owner.property.building_number')} {...methods.register('building_number')} />
             <InputField label={t('owner.property.street')} {...methods.register('street')} />
             <InputField label={t('owner.property.district')} {...methods.register('district')} />
@@ -69,12 +69,12 @@ export default function AddPropertyPage() {
           </div>
         )}
         {currentStep === 1 && (
-          <div className="space-y-4" dir={isRTL ? 'rtl' : 'ltr'}>
+          <div className="space-y-4" dir={t('common.dir') as any}>
             <InputField label={t('owner.property.title_deed_reference')} {...methods.register('title_deed_reference')} />
           </div>
         )}
         {currentStep === 2 && (
-          <div className="space-y-4" dir={isRTL ? 'rtl' : 'ltr'}>
+          <div className="space-y-4" dir={t('common.dir') as any}>
             <h3 className="text-lg font-bold text-neutral-900">{t('owner.property.review')}</h3>
             <div className="mt-4 space-y-2">
               <div className="flex items-center justify-between">

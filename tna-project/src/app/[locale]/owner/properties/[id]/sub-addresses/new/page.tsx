@@ -93,7 +93,7 @@ export default function AddSubAddressPage() {
 
   if (isLoading) {
     return (
-      <AppShell role="Owner" header={t('owner.add_subaddress_41')}>
+      <AppShell role="Owner">
         <div className="p-12 text-center">{t('loading')}</div>
       </AppShell>
     )

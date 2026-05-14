@@ -26,7 +26,7 @@ import { useTranslation } from 'react-i18next';
 export default function PropertyDetailPage() {
     const { id } = useParams();
     const router = useRouter();
-    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  locale, isRTL , t } = useLocale();
+    const {  locale, isRTL , t } = useLocale();
 
     const { data: properties, isLoading: propLoading } = useMock(mockProperties);
     const { data: subAddresses, isLoading: unitsLoading } = useMock(mockSubAddresses);
@@ -144,7 +144,7 @@ export default function PropertyDetailPage() {
     );
 
     return (
-        <AppShell role="Owner" header={t('owner.property_details_32')}>
+        <AppShell role="Owner">
             <DetailViewLayout
                 title={property.full_address}
                 mainContent={sections}

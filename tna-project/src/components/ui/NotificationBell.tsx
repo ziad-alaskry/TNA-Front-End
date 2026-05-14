@@ -6,17 +6,23 @@ import { cn } from '@/lib/utils/cn';
 interface NotificationBellProps {
   count?: number;
   className?: string;
+  isOpen?: boolean;
   onClick?: () => void;
 }
 
-export function NotificationBell({ count = 0, className, onClick }: NotificationBellProps) {
+export function NotificationBell({ count = 0, className, isOpen, onClick }: NotificationBellProps) {
   const hasNotifications = count > 0;
 
   return (
-    <div className={cn('relative', className)}>
+    <div className={cn('notif-wrapper', className)}>
       <button 
         onClick={onClick}
-        className="p-2 rounded-full hover:bg-surface-200 transition-colors"
+        className={cn(
+          'notif-bell-btn',
+          isOpen && 'active'
+        )}
+        aria-expanded={isOpen}
+        aria-haspopup="true"
       >
         <Bell 
           size={20} 
@@ -24,7 +30,7 @@ export function NotificationBell({ count = 0, className, onClick }: Notification
         />
       </button>
       {hasNotifications && (
-        <span className="absolute -top-0.5 -end-0.5 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-error px-1 text-[10px] font-bold text-white border-[2px] border-surface">
+        <span className="notif-badge">
           {count > 99 ? '99+' : count}
         </span>
       )}

@@ -23,7 +23,7 @@ import { useTranslation } from 'react-i18next';
 export default function OwnerPropertiesPage() {
     const router = useRouter();
     const { locale } = useParams();
-    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const { t, isRTL } = useLocale();
+    const { t, isRTL } = useLocale();
 
     const { data: properties, isLoading } = useMock(mockProperties);
 
@@ -89,7 +89,7 @@ export default function OwnerPropertiesPage() {
                         className="h-9 px-4 gap-2 border-neutral-200"
                     >
                         {t('owner.details_16')}
-                        <ArrowRight size={16} className={isRTL ? "rotate-180" : ""} />
+                        <ArrowRight size={16} className={cn(isRTL && "rotate-180")} />
                     </Button>
                 </div>
             )
@@ -97,7 +97,7 @@ export default function OwnerPropertiesPage() {
     ];
 
     return (
-        <AppShell role="Owner" header={t('owner.property_management_17')}>
+        <AppShell role="Owner">
             <DataTableLayout
                 title={t('owner.property_portfolio_18')}
                 columns={columns}

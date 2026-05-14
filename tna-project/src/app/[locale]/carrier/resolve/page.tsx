@@ -24,7 +24,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function CarrierResolvePage() {
   const router = useRouter()
-  /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const { locale, isRTL, t } = useLocale()
+  const { locale, isRTL, t } = useLocale()
   const toast = useToast()
 
   const [tnaCode, setTnaCode] = useState('')
@@ -59,7 +59,7 @@ export default function CarrierResolvePage() {
 
   return (
     <RoleGuard requiredRole="Carrier">
-      <AppShell role="Carrier" header={t('carrier.tna_address_resolver_63')}>
+      <AppShell role="Carrier">
         <div className="max-w-2xl mx-auto space-y-8 pb-12">
 
           {/* Intro Banner */}
@@ -224,7 +224,7 @@ export default function CarrierResolvePage() {
                           }
                         }}
                       >
-                        <NavigationArrow size={20} weight="bold" className={isRTL ? "rotate-180" : ""} />
+                        <NavigationArrow size={20} weight="bold" className={cn(isRTL && "rotate-180")} />
                         {t(result.binding_status === 'UNLINKED' ? 'carrier.bind_address' : 'carrier.view_details')}
                       </Button>
                     </div>

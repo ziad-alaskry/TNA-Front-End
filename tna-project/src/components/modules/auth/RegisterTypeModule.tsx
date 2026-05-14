@@ -36,7 +36,7 @@ export default function RegisterTypeModule() {
     };
 
     return (
-        <div className="min-h-screen bg-surface-100 flex flex-col" dir={isRTL ? 'rtl' : 'ltr'}>
+        <div className="min-h-screen bg-surface-100 flex flex-col" dir={t('common.dir') as any}>
             {/* Header */}
             <header className="sticky top-0 z-50 border-b border-neutral-100 h-16 flex items-center px-4 shadow-sm backdrop-blur-md bg-white/80">
                 <LanguageSwitcher />

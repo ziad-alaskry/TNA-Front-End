@@ -27,7 +27,7 @@ import { useTranslation } from 'react-i18next';
 export default function VisitorTnaDetailPage() {
     const { id } = useParams();
     const router = useRouter();
-    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const { locale, t, isRTL } = useLocale();
+    const { locale, t, isRTL } = useLocale();
 
     const { data: tnas, isLoading } = useMock(mockTNAs);
     const tna = tnas?.find(t => t.tna_id === id);
@@ -120,7 +120,7 @@ export default function VisitorTnaDetailPage() {
     );
 
     return (
-        <AppShell role="Visitor" header={t('visitor.tna_details_26')}>
+        <AppShell role="Visitor">
             <DetailViewLayout
                 title={`TNA: ${tna.tna_code}`}
                 mainContent={sections}

@@ -131,7 +131,7 @@ export default function KYCUploadPage() {
   if (success) {
     return (
       <RoleGuard requiredRole="Visitor">
-        <AppShell role="Visitor" header={t('kyc.title') || 'KYC Verification'}>
+        <AppShell role="Visitor">
           <div className="max-w-md mx-auto py-12 text-center space-y-6">
             <div className="mx-auto w-24 h-24 rounded-full bg-success/10 flex items-center justify-center text-success animate-bounce">
               <CheckCircle size={64} weight="fill" />
@@ -165,7 +165,7 @@ export default function KYCUploadPage() {
 
   return (
     <RoleGuard requiredRole="Visitor">
-      <AppShell role="Visitor" header={t('kyc.title') || 'Identity Verification'}>
+      <AppShell role="Visitor">
         <div className="max-w-3xl mx-auto space-y-8 py-4">
           {/* Status Banner */}
           <section>

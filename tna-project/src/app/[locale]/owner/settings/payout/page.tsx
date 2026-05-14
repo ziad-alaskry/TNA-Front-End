@@ -20,7 +20,7 @@ const payoutSchema = z.object({
 type PayoutInputs = z.infer<typeof payoutSchema>
 
 export default function PayoutSettingsPage() {
-  /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  isRTL , t } = useLocale()
+  const {  isRTL , t } = useLocale()
   const [isLoading, setIsLoading] = useState(false)
   const [success, setSuccess] = useState(false)
 
@@ -50,7 +50,7 @@ export default function PayoutSettingsPage() {
   }
 
   return (
-    <AppShell role="Owner" header={t('owner.payout_settings_1')}>
+    <AppShell role="Owner">
       <div className="max-w-2xl mx-auto">
         <div className="p-8 bg-white rounded-3xl border border-neutral-200 shadow-sm space-y-6">
           <div>

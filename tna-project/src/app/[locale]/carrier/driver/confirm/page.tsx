@@ -25,7 +25,7 @@ function DeliveryConfirmationContent() {
   const router = useRouter()
   const params = useParams()
   const searchParams = useSearchParams()
-  /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const { locale, isRTL, t } = useLocale()
+  const { locale, isRTL, t } = useLocale()
   const toast = useToast()
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -57,7 +57,7 @@ function DeliveryConfirmationContent() {
 
   if (isLoading) {
     return (
-      <AppShell role="Carrier" header={t('carrier.confirm_delivery_80')}>
+        <AppShell role="Carrier">
         <div className="animate-pulse space-y-6">
           <div className="h-64 bg-neutral-200 rounded-2xl" />
         </div>
@@ -67,7 +67,7 @@ function DeliveryConfirmationContent() {
 
   if (!shipment) {
     return (
-      <AppShell role="Carrier" header={t('carrier.not_found_81')}>
+        <AppShell role="Carrier">
         <div className="text-center py-12 space-y-4">
           <Info size={64} className="text-warning mx-auto" weight="fill" />
           <h2 className="text-xl font-bold text-neutral-900">
@@ -116,7 +116,7 @@ function DeliveryConfirmationContent() {
 
   if (isLoading) {
     return (
-      <AppShell role="Carrier" header={t('carrier.confirm_delivery_80')}>
+        <AppShell role="Carrier">
         <div className="animate-pulse space-y-6">
           <div className="h-64 bg-neutral-200 rounded-2xl" />
         </div>
@@ -126,7 +126,7 @@ function DeliveryConfirmationContent() {
 
   if (!shipment) {
     return (
-      <AppShell role="Carrier" header={t('carrier.not_found_81')}>
+        <AppShell role="Carrier">
         <div className="text-center py-12 space-y-4">
           <Info size={64} className="text-warning mx-auto" weight="fill" />
           <h2 className="text-xl font-bold text-neutral-900">
@@ -143,7 +143,7 @@ function DeliveryConfirmationContent() {
 
   return (
     <RoleGuard requiredRole="Carrier">
-      <AppShell role="Carrier" header={t('carrier.confirm_delivery_80')} showBottomNav={false}>
+      <AppShell role="Carrier" showBottomNav={false}>
         <div className="max-w-2xl mx-auto space-y-6 pb-8">
         
         {/* Shipment Info */}

@@ -26,7 +26,7 @@ import { useTranslation } from 'react-i18next';
 export default function GovAddressVerificationDetailPage() {
     const { id } = useParams();
     const router = useRouter();
-    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  locale, isRTL , t } = useLocale();
+    const {  locale, isRTL , t } = useLocale();
 
     const details = mockSubAddressDetails[id as keyof typeof mockSubAddressDetails];
     const isLoading = false;
@@ -109,7 +109,7 @@ export default function GovAddressVerificationDetailPage() {
                       {decision === 'APPROVED' ? <CheckCircle size={40} weight="fill" /> : <XCircle size={40} weight="fill" />}
                   </div>
                   <div>
-                    <h3 className="font-black text-xl uppercase tracking-tight">{isRTL ? t(decision === 'APPROVED' ? 'gov.address_verified' : 'gov.address_rejected') : t('gov.request_decision', { decision })}</h3>
+                    <h3 className="font-black text-xl uppercase tracking-tight">{t(decision === 'APPROVED' ? 'gov.address_verified' : 'gov.address_rejected')}</h3>
                     <p className="text-xs font-medium opacity-70">{t('gov.the_subaddress_verification_status_has_b_152')}</p>
                   </div>
                   <Button variant="outline" className="w-full border-neutral-200 text-neutral-900" onClick={() => router.push(`/${locale}/gov/address-queue`)}>
@@ -131,7 +131,7 @@ export default function GovAddressVerificationDetailPage() {
     );
 
     return (
-        <AppShell role="Gov" header={t('gov.subaddress_verification_review_156')}>
+        <AppShell role="Gov">
             <DetailViewLayout
                 title={`${t('gov.subaddress_157')} ${details.sub_address.suffix_code}`}
                 mainContent={sections}
