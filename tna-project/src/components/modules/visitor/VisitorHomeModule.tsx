@@ -162,7 +162,7 @@ export default function VisitorHomeModule() {
              className="text-sm font-bold text-primary flex items-center gap-1 hover:underline"
            >
              Manage Addresses
-             <CaretRight size={14} className={isRTL ? "rotate-180" : ""} />
+             <CaretRight size={14} className={cn(isRTL && "rotate-180")} />
            </button>
          </div>
          
@@ -195,7 +195,7 @@ export default function VisitorHomeModule() {
                  </div>
                  <div className="pt-2 flex items-center gap-2 text-xs font-bold text-primary">
                    View Details
-                   <ArrowRight size={14} className={isRTL ? "rotate-180" : ""} />
+                   <ArrowRight size={14} className={cn(isRTL && "rotate-180")} />
                  </div>
                </div>
              ))}
@@ -212,7 +212,7 @@ export default function VisitorHomeModule() {
             className="text-sm font-bold text-primary flex items-center gap-1 hover:underline"
           >
             View All
-            <CaretRight size={14} className={isRTL ? "rotate-180" : ""} />
+            <CaretRight size={14} className={cn(isRTL && "rotate-180")} />
           </button>
         </div>
 

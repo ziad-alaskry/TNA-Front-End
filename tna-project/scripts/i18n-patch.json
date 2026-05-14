@@ -27,6 +27,14 @@
       "mr2_5": "rotate-180 ml-2",
       "mr2_6": "rotate-180 ml-2",
       "mr2_7": "rotate-180 ml-2"
+    },
+    "notifications": {
+      "title": "الإشعارات",
+      "markAllRead": "تحديد الكل كمقروء",
+      "empty": {
+        "title": "لا توجد إشعارات",
+        "subtitle": "أنت على اطلاع بكل شيء!"
+      }
     }
   },
   "en": {
@@ -57,6 +65,14 @@
       "mr2_5": "mr-2",
       "mr2_6": "mr-2",
       "mr2_7": "mr-2"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "markAllRead": "Mark all read",
+      "empty": {
+        "title": "No notifications",
+        "subtitle": "You're all caught up!"
+      }
     }
   }
 }

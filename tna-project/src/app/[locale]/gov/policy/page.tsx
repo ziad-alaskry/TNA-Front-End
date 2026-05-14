@@ -21,7 +21,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function GovPolicyPage() {
     const router = useRouter();
-    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  isRTL , t } = useLocale();
+    const {  isRTL , t } = useLocale();
     const [isSaving, setIsSaving] = useState(false);
     const [saved, setSaved] = useState(false);
 
@@ -60,7 +60,7 @@ export default function GovPolicyPage() {
     ];
 
 return (
-        <AppShell role="Gov" header={t('gov.global_policy_control_81')}>
+        <AppShell role="Gov">
             <div className="max-w-4xl space-y-8 pb-12">
                 <div className="flex items-center justify-between">
                     <div className="space-y-1">

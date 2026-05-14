@@ -1,18 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Bell, Check } from 'lucide-react';
-import { X } from '@phosphor-icons/react';
 import { useLocale } from '@/i18n/LocaleProvider';
 import { useAuthStore } from '@/lib/store/useAuthStore';
 import { useUIStore } from '@/lib/store/useUIStore';
 import { getNotificationsForRole } from '@/lib/mock/notifications.mock';
 import { cn } from '@/lib/utils/cn';
 
-export function NotificationPanel() {
+interface NotificationPanelProps {
+  isOpen: boolean;
+  anchorRef: React.RefObject<HTMLElement>;
+  onClose: () => void;
+}
+
+export function NotificationPanel({ isOpen, anchorRef, onClose }: NotificationPanelProps) {
   const { t } = useLocale();
   const { user } = useAuthStore();
-  const { isNotificationPanelOpen, setNotificationPanelOpen, setUnreadNotificationCount } = useUIStore();
+  const { setUnreadNotificationCount, setNotificationPanelOpen } = useUIStore();
 
   const role = user?.user_role?.toLowerCase() === 'visitor' ? 'Visitor' :
                user?.user_role?.toLowerCase() === 'owner' ? 'Owner' :
@@ -33,112 +39,156 @@ export function NotificationPanel() {
       window.location.href = link;
     }
     setNotificationPanelOpen(false);
+    onClose();
   };
 
-  if (!isNotificationPanelOpen) return null;
+  const [coords, setCoords] = useState({ top: 0, left: 0 });
 
-  return (
-    <div className="fixed inset-0 z-50 flex justify-end">
-      {/* Overlay */}
-      <div 
-        className="absolute inset-0 bg-black/20 backdrop-blur-sm"
-        onClick={() => setNotificationPanelOpen(false)}
+  useEffect(() => {
+    if (!isOpen || !anchorRef.current) return;
+
+    const computePosition = () => {
+      const anchor = anchorRef.current;
+      if (!anchor) return;
+
+      const rect = anchor.getBoundingClientRect();
+      const gap = 8;
+
+      // Panel width: match CSS (360px on desktop, responsive on mobile)
+      const isMobile = window.innerWidth <= 600;
+      const panelWidth = isMobile ? Math.min(360, window.innerWidth - 16) : 360;
+
+      let top = rect.bottom + gap;
+      let left: number;
+
+      const isRTL = document.documentElement.dir === 'rtl';
+      if (isRTL) {
+        // RTL: bell is on left side; align left edges, panel extends right
+        left = rect.left;
+      } else {
+        // LTR: bell is on right side; align right edges, panel extends left
+        left = rect.right - panelWidth;
+      }
+
+      // Clamp to viewport with edge padding
+      const EDGE_PAD = 8;
+      const winWidth = window.innerWidth;
+      if (left < EDGE_PAD) left = EDGE_PAD;
+      if (left > winWidth - panelWidth - EDGE_PAD) left = winWidth - panelWidth - EDGE_PAD;
+
+      setCoords({ top, left });
+    };
+
+    computePosition();
+
+    const handleResize = () => computePosition();
+    const handleScroll = () => computePosition();
+
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('scroll', handleScroll, true);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll, true);
+    };
+  }, [isOpen, anchorRef]);
+
+  if (!isOpen) return null;
+
+  return createPortal(
+    <>
+      {/* Outside-click overlay */}
+      <div
+        className="notif-click-outside"
+        onClick={onClose}
       />
 
       {/* Panel */}
-      <div className="relative w-full max-w-sm bg-white dark:bg-slate-800 shadow-2xl border border-neutral-200 dark:border-slate-700 h-full md:h-auto md:max-h-[80vh] md:my-8 md:me-4 md:rounded-xl flex flex-col end-0">
+      <div
+        className="notif-panel"
+        style={{
+          position: 'fixed',
+          top: coords.top,
+          left: coords.left,
+          right: 'auto',
+        }}
+      >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-slate-700">
+        <div className="notif-panel-header">
           <div className="flex items-center gap-2">
             <Bell size={20} className="text-primary" />
-            <h2 className="text-lg font-bold text-neutral-900 dark:text-white">
+            <h2 className="notif-panel-title">
               {t('notifications.title')}
             </h2>
             {localCount > 0 && (
-              <span className="px-2 py-0.5 text-xs font-bold bg-error text-white rounded-full">
+              <span className="notif-badge">
                 {localCount}
               </span>
             )}
           </div>
-          <div className="flex items-center gap-2">
-            {localCount > 0 && (
-              <button
-                onClick={handleMarkAllRead}
-                className="text-xs font-medium text-primary hover:text-primary/80 px-2 py-1 rounded hover:bg-primary/10 transition-colors"
-              >
-                {t('notifications.markAllRead')}
-              </button>
-            )}
+          {localCount > 0 && (
             <button
-              onClick={() => setNotificationPanelOpen(false)}
-              className="p-1 rounded-full hover:bg-neutral-100 dark:hover:bg-slate-700 transition-colors"
+              onClick={handleMarkAllRead}
+              className="notif-mark-all-btn"
             >
-              <X size={20} className="text-neutral-500" />
+              {t('notifications.markAllRead')}
             </button>
-          </div>
+          )}
         </div>
 
         {/* Notifications List */}
-        <div className="flex-1 overflow-y-auto p-2">
+        <div className="notif-panel-body">
           {notifications.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full text-center p-8">
-              <Bell size={48} className="text-neutral-300 dark:text-slate-600 mb-4" />
-              <p className="text-neutral-500 dark:text-slate-400 font-medium">
+            <div className="notif-empty-state">
+              <Bell size={48} className="notif-empty-icon" />
+              <p className="notif-empty-title">
                 {t('notifications.empty.title')}
               </p>
-              <p className="text-sm text-neutral-400 dark:text-slate-500 mt-1">
+              <p className="notif-empty-subtitle">
                 {t('notifications.empty.subtitle')}
               </p>
             </div>
           ) : (
-            <div className="space-y-1">
+            <div className="space-y-0">
               {notifications.map(notification => (
                 <div
                   key={notification.id}
                   onClick={() => handleNotificationClick(notification.link)}
                   className={cn(
-                    "p-3 rounded-lg cursor-pointer transition-colors border-s-4",
-                    notification.read
-                      ? "bg-transparent border-transparent hover:bg-neutral-50 dark:hover:bg-slate-700/50"
-                      : "bg-primary/5 border-primary",
-                    notification.type === 'alert' && !notification.read && "border-error",
-                    notification.type === 'success' && !notification.read && "border-success"
+                    "notif-item",
+                    notification.read ? "notif-item-read" : "notif-item-unread"
                   )}
                 >
-                  <div className="flex items-start gap-3">
-                    <div className={cn(
-                      "mt-0.5 w-2 h-2 rounded-full flex-shrink-0",
-                      notification.type === 'success' ? "bg-success" :
-                      notification.type === 'alert' ? "bg-error" : "bg-info"
-                    )} />
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-2">
-                        <h4 className={cn(
-                          "text-sm font-semibold truncate",
-                          notification.read
-                            ? "text-neutral-600 dark:text-slate-400"
-                            : "text-neutral-900 dark:text-white"
-                        )}>
-                          {notification.title}
-                        </h4>
-                        {!notification.read && (
-                          <Check size={14} className="text-primary flex-shrink-0" />
-                        )}
-                      </div>
-                      <p className="text-sm text-neutral-500 dark:text-slate-400 mt-0.5 line-clamp-2">
-                        {notification.message}
-                      </p>
-                      <span className="text-xs text-neutral-400 dark:text-slate-500 mt-1 block">
-                        {notification.timestamp}
-                      </span>
+                  <div className="notif-item-content">
+                    <div className="flex items-center justify-between gap-2">
+                      <h4 className="notif-item-title">
+                        {notification.title}
+                      </h4>
+                      {!notification.read && (
+                        <Check size={14} className="notif-item-check" />
+                      )}
                     </div>
+                    <p className="notif-item-desc">
+                      {notification.message}
+                    </p>
+                    <span className="notif-item-time">
+                      {notification.timestamp}
+                    </span>
                   </div>
                 </div>
               ))}
             </div>
           )}
         </div>
+
+        {/* Footer */}
+        <div className="notif-panel-footer">
+          <a href="/notifications" className="notif-view-all">
+            View all notifications
+          </a>
+        </div>
       </div>
-    </div>
+    </>,
+    document.body
   );
 }

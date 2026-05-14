@@ -95,7 +95,7 @@ export default function ForgotPasswordModule() {
     return (
         <div
             className="min-h-screen flex flex-col font-display items-center bg-surface-100"
-            dir={isRTL ? 'rtl' : 'ltr'}
+            dir={t('common.dir') as any}
         >
             {/* Background pattern layer - hidden on mobile, reduced on tablet, full on desktop */}
             <div
@@ -112,7 +112,7 @@ export default function ForgotPasswordModule() {
                     }}
                     className="flex items-center justify-center w-10 h-10 hover:bg-gray-50 rounded-full transition-colors"
                 >
-                    <CaretLeft size={24} className={isRTL ? 'rotate-180' : ''} />
+                    <CaretLeft size={24} className={isRTL ? "rotate-180" : ""} />
                 </button>
                 <h1 className="text-[16px] font-semibold text-slate-900">{t('auth.forgot_password.title')}</h1>
                 <LanguageSwitcher />

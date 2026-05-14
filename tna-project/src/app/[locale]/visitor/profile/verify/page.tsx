@@ -80,7 +80,7 @@ export default function VisitorVerifyPage() {
   };
 
   const renderDocumentUpload = (doc: { type: KYCDocType; labelKey: string; icon: any; descriptionKey: string }) => {
-    const existingDoc = currentVerification?.documents.find(d => d.document_type === doc.type);
+    const existingDoc = currentVerification?.documents.find((d: any) => d.document_type === doc.type);
     const key = `${doc.type}_front`;
     
     return (
@@ -136,10 +136,10 @@ export default function VisitorVerifyPage() {
   };
 
   return (
-    <div className="min-h-screen bg-surface-100 pb-24" dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className="min-h-screen bg-surface-100 pb-24" dir={t('common.dir') as any}>
       <header className="sticky top-0 z-50 bg-surface-200 border-b border-neutral-100 py-3 px-4 flex items-center justify-between">
         <button onClick={() => router.back()} className="p-2 -m-2">
-          <ArrowRight size={24} className={isRTL ? 'rotate-180' : ''} />
+          <ArrowRight size={24} className={cn(isRTL && "rotate-180")} />
         </button>
         <h1 className="text-base font-bold text-neutral-900">{t('kyc.verification_title')}</h1>
         <div className="w-10" />

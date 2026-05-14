@@ -9,7 +9,7 @@ export default function CarrierProfilePage() {
   const { t } = useLocale()
 
   return (
-    <AppShell role="Carrier" header={t('common.roles.Carrier.profile')}>
+    <AppShell role="Carrier">
       <ProfileModule role="Carrier" />
     </AppShell>
   )

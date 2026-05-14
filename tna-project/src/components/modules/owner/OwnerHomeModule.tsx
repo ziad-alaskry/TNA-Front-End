@@ -92,7 +92,7 @@ export default function OwnerHomeModule() {
                 className="text-sm font-bold text-primary flex items-center gap-1 hover:underline"
               >
                 View All
-                <CaretRight size={14} className={isRTL ? "rotate-180" : ""} />
+                <CaretRight size={14} className={cn(isRTL && "rotate-180")} />
               </button>
             </div>
 

@@ -26,7 +26,7 @@ import { useTranslation } from 'react-i18next';
 export default function GovTNARequestDetailPage() {
     const { id } = useParams();
     const router = useRouter();
-    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  locale, isRTL , t } = useLocale();
+    const {  locale, isRTL , t } = useLocale();
 
     const details = mockTNARequestDetails[id as keyof typeof mockTNARequestDetails];
     const isLoading = false;
@@ -69,9 +69,9 @@ export default function GovTNARequestDetailPage() {
             title: t('gov.supporting_documents_158'),
             description: t('gov.documents_submitted_by_visitor_173'),
             items: [
-                { label: t('gov.passport_entry_174'), value: details.documents.find(d => d.type === 'passport_entry')?.status || 'NOT_UPLOADED' },
-                { label: t('gov.id_copy_175'), value: details.documents.find(d => d.type === 'id_copy')?.status || 'NOT_UPLOADED' },
-                { label: t('gov.residence_permit_176'), value: details.documents.find(d => d.type === 'residence_permit')?.status || 'NOT_UPLOADED' },
+                { label: t('gov.passport_entry_174'), value: details.documents.find((d: any) => d.type === 'passport_entry')?.status || 'NOT_UPLOADED' },
+                { label: t('gov.id_copy_175'), value: details.documents.find((d: any) => d.type === 'id_copy')?.status || 'NOT_UPLOADED' },
+                { label: t('gov.residence_permit_176'), value: details.documents.find((d: any) => d.type === 'residence_permit')?.status || 'NOT_UPLOADED' },
             ]
         }
     ];
@@ -110,7 +110,7 @@ export default function GovTNARequestDetailPage() {
                       {decision === 'APPROVED' ? <CheckCircle size={40} weight="fill" /> : <XCircle size={40} weight="fill" />}
                   </div>
                   <div>
-                    <h3 className="font-black text-xl uppercase tracking-tight">{isRTL ? t(decision === 'APPROVED' ? 'gov.request_approved' : 'gov.request_rejected') : t('gov.request_decision', { decision })}</h3>
+                    <h3 className="font-black text-xl uppercase tracking-tight">{t(decision === 'APPROVED' ? 'gov.request_approved' : 'gov.request_rejected')}</h3>
                     <p className="text-xs font-medium opacity-70">{t('gov.the_tna_request_status_has_been_updated_179')}</p>
                   </div>
                   <Button variant="outline" className="w-full border-neutral-200 text-neutral-900" onClick={() => router.push(`/${locale}/gov/tna-queue`)}>
@@ -132,7 +132,7 @@ export default function GovTNARequestDetailPage() {
     );
 
     return (
-        <AppShell role="Gov" header={t('gov.tna_request_review_182')}>
+        <AppShell role="Gov">
             <DetailViewLayout
                 title={`${t('gov.tna_request_183')} ${details.request_id}`}
                 mainContent={sections}
@@ -153,8 +153,8 @@ export default function GovTNARequestDetailPage() {
                       </div>
                       <span className="text-xs font-bold text-neutral-700">{t('gov.document_type_184')}: {t('gov.passport_entry_174')}</span>
                     </div>
-                    <span className="text-[10px] font-black {details.documents.find(d => d.type === 'passport_entry')?.status === 'UPLOADED' ? 'text-success' : 'text-error'} uppercase">
-                        {details.documents.find(d => d.type === 'passport_entry')?.status === 'UPLOADED' ? t('gov.available_160') : t('gov.missing_185')}
+                    <span className={cn("text-[10px] font-black uppercase", details.documents.find((d: any) => d.type === 'passport_entry')?.status === 'UPLOADED' ? 'text-success' : 'text-error')}>
+                        {details.documents.find((d: any) => d.type === 'passport_entry')?.status === 'UPLOADED' ? t('gov.available_160') : t('gov.missing_185')}
                     </span>
                   </div>
                   <div className="p-4 bg-white rounded-2xl border border-neutral-100 flex items-center justify-between group hover:border-primary/30 cursor-pointer transition-all">
@@ -164,8 +164,8 @@ export default function GovTNARequestDetailPage() {
                       </div>
                       <span className="text-xs font-bold text-neutral-700">{t('gov.document_type_184')}: {t('gov.id_copy_175')}</span>
                     </div>
-                    <span className="text-[10px] font-black {details.documents.find(d => d.type === 'id_copy')?.status === 'UPLOADED' ? 'text-success' : 'text-error'} uppercase">
-                        {details.documents.find(d => d.type === 'id_copy')?.status === 'UPLOADED' ? t('gov.available_160') : t('gov.missing_185')}
+                    <span className={cn("text-[10px] font-black uppercase", details.documents.find((d: any) => d.type === 'id_copy')?.status === 'UPLOADED' ? 'text-success' : 'text-error')}>
+                        {details.documents.find((d: any) => d.type === 'id_copy')?.status === 'UPLOADED' ? t('gov.available_160') : t('gov.missing_185')}
                     </span>
                   </div>
                   <div className="p-4 bg-white rounded-2xl border border-neutral-100 flex items-center justify-between group hover:border-primary/30 cursor-pointer transition-all">
@@ -175,8 +175,8 @@ export default function GovTNARequestDetailPage() {
                       </div>
                       <span className="text-xs font-bold text-neutral-700">{t('gov.document_type_184')}: {t('gov.residence_permit_176')}</span>
                     </div>
-                    <span className="text-[10px] font-black {details.documents.find(d => d.type === 'residence_permit')?.status === 'UPLOADED' ? 'text-success' : 'text-error'} uppercase">
-                        {details.documents.find(d => d.type === 'residence_permit')?.status === 'UPLOADED' ? t('gov.available_160') : t('gov.missing_185')}
+                    <span className={cn("text-[10px] font-black uppercase", details.documents.find((d: any) => d.type === 'residence_permit')?.status === 'UPLOADED' ? 'text-success' : 'text-error')}>
+                        {details.documents.find((d: any) => d.type === 'residence_permit')?.status === 'UPLOADED' ? t('gov.available_160') : t('gov.missing_185')}
                     </span>
                   </div>
                 </div>

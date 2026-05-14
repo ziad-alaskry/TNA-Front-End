@@ -1,5 +1,6 @@
 {
   "common": {
+    "dir": "ltr",
     "next": "Next",
     "back": "Back",
     "confirm": "Confirm",
@@ -21,6 +22,41 @@
     "no_data_desc": "We couldn't find any records matching your criteria.",
     "currency": "SAR",
     "goBack": "Go Back",
+    "roles": {
+      "Visitor": {
+        "overview": "Overview",
+        "address_search": "Address Search",
+        "codes": "My TNA Codes",
+        "shipments": "My Shipments",
+        "profile": "My Profile"
+      },
+      "Owner": {
+        "overview": "Dashboard",
+        "properties": "Manage Properties",
+        "bindings": "Linking Requests",
+        "earnings": "Earnings",
+        "profile": "Profile"
+      },
+      "Carrier": {
+        "overview": "Command Center",
+        "resolve": "Resolve TNA",
+        "shipments": "Manage Shipments",
+        "staff": "Staff Management",
+        "tasks": "Driver Tasks",
+        "settings": "Integration Settings",
+        "profile": "Profile"
+      },
+      "Gov": {
+        "overview": "System Metrics",
+        "tna_queue": "TNA Queue",
+        "address_queue": "Address Queue",
+        "adjustments": "Financial Adjustments",
+        "audit": "Audit Logs",
+        "agencies": "Gov Agencies",
+        "policy": "Policy Config",
+        "profile": "Profile"
+      }
+    },
     "Owner": {
       "overview": "Dashboard",
       "properties": "Manage Properties",
@@ -192,15 +228,15 @@
       "save_login": "Save and Login",
       "reset_success": "Password reset successfully!"
     },
-     "ltr_1": "ltr",
-     "ltr_2": "ltr",
-     "ltr_3": "ltr",
-     "ltr_4": "ltr",
-     "ltr_5": "ltr",
-     "validation": {
-       "field_required": "This field is required"
-     }
-   },
+    "ltr_1": "ltr",
+    "ltr_2": "ltr",
+    "ltr_3": "ltr",
+    "ltr_4": "ltr",
+    "ltr_5": "ltr",
+    "validation": {
+      "field_required": "This field is required"
+    }
+  },
   "visitor": {
     "home": {
       "title": "Temporary National Address",
@@ -686,7 +722,9 @@
     "address_rejected": "Address Rejected",
     "request_decision": "Request {decision}",
     "approval_completed": "Approval Completed",
-    "rejection_completed": "Rejection Completed"
+    "rejection_completed": "Rejection Completed",
+    "request_approved": "Request Approved",
+    "request_rejected": "Request Rejected"
   },
   "kyc": {
     "title": "KYC Verification",
@@ -781,40 +819,40 @@
     "payment_success_message": "Your binding request has been submitted and is awaiting owner approval.",
     "redirect_message": "Redirecting to your TNA details in 3 seconds..."
   },
-   "payment": {
-     "method": "Payment Method",
-     "credit_card": "Credit Card",
-     "apple_pay": "Apple Pay",
-     "stc_pay": "STC Pay",
-     "coming_soon": "Coming Soon",
-     "coming_soon_action": "Coming Soon",
-     "card_details": "Card Details",
-     "card_number": "Card Number",
-     "expiry": "Expiry Date",
-     "cvv": "CVV",
-     "cardholder_name": "Cardholder Name",
-     "top_up": "Top Up Wallet",
-     "top_up_success": "{amount} SAR added to wallet",
-     "top_up_title": "Add Funds",
-     "cardholder_placeholder": "Enter cardholder name",
-     "invalid_card": "Invalid card number",
-     "invalid_card_length": "Card number must be 16 digits",
-     "invalid_expiry": "Card expired or invalid date",
-     "invalid_cvv": "CVV must be at least 3 digits",
-     "name_required": "Cardholder name is required"
-   },
+  "payment": {
+    "method": "Payment Method",
+    "credit_card": "Credit Card",
+    "apple_pay": "Apple Pay",
+    "stc_pay": "STC Pay",
+    "coming_soon": "Coming Soon",
+    "coming_soon_action": "Coming Soon",
+    "card_details": "Card Details",
+    "card_number": "Card Number",
+    "expiry": "Expiry Date",
+    "cvv": "CVV",
+    "cardholder_name": "Cardholder Name",
+    "top_up": "Top Up Wallet",
+    "top_up_success": "{amount} SAR added to wallet",
+    "top_up_title": "Add Funds",
+    "cardholder_placeholder": "Enter cardholder name",
+    "invalid_card": "Invalid card number",
+    "invalid_card_length": "Card number must be 16 digits",
+    "invalid_expiry": "Card expired or invalid date",
+    "invalid_cvv": "CVV must be at least 3 digits",
+    "name_required": "Cardholder name is required"
+  },
   "shell": {
     "ltr_1": "ltr",
     "left0_2": "left-0"
   },
-  "notifications": {
-    "title": "Notifications",
-    "markAllRead": "Mark all read",
-    "empty": {
-      "title": "No notifications",
-      "subtitle": "You are all caught up"
-    }
-  },
+   "notifications": {
+     "title": "Notifications",
+     "markAllRead": "Mark all read",
+     "empty": {
+       "title": "No notifications",
+       "subtitle": "You're all caught up!"
+     }
+   },
   "roles": {
     "Owner": {
       "profile": "Profile"

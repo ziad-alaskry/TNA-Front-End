@@ -31,7 +31,7 @@ interface PackageDetails {
 
 export default function NewShipmentPage() {
   const router = useRouter()
-  /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const { locale, isRTL, t } = useLocale()
+  const { locale, isRTL, t } = useLocale()
   const toast = useToast()
 
   const [step, setStep] = useState(1)
@@ -116,7 +116,7 @@ export default function NewShipmentPage() {
 
   return (
     <RoleGuard requiredRole="Carrier">
-      <AppShell role="Carrier" header={t('carrier.register_new_shipment_35')}>
+      <AppShell role="Carrier">
         <div className="max-w-2xl mx-auto space-y-8 pb-12">
 
           {/* Progress Steps */}

@@ -1,5 +1,6 @@
 {
   "common": {
+    "dir": "rtl",
     "next": "التالي",
     "back": "الرجوع",
     "confirm": "تأكيد",
@@ -21,6 +22,41 @@
     "no_data_desc": "لم نتمكن من العثور على أي سجلات تطابق معايير البحث.",
     "currency": "SAR",
     "goBack": "الرجوع",
+    "roles": {
+      "Visitor": {
+        "overview": "نظرة عامة",
+        "address_search": "البحث عن عنوان",
+        "codes": "عناويني المؤقتة",
+        "shipments": "شحناتي",
+        "profile": "ملفي الشخصي"
+      },
+      "Owner": {
+        "overview": "لوحة التحكم",
+        "properties": "إدارة العقارات",
+        "bindings": "طلبات الربط",
+        "earnings": "الأرباح",
+        "profile": "الملف الشخصي"
+      },
+      "Carrier": {
+        "overview": "مركز القيادة",
+        "resolve": "التحقق من العناوين",
+        "shipments": "إدارة الشحنات",
+        "staff": "إدارة الموظفين",
+        "tasks": "مهام السائقين",
+        "settings": "إعدادات التكامل",
+        "profile": "الملف الشخصي"
+      },
+      "Gov": {
+        "overview": "مؤشرات النظام",
+        "tna_queue": "طابور TNA",
+        "address_queue": "طابور العناوين",
+        "adjustments": "التسويات المالية",
+        "audit": "سجلات التدقيق",
+        "agencies": "الجهات الحكومية",
+        "policy": "إعدادات السياسة",
+        "profile": "الملف الشخصي"
+      }
+    },
     "Owner": {
       "overview": "لوحة التحكم",
       "properties": "إدارة العقارات",
@@ -192,15 +228,15 @@
       "save_login": "حفظ وتسجيل الدخول",
       "reset_success": "تم إعادة تعيين كلمة المرور بنجاح!"
     },
-     "ltr_1": "rtl",
-     "ltr_2": "rtl",
-     "ltr_3": "rtl",
-     "ltr_4": "rtl",
-     "ltr_5": "rtl",
-     "validation": {
-       "field_required": "هذا الحقل مطلوب"
-     }
-   },
+    "ltr_1": "rtl",
+    "ltr_2": "rtl",
+    "ltr_3": "rtl",
+    "ltr_4": "rtl",
+    "ltr_5": "rtl",
+    "validation": {
+      "field_required": "هذا الحقل مطلوب"
+    }
+  },
   "visitor": {
     "home": {
       "title": "العنوان الوطني المؤقت",
@@ -686,7 +722,9 @@
     "address_rejected": "تم الرفض",
     "request_decision": "Request {decision}",
     "approval_completed": "تمت الموافقة",
-    "rejection_completed": "تم الرفض"
+    "rejection_completed": "تم الرفض",
+    "request_approved": "تمت الموافقة",
+    "request_rejected": "تم الرفض"
   },
   "kyc": {
     "title": "التحقق من الهوية",
@@ -781,40 +819,40 @@
     "payment_success_message": "تم إرسال طلب الربط الخاص بك وينتظر موافقة مالك العقار.",
     "redirect_message": "سيتم توجيهك إلى تفاصيل TNA الخاص بك خلال 3 ثوانٍ..."
   },
-   "payment": {
-     "method": "طريقة الدفع",
-     "credit_card": "بطاقة ائتمان",
-     "apple_pay": "Apple Pay",
-     "stc_pay": "STC Pay",
-     "coming_soon": "قريباً",
-     "coming_soon_action": "قريباً",
-     "card_details": "بيانات البطاقة",
-     "card_number": "رقم البطاقة",
-     "expiry": "تاريخ الانتهاء",
-     "cvv": "رمز الأمان",
-     "cardholder_name": "اسم حامل البطاقة",
-     "top_up": "إضافة رصيد",
-     "top_up_success": "{amount} ريال تم إضافتها إلى المحفظة",
-     "top_up_title": "إضافة أموال",
-     "cardholder_placeholder": "أدخل اسم حامل البطاقة",
-     "invalid_card": "رقم البطاقة غير صالح",
-     "invalid_card_length": "رقم البطاقة يجب أن يكون 16 رقم",
-     "invalid_expiry": "البطاقة منتهية أو التاريخ غير صالح",
-     "invalid_cvv": "رمز الأمان يجب أن يكون 3 أرقام على الأقل",
-     "name_required": "اسم حامل البطاقة مطلوب"
-   },
+  "payment": {
+    "method": "طريقة الدفع",
+    "credit_card": "بطاقة ائتمان",
+    "apple_pay": "Apple Pay",
+    "stc_pay": "STC Pay",
+    "coming_soon": "قريباً",
+    "coming_soon_action": "قريباً",
+    "card_details": "بيانات البطاقة",
+    "card_number": "رقم البطاقة",
+    "expiry": "تاريخ الانتهاء",
+    "cvv": "رمز الأمان",
+    "cardholder_name": "اسم حامل البطاقة",
+    "top_up": "إضافة رصيد",
+    "top_up_success": "{amount} ريال تم إضافتها إلى المحفظة",
+    "top_up_title": "إضافة أموال",
+    "cardholder_placeholder": "أدخل اسم حامل البطاقة",
+    "invalid_card": "رقم البطاقة غير صالح",
+    "invalid_card_length": "رقم البطاقة يجب أن يكون 16 رقم",
+    "invalid_expiry": "البطاقة منتهية أو التاريخ غير صالح",
+    "invalid_cvv": "رمز الأمان يجب أن يكون 3 أرقام على الأقل",
+    "name_required": "اسم حامل البطاقة مطلوب"
+  },
   "shell": {
     "ltr_1": "rtl",
     "left0_2": "right-0"
   },
-  "notifications": {
-    "title": "الإشعارات",
-    "markAllRead": "تحديد الكل كمقروء",
-    "empty": {
-      "title": "لا توجد إشعارات",
-      "subtitle": "أنت كل شيء جيد"
-    }
-  },
+   "notifications": {
+     "title": "الإشعارات",
+     "markAllRead": "تحديد الكل كمقروء",
+     "empty": {
+       "title": "لا توجد إشعارات",
+       "subtitle": "أنت على اطلاع بكل شيء!"
+     }
+   },
   "roles": {
     "Owner": {
       "profile": "الملف الشخصي"

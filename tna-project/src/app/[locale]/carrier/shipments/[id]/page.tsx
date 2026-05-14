@@ -80,7 +80,7 @@ const statusConfig: Record<string, { labelAr: string; labelEn: string; color: st
 export default function ShipmentDetailPage() {
   const router = useRouter()
   const params = useParams()
-  /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const { locale, isRTL, t } = useLocale()
+  const { locale, isRTL, t } = useLocale()
   const toast = useToast()
   const queryClient = useQueryClient()
   const shipmentId = params.id as string
@@ -119,7 +119,7 @@ export default function ShipmentDetailPage() {
 
   if (isLoading) {
     return (
-      <AppShell role="Carrier" header={t('carrier.shipment_details_10')}>
+        <AppShell role="Carrier">
         <div className="animate-pulse space-y-6">
           <div className="h-48 bg-neutral-200 rounded-2xl" />
           <div className="h-64 bg-neutral-200 rounded-2xl" />
@@ -130,7 +130,7 @@ export default function ShipmentDetailPage() {
 
   if (!shipment) {
     return (
-      <AppShell role="Carrier" header={t('carrier.not_found_11')}>
+        <AppShell role="Carrier">
         <div className="text-center py-12 space-y-4">
           <WarningCircle size={64} className="text-warning mx-auto" weight="fill" />
           <h2 className="text-xl font-bold text-neutral-900">
@@ -152,7 +152,7 @@ export default function ShipmentDetailPage() {
       <AppShell role="Carrier" header={
         <div className="flex items-center gap-3">
           <button onClick={() => router.back()} className="p-2 hover:bg-white/10 rounded-lg">
-            <ArrowLeft size={24} className={isRTL ? "rotate-180" : ""} />
+            <ArrowLeft size={24} className={cn(isRTL && "rotate-180")} />
           </button>
           <span>{t('carrier.shipment_details_10')}</span>
         </div>

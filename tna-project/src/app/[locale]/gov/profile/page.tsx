@@ -9,7 +9,7 @@ export default function GovProfilePage() {
   const { t } = useLocale()
 
   return (
-    <AppShell role="Gov" header={t('common.roles.Gov.profile')}>
+    <AppShell role="Gov">
       <ProfileModule role="Gov" />
     </AppShell>
   )

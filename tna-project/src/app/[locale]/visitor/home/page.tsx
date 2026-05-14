@@ -11,7 +11,7 @@ export default function VisitorHomePage() {
 
   return (
     <RoleGuard requiredRole="Visitor">
-      <AppShell role="Visitor" header={t('common.roles.Visitor.overview')}>
+      <AppShell role="Visitor">
         <VisitorHomeModule />
       </AppShell>
     </RoleGuard>

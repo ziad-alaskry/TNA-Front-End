@@ -21,7 +21,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function CarrierShipmentsPage() {
     const router = useRouter();
-    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  locale, isRTL , t } = useLocale();
+    const {  locale, isRTL , t } = useLocale();
     const { data: shipments, isLoading } = useMock(mockShipments);
 
     const columns: DataTableColumn<any>[] = [
@@ -71,7 +71,7 @@ export default function CarrierShipmentsPage() {
     ];
 
     return (
-        <AppShell role="Carrier" header={t('carrier.shipment_management_4')}>
+        <AppShell role="Carrier">
             <DataTableLayout
                 title="Active Shipments"
                 columns={columns}

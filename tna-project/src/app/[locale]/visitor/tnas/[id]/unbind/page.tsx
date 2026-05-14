@@ -31,7 +31,7 @@ import { useTranslation } from 'react-i18next';
 export default function VisitorTnaUnbindPage() {
     const { id } = useParams();
     const router = useRouter();
-    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  locale, isRTL , t } = useLocale();
+    const {  locale, isRTL , t } = useLocale();
     const { terminateBinding, visitorTnas } = useBindingContext();
 
     const tna = visitorTnas?.find(t => t.tna_id === id);
@@ -155,7 +155,7 @@ export default function VisitorTnaUnbindPage() {
     );
 
     return (
-        <AppShell role="Visitor" header={t('visitor.unbind_tna_address_38')}>
+        <AppShell role="Visitor">
             <DetailViewLayout
                 title={`TNA: ${tna.tna_code}`}
                 mainContent={sections}

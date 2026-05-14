@@ -11,7 +11,7 @@ export default function TNANewPage() {
 
   return (
     <RoleGuard requiredRole="Visitor">
-      <AppShell role="Visitor" header={t('visitor.home.actions.create_new') || 'Request New TNA'}>
+      <AppShell role="Visitor">
         <TNAIssuanceWizard />
       </AppShell>
     </RoleGuard>

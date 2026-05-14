@@ -9,6 +9,7 @@ import { notFound } from 'next/navigation'
 import { FleetProvider } from '@/context/FleetContext';
 import { BindingProvider } from '@/context/BindingContext';
 import { ToastProvider } from '@/components/ui/Toast';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 export const metadata: Metadata = {
   title: {
@@ -66,7 +67,9 @@ export default async function LocaleLayout({
            <ToastProvider>
              <FleetProvider>
                <BindingProvider>
-                 <Providers>{children}</Providers>
+                 <ErrorBoundary>
+                   <Providers>{children}</Providers>
+                 </ErrorBoundary>
                </BindingProvider>
              </FleetProvider>
            </ToastProvider>

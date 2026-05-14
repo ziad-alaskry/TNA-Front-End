@@ -8,11 +8,11 @@ import GovHomeModule from '@/components/modules/gov/GovHomeModule'
 import { useTranslation } from 'react-i18next';
 
 export default function GovHomePage() {
-  /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const { t, isRTL } = useLocale();
+  const { t, isRTL } = useLocale();
 
   return (
     <RoleGuard requiredRole="Gov">
-      <AppShell role="Gov" header={t('gov.gov_control_center_87')}>
+      <AppShell role="Gov">
         <GovHomeModule />
       </AppShell>
     </RoleGuard>

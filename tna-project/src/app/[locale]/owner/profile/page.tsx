@@ -9,7 +9,7 @@ export default function OwnerProfilePage() {
   const { t } = useLocale()
 
   return (
-    <AppShell role="Owner" header={t('common.roles.Owner.profile')}>
+    <AppShell role="Owner">
       <ProfileModule role="Owner" />
     </AppShell>
   )

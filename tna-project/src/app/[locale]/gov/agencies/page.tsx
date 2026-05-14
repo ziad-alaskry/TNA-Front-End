@@ -172,7 +172,7 @@ export default function GovAgenciesPage() {
     ];
 
     return (
-        <AppShell role="Gov" header={t('gov.overview')}>
+        <AppShell role="Gov">
             <div className="space-y-6">
                 {/* Custom Tabs */}
                 <div className="flex border-b border-neutral-200 gap-8">

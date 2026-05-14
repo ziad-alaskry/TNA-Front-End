@@ -70,7 +70,7 @@ export default function ShipmentDetailPage() {
   if (loading) {
     return (
       <RoleGuard requiredRole="Visitor">
-        <AppShell role="Visitor" header={t('shipments.detail.title') || 'Shipment Details'}>
+        <AppShell role="Visitor">
           <div className="max-w-3xl mx-auto py-8 px-4 space-y-6">
             <SkeletonCard className="h-48" />
             <SkeletonCard className="h-64" />
@@ -83,7 +83,7 @@ export default function ShipmentDetailPage() {
   if (error || !shipment) {
     return (
       <RoleGuard requiredRole="Visitor">
-        <AppShell role="Visitor" header={t('shipments.detail.title') || 'Shipment Details'}>
+        <AppShell role="Visitor">
           <div className="max-w-md mx-auto py-12">
             <ErrorAlert message={error || t('shipments.error.not_found') || 'Shipment not found'} />
           </div>
@@ -221,7 +221,7 @@ export default function ShipmentDetailPage() {
               onClick={() => router.back()}
               className="gap-2"
             >
-              <ArrowLeft size={16} className={isRTL ? "rotate-180" : ""} />
+              <ArrowLeft size={16} className={cn(isRTL && "rotate-180")} />
               {t('common.back') || 'Back'}
             </Button>
           </div>

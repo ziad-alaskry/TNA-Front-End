@@ -70,13 +70,8 @@ export default function LoginPage() {
 
   return (
     <div
-      className="font-display min-h-screen flex items-center justify-center p-4 bg-surface-100"
-      style={{
-        backgroundImage:
-          "var(--geometric-pattern, linear-gradient(45deg, #f8fafc 25%, transparent 25%, transparent 50%, #f8fafc 50%, #f8fafc 75%, transparent 75%, transparent))",
-        backgroundSize: "20px 20px",
-      }}
-      dir={isRTL ? "rtl" : "ltr"}
+      className="font-display min-h-screen flex items-center justify-center p-4 bg-surface-100 auth-bg-pattern"
+      dir={t('common.dir') as any}
     >
       <div className="w-full max-w-sm sm:max-w-[520px] lg:max-w-[480px] bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden relative z-10 transition-all duration-300 transform scale-100 px-4 sm:px-0">
         {/* Top Section: Header */}

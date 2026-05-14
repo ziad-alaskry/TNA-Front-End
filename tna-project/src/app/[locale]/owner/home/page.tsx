@@ -8,11 +8,11 @@ import OwnerHomeModule from '@/components/modules/owner/OwnerHomeModule'
 import { useTranslation } from 'react-i18next';
 
 export default function OwnerHomePage() {
-  /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const { t, isRTL } = useLocale();
+  const { t, isRTL } = useLocale();
 
   return (
     <RoleGuard requiredRole="Owner">
-      <AppShell role="Owner" header={t('owner.owner_dashboard_46')}>
+      <AppShell role="Owner">
         <OwnerHomeModule />
       </AppShell>
     </RoleGuard>

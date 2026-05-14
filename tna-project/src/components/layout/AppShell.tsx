@@ -8,7 +8,6 @@ import { useLocale } from '@/i18n/LocaleProvider'
 import Breadcrumbs from '@/components/shared/Breadcrumbs'
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher'
 import { BottomNav } from './BottomNav'
-import { NotificationPanel } from '@/components/ui/NotificationPanel'
 import { cn } from '@/lib/utils/cn'
 import Header from '@/components/shell/Header'
 import { useMounted } from '@/lib/hooks/useMounted'
@@ -52,22 +51,31 @@ export function AppShell({
   if (!mounted) return null
 
   return (
-    <div suppressHydrationWarning className="flex h-screen w-full flex-col bg-surface-100 text-neutral-900" dir={isRTL ? 'rtl' : 'ltr'}>
+    <div suppressHydrationWarning className="flex h-screen w-full flex-col bg-surface-100 text-neutral-900" dir={t('common.dir') as any}>
 
       {/* ── HEADER (Enterprise Header with Bell, Search, Avatar) ────────────── */}
-      <Header title={header} onMenuClick={() => setSidebarOpen(true)} />
+      <Header 
+        title={header} 
+        onMenuClick={() => {
+          if (isDesktop) {
+            setCollapsed(!collapsed)
+          } else {
+            setSidebarOpen(true)
+          }
+        }} 
+      />
 
       {/* ── BODY ─────────────────────────────────────────────── */}
       <div className="flex flex-1 overflow-hidden">
 
         {/* DESKTOP SIDEBAR */}
         <aside className={cn(
-          'hidden shrink-0 md:flex flex-col bg-primary-gradient border-e border-white/10 h-[calc(100vh-var(--navbar-height))] sticky top-navbar',
+          'hidden shrink-0 md:flex flex-col border-e border-white/10 h-[calc(100vh-var(--navbar-height))] sticky top-navbar z-[40]',
           !isDesktop ? 'hidden' : '', // Hide on mobile
           collapsed ? 'w-[72px]' : 'w-64', // Width based on collapsed state
-          'transition-all duration-300'
+          'transition-all duration-300 ease-in-out bg-[var(--sidebar-gradient)] shadow-xl'
         )}>
-          <nav className="flex-1 overflow-y-auto px-4 py-8 text-start no-scrollbar">
+          <nav className="flex-1 overflow-y-auto py-8 text-start no-scrollbar">
             <SidebarContent role={role} collapsed={collapsed} />
           </nav>
         </aside>
@@ -125,17 +133,14 @@ export function AppShell({
       {/* BOTTOM NAV (Mobile) */}
       {showBottomNav && <BottomNav role={role} />}
 
-      {/* FOOTER */}
-      {footer && (
-        <footer className="shrink-0 border-t border-neutral-200 bg-surface-200 px-6 py-8 text-start">
-          <div className="ui-content-container mx-auto text-caption text-neutral-500">
-            {footer}
-          </div>
-        </footer>
-      )}
-
-      {/* Global Notification Panel */}
-      <NotificationPanel />
-    </div>
-  )
-}
+       {/* FOOTER */}
+       {footer && (
+         <footer className="shrink-0 border-t border-neutral-200 bg-surface-200 px-6 py-8 text-start">
+           <div className="ui-content-container mx-auto text-caption text-neutral-500">
+             {footer}
+           </div>
+         </footer>
+       )}
+     </div>
+   )
+ }

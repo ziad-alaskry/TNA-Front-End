@@ -21,7 +21,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function GovQueuePage() {
     const router = useRouter();
-    /* TODO: review isRTL usage */ /* TODO: review isRTL usage */ const {  locale, isRTL , t } = useLocale();
+    const {  locale, isRTL , t } = useLocale();
     const { data: queue, isLoading } = useMock(mockGovQueue);
 
     const columns: DataTableColumn<any>[] = [
@@ -88,7 +88,7 @@ export default function GovQueuePage() {
                         className="h-9 px-4 border-neutral-200"
                     >
                         {t('gov.review_30')}
-                        <ArrowRight size={16} className={isRTL ? "rotate-180" : ""} />
+                        <ArrowRight size={16} className={cn(isRTL && "rotate-180")} />
                     </Button>
                 </div>
             )
@@ -96,7 +96,7 @@ export default function GovQueuePage() {
     ];
 
     return (
-        <AppShell role="Gov" header={t('gov.verification_queue_31')}>
+        <AppShell role="Gov">
             <DataTableLayout
                 title="Pending TNA Requests"
                 columns={columns}

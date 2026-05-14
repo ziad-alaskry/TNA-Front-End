@@ -91,7 +91,7 @@ export default function CarrierHomeModule() {
                 className="text-sm font-bold text-primary flex items-center gap-1 hover:underline"
               >
                 Manage All
-                <CaretRight size={14} className={isRTL ? "rotate-180" : ""} />
+                <CaretRight size={14} className={cn(isRTL && "rotate-180")} />
               </button>
             </div>
 
