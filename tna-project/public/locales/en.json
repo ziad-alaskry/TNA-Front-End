@@ -58,7 +58,40 @@
     "notifications_3": "Notifications",
     "mark_all_read_4": "Mark all read",
     "no_notifications_5": "No notifications",
-    "you_are_all_caught_up_6": "You are all caught up"
+    "you_are_all_caught_up_6": "You are all caught up",
+    "error_network": "Network error. Please try again.",
+    "note": "Note",
+    "review": "Review",
+    "uploaded": "Uploaded",
+    "uploading": "Uploading...",
+    "roles": {
+      "Visitor": {
+        "overview": "Dashboard",
+        "codes": "TNA Codes",
+        "shipments": "Shipments"
+      },
+      "Owner": {
+        "overview": "Dashboard",
+        "properties": "Properties",
+        "bindings": "Linking Requests",
+        "earnings": "Earnings",
+        "profile": "Profile"
+      },
+      "Carrier": {
+        "overview": "Command Center",
+        "profile": "Profile",
+        "shipments": "Shipments",
+        "staff": "Staff",
+        "tasks": "Driver Tasks"
+      },
+      "Gov": {
+        "overview": "System Metrics",
+        "queue": "Review Queue",
+        "audit": "Audit Logs",
+        "policy": "Policy Config",
+        "profile": "Profile"
+      }
+    }
   },
   "auth": {
     "login": {
@@ -192,15 +225,15 @@
       "save_login": "Save and Login",
       "reset_success": "Password reset successfully!"
     },
-     "ltr_1": "ltr",
-     "ltr_2": "ltr",
-     "ltr_3": "ltr",
-     "ltr_4": "ltr",
-     "ltr_5": "ltr",
-     "validation": {
-       "field_required": "This field is required"
-     }
-   },
+    "ltr_1": "ltr",
+    "ltr_2": "ltr",
+    "ltr_3": "ltr",
+    "ltr_4": "ltr",
+    "ltr_5": "ltr",
+    "validation": {
+      "field_required": "This field is required"
+    }
+  },
   "visitor": {
     "home": {
       "title": "Temporary National Address",
@@ -266,7 +299,8 @@
     "city_36": "City",
     "unit_37": "Unit",
     "unbind_tna_address_38": "Unbind TNA Address",
-    "ltr_1": "ltr"
+    "ltr_1": "ltr",
+    "wallet": "Wallet"
   },
   "owner": {
     "property": {
@@ -475,7 +509,48 @@
     "mr2_4": "mr-2",
     "mr2_5": "mr-2",
     "mr2_6": "mr-2",
-    "mr2_7": "mr-2"
+    "mr2_7": "mr-2",
+    "tracking_1": "Tracking",
+    "driver": {
+      "map": {
+        "header": "Navigation and Delivery",
+        "pin_label": "Al Malqa District - TNA-667722",
+        "placeholder": "Interactive route tracking map will appear here soon",
+        "current_task": "Current Task",
+        "active": "Active",
+        "express_delivery": "Express parcel delivery",
+        "distance": "Distance",
+        "distance_value": "2.4 km",
+        "eta": "ETA",
+        "eta_value": "8 min",
+        "delivery_date": "Delivery Date",
+        "delivery_date_value": "April 25, 10:30 AM",
+        "delivery_address": "Delivery Address (TNA)",
+        "delivery_address_value": "Al Malqa District, Prince Mohammed bin Saad Street, Villa 12",
+        "confirm_delivery": "Confirm Delivery (Scan QR)",
+        "call": "Call",
+        "report_issue": "Report Issue",
+        "back_to_tasks": "Back to Task List"
+      },
+      "tasks": {
+        "header": "My Daily Tasks",
+        "driver_name": "Captain Mohammed Ali",
+        "today": "Today: April 25, 2026",
+        "scheduled_tasks": "Scheduled Tasks",
+        "high_priority": "High Priority",
+        "continue_navigation": "Continue Navigation",
+        "start_task": "Start Task",
+        "task_1_customer": "Ahmed Al-Otaibi",
+        "task_1_address": "Al Malqa District, Prince Mohammed bin Saad Street",
+        "task_1_time": "10:30 AM",
+        "task_2_customer": "Sarah Mohammed",
+        "task_2_address": "Al Narjis District, King Salman Road intersection",
+        "task_2_time": "11:15 AM",
+        "task_3_customer": "Fahad Al-Mutairi",
+        "task_3_address": "Al Yasmin District, Building 44",
+        "task_3_time": "12:00 PM"
+      }
+    }
   },
   "gov": {
     "home": {
@@ -686,7 +761,92 @@
     "address_rejected": "Address Rejected",
     "request_decision": "Request {decision}",
     "approval_completed": "Approval Completed",
-    "rejection_completed": "Rejection Completed"
+    "rejection_completed": "Rejection Completed",
+    "overview": "System Metrics",
+    "visitor_information_162": "Visitor Information",
+    "nationality_163": "Nationality",
+    "visa_status_164": "Visa Status",
+    "eligibility_snapshot_165": "Eligibility Snapshot",
+    "visitor_eligibility_assessment_166": "Visitor Eligibility Assessment",
+    "visa_valid_167": "Visa Valid",
+    "yes_168": "Yes",
+    "no_169": "No",
+    "iqama_valid_170": "Iqama Valid",
+    "max_tnas_reached_171": "Max TNAs Reached",
+    "risk_score_172": "Risk Score",
+    "documents_submitted_by_visitor_173": "Documents Submitted by Visitor",
+    "passport_entry_174": "Passport Entry",
+    "id_copy_175": "ID Copy",
+    "residence_permit_176": "Residence Permit",
+    "review_action_177": "Review Action",
+    "approve_request_178": "Approve Request",
+    "the_tna_request_status_has_been_updated_179": "The TNA request status has been updated.",
+    "back_to_queue_180": "Back to Queue",
+    "verify_visitor_details_before_approving_181": "Verify visitor details before approving.",
+    "tna_request_review_182": "TNA Request Review",
+    "tna_request_183": "TNA Request",
+    "document_type_184": "Document Type",
+    "missing_185": "Missing",
+    "agencies": {
+      "title": "Government Agencies",
+      "add_new": "Add New Agency",
+      "tab": "Agencies",
+      "table": {
+        "headers": {
+          "name": "Agency Name",
+          "region": "Region",
+          "department": "Department",
+          "admin_user": "System Administrator",
+          "staff_count": "Staff Count"
+        }
+      },
+      "modal": {
+        "title": "Add New Government Agency",
+        "fields": {
+          "name": "Agency Name",
+          "region": "Region",
+          "department": "Responsible Department",
+          "admin_user": "System Administrator Nominee",
+          "name_placeholder": "e.g. Ministry of Tourism",
+          "department_placeholder": "e.g. Audit Department",
+          "admin_user_placeholder": "Full Name",
+          "regions": {
+            "riyadh": "Riyadh",
+            "jeddah": "Jeddah"
+          }
+        }
+      }
+    },
+    "staff": {
+      "title": "Government Staff",
+      "add_new": "Add New Staff",
+      "tab": "Personnel",
+      "table": {
+        "headers": {
+          "name": "Employee Name",
+          "department": "Department",
+          "permissions": "Permissions",
+          "status": "Status"
+        },
+        "permissions": {
+          "VERIFY": "Verify Requests",
+          "MANAGE_POLICY": "Manage Policies",
+          "AUDIT": "Audit Logs",
+          "READ_ONLY": "Read Only"
+        }
+      },
+      "modal": {
+        "title": "Add New Government Staff",
+        "fields": {
+          "name": "Employee Name",
+          "agency": "Agency",
+          "email": "Government Email",
+          "permissions": "Permissions",
+          "name_placeholder": "Full Name",
+          "email_placeholder": "name@agency.gov.sa"
+        }
+      }
+    }
   },
   "kyc": {
     "title": "KYC Verification",
@@ -721,7 +881,19 @@
     "success": {
       "title": "Documents Submitted",
       "message": "Your KYC documents have been submitted for review."
-    }
+    },
+    "documents_description": "Upload the documents required to complete identity verification.",
+    "process_info_1": "Submit clear, valid documents.",
+    "process_info_2": "Government reviewers verify your information.",
+    "process_info_3": "You will be notified when verification is complete.",
+    "process_info_title": "Verification Process",
+    "required_documents": "Required Documents",
+    "submit_for_verification": "Submit for Verification",
+    "upload_hint": "Upload a PDF, JPG, or PNG file.",
+    "upload_success": "Document uploaded successfully",
+    "uploaded_at": "Uploaded at",
+    "verification_description": "Complete KYC verification to unlock TNA services.",
+    "verification_title": "Identity Verification"
   },
   "tna": {
     "new": {
@@ -741,6 +913,14 @@
       "active": "ACTIVE",
       "go_to_tnas": "Go to My TNAs",
       "return_dashboard": "Return to Dashboard"
+    },
+    "detail": {
+      "digital_card": "Digital Card",
+      "link_address": "Link Address",
+      "quick_actions": "Quick Actions",
+      "unbind": "Unbind",
+      "unbind_note": "Unbinding removes the linked address from this TNA.",
+      "unlinked_note": "This TNA is not linked to an address yet."
     }
   },
   "binding": {
@@ -749,7 +929,43 @@
       "platform_fee": "Platform Fee",
       "authority_share": "Authority Share",
       "net_owner": "Net Owner Amount"
-    }
+    },
+    "authority_share": "Authority Share",
+    "available_units": "Available Units",
+    "breakdown": "Breakdown",
+    "calculating": "Calculating...",
+    "conflict_error": "This unit is already booked for the selected period.",
+    "created": "Binding request created",
+    "duration": "Duration",
+    "end_date": "End Date",
+    "escrow_notice": "Funds are held securely until the owner confirms the binding.",
+    "estimated_cost": "Estimated Cost",
+    "financial_breakdown": "Financial Breakdown",
+    "find_address": "Find Address",
+    "find_address_desc": "Search for an available verified unit to bind with your TNA.",
+    "gross_amount": "Gross Amount",
+    "no_properties": "No available properties found",
+    "owner_net": "Owner Receives",
+    "period": "Period",
+    "period_type": "Period Type",
+    "platform_fee": "Platform Fee",
+    "review_desc": "Review the binding details before submitting your request.",
+    "review_title": "Review Binding Request",
+    "search_placeholder": "Search by city, district, or address...",
+    "select_unit_desc": "Choose a verified unit and rental period.",
+    "select_unit_period": "Select Unit and Period",
+    "start_date": "Start Date",
+    "step1": "Address",
+    "step2": "Unit",
+    "step3": "Review",
+    "submit_notice": "Submitting creates a pending binding request for owner approval.",
+    "submit_request": "Submit Request",
+    "suffix": "Suffix",
+    "target_address": "Target Address",
+    "title": "Bind TNA to Address",
+    "tna_code": "TNA Code",
+    "total_amount": "Total Amount",
+    "total_payable": "Total Payable"
   },
   "checkout": {
     "payment_blocked": "Payment blocked - binding already processed",
@@ -779,30 +995,31 @@
     "complete_top_up": "Complete Top Up",
     "payment_success": "Payment Successful!",
     "payment_success_message": "Your binding request has been submitted and is awaiting owner approval.",
-    "redirect_message": "Redirecting to your TNA details in 3 seconds..."
+    "redirect_message": "Redirecting to your TNA details in 3 seconds...",
+    "type": "Type"
   },
-   "payment": {
-     "method": "Payment Method",
-     "credit_card": "Credit Card",
-     "apple_pay": "Apple Pay",
-     "stc_pay": "STC Pay",
-     "coming_soon": "Coming Soon",
-     "coming_soon_action": "Coming Soon",
-     "card_details": "Card Details",
-     "card_number": "Card Number",
-     "expiry": "Expiry Date",
-     "cvv": "CVV",
-     "cardholder_name": "Cardholder Name",
-     "top_up": "Top Up Wallet",
-     "top_up_success": "{amount} SAR added to wallet",
-     "top_up_title": "Add Funds",
-     "cardholder_placeholder": "Enter cardholder name",
-     "invalid_card": "Invalid card number",
-     "invalid_card_length": "Card number must be 16 digits",
-     "invalid_expiry": "Card expired or invalid date",
-     "invalid_cvv": "CVV must be at least 3 digits",
-     "name_required": "Cardholder name is required"
-   },
+  "payment": {
+    "method": "Payment Method",
+    "credit_card": "Credit Card",
+    "apple_pay": "Apple Pay",
+    "stc_pay": "STC Pay",
+    "coming_soon": "Coming Soon",
+    "coming_soon_action": "Coming Soon",
+    "card_details": "Card Details",
+    "card_number": "Card Number",
+    "expiry": "Expiry Date",
+    "cvv": "CVV",
+    "cardholder_name": "Cardholder Name",
+    "top_up": "Top Up Wallet",
+    "top_up_success": "{amount} SAR added to wallet",
+    "top_up_title": "Add Funds",
+    "cardholder_placeholder": "Enter cardholder name",
+    "invalid_card": "Invalid card number",
+    "invalid_card_length": "Card number must be 16 digits",
+    "invalid_expiry": "Card expired or invalid date",
+    "invalid_cvv": "CVV must be at least 3 digits",
+    "name_required": "Cardholder name is required"
+  },
   "shell": {
     "ltr_1": "ltr",
     "left0_2": "left-0"
@@ -847,5 +1064,101 @@
       "title": "Department"
     },
     "logout": "Logout"
-  }
+  },
+  "shipments": {
+    "error": {
+      "not_found": "Shipment not found"
+    },
+    "status": {
+      "created": "Created",
+      "picked_up": "Picked Up",
+      "in_transit": "In Transit",
+      "out_for_delivery": "Out for Delivery",
+      "delivered": "Delivered",
+      "failed": "Failed",
+      "returned": "Returned"
+    },
+    "detail": {
+      "title": "Shipment Details",
+      "to_address": "Delivery Address",
+      "tracking_timeline": "Tracking Timeline",
+      "messages": "Messages",
+      "package_info": "Package Information",
+      "weight": "Weight",
+      "dimensions": "Dimensions",
+      "contents": "Contents"
+    }
+  },
+  "transactions": {
+    "type": {
+      "deposit": "Deposit",
+      "refund": "Refund",
+      "rental_payment": "Rental Payment",
+      "tna_issuance": "TNA Issuance",
+      "withdrawal": "Withdrawal"
+    }
+  },
+  "units": {
+    "days": "days"
+  },
+  "wallet": {
+    "available_balance": "Available Balance",
+    "columns": {
+      "amount": "Amount",
+      "date": "Date",
+      "status": "Status",
+      "type": "Type"
+    },
+    "statement": "Statement",
+    "top_up": "Top Up",
+    "transactions_title": "Transactions"
+  },
+  "actions": "Actions",
+  "active": "Active",
+  "addProperty": "Add Property",
+  "all": "All",
+  "approve": "Approve",
+  "authorityShare": "Authority Share",
+  "awaitingApproval": "Awaiting owner approval",
+  "bindingActivated": "Binding activated",
+  "bindingDetailsDesc": "Details of the binding request between TNA and unit",
+  "bindingInformation": "Binding Information",
+  "bindingTerminated": "Binding terminated",
+  "completed": "Completed",
+  "createSubAddress": "Create Sub-Address",
+  "createdAt": "Created At",
+  "description": "Description",
+  "descriptionDescription": "Optional unit description",
+  "endDate": "End Date",
+  "financialContract": "Financial Contract",
+  "financialDetailsDesc": "Breakdown of the financial distribution for the binding",
+  "financialNote": "Financial details show the final amount the owner will receive after deducting all fees.",
+  "grossAmount": "Gross Amount",
+  "label": "Label",
+  "labelDescription": "Unit name",
+  "loading": "Loading...",
+  "netOwnerAmount": "Net Owner Amount",
+  "noBindings": "No bindings found",
+  "noBindingsDescription": "You have no binding requests at the moment.",
+  "noBindingsWithFilter": "No {status} bindings found",
+  "noBindingsWithFilterDescription": "There are no bindings with {status} status.",
+  "note": "Note",
+  "pending": "Pending",
+  "platformFee": "Platform Fee",
+  "property": "Property",
+  "reject": "Reject",
+  "requestApproved": "Request approved",
+  "requestCreated": "Binding request created",
+  "startDate": "Start Date",
+  "status": "Status",
+  "statusTimeline": "Status Timeline",
+  "suffixCode": "Suffix Code",
+  "suffixCodeDescription": "4 unique characters for the unit, e.g. ROOM",
+  "terminate": "Terminate",
+  "terminated": "Terminated",
+  "terminatedByAgreement": "Binding terminated by agreement",
+  "terminationReason": "Termination Reason",
+  "tnaCode": "TNA Code",
+  "unit": "Unit",
+  "viewDetails": "View Details"
 }

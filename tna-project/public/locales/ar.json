@@ -58,7 +58,40 @@
     "notifications_3": "الإشعارات",
     "mark_all_read_4": "تحديد الكل كمقروء",
     "no_notifications_5": "لا توجد إشعارات",
-    "you_are_all_caught_up_6": "أنت كل شيء جيد"
+    "you_are_all_caught_up_6": "أنت كل شيء جيد",
+    "error_network": "حدث خطأ في الشبكة. حاول مرة أخرى.",
+    "note": "ملاحظة",
+    "review": "مراجعة",
+    "uploaded": "تم الرفع",
+    "uploading": "جاري الرفع...",
+    "roles": {
+      "Visitor": {
+        "overview": "لوحة التحكم",
+        "codes": "رموز TNA",
+        "shipments": "الشحنات"
+      },
+      "Owner": {
+        "overview": "لوحة التحكم",
+        "properties": "العقارات",
+        "bindings": "طلبات الربط",
+        "earnings": "الأرباح",
+        "profile": "الملف الشخصي"
+      },
+      "Carrier": {
+        "overview": "مركز التحكم",
+        "profile": "الملف الشخصي",
+        "shipments": "الشحنات",
+        "staff": "الموظفون",
+        "tasks": "مهام السائق"
+      },
+      "Gov": {
+        "overview": "مؤشرات النظام",
+        "queue": "قائمة المراجعة",
+        "audit": "سجلات التدقيق",
+        "policy": "إعدادات السياسات",
+        "profile": "الملف الشخصي"
+      }
+    }
   },
   "auth": {
     "login": {
@@ -192,15 +225,15 @@
       "save_login": "حفظ وتسجيل الدخول",
       "reset_success": "تم إعادة تعيين كلمة المرور بنجاح!"
     },
-     "ltr_1": "rtl",
-     "ltr_2": "rtl",
-     "ltr_3": "rtl",
-     "ltr_4": "rtl",
-     "ltr_5": "rtl",
-     "validation": {
-       "field_required": "هذا الحقل مطلوب"
-     }
-   },
+    "ltr_1": "rtl",
+    "ltr_2": "rtl",
+    "ltr_3": "rtl",
+    "ltr_4": "rtl",
+    "ltr_5": "rtl",
+    "validation": {
+      "field_required": "هذا الحقل مطلوب"
+    }
+  },
   "visitor": {
     "home": {
       "title": "العنوان الوطني المؤقت",
@@ -266,7 +299,8 @@
     "city_36": "المدينة",
     "unit_37": "رقم الوحدة",
     "unbind_tna_address_38": "إلغاء ربط TNA",
-    "ltr_1": "rtl"
+    "ltr_1": "rtl",
+    "wallet": "المحفظة"
   },
   "owner": {
     "property": {
@@ -475,7 +509,48 @@
     "mr2_4": "rotate-180 ml-2",
     "mr2_5": "rotate-180 ml-2",
     "mr2_6": "rotate-180 ml-2",
-    "mr2_7": "rotate-180 ml-2"
+    "mr2_7": "rotate-180 ml-2",
+    "tracking_1": "التتبع",
+    "driver": {
+      "map": {
+        "header": "الملاحة والتوصيل",
+        "pin_label": "حي الملقا - TNA-667722",
+        "placeholder": "ستظهر خريطة تتبع المسارات التفاعلية هنا قريباً",
+        "current_task": "المهمة الحالية",
+        "active": "نشط",
+        "express_delivery": "توصيل طرد فائق السرعة",
+        "distance": "المسافة",
+        "distance_value": "٢.٤ كم",
+        "eta": "وقت الوصول",
+        "eta_value": "٨ دقائق",
+        "delivery_date": "تاريخ التسليم",
+        "delivery_date_value": "٢٥ أبريل، ١٠:٣٠ ص",
+        "delivery_address": "عنوان التسليم (TNA)",
+        "delivery_address_value": "حي الملقا، شارع الأمير محمد بن سعد، فيلا ١٢",
+        "confirm_delivery": "تأكيد التوصيل (مسح QR)",
+        "call": "اتصال",
+        "report_issue": "إبلاغ عن مشكلة",
+        "back_to_tasks": "العودة لقائمة المهام"
+      },
+      "tasks": {
+        "header": "مهامي اليومية",
+        "driver_name": "الكابتن محمد علي",
+        "today": "تاريخ اليوم: ٢٥ أبريل ٢٠٢٦",
+        "scheduled_tasks": "المهام المجدولة",
+        "high_priority": "أولوية عالية",
+        "continue_navigation": "متابعة الملاحة",
+        "start_task": "بدء المهمة",
+        "task_1_customer": "أحمد العتيبي",
+        "task_1_address": "حي الملقا، شارع الأمير محمد بن سعد",
+        "task_1_time": "١٠:٣٠ ص",
+        "task_2_customer": "سارة محمد",
+        "task_2_address": "حي النرجس، تقاطع طريق الملك سلمان",
+        "task_2_time": "١١:١٥ ص",
+        "task_3_customer": "فهد المطيري",
+        "task_3_address": "حي الياسمين، عمارة رقم ٤٤",
+        "task_3_time": "١٢:٠٠ م"
+      }
+    }
   },
   "gov": {
     "home": {
@@ -686,7 +761,92 @@
     "address_rejected": "تم الرفض",
     "request_decision": "Request {decision}",
     "approval_completed": "تمت الموافقة",
-    "rejection_completed": "تم الرفض"
+    "rejection_completed": "تم الرفض",
+    "overview": "مؤشرات النظام",
+    "visitor_information_162": "معلومات الزائر",
+    "nationality_163": "الجنسية",
+    "visa_status_164": "حالة التأشيرة",
+    "eligibility_snapshot_165": "ملخص الأهلية",
+    "visitor_eligibility_assessment_166": "تقييم أهلية الزائر",
+    "visa_valid_167": "التأشيرة صالحة",
+    "yes_168": "نعم",
+    "no_169": "لا",
+    "iqama_valid_170": "الإقامة صالحة",
+    "max_tnas_reached_171": "تم بلوغ الحد الأقصى لرموز TNA",
+    "risk_score_172": "درجة المخاطر",
+    "documents_submitted_by_visitor_173": "المستندات المقدمة من الزائر",
+    "passport_entry_174": "بيانات الجواز",
+    "id_copy_175": "نسخة الهوية",
+    "residence_permit_176": "تصريح الإقامة",
+    "review_action_177": "إجراء المراجعة",
+    "approve_request_178": "اعتماد الطلب",
+    "the_tna_request_status_has_been_updated_179": "تم تحديث حالة طلب TNA.",
+    "back_to_queue_180": "العودة إلى القائمة",
+    "verify_visitor_details_before_approving_181": "تحقق من بيانات الزائر قبل الاعتماد.",
+    "tna_request_review_182": "مراجعة طلب TNA",
+    "tna_request_183": "طلب TNA",
+    "document_type_184": "نوع المستند",
+    "missing_185": "غير متوفر",
+    "agencies": {
+      "title": "الجهات الحكومية",
+      "add_new": "إضافة جهة جديدة",
+      "tab": "الجهات",
+      "table": {
+        "headers": {
+          "name": "اسم الجهة",
+          "region": "المنطقة",
+          "department": "الإدارة",
+          "admin_user": "مدير النظام",
+          "staff_count": "عدد الموظفين"
+        }
+      },
+      "modal": {
+        "title": "إضافة جهة حكومية جديدة",
+        "fields": {
+          "name": "اسم الجهة",
+          "region": "المنطقة",
+          "department": "الإدارة المسؤولة",
+          "admin_user": "مرشح إدارة النظام",
+          "name_placeholder": "مثال: وزارة السياحة",
+          "department_placeholder": "مثال: إدارة التدقيق",
+          "admin_user_placeholder": "الاسم الكامل",
+          "regions": {
+            "riyadh": "الرياض",
+            "jeddah": "جدة"
+          }
+        }
+      }
+    },
+    "staff": {
+      "title": "موظفو الحكومة",
+      "add_new": "إضافة موظف جديد",
+      "tab": "الموظفون",
+      "table": {
+        "headers": {
+          "name": "اسم الموظف",
+          "department": "الإدارة",
+          "permissions": "الصلاحيات",
+          "status": "الحالة"
+        },
+        "permissions": {
+          "VERIFY": "التحقق من الطلبات",
+          "MANAGE_POLICY": "إدارة السياسات",
+          "AUDIT": "سجلات التدقيق",
+          "READ_ONLY": "قراءة فقط"
+        }
+      },
+      "modal": {
+        "title": "إضافة موظف حكومي جديد",
+        "fields": {
+          "name": "اسم الموظف",
+          "agency": "الجهة",
+          "email": "البريد الحكومي",
+          "permissions": "الصلاحيات",
+          "name_placeholder": "الاسم الكامل",
+          "email_placeholder": "name@agency.gov.sa"
+        }
+      }
+    }
   },
   "kyc": {
     "title": "التحقق من الهوية",
@@ -721,7 +881,19 @@
     "success": {
       "title": "تم إرسال المستندات",
       "message": "تم إرسال مستنداتك للتحقق."
-    }
+    },
+    "documents_description": "ارفع المستندات المطلوبة لإكمال التحقق من الهوية.",
+    "process_info_1": "أرسل مستندات واضحة وسارية.",
+    "process_info_2": "يراجع المختصون بياناتك ويتحققون منها.",
+    "process_info_3": "سيتم إشعارك عند اكتمال التحقق.",
+    "process_info_title": "خطوات التحقق",
+    "required_documents": "المستندات المطلوبة",
+    "submit_for_verification": "إرسال للتحقق",
+    "upload_hint": "ارفع ملف PDF أو JPG أو PNG.",
+    "upload_success": "تم رفع المستند بنجاح",
+    "uploaded_at": "وقت الرفع",
+    "verification_description": "أكمل التحقق من الهوية لاستخدام خدمات TNA.",
+    "verification_title": "التحقق من الهوية"
   },
   "tna": {
     "new": {
@@ -741,6 +913,14 @@
       "active": "نشط",
       "go_to_tnas": "انتقل إلى عناوين TNA الخاصة بي",
       "return_dashboard": "العودة إلى لوحة التحكم"
+    },
+    "detail": {
+      "digital_card": "البطاقة الرقمية",
+      "link_address": "ربط عنوان",
+      "quick_actions": "إجراءات سريعة",
+      "unbind": "إلغاء الربط",
+      "unbind_note": "إلغاء الربط يزيل العنوان المرتبط من هذا الرمز.",
+      "unlinked_note": "رمز TNA هذا غير مرتبط بعنوان بعد."
     }
   },
   "binding": {
@@ -749,7 +929,43 @@
       "platform_fee": "رسوم المنصة",
       "authority_share": "حصة الجهة",
       "net_owner": "صافي المبلغ للمالك"
-    }
+    },
+    "authority_share": "حصة الهيئة",
+    "available_units": "الوحدات المتاحة",
+    "breakdown": "التفاصيل",
+    "calculating": "جاري الحساب...",
+    "conflict_error": "هذه الوحدة محجوزة بالفعل خلال الفترة المحددة.",
+    "created": "تم إنشاء طلب الربط",
+    "duration": "المدة",
+    "end_date": "تاريخ النهاية",
+    "escrow_notice": "يتم حفظ المبلغ بأمان حتى يؤكد المالك الربط.",
+    "estimated_cost": "التكلفة التقديرية",
+    "financial_breakdown": "التفاصيل المالية",
+    "find_address": "البحث عن عنوان",
+    "find_address_desc": "ابحث عن وحدة موثقة ومتاحة لربطها برمز TNA.",
+    "gross_amount": "الإجمالي",
+    "no_properties": "لا توجد عقارات متاحة",
+    "owner_net": "مستحقات المالك",
+    "period": "الفترة",
+    "period_type": "نوع الفترة",
+    "platform_fee": "رسوم المنصة",
+    "review_desc": "راجع تفاصيل الربط قبل إرسال الطلب.",
+    "review_title": "مراجعة طلب الربط",
+    "search_placeholder": "ابحث بالمدينة أو الحي أو العنوان...",
+    "select_unit_desc": "اختر وحدة موثقة وفترة الإيجار.",
+    "select_unit_period": "اختيار الوحدة والفترة",
+    "start_date": "تاريخ البداية",
+    "step1": "العنوان",
+    "step2": "الوحدة",
+    "step3": "المراجعة",
+    "submit_notice": "سيؤدي الإرسال إلى إنشاء طلب ربط بانتظار موافقة المالك.",
+    "submit_request": "إرسال الطلب",
+    "suffix": "اللاحقة",
+    "target_address": "العنوان المستهدف",
+    "title": "ربط TNA بعنوان",
+    "tna_code": "كود TNA",
+    "total_amount": "المبلغ الإجمالي",
+    "total_payable": "إجمالي المستحق"
   },
   "checkout": {
     "payment_blocked": "الدفع محظور - تم معالجة الربط بالفعل",
@@ -779,30 +995,31 @@
     "complete_top_up": "إكمال الشحن",
     "payment_success": "تم الدفع بنجاح!",
     "payment_success_message": "تم إرسال طلب الربط الخاص بك وينتظر موافقة مالك العقار.",
-    "redirect_message": "سيتم توجيهك إلى تفاصيل TNA الخاص بك خلال 3 ثوانٍ..."
+    "redirect_message": "سيتم توجيهك إلى تفاصيل TNA الخاص بك خلال 3 ثوانٍ...",
+    "type": "النوع"
   },
-   "payment": {
-     "method": "طريقة الدفع",
-     "credit_card": "بطاقة ائتمان",
-     "apple_pay": "Apple Pay",
-     "stc_pay": "STC Pay",
-     "coming_soon": "قريباً",
-     "coming_soon_action": "قريباً",
-     "card_details": "بيانات البطاقة",
-     "card_number": "رقم البطاقة",
-     "expiry": "تاريخ الانتهاء",
-     "cvv": "رمز الأمان",
-     "cardholder_name": "اسم حامل البطاقة",
-     "top_up": "إضافة رصيد",
-     "top_up_success": "{amount} ريال تم إضافتها إلى المحفظة",
-     "top_up_title": "إضافة أموال",
-     "cardholder_placeholder": "أدخل اسم حامل البطاقة",
-     "invalid_card": "رقم البطاقة غير صالح",
-     "invalid_card_length": "رقم البطاقة يجب أن يكون 16 رقم",
-     "invalid_expiry": "البطاقة منتهية أو التاريخ غير صالح",
-     "invalid_cvv": "رمز الأمان يجب أن يكون 3 أرقام على الأقل",
-     "name_required": "اسم حامل البطاقة مطلوب"
-   },
+  "payment": {
+    "method": "طريقة الدفع",
+    "credit_card": "بطاقة ائتمان",
+    "apple_pay": "Apple Pay",
+    "stc_pay": "STC Pay",
+    "coming_soon": "قريباً",
+    "coming_soon_action": "قريباً",
+    "card_details": "بيانات البطاقة",
+    "card_number": "رقم البطاقة",
+    "expiry": "تاريخ الانتهاء",
+    "cvv": "رمز الأمان",
+    "cardholder_name": "اسم حامل البطاقة",
+    "top_up": "إضافة رصيد",
+    "top_up_success": "{amount} ريال تم إضافتها إلى المحفظة",
+    "top_up_title": "إضافة أموال",
+    "cardholder_placeholder": "أدخل اسم حامل البطاقة",
+    "invalid_card": "رقم البطاقة غير صالح",
+    "invalid_card_length": "رقم البطاقة يجب أن يكون 16 رقم",
+    "invalid_expiry": "البطاقة منتهية أو التاريخ غير صالح",
+    "invalid_cvv": "رمز الأمان يجب أن يكون 3 أرقام على الأقل",
+    "name_required": "اسم حامل البطاقة مطلوب"
+  },
   "shell": {
     "ltr_1": "rtl",
     "left0_2": "right-0"
@@ -847,5 +1064,101 @@
       "title": "القسم"
     },
     "logout": "تسجيل الخروج"
-  }
+  },
+  "shipments": {
+    "error": {
+      "not_found": "الشحنة غير موجودة"
+    },
+    "status": {
+      "created": "تم الإنشاء",
+      "picked_up": "تم الاستلام",
+      "in_transit": "قيد النقل",
+      "out_for_delivery": "خرجت للتوصيل",
+      "delivered": "تم التسليم",
+      "failed": "فشل التسليم",
+      "returned": "تم الإرجاع"
+    },
+    "detail": {
+      "title": "تفاصيل الشحنة",
+      "to_address": "عنوان التسليم",
+      "tracking_timeline": "مسار التتبع",
+      "messages": "الرسائل",
+      "package_info": "معلومات الطرد",
+      "weight": "الوزن",
+      "dimensions": "الأبعاد",
+      "contents": "المحتويات"
+    }
+  },
+  "transactions": {
+    "type": {
+      "deposit": "إيداع",
+      "refund": "استرداد",
+      "rental_payment": "دفعة إيجار",
+      "tna_issuance": "إصدار TNA",
+      "withdrawal": "سحب"
+    }
+  },
+  "units": {
+    "days": "أيام"
+  },
+  "wallet": {
+    "available_balance": "الرصيد المتاح",
+    "columns": {
+      "amount": "المبلغ",
+      "date": "التاريخ",
+      "status": "الحالة",
+      "type": "النوع"
+    },
+    "statement": "كشف الحساب",
+    "top_up": "شحن الرصيد",
+    "transactions_title": "المعاملات"
+  },
+  "actions": "الإجراءات",
+  "active": "نشط",
+  "addProperty": "إضافة عقار",
+  "all": "الكل",
+  "approve": "موافقة",
+  "authorityShare": "حصة الهيئة",
+  "awaitingApproval": "بانتظار موافقة المالك",
+  "bindingActivated": "تم تفعيل الربط",
+  "bindingDetailsDesc": "تفاصيل طلب الربط بين TNA والوحدة",
+  "bindingInformation": "معلومات الربط",
+  "bindingTerminated": "تم إنهاء الربط",
+  "completed": "مكتمل",
+  "createSubAddress": "إنشاء وحدة فرعية",
+  "createdAt": "تاريخ الإنشاء",
+  "description": "الوصف",
+  "descriptionDescription": "وصف اختياري للوحدة",
+  "endDate": "تاريخ النهاية",
+  "financialContract": "التفاصيل المالية",
+  "financialDetailsDesc": "تفاصيل توزيع المبلغ المالي للربط",
+  "financialNote": "توضح التفاصيل المالية المبلغ النهائي الذي سيستلمه المالك بعد خصم جميع الرسوم.",
+  "grossAmount": "الإجمالي",
+  "label": "التسمية",
+  "labelDescription": "اسم الوحدة",
+  "loading": "جاري التحميل...",
+  "netOwnerAmount": "صافي المبلغ للمالك",
+  "noBindings": "لا توجد طلبات ربط",
+  "noBindingsDescription": "لا توجد لديك طلبات ربط حالياً.",
+  "noBindingsWithFilter": "لا توجد طلبات ربط بحالة {status}",
+  "noBindingsWithFilterDescription": "لا توجد طلبات ربط بهذه الحالة.",
+  "note": "ملاحظة",
+  "pending": "قيد الانتظار",
+  "platformFee": "رسوم المنصة",
+  "property": "العقار",
+  "reject": "رفض",
+  "requestApproved": "تمت الموافقة على الطلب",
+  "requestCreated": "تم إنشاء طلب الربط",
+  "startDate": "تاريخ البداية",
+  "status": "الحالة",
+  "statusTimeline": "الخط الزمني للحالة",
+  "suffixCode": "كود اللاحقة",
+  "suffixCodeDescription": "4 أحرف فريدة للوحدة، مثال ROOM",
+  "terminate": "إنهاء",
+  "terminated": "منتهي",
+  "terminatedByAgreement": "تم إنهاء الربط بالاتفاق",
+  "terminationReason": "سبب الإنهاء",
+  "tnaCode": "كود TNA",
+  "unit": "الوحدة",
+  "viewDetails": "عرض التفاصيل"
 }
