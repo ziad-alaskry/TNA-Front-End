@@ -45,12 +45,16 @@ export default function GovHomeModule() {
         {/* SYSTEM HEALTH TOP STATS */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { label: t('gov.tna_pending_1'), value: pendingTNARequests.length, icon: ShieldCheck, color: 'text-warning', bg: 'bg-warning/10' },
-            { label: t('gov.addresses_pending_2'), value: pendingAddressRequests.length, icon: MapPin, color: 'text-secondary', bg: 'bg-secondary/10' },
-            { label: t('gov.adjustments_pending_3'), value: pendingAdjustments.length, icon: CurrencyDollar, color: 'text-primary', bg: 'bg-primary/10' },
-            { label: t('gov.autoapproval_rate_4'), value: '87%', icon: CheckCircle, color: 'text-success', bg: 'bg-success/10' },
+            { label: t('gov.tna_pending_1'), value: pendingTNARequests.length, icon: ShieldCheck, color: 'text-warning', bg: 'bg-warning/10', path: 'tna-queue' },
+            { label: t('gov.addresses_pending_2'), value: pendingAddressRequests.length, icon: MapPin, color: 'text-secondary', bg: 'bg-secondary/10', path: 'address-queue' },
+            { label: t('gov.adjustments_pending_3'), value: pendingAdjustments.length, icon: CurrencyDollar, color: 'text-primary', bg: 'bg-primary/10', path: 'adjustments' },
+            { label: t('gov.autoapproval_rate_4'), value: '87%', icon: CheckCircle, color: 'text-success', bg: 'bg-success/10', path: 'policy' },
           ].map((stat, i) => (
-            <div key={i} className="bg-white p-6 rounded-2xl border border-neutral-100 shadow-sm flex items-center gap-4 group hover:border-primary/20 transition-all">
+            <div 
+              key={i} 
+              onClick={() => router.push(`/${locale}/gov/${stat.path}`)}
+              className="bg-white p-6 rounded-2xl border border-neutral-100 shadow-sm flex items-center gap-4 group hover:border-primary/20 transition-all cursor-pointer"
+            >
               <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center transition-all", stat.bg, stat.color)}>
                 <stat.icon size={28} weight="bold" />
               </div>

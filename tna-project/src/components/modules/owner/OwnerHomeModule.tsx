@@ -42,12 +42,16 @@ export default function OwnerHomeModule() {
       {/* TOP STATS GRID */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: 'Properties', value: properties?.length || 0, icon: Buildings, color: 'text-primary', bg: 'bg-primary/10' },
-          { label: 'Active Bindings', value: activeBindings.length, icon: LinkIcon, color: 'text-success', bg: 'bg-success/10' },
-          { label: 'Pending Requests', value: pendingBindings.length, icon: Clock, color: 'text-warning', bg: 'bg-warning/10' },
-          { label: 'Total Earnings', value: `SAR 12,300`, icon: TrendUp, color: 'text-secondary', bg: 'bg-secondary/10' },
+          { label: 'Properties', value: properties?.length || 0, icon: Buildings, color: 'text-primary', bg: 'bg-primary/10', path: 'properties' },
+          { label: 'Active Bindings', value: activeBindings.length, icon: LinkIcon, color: 'text-success', bg: 'bg-success/10', path: 'bindings' },
+          { label: 'Pending Requests', value: pendingBindings.length, icon: Clock, color: 'text-warning', bg: 'bg-warning/10', path: 'bindings' },
+          { label: 'Total Earnings', value: `SAR 12,300`, icon: TrendUp, color: 'text-secondary', bg: 'bg-secondary/10', path: 'earnings' },
         ].map((stat, i) => (
-          <div key={i} className="bg-white p-6 rounded-2xl border border-neutral-100 shadow-sm flex items-center gap-4 group hover:border-primary/20 transition-all">
+          <div 
+            key={i} 
+            onClick={() => router.push(`/${locale}/owner/${stat.path}`)}
+            className="bg-white p-6 rounded-2xl border border-neutral-100 shadow-sm flex items-center gap-4 group hover:border-primary/20 transition-all cursor-pointer"
+          >
             <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center transition-all", stat.bg, stat.color)}>
               <stat.icon size={28} weight="bold" />
             </div>
@@ -100,7 +104,8 @@ export default function OwnerHomeModule() {
               {pendingBindings.map((bind) => (
                 <div 
                   key={bind.binding_id}
-                  className="bg-white rounded-2xl border border-neutral-100 shadow-sm p-4 flex items-center gap-4 hover:border-warning/30 transition-all group"
+                  className="bg-white rounded-2xl border border-neutral-100 shadow-sm p-4 flex items-center gap-4 hover:border-warning/30 transition-all group cursor-pointer"
+                  onClick={() => router.push(`/${locale}/owner/bindings`)}
                 >
                   <div className="w-12 h-12 rounded-xl bg-warning/10 flex items-center justify-center text-warning group-hover:scale-110 transition-transform">
                     <User size={24} weight="bold" />
@@ -113,7 +118,7 @@ export default function OwnerHomeModule() {
                     <p className="font-bold text-neutral-900">Request for TNA: <span className="font-mono text-primary">{bind.tna_code}</span></p>
                     <p className="text-xs text-neutral-500 mt-0.5">Unit: {bind.sub_address_id} | Period: {new Date(bind.start_at).toLocaleDateString()} → {new Date(bind.end_at).toLocaleDateString()}</p>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
                     <Button size="sm" className="h-8 px-4 text-[10px]" onClick={() => router.push(`/${locale}/owner/bindings`)}>
                       Accept
                     </Button>
@@ -174,7 +179,10 @@ export default function OwnerHomeModule() {
           </section>
 
            {/* QUICK PERFORMANCE CHART */}
-           <section className="bg-surface-200 rounded-3xl border border-neutral-200 p-6 space-y-4">
+           <section 
+             onClick={() => router.push(`/${locale}/owner/earnings`)}
+             className="bg-surface-200 rounded-3xl border border-neutral-200 p-6 space-y-4 cursor-pointer hover:border-primary/30 transition-all"
+           >
              <div className="flex items-center gap-2">
                <ChartLineUp size={20} className="text-success" />
                <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest">Weekly Revenue</h3>

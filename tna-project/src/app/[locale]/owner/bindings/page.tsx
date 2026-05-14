@@ -76,6 +76,7 @@ export default function OwnerBindingsPage() {
             label: t('owner.period_49'),
             width: '20%',
             render: (row) => {
+                if (!row || !row.start_at || !row.end_at) return null;
                 const start = new Date(row.start_at);
                 const end = new Date(row.end_at);
                 const formattedStart = start.toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' });
