@@ -3,6 +3,7 @@
 import React from 'react';
 import { Wallet } from '@phosphor-icons/react';
 import { cn } from '@/lib/utils/cn';
+import { useLocale } from '@/i18n/LocaleProvider';
 
 interface WalletBalanceChipProps {
   balance: number;
@@ -17,6 +18,8 @@ export function WalletBalanceChip({
   onClick, 
   className 
 }: WalletBalanceChipProps) {
+  const { t } = useLocale();
+
   return (
     <div 
       onClick={onClick}
@@ -30,7 +33,7 @@ export function WalletBalanceChip({
       </div>
       <div className="flex flex-col">
         <span className="text-[10px] leading-none font-bold text-neutral-400 uppercase tracking-widest">
-          Balance
+          {t('common.wallet_balance')}
         </span>
         <span className="text-sm leading-none font-bold text-primary tabular-nums">
           {balance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <span className="text-[10px] opacity-70">{currency}</span>

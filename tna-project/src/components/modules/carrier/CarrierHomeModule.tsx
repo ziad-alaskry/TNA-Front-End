@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import { 
   Truck, 
@@ -26,7 +26,7 @@ import {
 
 export default function CarrierHomeModule() {
   const router = useRouter();
-  const { locale, isRTL } = useLocale();
+  const { locale, isRTL, t } = useLocale();
 
   const { data: shipments, isLoading } = useMock(mockShipments);
 
@@ -40,10 +40,10 @@ export default function CarrierHomeModule() {
       {/* PERFORMANCE OVERVIEW */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: 'Pending Pickups', value: pendingPickups.length, icon: Clock, color: 'text-warning', bg: 'bg-warning/10', path: 'shipments' },
-          { label: 'In Transit', value: inTransit.length, icon: Truck, color: 'text-primary', bg: 'bg-primary/10', path: 'shipments' },
-          { label: 'Delivered Today', value: deliveredToday.length, icon: CheckCircle, color: 'text-success', bg: 'bg-success/10', path: 'shipments' },
-          { label: 'Active Drivers', value: '18', icon: Users, color: 'text-secondary', bg: 'bg-secondary/10', path: 'staff' },
+          { label: t('carrier.home.stats.pending_pickups'), value: pendingPickups.length, icon: Clock, color: 'text-warning', bg: 'bg-warning/10', path: 'shipments' },
+          { label: t('carrier.home.stats.in_transit'), value: inTransit.length, icon: Truck, color: 'text-primary', bg: 'bg-primary/10', path: 'shipments' },
+          { label: t('carrier.home.stats.delivered_today'), value: deliveredToday.length, icon: CheckCircle, color: 'text-success', bg: 'bg-success/10', path: 'shipments' },
+          { label: t('carrier.home.stats.active_drivers'), value: '18', icon: Users, color: 'text-secondary', bg: 'bg-secondary/10', path: 'staff' },
         ].map((stat, i) => (
           <div 
             key={i} 
@@ -72,13 +72,13 @@ export default function CarrierHomeModule() {
               <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md">
                 <Scan size={28} weight="bold" />
               </div>
-              <h2 className="text-3xl font-black tracking-tight leading-tight">Instant Shipment Scanner</h2>
-              <p className="text-white/80 text-sm md:text-base">Scan TNA barcodes or QR codes to instantly retrieve shipment details and update statuses.</p>
+              <h2 className="text-3xl font-black tracking-tight leading-tight">{t('carrier.home.scanner.title')}</h2>
+              <p className="text-white/80 text-sm md:text-base">{t('carrier.home.scanner.description')}</p>
               <div className="pt-2">
                 <Button 
                   className="bg-white text-primary hover:bg-neutral-100 border-none px-8 py-4 font-bold shadow-xl"
                 >
-                  Open Scanner Simulator
+                  {t('carrier.home.scanner.cta')}
                   <ArrowRight size={20} className={cn("ml-2", isRTL && "rotate-180")} />
                 </Button>
               </div>
@@ -89,12 +89,12 @@ export default function CarrierHomeModule() {
           {/* ACTIVE SHIPMENTS FEED */}
           <section className="space-y-4 text-start">
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-black text-neutral-900 tracking-tight">Active Operations</h3>
+              <h3 className="text-xl font-black text-neutral-900 tracking-tight">{t('carrier.home.operations.title')}</h3>
               <button 
                 onClick={() => router.push(`/${locale}/carrier/shipments`)}
                 className="text-sm font-bold text-primary flex items-center gap-1 hover:underline"
               >
-                Manage All
+                {t('carrier.home.operations.manage_all')}
                 <CaretRight size={14} className={cn(isRTL && "rotate-180")} />
               </button>
             </div>
@@ -110,13 +110,13 @@ export default function CarrierHomeModule() {
                   </div>
                   <div className="flex-1">
                     <div className="flex justify-between items-start">
-                      <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">{ship.status}</p>
+                      <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">{t(`carrier.statuses.${ship.status}`)}</p>
                       <span className="text-[10px] font-bold text-neutral-500">{ship.tracking_number}</span>
                     </div>
-                    <p className="font-bold text-neutral-900 leading-tight">Deliver to: <span className="text-primary font-mono">{ship.tna_id}</span></p>
+                    <p className="font-bold text-neutral-900 leading-tight">{t('carrier.home.operations.deliver_to')}: <span className="text-primary font-mono">{ship.tna_id}</span></p>
                     <div className="flex items-center gap-1.5 mt-1">
                       <MapPin size={12} className="text-neutral-400" />
-                      <p className="text-[10px] text-neutral-500 font-medium">Recipient: {ship.recipient_name}</p>
+                      <p className="text-[10px] text-neutral-500 font-medium">{t('carrier.home.operations.recipient')}: {t('carrier.home.mock.recipient_abdullah')}</p>
                     </div>
                   </div>
                   <Button 
@@ -125,7 +125,7 @@ export default function CarrierHomeModule() {
                     className="h-9 px-4 text-xs gap-2 border-neutral-200"
                     onClick={() => router.push(`/${locale}/carrier/shipments/${ship.shipment_id}`)}
                   >
-                    Update
+                    {t('carrier.update_status_29')}
                     <NavigationArrow size={16} weight="fill" />
                   </Button>
                 </div>
@@ -142,13 +142,13 @@ export default function CarrierHomeModule() {
            <section className="bg-white rounded-3xl border border-neutral-200 shadow-xl p-6 space-y-6">
              <div className="flex items-center gap-2">
                <ChartBar size={20} className="text-primary" weight="fill" />
-               <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest">Operations Overview</h3>
+               <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest">{t('carrier.home.overview.title')}</h3>
              </div>
              
              <div className="space-y-4">
                <div className="space-y-1.5">
                  <div className="flex justify-between text-[10px] font-black uppercase">
-                   <span className="text-neutral-500">Fleet Utilization</span>
+                   <span className="text-neutral-500">{t('carrier.home.overview.fleet_utilization')}</span>
                    <span className="text-primary">{mockFleetUtilization}%</span>
                  </div>
                  <div className="h-2 w-full bg-neutral-100 rounded-full overflow-hidden">
@@ -157,7 +157,7 @@ export default function CarrierHomeModule() {
                </div>
                <div className="space-y-1.5">
                  <div className="flex justify-between text-[10px] font-black uppercase">
-                   <span className="text-neutral-500">Task Distribution</span>
+                   <span className="text-neutral-500">{t('carrier.home.overview.task_distribution')}</span>
                  </div>
                  <div className="grid grid-cols-3 gap-2">
                    <div className="bg-neutral-100 rounded-full h-2.5 w-full">
@@ -171,9 +171,9 @@ export default function CarrierHomeModule() {
                    </div>
                  </div>
                  <div className="flex justify-between text-[10px] font-bold text-neutral-400 uppercase tracking-tighter">
-                   <span>Pending</span>
-                   <span>In Transit</span>
-                   <span>Delivered</span>
+                   <span>{t('carrier.statuses.CREATED')}</span>
+                   <span>{t('carrier.statuses.IN_TRANSIT')}</span>
+                   <span>{t('carrier.statuses.DELIVERED')}</span>
                  </div>
                  <div className="grid grid-cols-2 gap-2 mt-4">
                    <Button 
@@ -181,13 +181,13 @@ export default function CarrierHomeModule() {
                      size="sm"
                      onClick={() => router.push(`/${locale}/carrier/fleet-map`)}
                    >
-                     Show Map
+                     {t('carrier.home.overview.show_map')}
                    </Button>
                    <Button 
                      variant="outline"
                      size="sm"
                      onClick={() => router.push(`/${locale}/carrier/analytics`)}>
-                     View Analytics
+                     {t('carrier.home.overview.view_analytics')}
                    </Button>
                  </div>
                </div>
@@ -197,16 +197,16 @@ export default function CarrierHomeModule() {
 
              <div className="flex items-center gap-3 p-3 bg-warning/5 border border-warning/10 rounded-xl">
                <Warning size={20} className="text-warning shrink-0" weight="fill" />
-               <p className="text-[10px] text-warning-dark font-medium">3 staff members require certification renewal within the next 48 hours.</p>
+               <p className="text-[10px] text-warning-dark font-medium">{t('carrier.home.overview.certification_warning')}</p>
              </div>
           </section>
 
           {/* QUICK LINKS */}
           <section className="space-y-3">
             {[
-              { label: 'Manage Routes', icon: MapPin, path: 'fleet' },
-              { label: 'Staff Management', icon: Users, path: 'staff' },
-              { label: 'Vehicle Maintenance', icon: Truck, path: 'fleet' },
+              { label: t('carrier.home.quick_links.manage_routes'), icon: MapPin, path: 'fleet' },
+              { label: t('carrier.home.quick_links.staff_management'), icon: Users, path: 'staff' },
+              { label: t('carrier.home.quick_links.vehicle_maintenance'), icon: Truck, path: 'fleet' },
             ].map((link, i) => (
               <button 
                 key={i}

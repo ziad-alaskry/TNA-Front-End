@@ -26,7 +26,7 @@ export function ProfileModule({ role }: ProfileModuleProps) {
       fleetSize: 12,
     },
     Gov: {
-      department: 'Monitoring & Compliance',
+      department: 'monitoring_compliance',
     }
   }
 
@@ -47,12 +47,12 @@ export function ProfileModule({ role }: ProfileModuleProps) {
           <User size={40} weight="duotone" />
         </div>
         <div>
-          <h2 className="text-2xl font-bold text-neutral-900">{user?.full_name || 'User Name'}</h2>
+          <h2 className="text-2xl font-bold text-neutral-900">{user?.full_name || t('profile.default_user_name')}</h2>
           <span className={cn(
             "inline-block mt-1 px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full",
             getRoleBadgeColor()
           )}>
-            {t(`common.roles.${role}.overview`)}
+            {t(`common.roles.${role}.profile`)}
           </span>
         </div>
       </div>
@@ -78,7 +78,7 @@ export function ProfileModule({ role }: ProfileModuleProps) {
               <Wallet size={20} className="text-primary" />
               <h3 className="font-semibold text-neutral-900">{t('profile.wallet.title')}</h3>
             </div>
-            <p className="text-xl font-bold text-primary">{balance.toLocaleString()} SAR</p>
+            <p className="text-xl font-bold text-primary">{balance.toLocaleString()} {t('common.currency')}</p>
             <p className="text-xs text-neutral-500 mt-1">{t('profile.wallet.available')}</p>
           </div>
         )}
@@ -114,8 +114,8 @@ export function ProfileModule({ role }: ProfileModuleProps) {
               <Bank size={20} className="text-purple-600" />
               <h3 className="font-semibold text-neutral-900">{t('profile.department.title')}</h3>
             </div>
-            <p className="text-sm font-bold text-purple-600">{mockData.Gov.department}</p>
-            <p className="text-xs text-neutral-500 mt-1">{t('common.roles.Gov.overview')}</p>
+            <p className="text-sm font-bold text-purple-600">{t(`profile.department.values.${mockData.Gov.department}`)}</p>
+            <p className="text-xs text-neutral-500 mt-1">{t('common.roles.Gov.profile')}</p>
           </div>
         )}
       </div>
