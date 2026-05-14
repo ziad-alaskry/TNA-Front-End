@@ -25,7 +25,17 @@
     "goBack": "الرجوع",
     "signOut": "تسجيل الخروج",
     "breadcrumbs": {
-      "search": "البحث"
+      "home": "الرئيسية",
+      "search": "البحث",
+      "shipments": "الشحنات",
+      "profile": "الملف الشخصي",
+      "bindings": "طلبات الربط",
+      "earnings": "الأرباح",
+      "staff": "الموظفون",
+      "settings": "الإعدادات",
+      "integration": "التكامل",
+      "driver": "السائق",
+      "tasks": "المهام"
     },
     "roles": {
       "Visitor": {
@@ -87,6 +97,7 @@
     },
     "statuses": {
       "ACTIVE": "نشط",
+      "INACTIVE": "غير نشط",
       "PENDING": "قيد المراجعة",
       "EXPIRED": "منتهي",
       "REJECTED": "مرفوض",
@@ -347,6 +358,66 @@
         }
       }
     },
+    "shipments_page": {
+      "header": "تتبع الشحنات",
+      "title": "سجل الشحنات",
+      "columns": {
+        "tracking_number": "رقم التتبع",
+        "carrier": "الناقل",
+        "tna_code": "كود العنوان",
+        "status": "الحالة",
+        "estimated_delivery": "الموعد المتوقع"
+      },
+      "statuses": {
+        "IN_TRANSIT": "في الطريق",
+        "DELIVERED": "تم التوصيل",
+        "OUT_FOR_DELIVERY": "مع المندوب",
+        "PENDING": "قيد التجهيز"
+      },
+      "destinations": {
+        "malqa_riyadh": "الملقا، الرياض",
+        "narjis_riyadh": "النرجس، الرياض"
+      },
+      "actions": {
+        "new_shipment": "طلب شحن جديد"
+      },
+      "notes": {
+        "auto_update": "يتم تحديث حالات الشحنات تلقائياً بناءً على بيانات الناقلين."
+      }
+    },
+    "profile_page": {
+      "header": "الحساب الشخصي",
+      "title": "إعدادات الملف الشخصي",
+      "member_since": "زائر • عضو منذ 2025",
+      "mock": {
+        "full_name": "احمد محمد العتيبي",
+        "short_name": "أحمد العتيبي"
+      },
+      "personal_info": {
+        "title": "المعلومات الشخصية",
+        "description": "بياناتك الشخصية الأساسية كما هي مسجلة في النظام.",
+        "full_name": "الاسم الكامل",
+        "email": "البريد الإلكتروني",
+        "mobile": "رقم الجوال",
+        "birth_date": "تاريخ الميلاد"
+      },
+      "identity": {
+        "title": "بيانات الهوية",
+        "description": "تفاصيل وثيقة إثبات الشخصية المعتمدة.",
+        "document_type": "نوع الوثيقة",
+        "national_id": "هوية وطنية",
+        "document_number": "رقم الوثيقة",
+        "expiry_date": "تاريخ الانتهاء",
+        "verification_status": "حالة التحقق",
+        "verified_nafath": "موثق عبر نفاذ"
+      },
+      "actions": {
+        "notification_preferences": "تفضيلات التنبيهات",
+        "change_language": "تغيير اللغة",
+        "kyc_verification": "التحقق من الهوية (KYC)",
+        "change_password": "تغيير كلمة المرور"
+      }
+    },
     "tna_code_1": "كود TNA",
     "status_2": "الحالة",
     "issued_at_3": "تاريخ الإصدار",
@@ -389,6 +460,131 @@
     "wallet": "المحفظة"
   },
   "owner": {
+    "home": {
+      "header": "لوحة تحكم المالك",
+      "stats": {
+        "properties": "العقارات",
+        "active_bindings": "الروابط النشطة",
+        "pending_requests": "الطلبات المعلقة",
+        "total_earnings": "إجمالي الأرباح"
+      },
+      "banner": {
+        "title": "ضاعف إمكانات عقارك",
+        "description": "أدرج وحداتك السكنية أو التجارية وابدأ بتحقيق دخل من طلبات ربط TNA اليوم.",
+        "cta": "إضافة عقار جديد"
+      },
+      "pending": {
+        "title": "الطلبات المعلقة",
+        "new_request": "طلب ربط جديد",
+        "request_for_tna": "طلب لـ TNA",
+        "unit": "الوحدة",
+        "period": "الفترة",
+        "accept": "قبول",
+        "decline": "رفض",
+        "empty": "لا توجد طلبات معلقة حالياً."
+      },
+      "wallet": {
+        "title": "المحفظة الرقمية",
+        "available_balance": "الرصيد المتاح",
+        "withdraw": "سحب الأموال",
+        "total_withdrawn": "إجمالي المسحوب"
+      },
+      "revenue": {
+        "title": "إيرادات الأسبوع",
+        "days": {
+          "sun": "الأحد",
+          "mon": "الاثنين",
+          "tue": "الثلاثاء",
+          "wed": "الأربعاء",
+          "thu": "الخميس",
+          "fri": "الجمعة",
+          "sat": "السبت"
+        }
+      }
+    },
+    "bindings_page": {
+      "header": "طلبات الربط",
+      "title": "روابط العقارات",
+      "filters": {
+        "all": "الكل"
+      },
+      "statuses": {
+        "PENDING": "معلق",
+        "ACTIVE": "نشط",
+        "COMPLETED": "مكتمل",
+        "TERMINATED": "منتهي",
+        "CANCELLED": "ملغى"
+      },
+      "actions": {
+        "approve": "قبول",
+        "reject": "رفض",
+        "terminate": "إنهاء",
+        "view_details": "عرض التفاصيل"
+      },
+      "units": {
+        "sub-1-room": "غرفة ضيوف",
+        "sub-2-apt1": "شقة 1"
+      },
+      "empty": {
+        "no_bindings": "لا توجد طلبات ربط",
+        "no_bindings_description": "لا توجد لديك طلبات ربط حالياً.",
+        "no_bindings_with_filter": "لا توجد روابط بحالة {status}",
+        "no_bindings_with_filter_description": "لا توجد روابط بالحالة {status}.",
+        "add_property": "إضافة عقار"
+      }
+    },
+    "earnings_page": {
+      "header": "الأرباح والمحفظة",
+      "withdrawable_balance": "الرصيد القابل للسحب",
+      "request_bank_transfer": "طلب تحويل بنكي",
+      "transfer_history": "سجل التحويلات",
+      "total_earnings": "إجمالي الأرباح",
+      "monthly_change": "+١٢٪ من الشهر الماضي",
+      "previous_payouts": "المدفوعات السابقة",
+      "last_payout": "آخر عملية منذ ١٠ أيام",
+      "revenue_overview": "موجز الإيرادات",
+      "chart_placeholder": "الرسم البياني للتوزيع المالي سيظهر هنا",
+      "recent_transactions": "سجل العمليات الأخيرة",
+      "periods": {
+        "day": "يوم",
+        "week": "أسبوع",
+        "month": "شهر",
+        "year": "سنة"
+      },
+      "columns": {
+        "source": "مصدر الدخل",
+        "date": "التاريخ",
+        "amount": "المبلغ",
+        "status": "الحالة"
+      },
+      "statuses": {
+        "COMPLETED": "مكتملة",
+        "PENDING": "معلقة"
+      },
+      "sources": {
+        "binding_sq": "رسوم ربط: ص . ق",
+        "binding_mk": "رسوم ربط: م . خ",
+        "binding_nt": "رسوم ربط: ن . ط"
+      },
+      "properties": {
+        "malqa_villa_12": "فيلا الملقا ١٢",
+        "narjis_building": "عمارة النرجس"
+      }
+    },
+    "withdrawal": {
+      "title": "سحب الرصيد",
+      "available_balance": "الرصيد المتاح",
+      "amount_label": "المبلغ المراد سحبه",
+      "minimum": "الحد الأدنى للسحب {amount} SAR",
+      "choose_method": "اختر طريقة السحب",
+      "bank_transfer": "تحويل بنكي (IBAN)",
+      "bank_eta": "يصل خلال ٢٤-٤٨ ساعة عمل",
+      "stcpay_eta": "تحويل فوري عبر رقم الجوال",
+      "confirm_request": "تأكيد الطلب",
+      "success_title": "تم استلام طلبك",
+      "success_message": "جاري معالجة طلب سحب مبلغ {amount} عبر {method}.",
+      "return_home": "العودة للوحة التحكم"
+    },
     "property": {
       "deed_required": "إثبات الملكية مطلوب للتحقق من العقار.",
       "registration": "تسجيل عقار",
@@ -491,6 +687,113 @@
     "ltr_3": "rtl"
   },
   "carrier": {
+    "statuses": {
+      "CREATED": "معلق",
+      "PICKED_UP": "تم الاستلام",
+      "IN_TRANSIT": "في الطريق",
+      "OUT_FOR_DELIVERY": "مع المندوب",
+      "DELIVERED": "تم التوصيل",
+      "FAILED": "فشل",
+      "RETURNED": "مرتجع"
+    },
+    "home": {
+      "header": "لوحة تحكم الناقل",
+      "stats": {
+        "pending_pickups": "عمليات الاستلام المعلقة",
+        "in_transit": "في الطريق",
+        "delivered_today": "تم توصيلها اليوم",
+        "active_drivers": "السائقون النشطون"
+      },
+      "scanner": {
+        "title": "ماسح الشحنات الفوري",
+        "description": "امسح باركود أو رمز QR الخاص بـ TNA لاسترجاع تفاصيل الشحنة وتحديث حالتها فوراً.",
+        "cta": "فتح محاكي الماسح"
+      },
+      "operations": {
+        "title": "العمليات النشطة",
+        "manage_all": "إدارة الكل",
+        "deliver_to": "التوصيل إلى",
+        "recipient": "المستلم"
+      },
+      "mock": {
+        "recipient_abdullah": "عبدالله الغامدي"
+      },
+      "overview": {
+        "title": "نظرة عامة على العمليات",
+        "fleet_utilization": "استخدام الأسطول",
+        "task_distribution": "توزيع المهام",
+        "show_map": "عرض الخريطة",
+        "view_analytics": "عرض التحليلات",
+        "certification_warning": "3 موظفين يحتاجون إلى تجديد الشهادات خلال 48 ساعة القادمة."
+      },
+      "quick_links": {
+        "manage_routes": "إدارة المسارات",
+        "staff_management": "إدارة الموظفين",
+        "vehicle_maintenance": "صيانة المركبات"
+      }
+    },
+    "shipments_page": {
+      "header": "إدارة الشحنات",
+      "title": "الشحنات النشطة"
+    },
+    "staff_page": {
+      "header": "إدارة الموظفين",
+      "title": "قائمة فريق النقل",
+      "columns": {
+        "employee_name": "اسم الموظف",
+        "position": "الدور الوظيفي",
+        "mobile": "رقم الجوال",
+        "employee_id": "الرقم الوظيفي",
+        "status": "الحالة",
+        "last_login": "آخر دخول"
+      },
+      "positions": {
+        "DRIVER": "سائق",
+        "DISPATCHER": "موزع عمليات",
+        "MANAGER": "مدير عمليات"
+      },
+      "status": {
+        "active": "نشط",
+        "inactive": "متوقف"
+      },
+      "names": {
+        "STF-001": "محمد علي",
+        "STF-002": "إبراهيم حسن",
+        "STF-003": "خالد صالح",
+        "STF-004": "فهد السبيعي"
+      },
+      "actions": {
+        "add_staff": "إضافة موظف جديد",
+        "view_details": "عرض التفاصيل",
+        "more": "المزيد"
+      }
+    },
+    "integration_page": {
+      "header": "إعدادات الربط التقني (API)",
+      "status": {
+        "title": "حالة الربط: متصل",
+        "description": "نظامكم البريدي يستقبل التحديثات بشكل صحيح عبر الويب هوك.",
+        "live_endpoint": "نقطة اتصال مباشرة"
+      },
+      "api_keys": {
+        "title": "مفاتيح الوصول (API Keys)",
+        "live_secret_key": "مفتاح Live السري",
+        "generating": "جاري التحديث...",
+        "regenerate": "توليد مفتاح جديد"
+      },
+      "webhooks": {
+        "title": "تنبيهات الويب هوك (Webhooks)",
+        "url_label": "رابط الاستقبال (URL)",
+        "security_title": "تأمين الاتصال",
+        "security_description": "يجب أن يكون الرابط مشفراً (HTTPS) لدواعي أمنية وحماية خصوصية بيانات العناوين الوطنية."
+      },
+      "docs": {
+        "title": "دليل الربط للمطورين",
+        "description": "راجع مستندات API لمعرفة كيفية استقبال تحديثات العناوين وتتبع الشحنات.",
+        "download_pdf": "تحميل PDF"
+      },
+      "save_changes": "حفظ التغييرات"
+    },
     "resolve": {
       "unlinked": "TNA غير مرتبط بأي عنوان",
       "deliverable": "عنوان قابل للتوصيل",
@@ -873,11 +1176,65 @@
     "tna_request_183": "طلب TNA",
     "document_type_184": "نوع المستند",
     "missing_185": "غير متوفر",
+    "mock": {
+      "tna_requests": {
+        "req-pending-1": {
+          "visitor_name": "عبدالله الغامدي",
+          "nationality": "السعودية"
+        },
+        "req-pending-2": {
+          "visitor_name": "سارة أحمد",
+          "nationality": "مصر"
+        },
+        "req-pending-3": {
+          "visitor_name": "مايكل سميث",
+          "nationality": "المملكة المتحدة"
+        },
+        "req-pending-4": {
+          "visitor_name": "فاطمة الزهراء",
+          "nationality": "المغرب"
+        }
+      },
+      "address_requests": {
+        "sub-001": {
+          "owner_name": "محمد آل سعود",
+          "full_address": "1234 طريق الملك فهد، حي العليا، الرياض",
+          "label": "الوحدة 1"
+        },
+        "sub-002": {
+          "owner_name": "مصرف الراجحي",
+          "full_address": "8472 طريق الأمير محمد بن فهد، الخبر",
+          "label": "مكتب فرعي"
+        },
+        "sub-003": {
+          "owner_name": "نورة المنصوري",
+          "full_address": "5678 طريق الملك عبدالعزيز، جدة",
+          "label": "شقة 3"
+        }
+      },
+      "adjustments": {
+        "adj-001": {
+          "reason": "خطأ في احتساب رسوم الربط BIND-123",
+          "initiated_by": "مستخدم حكومي"
+        },
+        "adj-002": {
+          "reason": "استرداد رسوم مكررة",
+          "initiated_by": "النظام"
+        }
+      }
+    },
+    "policy": {
+      "options": {
+        "MODERATED": "مراجعة يدوية",
+        "AUTONOMOUS": "إصدار تلقائي"
+      }
+    },
     "agencies": {
       "title": "الجهات الحكومية",
       "add_new": "إضافة جهة جديدة",
       "tab": "الجهات",
       "table": {
+        "id_label": "المعرف",
         "headers": {
           "name": "اسم الجهة",
           "region": "المنطقة",
@@ -900,6 +1257,26 @@
             "riyadh": "الرياض",
             "jeddah": "جدة"
           }
+        }
+      },
+      "mock": {
+        "AG-01": {
+          "name": "هيئة الاتصالات",
+          "region": "الرياض",
+          "department": "التراخيص",
+          "admin_user": "سعد المنصور"
+        },
+        "AG-02": {
+          "name": "وزارة الشؤون البلدية",
+          "region": "جدة",
+          "department": "التخطيط الحضري",
+          "admin_user": "نورة السعيد"
+        },
+        "AG-03": {
+          "name": "البريد السعودي (سبل)",
+          "region": "الدمام",
+          "department": "عمليات الخدمات اللوجستية",
+          "admin_user": "إبراهيم حسن"
         }
       }
     },
@@ -930,6 +1307,20 @@
           "permissions": "الصلاحيات",
           "name_placeholder": "الاسم الكامل",
           "email_placeholder": "name@agency.gov.sa"
+        }
+      },
+      "mock": {
+        "STF-501": {
+          "name": "محمد القحطاني",
+          "department": "إدارة العناوين"
+        },
+        "STF-442": {
+          "name": "سارة العتيبي",
+          "department": "السياسات والأنظمة"
+        },
+        "STF-330": {
+          "name": "خالد السبيعي",
+          "department": "الدعم الفني"
         }
       }
     }
@@ -1169,8 +1560,12 @@
       "count": "{count} مركبات نشطة"
     },
     "department": {
-      "title": "القسم"
+      "title": "القسم",
+      "values": {
+        "monitoring_compliance": "المراقبة والامتثال"
+      }
     },
+    "default_user_name": "اسم المستخدم",
     "logout": "تسجيل الخروج"
   },
   "shipments": {

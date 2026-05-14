@@ -3,13 +3,9 @@
 import React from 'react'
 import { AppShell } from '@/components/layout/AppShell'
 import DataTableLayout, { DataTableColumn } from '@/components/templates/DataTableLayout'
-import { useRouter, useParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { 
-  Package, 
-  Truck, 
-  CheckCircle, 
   MapPin,
-  ArrowRight,
   Plus
 } from '@phosphor-icons/react'
 import { useLocale } from '@/i18n/LocaleProvider'
@@ -17,7 +13,6 @@ import { mockShipments } from '@/lib/mock/shipments.mock'
 import { useMock } from '@/lib/hooks/useMock'
 import Button from '@/components/ui/Button'
 import { cn } from '@/lib/utils/cn'
-import { useTranslation } from 'react-i18next';
 
 export default function CarrierShipmentsPage() {
     const router = useRouter();
@@ -43,11 +38,11 @@ export default function CarrierShipmentsPage() {
             width: '20%',
             render: (val) => (
                 <span className={cn(
-                    "px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-widest",
+                    "px-2 py-0.5 rounded text-[10px] font-black tracking-widest",
                     val === 'DELIVERED' ? "bg-success/10 text-success" : 
                     val === 'IN_TRANSIT' ? "bg-primary/10 text-primary" : "bg-warning/10 text-warning"
                 )}>
-                    {val}
+                    {t(`carrier.statuses.${val}`)}
                 </span>
             )
         },
@@ -63,7 +58,7 @@ export default function CarrierShipmentsPage() {
                       className="h-8 px-3 text-[10px] border-neutral-200"
                       onClick={() => router.push(`/${locale}/carrier/shipments/${id}`)}
                     >
-                      Update Status
+                      {t('carrier.update_status_29')}
                     </Button>
                 </div>
             )
@@ -71,9 +66,9 @@ export default function CarrierShipmentsPage() {
     ];
 
     return (
-        <AppShell role="Carrier">
+        <AppShell role="Carrier" header={t('carrier.shipments_page.header')}>
             <DataTableLayout
-                title="Active Shipments"
+                title={t('carrier.shipments_page.title')}
                 columns={columns}
                 data={shipments || []}
                 isLoading={isLoading}

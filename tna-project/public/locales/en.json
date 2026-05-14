@@ -25,7 +25,17 @@
     "goBack": "Go Back",
     "signOut": "Sign Out",
     "breadcrumbs": {
-      "search": "Search"
+      "home": "Home",
+      "search": "Search",
+      "shipments": "Shipments",
+      "profile": "Profile",
+      "bindings": "Bindings",
+      "earnings": "Earnings",
+      "staff": "Staff",
+      "settings": "Settings",
+      "integration": "Integration",
+      "driver": "Driver",
+      "tasks": "Tasks"
     },
     "roles": {
       "Visitor": {
@@ -87,6 +97,7 @@
     },
     "statuses": {
       "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
       "PENDING": "Pending Review",
       "EXPIRED": "Expired",
       "REJECTED": "Rejected",
@@ -347,6 +358,66 @@
         }
       }
     },
+    "shipments_page": {
+      "header": "Track Shipments",
+      "title": "Shipments History",
+      "columns": {
+        "tracking_number": "Tracking Number",
+        "carrier": "Carrier",
+        "tna_code": "TNA Code",
+        "status": "Status",
+        "estimated_delivery": "Estimated Delivery"
+      },
+      "statuses": {
+        "IN_TRANSIT": "In Transit",
+        "DELIVERED": "Delivered",
+        "OUT_FOR_DELIVERY": "Out for Delivery",
+        "PENDING": "Pending"
+      },
+      "destinations": {
+        "malqa_riyadh": "Al Malqa, Riyadh",
+        "narjis_riyadh": "Al Narjis, Riyadh"
+      },
+      "actions": {
+        "new_shipment": "New Shipment Request"
+      },
+      "notes": {
+        "auto_update": "Shipment statuses are automatically updated based on carrier data."
+      }
+    },
+    "profile_page": {
+      "header": "Profile",
+      "title": "Profile Settings",
+      "member_since": "Visitor • Member since 2025",
+      "mock": {
+        "full_name": "Ahmed Mohammed Al Otaibi",
+        "short_name": "Ahmed Al Otaibi"
+      },
+      "personal_info": {
+        "title": "Personal Information",
+        "description": "Your basic personal details as registered in the system.",
+        "full_name": "Full Name",
+        "email": "Email",
+        "mobile": "Mobile Number",
+        "birth_date": "Date of Birth"
+      },
+      "identity": {
+        "title": "Identity Information",
+        "description": "Details of your approved identity document.",
+        "document_type": "Document Type",
+        "national_id": "National ID",
+        "document_number": "Document Number",
+        "expiry_date": "Expiry Date",
+        "verification_status": "Verification Status",
+        "verified_nafath": "Verified via Nafath"
+      },
+      "actions": {
+        "notification_preferences": "Notification Preferences",
+        "change_language": "Change Language",
+        "kyc_verification": "Verification (KYC)",
+        "change_password": "Change Password"
+      }
+    },
     "tna_code_1": "TNA Code",
     "status_2": "Status",
     "issued_at_3": "Issued At",
@@ -389,6 +460,131 @@
     "wallet": "Wallet"
   },
   "owner": {
+    "home": {
+      "header": "Owner Dashboard",
+      "stats": {
+        "properties": "Properties",
+        "active_bindings": "Active Bindings",
+        "pending_requests": "Pending Requests",
+        "total_earnings": "Total Earnings"
+      },
+      "banner": {
+        "title": "Maximize Your Property's Potential",
+        "description": "List your residential or commercial units and start earning from TNA binding requests today.",
+        "cta": "Add New Property"
+      },
+      "pending": {
+        "title": "Pending Requests",
+        "new_request": "New Binding Request",
+        "request_for_tna": "Request for TNA",
+        "unit": "Unit",
+        "period": "Period",
+        "accept": "Accept",
+        "decline": "Decline",
+        "empty": "No pending requests at the moment."
+      },
+      "wallet": {
+        "title": "Digital Wallet",
+        "available_balance": "Available Balance",
+        "withdraw": "Withdraw Funds",
+        "total_withdrawn": "Total Withdrawn"
+      },
+      "revenue": {
+        "title": "Weekly Revenue",
+        "days": {
+          "sun": "Sun",
+          "mon": "Mon",
+          "tue": "Tue",
+          "wed": "Wed",
+          "thu": "Thu",
+          "fri": "Fri",
+          "sat": "Sat"
+        }
+      }
+    },
+    "bindings_page": {
+      "header": "Linking Requests",
+      "title": "Property Bindings",
+      "filters": {
+        "all": "All"
+      },
+      "statuses": {
+        "PENDING": "Pending",
+        "ACTIVE": "Active",
+        "COMPLETED": "Completed",
+        "TERMINATED": "Terminated",
+        "CANCELLED": "Cancelled"
+      },
+      "actions": {
+        "approve": "Approve",
+        "reject": "Reject",
+        "terminate": "Terminate",
+        "view_details": "View Details"
+      },
+      "units": {
+        "sub-1-room": "Guest Room",
+        "sub-2-apt1": "Apartment 1"
+      },
+      "empty": {
+        "no_bindings": "No bindings found",
+        "no_bindings_description": "You have no binding requests at the moment.",
+        "no_bindings_with_filter": "No {status} bindings found",
+        "no_bindings_with_filter_description": "There are no bindings with {status} status.",
+        "add_property": "Add Property"
+      }
+    },
+    "earnings_page": {
+      "header": "Earnings and Wallet",
+      "withdrawable_balance": "Withdrawable Balance",
+      "request_bank_transfer": "Request Bank Transfer",
+      "transfer_history": "Transfer History",
+      "total_earnings": "Total Earnings",
+      "monthly_change": "+12% from last month",
+      "previous_payouts": "Previous Payouts",
+      "last_payout": "Last transaction 10 days ago",
+      "revenue_overview": "Revenue Overview",
+      "chart_placeholder": "Financial distribution chart will appear here",
+      "recent_transactions": "Recent Transactions",
+      "periods": {
+        "day": "Day",
+        "week": "Week",
+        "month": "Month",
+        "year": "Year"
+      },
+      "columns": {
+        "source": "Income Source",
+        "date": "Date",
+        "amount": "Amount",
+        "status": "Status"
+      },
+      "statuses": {
+        "COMPLETED": "Completed",
+        "PENDING": "Pending"
+      },
+      "sources": {
+        "binding_sq": "Binding Fee: S. Q.",
+        "binding_mk": "Binding Fee: M. K.",
+        "binding_nt": "Binding Fee: N. T."
+      },
+      "properties": {
+        "malqa_villa_12": "Al Malqa Villa 12",
+        "narjis_building": "Al Narjis Building"
+      }
+    },
+    "withdrawal": {
+      "title": "Withdraw Balance",
+      "available_balance": "Available Balance",
+      "amount_label": "Amount to Withdraw",
+      "minimum": "Minimum withdrawal amount is {amount} SAR",
+      "choose_method": "Choose withdrawal method",
+      "bank_transfer": "Bank Transfer (IBAN)",
+      "bank_eta": "Arrives within 24-48 business hours",
+      "stcpay_eta": "Instant transfer via mobile number",
+      "confirm_request": "Confirm Request",
+      "success_title": "Your request has been received",
+      "success_message": "Your withdrawal request for {amount} via {method} is being processed.",
+      "return_home": "Return to Dashboard"
+    },
     "property": {
       "deed_required": "Title deed reference is required for property verification.",
       "registration": "Property Registration",
@@ -491,6 +687,113 @@
     "ltr_3": "ltr"
   },
   "carrier": {
+    "statuses": {
+      "CREATED": "Pending",
+      "PICKED_UP": "Picked Up",
+      "IN_TRANSIT": "In Transit",
+      "OUT_FOR_DELIVERY": "Out for Delivery",
+      "DELIVERED": "Delivered",
+      "FAILED": "Failed",
+      "RETURNED": "Returned"
+    },
+    "home": {
+      "header": "Carrier Dashboard",
+      "stats": {
+        "pending_pickups": "Pending Pickups",
+        "in_transit": "In Transit",
+        "delivered_today": "Delivered Today",
+        "active_drivers": "Active Drivers"
+      },
+      "scanner": {
+        "title": "Instant Shipment Scanner",
+        "description": "Scan TNA barcodes or QR codes to instantly retrieve shipment details and update statuses.",
+        "cta": "Open Scanner Simulator"
+      },
+      "operations": {
+        "title": "Active Operations",
+        "manage_all": "Manage All",
+        "deliver_to": "Deliver to",
+        "recipient": "Recipient"
+      },
+      "mock": {
+        "recipient_abdullah": "Abdullah Al-Ghamdi"
+      },
+      "overview": {
+        "title": "Operations Overview",
+        "fleet_utilization": "Fleet Utilization",
+        "task_distribution": "Task Distribution",
+        "show_map": "Show Map",
+        "view_analytics": "View Analytics",
+        "certification_warning": "3 staff members require certification renewal within the next 48 hours."
+      },
+      "quick_links": {
+        "manage_routes": "Manage Routes",
+        "staff_management": "Staff Management",
+        "vehicle_maintenance": "Vehicle Maintenance"
+      }
+    },
+    "shipments_page": {
+      "header": "Shipment Management",
+      "title": "Active Shipments"
+    },
+    "staff_page": {
+      "header": "Staff Management",
+      "title": "Transport Team",
+      "columns": {
+        "employee_name": "Employee Name",
+        "position": "Position",
+        "mobile": "Mobile Number",
+        "employee_id": "Employee ID",
+        "status": "Status",
+        "last_login": "Last Login"
+      },
+      "positions": {
+        "DRIVER": "Driver",
+        "DISPATCHER": "Dispatcher",
+        "MANAGER": "Operations Manager"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "names": {
+        "STF-001": "Mohammed Ali River",
+        "STF-002": "Ibrahim Hassan",
+        "STF-003": "Khaled Saleh",
+        "STF-004": "Fahad Alsubaie"
+      },
+      "actions": {
+        "add_staff": "Add New Staff",
+        "view_details": "View Details",
+        "more": "More"
+      }
+    },
+    "integration_page": {
+      "header": "Technical Integration Settings (API)",
+      "status": {
+        "title": "Connection Status: Connected",
+        "description": "Your postal system is receiving updates correctly through the webhook.",
+        "live_endpoint": "Live Endpoint"
+      },
+      "api_keys": {
+        "title": "Access Keys (API Keys)",
+        "live_secret_key": "Live Secret Key",
+        "generating": "Regenerating...",
+        "regenerate": "Regenerate Key"
+      },
+      "webhooks": {
+        "title": "Webhook Notifications",
+        "url_label": "Receiver URL",
+        "security_title": "Connection Security",
+        "security_description": "The URL must use HTTPS for security and to protect national address data privacy."
+      },
+      "docs": {
+        "title": "Developer Integration Guide",
+        "description": "Review the API documentation to learn how to receive address updates and track shipments.",
+        "download_pdf": "Download PDF"
+      },
+      "save_changes": "Save Changes"
+    },
     "resolve": {
       "unlinked": "TNA not linked to any address",
       "deliverable": "Deliverable Address",
@@ -873,11 +1176,65 @@
     "tna_request_183": "TNA Request",
     "document_type_184": "Document Type",
     "missing_185": "Missing",
+    "mock": {
+      "tna_requests": {
+        "req-pending-1": {
+          "visitor_name": "Abdullah Al-Ghamdi",
+          "nationality": "Saudi Arabia"
+        },
+        "req-pending-2": {
+          "visitor_name": "Sara Ahmed",
+          "nationality": "Egypt"
+        },
+        "req-pending-3": {
+          "visitor_name": "Michael Smith",
+          "nationality": "UK"
+        },
+        "req-pending-4": {
+          "visitor_name": "Fatima Zahra",
+          "nationality": "Morocco"
+        }
+      },
+      "address_requests": {
+        "sub-001": {
+          "owner_name": "Mohammed Al-Saud",
+          "full_address": "1234 King Fahd Road, Al Olaya District, Riyadh",
+          "label": "Unit 1"
+        },
+        "sub-002": {
+          "owner_name": "Al Rajhi Bank",
+          "full_address": "8472 Prince Mohammed Bin Fahd Road, Al Khobar",
+          "label": "Branch Office"
+        },
+        "sub-003": {
+          "owner_name": "Noura Al-Mansouri",
+          "full_address": "5678 King Abdulaziz Road, Jeddah",
+          "label": "Apartment 3"
+        }
+      },
+      "adjustments": {
+        "adj-001": {
+          "reason": "Incorrect fee calculation on binding BIND-123",
+          "initiated_by": "Gov User"
+        },
+        "adj-002": {
+          "reason": "Duplicate charge refund",
+          "initiated_by": "System"
+        }
+      }
+    },
+    "policy": {
+      "options": {
+        "MODERATED": "Moderated",
+        "AUTONOMOUS": "Autonomous"
+      }
+    },
     "agencies": {
       "title": "Government Agencies",
       "add_new": "Add New Agency",
       "tab": "Agencies",
       "table": {
+        "id_label": "ID",
         "headers": {
           "name": "Agency Name",
           "region": "Region",
@@ -900,6 +1257,26 @@
             "riyadh": "Riyadh",
             "jeddah": "Jeddah"
           }
+        }
+      },
+      "mock": {
+        "AG-01": {
+          "name": "Communications Authority",
+          "region": "Riyadh",
+          "department": "Licensing",
+          "admin_user": "Saad Al-Mansour"
+        },
+        "AG-02": {
+          "name": "Ministry of Municipal Affairs",
+          "region": "Jeddah",
+          "department": "Urban Planning",
+          "admin_user": "Noura Al-Saeed"
+        },
+        "AG-03": {
+          "name": "Saudi Post (SPL)",
+          "region": "Dammam",
+          "department": "Logistics Operations",
+          "admin_user": "Ibrahim Hassan"
         }
       }
     },
@@ -930,6 +1307,20 @@
           "permissions": "Permissions",
           "name_placeholder": "Full Name",
           "email_placeholder": "name@agency.gov.sa"
+        }
+      },
+      "mock": {
+        "STF-501": {
+          "name": "Mohammed Al-Qahtani",
+          "department": "Address Management"
+        },
+        "STF-442": {
+          "name": "Sara Al-Otaibi",
+          "department": "Policies and Systems"
+        },
+        "STF-330": {
+          "name": "Khaled Al-Subaie",
+          "department": "Technical Support"
         }
       }
     }
@@ -1169,8 +1560,12 @@
       "count": "{count} Active vehicles"
     },
     "department": {
-      "title": "Department"
+      "title": "Department",
+      "values": {
+        "monitoring_compliance": "Monitoring & Compliance"
+      }
     },
+    "default_user_name": "User Name",
     "logout": "Logout"
   },
   "shipments": {

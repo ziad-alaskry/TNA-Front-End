@@ -20,7 +20,6 @@ import { useMock } from '@/lib/hooks/useMock'
 import Button from '@/components/ui/Button'
 import Modal from '@/components/ui/Modal'
 import { cn } from '@/lib/utils/cn'
-import { useTranslation } from 'react-i18next';
 
 interface SettlementAdjustment {
     adjustment_id: string;
@@ -42,6 +41,12 @@ export default function GovAdjustmentsPage() {
     const [isProcessing, setIsProcessing] = useState(false);
 
     const pendingAdjustments = adjustments?.filter(a => a.status === 'PENDING' && a.approval_required) || [];
+    const currency = t('common.currency');
+    const getAdjustmentText = (id: string, field: 'reason' | 'initiated_by', fallback: string) => {
+        const key = `gov.mock.adjustments.${id}.${field}`;
+        const translated = t(key);
+        return translated === key ? fallback : translated;
+    };
 
     const columns: DataTableColumn<SettlementAdjustment>[] = [
         {
@@ -64,7 +69,7 @@ export default function GovAdjustmentsPage() {
                     "font-mono font-bold",
                     val >= 0 ? "text-success" : "text-error"
                 )}>
-                    {val >= 0 ? '+' : ''}{val.toFixed(2)} SAR
+                    {val >= 0 ? '+' : ''}{val.toFixed(2)} {currency}
                 </span>
             )
         },
@@ -72,18 +77,18 @@ export default function GovAdjustmentsPage() {
             key: 'reason',
             label: t('gov.reason_101'),
             width: '30%',
-            render: (val) => (
-                <span className="text-xs text-neutral-600 line-clamp-2">{val}</span>
+            render: (val, row) => (
+                <span className="text-xs text-neutral-600 line-clamp-2">{getAdjustmentText(row.adjustment_id, 'reason', val)}</span>
             )
         },
         {
             key: 'initiated_by',
             label: t('gov.initiated_by_102'),
             width: '15%',
-            render: (val) => (
+            render: (val, row) => (
                 <div className="flex items-center gap-2 text-xs text-neutral-600">
                     <User size={14} />
-                    {val}
+                    {getAdjustmentText(row.adjustment_id, 'initiated_by', val)}
                 </div>
             )
         },
@@ -92,7 +97,7 @@ export default function GovAdjustmentsPage() {
             label: t('gov.created_at_103'),
             width: '15%',
             render: (val) => (
-                <span className="text-xs text-neutral-500">{new Date(val).toLocaleDateString()}</span>
+                <span className="text-xs text-neutral-500">{new Date(val).toLocaleDateString(locale)}</span>
             )
         },
         {
@@ -170,12 +175,12 @@ export default function GovAdjustmentsPage() {
                                     "text-2xl font-mono font-bold",
                                     selectedAdjustment.amount >= 0 ? "text-success" : "text-error"
                                 )}>
-                                    {selectedAdjustment.amount >= 0 ? '+' : ''}{selectedAdjustment.amount.toFixed(2)} SAR
+                                    {selectedAdjustment.amount >= 0 ? '+' : ''}{selectedAdjustment.amount.toFixed(2)} {currency}
                                 </p>
                             </div>
                             <div className="p-4 bg-neutral-50 rounded-xl border border-neutral-100">
                                 <p className="text-xs font-bold text-neutral-400 uppercase mb-2">{t('gov.reason_114')}</p>
-                                <p className="text-sm text-neutral-700">{selectedAdjustment.reason}</p>
+                                <p className="text-sm text-neutral-700">{getAdjustmentText(selectedAdjustment.adjustment_id, 'reason', selectedAdjustment.reason)}</p>
                             </div>
                         </div>
                         

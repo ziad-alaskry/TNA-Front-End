@@ -17,7 +17,6 @@ import { useRouter } from 'next/navigation'
 import { useLocale } from '@/i18n/LocaleProvider'
 import Button from '@/components/ui/Button'
 import { cn } from '@/lib/utils/cn'
-import { useTranslation } from 'react-i18next';
 
 export default function GovPolicyPage() {
     const router = useRouter();
@@ -104,7 +103,9 @@ return (
                                             )}
                                             {item.type === 'select' && (
                                                 <select className="h-10 px-4 bg-surface-200 rounded-xl border border-neutral-100 text-sm font-bold text-neutral-900 outline-none">
-                                                    {((item as any).options as string[]).map(o => <option key={o} value={o}>{o}</option>)}
+                                                    {((item as any).options as string[]).map(o => (
+                                                        <option key={o} value={o}>{t(`gov.policy.options.${o}`)}</option>
+                                                    ))}
                                                 </select>
                                             )}
                                         </div>

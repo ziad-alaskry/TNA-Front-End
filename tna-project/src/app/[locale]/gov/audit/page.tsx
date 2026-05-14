@@ -16,10 +16,9 @@ import { useLocale } from '@/i18n/LocaleProvider'
 import { mockTNAs } from '@/lib/mock/tnas.mock'
 import { useMock } from '@/lib/hooks/useMock'
 import { cn } from '@/lib/utils/cn'
-import { useTranslation } from 'react-i18next';
 
 export default function GovAuditPage() {
-    const {  isRTL , t } = useLocale();
+    const {  locale, isRTL , t } = useLocale();
     const { data: tnas, isLoading } = useMock(mockTNAs);
 
     const columns: DataTableColumn<any>[] = [
@@ -44,7 +43,7 @@ export default function GovAuditPage() {
             key: 'created_at',
             label: t('gov.timestamp_90'),
             width: '25%',
-            render: (val) => <span className="text-xs font-medium text-neutral-500">{new Date(val).toISOString()}</span>
+            render: (val) => <span className="text-xs font-medium text-neutral-500">{new Date(val).toLocaleString(locale)}</span>
         },
         {
             key: 'status',

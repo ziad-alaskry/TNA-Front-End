@@ -17,12 +17,16 @@ import { useLocale } from '@/i18n/LocaleProvider'
 import { mockSubAddressQueue } from '@/lib/mock/gov.mock'
 import { useMock } from '@/lib/hooks/useMock'
 import Button from '@/components/ui/Button'
-import { useTranslation } from 'react-i18next';
 
 export default function GovAddressQueuePage() {
     const router = useRouter();
     const {  locale, isRTL , t } = useLocale();
     const { data: queue, isLoading } = useMock(mockSubAddressQueue);
+    const getAddressText = (id: string, field: 'owner_name' | 'full_address' | 'label', fallback: string) => {
+        const key = `gov.mock.address_requests.${id}.${field}`;
+        const translated = t(key);
+        return translated === key ? fallback : translated;
+    };
 
     const columns: DataTableColumn<any>[] = [
         {
@@ -35,7 +39,7 @@ export default function GovAddressQueuePage() {
                         <User size={20} weight="duotone" />
                     </div>
                     <div className="flex flex-col">
-                        <span className="font-bold text-neutral-900 line-clamp-1">{val}</span>
+                        <span className="font-bold text-neutral-900 line-clamp-1">{getAddressText(row.sub_address_id, 'owner_name', val)}</span>
                         <span className="text-[10px] text-neutral-400">{row.owner_type === 'INDIVIDUAL' ? (t('gov.individual_118')) : (t('gov.business_119'))}</span>
                     </div>
                 </div>
@@ -45,10 +49,10 @@ export default function GovAddressQueuePage() {
             key: 'full_address',
             label: t('gov.full_address_120'),
             width: '35%',
-            render: (val) => (
+            render: (val, row) => (
                 <div className="flex items-center gap-2 text-xs text-neutral-600">
                     <MapPin size={14} className="shrink-0" />
-                    <span className="line-clamp-1">{val}</span>
+                    <span className="line-clamp-1">{getAddressText(row.sub_address_id, 'full_address', val)}</span>
                 </div>
             )
         },
@@ -57,7 +61,7 @@ export default function GovAddressQueuePage() {
             label: t('gov.suffix_121'),
             width: '10%',
             render: (val, row) => (
-                <span className="font-mono font-bold text-primary">{val} - {row.label}</span>
+                <span className="font-mono font-bold text-primary">{val} - {getAddressText(row.sub_address_id, 'label', row.label)}</span>
             )
         },
         {
@@ -67,7 +71,7 @@ export default function GovAddressQueuePage() {
             render: (val) => (
                 <div className="flex items-center gap-2 text-neutral-500">
                     <Calendar size={14} />
-                    <span className="text-xs font-medium">{new Date(val).toLocaleDateString()}</span>
+                    <span className="text-xs font-medium">{new Date(val).toLocaleDateString(locale)}</span>
                 </div>
             )
         },

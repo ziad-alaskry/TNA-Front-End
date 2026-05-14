@@ -16,11 +16,13 @@ import {
 import InputField from '@/components/ui/InputField'
 import Button from '@/components/ui/Button'
 import { cn } from '@/lib/utils/cn'
+import { useLocale } from '@/i18n/LocaleProvider'
 
 export default function CarrierIntegrationPage() {
     const [apiKey, setApiKey] = useState('tna_live_51M4e7xS9W2v8J0Lp1Q3z5X7c9V1b3N5m7Q')
     const [isCopied, setIsCopied] = useState(false)
     const [isGenerating, setIsGenerating] = useState(false)
+    const { t, dir } = useLocale()
 
     const handleCopy = () => {
         navigator.clipboard.writeText(apiKey)
@@ -37,8 +39,8 @@ export default function CarrierIntegrationPage() {
     }
 
     return (
-        <AppShell role="Carrier" header="إعدادات الربط التقني (API)">
-            <div className="max-w-4xl space-y-8 pb-20" dir="rtl">
+        <AppShell role="Carrier" header={t('carrier.integration_page.header')}>
+            <div className="max-w-4xl space-y-8 pb-20" dir={dir}>
                 {/* Connection Status Card */}
                 <div className="p-6 rounded-lg border border-success/10 bg-success-light flex items-center justify-between animate-in fade-in duration-standard">
                     <div className="flex items-center gap-4">
@@ -46,13 +48,13 @@ export default function CarrierIntegrationPage() {
                             <ShieldCheck size={24} weight="fill" />
                         </div>
                         <div>
-                            <h3 className="text-lg font-bold text-text-primary">حالة الربط: متصل</h3>
-                            <p className="text-xs text-text-secondary font-medium">نظامكم البريدي يستقبل التحديثات بشكل صحيح عبر الويب هوك.</p>
+                            <h3 className="text-lg font-bold text-text-primary">{t('carrier.integration_page.status.title')}</h3>
+                            <p className="text-xs text-text-secondary font-medium">{t('carrier.integration_page.status.description')}</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-2 px-3 py-1 bg-white/50 rounded-full text-[10px] font-bold text-success border border-success/10">
                         <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
-                        Live Endpoint
+                        {t('carrier.integration_page.status.live_endpoint')}
                     </div>
                 </div>
 
@@ -63,12 +65,12 @@ export default function CarrierIntegrationPage() {
                             <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center text-primary font-bold">
                                 <Key size={20} weight="bold" />
                             </div>
-                            <h4 className="font-bold text-neutral-900">مفاتيح الوصول (API Keys)</h4>
+                            <h4 className="font-bold text-neutral-900">{t('carrier.integration_page.api_keys.title')}</h4>
                         </div>
                         
                         <div className="space-y-4">
                             <div className="space-y-1.5">
-                                <label className="block text-label font-bold text-neutral-700 ps-1">Live Secret Key</label>
+                                <label className="block text-label font-bold text-neutral-700 ps-1">{t('carrier.integration_page.api_keys.live_secret_key')}</label>
                                 <div className="relative group">
                                     <input 
                                         type="password" 
@@ -94,7 +96,7 @@ export default function CarrierIntegrationPage() {
                                 disabled={isGenerating}
                             >
                                 <ArrowsClockwise size={16} className={isGenerating ? 'animate-spin' : ''} />
-                                {isGenerating ? 'جاري التحديث...' : 'توليد مفتاح جديد'}
+                                {isGenerating ? t('carrier.integration_page.api_keys.generating') : t('carrier.integration_page.api_keys.regenerate')}
                             </Button>
                         </div>
                     </div>
@@ -105,21 +107,21 @@ export default function CarrierIntegrationPage() {
                             <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center text-primary font-bold">
                                 <Webhook size={20} weight="bold" />
                             </div>
-                            <h4 className="font-bold text-neutral-900">تنبيهات الويب هوك (Webhooks)</h4>
+                            <h4 className="font-bold text-neutral-900">{t('carrier.integration_page.webhooks.title')}</h4>
                         </div>
                         <div className="space-y-4">
                             <InputField 
-                                label="رابط الاستقبال (URL)" 
+                                label={t('carrier.integration_page.webhooks.url_label')}
                                 placeholder="https://api.yourcompany.com/tna-updates"
                                 defaultValue="https://post.smsa-express.com/v1/webhooks"
                             />
                             <div className="p-4 bg-warning-bg border border-warning/10 rounded-md">
                                 <p className="text-[10px] text-warning font-bold flex items-center gap-2">
                                     <WarningCircle size={14} weight="fill" />
-                                    تأمين الاتصال
+                                    {t('carrier.integration_page.webhooks.security_title')}
                                 </p>
                                 <p className="text-[10px] text-neutral-600 mt-1 leading-relaxed">
-                                    يجب أن يكون الرابط مشفراً (HTTPS) لدواعي أمنية وحماية خصوصية بيانات العناوين الوطنية.
+                                    {t('carrier.integration_page.webhooks.security_description')}
                                 </p>
                             </div>
                         </div>
@@ -134,18 +136,18 @@ export default function CarrierIntegrationPage() {
                                 <Link size={24} />
                             </div>
                             <div>
-                                <h4 className="font-bold text-neutral-900">دليل الربط للمطورين</h4>
-                                <p className="text-xs text-neutral-500">راجع مستندات API لمعرفة كيفية استقبال تحديثات العناوين وتتبع الشحنات.</p>
+                                <h4 className="font-bold text-neutral-900">{t('carrier.integration_page.docs.title')}</h4>
+                                <p className="text-xs text-neutral-500">{t('carrier.integration_page.docs.description')}</p>
                             </div>
                         </div>
-                        <Button variant="ghost" size="sm">تحميل PDF</Button>
+                        <Button variant="ghost" size="sm">{t('carrier.integration_page.docs.download_pdf')}</Button>
                     </div>
                 </div>
 
                 {/* Save Footer */}
                 <div className="pt-8 border-t border-neutral-200 flex justify-end gap-3">
-                    <Button variant="ghost" className="px-8">تجاهل</Button>
-                    <Button className="px-12 ui-gradient-primary border-none shadow-glow-primary">حفظ التغييرات</Button>
+                    <Button variant="ghost" className="px-8">{t('common.cancel')}</Button>
+                    <Button className="px-12 ui-gradient-primary border-none shadow-glow-primary">{t('carrier.integration_page.save_changes')}</Button>
                 </div>
             </div>
         </AppShell>
