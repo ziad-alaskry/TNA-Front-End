@@ -570,8 +570,7 @@
    }
    @media (max-width: 639px) {
      .auth-bg-pattern {
-       display: none;
-       opacity: 0;
+       background-image: none;
      }
    }
  }
@@ -580,7 +579,6 @@
   .mirror-directional {
     @apply rtl:-scale-x-100;
   }
-  
   .active-press {
     @apply active:scale-95 transition-transform duration-fast;
   }
