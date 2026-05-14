@@ -6,12 +6,11 @@ import DataTableLayout, { DataTableColumn } from '@/components/templates/DataTab
 import { 
     Package as PackageIcon, 
     Truck as TruckIcon, 
-    Calendar as CalendarIcon, 
-    MapPin as MapPinIcon, 
     Info as InfoIcon 
 } from '@phosphor-icons/react'
-import { useRouter, useParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import Button from '@/components/ui/Button'
+import { useLocale } from '@/i18n/LocaleProvider'
 
 interface Shipment {
     id: string;
@@ -19,7 +18,7 @@ interface Shipment {
     carrier: string;
     status: 'IN_TRANSIT' | 'DELIVERED' | 'OUT_FOR_DELIVERY' | 'PENDING';
     tna_code: string;
-    destination: string;
+    destination_key: 'malqa_riyadh' | 'narjis_riyadh';
     estimated_delivery: string;
 }
 
@@ -30,7 +29,7 @@ const mockShipments: Shipment[] = [
         carrier: 'Smsa Express',
         status: 'IN_TRANSIT',
         tna_code: 'TNA-667722',
-        destination: 'الملقا، الرياض',
+        destination_key: 'malqa_riyadh',
         estimated_delivery: '2025/11/20'
     },
     {
@@ -39,7 +38,7 @@ const mockShipments: Shipment[] = [
         carrier: 'Aramex',
         status: 'DELIVERED',
         tna_code: 'TNA-102938',
-        destination: 'النرجس، الرياض',
+        destination_key: 'narjis_riyadh',
         estimated_delivery: '2025/11/15'
     },
     {
@@ -48,18 +47,18 @@ const mockShipments: Shipment[] = [
         carrier: 'Spl Online',
         status: 'OUT_FOR_DELIVERY',
         tna_code: 'TNA-667722',
-        destination: 'الملقا، الرياض',
+        destination_key: 'malqa_riyadh',
         estimated_delivery: '2025/11/18'
     }
 ];
 
 export default function VisitorShipmentsPage() {
     const router = useRouter();
-    const { locale } = useParams();
+    const { locale, t } = useLocale();
     const columns: DataTableColumn<Shipment>[] = [
         {
             key: 'tracking_number',
-            label: 'رقم التتبع',
+            label: t('visitor.shipments_page.columns.tracking_number'),
             render: (val) => (
                 <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-sm bg-neutral-100 flex items-center justify-center text-neutral-400">
@@ -71,44 +70,44 @@ export default function VisitorShipmentsPage() {
         },
         {
             key: 'carrier',
-            label: 'الناقل',
+            label: t('visitor.shipments_page.columns.carrier'),
             render: (val) => <span className="font-medium">{val}</span>
         },
         {
             key: 'tna_code',
-            label: 'كود العنوان',
+            label: t('visitor.shipments_page.columns.tna_code'),
             render: (val) => <span className="font-mono text-primary font-bold">{val}</span>
         },
         {
             key: 'status',
-            label: 'الحالة',
+            label: t('visitor.shipments_page.columns.status'),
             render: (val) => {
-                const configs: Record<Shipment['status'], { label: string; class: string }> = {
-                    IN_TRANSIT: { label: 'في الطريق', class: 'bg-info-bg text-primary' },
-                    DELIVERED: { label: 'تم التوصيل', class: 'bg-success-bg text-success' },
-                    OUT_FOR_DELIVERY: { label: 'مع المندوب', class: 'bg-warning-bg text-warning' },
-                    PENDING: { label: 'قيد التجهيز', class: 'bg-neutral-100 text-neutral-500' },
+                const configs: Record<Shipment['status'], { class: string }> = {
+                    IN_TRANSIT: { class: 'bg-info-bg text-primary' },
+                    DELIVERED: { class: 'bg-success-bg text-success' },
+                    OUT_FOR_DELIVERY: { class: 'bg-warning-bg text-warning' },
+                    PENDING: { class: 'bg-neutral-100 text-neutral-500' },
                 };
                 const config = configs[val as Shipment['status']];
-                return <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider ${config.class}`}>{config.label}</span>
+                return <span className={`px-2 py-1 rounded text-[10px] font-bold tracking-wider ${config.class}`}>{t(`visitor.shipments_page.statuses.${val}`)}</span>
             }
         },
         {
             key: 'estimated_delivery',
-            label: 'الموعد المتوقع',
+            label: t('visitor.shipments_page.columns.estimated_delivery'),
             render: (val, row) => (
                 <div className="flex flex-col">
                     <span className="text-xs font-semibold">{val}</span>
-                    <span className="text-[10px] text-neutral-400">{row.destination}</span>
+                    <span className="text-[10px] text-neutral-400">{t(`visitor.shipments_page.destinations.${row.destination_key}`)}</span>
                 </div>
             )
         }
     ];
 
   return (
-    <AppShell role="Visitor" header="تتبع الشحنات">
+    <AppShell role="Visitor" header={t('visitor.shipments_page.header')}>
       <DataTableLayout
-        title="سجل الشحنات"
+        title={t('visitor.shipments_page.title')}
         columns={columns}
         data={mockShipments}
         onRowClick={(row) => router.push(`/${locale}/visitor/shipments/${row.id}`)}
@@ -118,13 +117,13 @@ export default function VisitorShipmentsPage() {
                 className="ui-gradient-primary text-white h-10 px-4 rounded-md font-bold flex items-center gap-2 border-none shadow-glow-primary hover:opacity-90 transition-opacity"
             >
                 <PackageIcon size={20} className="text-white" />
-                طلب شحن جديد
+                {t('visitor.shipments_page.actions.new_shipment')}
             </Button>
         }
       >
         <div className="flex items-center gap-2 p-3 bg-primary/5 rounded-md border border-primary/10">
           <InfoIcon size={20} weight="fill" className="text-primary" />
-          <p className="text-xs text-neutral-600">يتم تحديث حالات الشحنات تلقائياً بناءً على بيانات الناقلين.</p>
+          <p className="text-xs text-neutral-600">{t('visitor.shipments_page.notes.auto_update')}</p>
         </div>
       </DataTableLayout>
     </AppShell>

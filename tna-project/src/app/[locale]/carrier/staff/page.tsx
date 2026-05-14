@@ -14,7 +14,7 @@ import {
   Shield,
   ArrowsDownUp
 } from '@phosphor-icons/react'
-import { useRouter, useParams } from 'next/navigation'
+import { useLocale } from '@/i18n/LocaleProvider'
 
 // Aligned with carrier_staff table from data model v2.1
 interface StaffMember {
@@ -73,20 +73,19 @@ const mockStaff: StaffMember[] = [
 ];
 
 export default function CarrierStaffPage() {
-  const router = useRouter();
-  const { locale } = useParams();
+  const { locale, t } = useLocale();
 
   const columns: DataTableColumn<StaffMember>[] = [
     {
       key: 'full_name',
-      label: 'اسم الموظف',
-      render: (val, row) => (
+      label: t('carrier.staff_page.columns.employee_name'),
+      render: (_, row) => (
         <div className="flex items-center gap-3 min-w-0">
           <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
             <User size={20} weight="bold" />
           </div>
           <div className="flex flex-col min-w-0">
-            <span className="font-bold text-neutral-900 truncate">{val}</span>
+            <span className="font-bold text-neutral-900 truncate">{t(`carrier.staff_page.names.${row.staff_id}`)}</span>
             <span className="text-[10px] text-neutral-400 truncate">ID: {row.staff_id}</span>
           </div>
         </div>
@@ -94,14 +93,14 @@ export default function CarrierStaffPage() {
     },
     {
       key: 'position',
-      label: 'الدور الوظيفي',
+      label: t('carrier.staff_page.columns.position'),
       width: '120px',
       render: (val) => {
         const position = val as StaffMember['position'];
         const labels: Record<StaffMember['position'], string> = {
-          DRIVER: 'سائق',
-          DISPATCHER: 'موزع عمليات',
-          MANAGER: 'مدير عمليات',
+          DRIVER: t('carrier.staff_page.positions.DRIVER'),
+          DISPATCHER: t('carrier.staff_page.positions.DISPATCHER'),
+          MANAGER: t('carrier.staff_page.positions.MANAGER'),
         };
         const icons: Record<StaffMember['position'], React.ReactNode> = {
           DRIVER: <ShieldCheck size={14} className="text-primary" />,
@@ -118,7 +117,7 @@ export default function CarrierStaffPage() {
     },
     {
       key: 'mobile',
-      label: 'رقم الجوال',
+      label: t('carrier.staff_page.columns.mobile'),
       width: '120px',
       render: (val) => (
         <div className="flex items-center gap-2">
@@ -129,7 +128,7 @@ export default function CarrierStaffPage() {
     },
     {
       key: 'employee_id',
-      label: 'الرقم الوظيفي',
+      label: t('carrier.staff_page.columns.employee_id'),
       width: '110px',
       render: (val) => (
         <span className="text-xs text-neutral-500 font-mono">{val}</span>
@@ -137,14 +136,15 @@ export default function CarrierStaffPage() {
     },
     {
       key: 'is_active',
-      label: 'الحالة',
+      label: t('carrier.staff_page.columns.status'),
       width: '100px',
       render: (val) => {
         const status = val
           ? { label: 'نشط', class: 'bg-success-bg text-success', icon: <CheckCircle size={12} /> }
-          : { label: 'متوقف', class: 'bg-neutral-100 text-neutral-500', icon: <WarningCircle size={12} /> };
+          : { label: t('carrier.staff_page.status.inactive'), class: 'bg-neutral-100 text-neutral-500', icon: <WarningCircle size={12} /> };
+        if (val) status.label = t('carrier.staff_page.status.active');
         return (
-          <div className={`flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider ${status.class}`}>
+          <div className={`flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold tracking-wider ${status.class}`}>
             {status.icon}
             {status.label}
           </div>
@@ -153,10 +153,10 @@ export default function CarrierStaffPage() {
     },
     {
       key: 'last_login_at',
-      label: 'آخر دخول',
+      label: t('carrier.staff_page.columns.last_login'),
       width: '120px',
       render: (val) => (
-        <span className="text-xs text-neutral-400">{val ? new Date(val).toLocaleDateString('ar-SA') : '—'}</span>
+        <span className="text-xs text-neutral-400">{val ? new Date(val).toLocaleDateString(locale) : '—'}</span>
       )
     },
     {
@@ -165,10 +165,10 @@ export default function CarrierStaffPage() {
       width: '80px',
       render: () => (
         <div className="flex justify-end gap-1">
-          <button className="p-2 rounded-sm hover:bg-neutral-100 text-neutral-400 transition-colors" title="عرض التفاصيل">
+          <button className="p-2 rounded-sm hover:bg-neutral-100 text-neutral-400 transition-colors" title={t('carrier.staff_page.actions.view_details')}>
             <ArrowsDownUp size={18} />
           </button>
-          <button className="p-2 rounded-sm hover:bg-neutral-100 text-neutral-400 transition-colors" title="المزيد">
+          <button className="p-2 rounded-sm hover:bg-neutral-100 text-neutral-400 transition-colors" title={t('carrier.staff_page.actions.more')}>
             <Shield size={18} />
           </button>
         </div>
@@ -177,9 +177,9 @@ export default function CarrierStaffPage() {
   ];
 
   return (
-    <AppShell role="Carrier" header="إدارة الموظفين">
+    <AppShell role="Carrier" header={t('carrier.staff_page.header')}>
       <DataTableLayout
-        title="قائمة فريق النقل"
+        title={t('carrier.staff_page.title')}
         columns={columns}
         data={mockStaff}
         onRowClick={(row) => console.log('View staff details:', row.staff_id)}
@@ -188,7 +188,7 @@ export default function CarrierStaffPage() {
           className="h-11 px-6 rounded-sm bg-primary text-white font-bold flex items-center gap-2 hover:bg-opacity-90 transition-all shadow-btn"
         >
           <PlusCircle size={20} weight="bold" />
-          إضافة موظف جديد
+          {t('carrier.staff_page.actions.add_staff')}
         </button>
       </DataTableLayout>
     </AppShell>

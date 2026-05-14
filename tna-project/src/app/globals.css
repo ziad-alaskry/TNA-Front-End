@@ -37,6 +37,23 @@
   --color-warning:            #F59E0B;
   --color-info:               #3B82F6;
 
+  /* ─── SIDEBAR DESIGN TOKENS ─── */
+  --sidebar-bg:               #ffffff;
+  --sidebar-width:            min(280px, 85vw);
+  --sidebar-width-col:        54px;
+  --sidebar-shadow:           -3px 0 20px rgba(0, 0, 0, 0.12);
+  --text-nav-default:         #374151;
+  --text-nav-hover:           #1a2736;
+  --text-nav-active:          #0E8FD1;
+  --text-group-label:         #6b7a8d;
+  --text-signout:             #b91c1c;
+  --divider-strong:           #c8d6e0;
+  --divider-light:            #dde5ed;
+  --divider-on-blue:          rgba(255,255,255,0.20);
+  --nav-hover-bg:             #f2f7fb;
+  --nav-active-bg:            #e6f4fb;
+  --signout-hover-bg:         #fef2f2;
+
   /* ─── NEUTRAL SCALE ─── */
   --color-white:              #FFFFFF;
   --color-background:         #F3F4F6;
@@ -136,7 +153,10 @@
   /* ─── Z-INDEX ─── */
   --z-base:    0;
   --z-card:    1;
-  --z-header:  100;
+  --z-content: 1;
+  --z-overlay: 350;
+  --z-sidebar: 400;
+  --z-header:  500;   /* topbar — highest layout element */
   --z-navbar:  100;
   --z-modal:   200;
   --z-toast:   300;
@@ -550,8 +570,7 @@
    }
    @media (max-width: 639px) {
      .auth-bg-pattern {
-       display: none;
-       opacity: 0;
+       background-image: none;
      }
    }
  }
@@ -560,7 +579,6 @@
   .mirror-directional {
     @apply rtl:-scale-x-100;
   }
-  
   .active-press {
     @apply active:scale-95 transition-transform duration-fast;
   }

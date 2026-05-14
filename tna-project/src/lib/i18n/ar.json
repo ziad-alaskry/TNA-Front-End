@@ -12,6 +12,7 @@
         "menu": "القائمة",
         "support": "الدعم الفني",
         "logged_in_as": "مسجل الدخول بصفتك {role}",
+        "signOut": "تسجيل الخروج",
         "roles": {
             "Visitor": {
                 "overview": "الرئيسية",

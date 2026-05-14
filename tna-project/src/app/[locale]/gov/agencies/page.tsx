@@ -54,10 +54,20 @@ const mockStaff: GovStaff[] = [
 ];
 
 export default function GovAgenciesPage() {
-    const { t } = useLocale();
+    const { isRTL, t } = useLocale();
     const [activeTab, setActiveTab] = useState<'AGENCIES' | 'PERSONNEL'>('AGENCIES');
     const [isAgencyModalOpen, setIsAgencyModalOpen] = useState(false);
     const [isStaffModalOpen, setIsStaffModalOpen] = useState(false);
+    const getAgencyText = (id: string, field: 'name' | 'region' | 'department' | 'admin_user', fallback: string) => {
+        const key = `gov.agencies.mock.${id}.${field}`;
+        const translated = t(key);
+        return translated === key ? fallback : translated;
+    };
+    const getStaffText = (id: string, field: 'name' | 'department' | 'last_active', fallback: string) => {
+        const key = `gov.staff.mock.${id}.${field}`;
+        const translated = t(key);
+        return translated === key ? fallback : translated;
+    };
 
     const agencyColumns: DataTableColumn<Agency>[] = [
         {
@@ -69,8 +79,8 @@ export default function GovAgenciesPage() {
                         <Buildings size={20} weight="fill" />
                     </div>
                     <div className="flex flex-col">
-                        <span className="font-bold text-neutral-900">{val}</span>
-                        <span className="text-[10px] text-neutral-400">ID: {row.id}</span>
+                        <span className="font-bold text-neutral-900">{getAgencyText(row.id, 'name', val)}</span>
+                        <span className="text-[10px] text-neutral-400">{t('gov.agencies.table.id_label')}: {row.id}</span>
                     </div>
                 </div>
             )
@@ -78,22 +88,22 @@ export default function GovAgenciesPage() {
         {
             key: 'region',
             label: t('gov.agencies.table.headers.region'),
-            render: (val) => (
+            render: (val, row) => (
                 <div className="flex items-center gap-1 text-xs text-neutral-600">
                     <MapPin size={14} />
-                    {val}
+                    {getAgencyText(row.id, 'region', val)}
                 </div>
             )
         },
         {
             key: 'department',
             label: t('gov.agencies.table.headers.department'),
-            render: (val) => <span className="text-xs font-semibold text-neutral-700">{val}</span>
+            render: (val, row) => <span className="text-xs font-semibold text-neutral-700">{getAgencyText(row.id, 'department', val)}</span>
         },
         {
             key: 'admin_user',
             label: t('gov.agencies.table.headers.admin_user'),
-            render: (val) => <span className="text-xs font-medium text-neutral-500">{val}</span>
+            render: (val, row) => <span className="text-xs font-medium text-neutral-500">{getAgencyText(row.id, 'admin_user', val)}</span>
         },
         {
             key: 'staff_count',
@@ -106,7 +116,7 @@ export default function GovAgenciesPage() {
             render: (id) => (
                 <div className="flex justify-end">
                     <button className="p-2 rounded-sm hover:bg-neutral-100 text-neutral-400">
-                        <ArrowRight size={18} className="rotate-180" />
+                        <ArrowRight size={18} className={cn(isRTL && "rotate-180")} />
                     </button>
                 </div>
             )
@@ -123,8 +133,10 @@ export default function GovAgenciesPage() {
                         <UserGear size={20} weight="fill" />
                     </div>
                     <div className="flex flex-col">
-                        <span className="font-bold text-neutral-900">{val}</span>
-                        <span className="text-[10px] text-neutral-400">{mockAgencies.find(a => a.id === row.agency_id)?.name}</span>
+                        <span className="font-bold text-neutral-900">{getStaffText(row.id, 'name', val)}</span>
+                        <span className="text-[10px] text-neutral-400">
+                            {getAgencyText(row.agency_id, 'name', mockAgencies.find(a => a.id === row.agency_id)?.name || row.agency_id)}
+                        </span>
                     </div>
                 </div>
             )
@@ -132,7 +144,7 @@ export default function GovAgenciesPage() {
         {
             key: 'department',
             label: t('gov.staff.table.headers.department'),
-            render: (val) => <span className="text-xs font-semibold text-neutral-700">{val}</span>
+            render: (val, row) => <span className="text-xs font-semibold text-neutral-700">{getStaffText(row.id, 'department', val)}</span>
         },
         {
             key: 'permissions',
@@ -267,7 +279,7 @@ export default function GovAgenciesPage() {
                     <InputField label={t('gov.staff.modal.fields.name')} placeholder={t('gov.staff.modal.fields.name_placeholder')} />
                     <Select 
                         label={t('gov.staff.modal.fields.agency')} 
-                        options={mockAgencies.map(a => ({ value: a.id, label: a.name }))} 
+                        options={mockAgencies.map(a => ({ value: a.id, label: getAgencyText(a.id, 'name', a.name) }))} 
                     />
                     <InputField label={t('gov.staff.modal.fields.email')} placeholder={t('gov.staff.modal.fields.email_placeholder')} />
                     <div className="space-y-2">

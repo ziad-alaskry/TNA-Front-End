@@ -31,6 +31,12 @@ export default function Breadcrumbs() {
       return t(`common.roles.${roleKey}.overview`)
     }
 
+    const breadcrumbKey = `common.breadcrumbs.${segment}`
+    const translated = t(breadcrumbKey)
+    if (translated !== breadcrumbKey) {
+      return translated
+    }
+
     // Default formatting for other segments
     return segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ')
   }

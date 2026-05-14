@@ -11,6 +11,7 @@
     "edit": "Edit",
     "view_all": "View All",
     "menu": "Menu",
+    "close_menu": "Close menu",
     "support": "Support",
     "logged_in_as": "Logged in as {role}",
     "view_profile": "View Profile",
@@ -22,6 +23,20 @@
     "no_data_desc": "We couldn't find any records matching your criteria.",
     "currency": "SAR",
     "goBack": "Go Back",
+    "signOut": "Sign Out",
+    "breadcrumbs": {
+      "home": "Home",
+      "search": "Search",
+      "shipments": "Shipments",
+      "profile": "Profile",
+      "bindings": "Bindings",
+      "earnings": "Earnings",
+      "staff": "Staff",
+      "settings": "Settings",
+      "integration": "Integration",
+      "driver": "Driver",
+      "tasks": "Tasks"
+    },
     "roles": {
       "Visitor": {
         "overview": "Overview",
@@ -82,6 +97,7 @@
     },
     "statuses": {
       "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
       "PENDING": "Pending Review",
       "EXPIRED": "Expired",
       "REJECTED": "Rejected",
@@ -94,7 +110,48 @@
     "notifications_3": "Notifications",
     "mark_all_read_4": "Mark all read",
     "no_notifications_5": "No notifications",
-    "you_are_all_caught_up_6": "You are all caught up"
+    "you_are_all_caught_up_6": "You are all caught up",
+    "error_network": "Network error. Please try again.",
+    "note": "Note",
+    "review": "Review",
+    "uploaded": "Uploaded",
+    "uploading": "Uploading...",
+    "roles": {
+      "Visitor": {
+        "overview": "Dashboard",
+        "address_search": "Address Search",
+        "codes": "TNA Codes",
+        "shipments": "Shipments",
+        "profile": "My Profile"
+      },
+      "Owner": {
+        "overview": "Dashboard",
+        "properties": "Properties",
+        "bindings": "Linking Requests",
+        "earnings": "Earnings",
+        "profile": "Profile"
+      },
+      "Carrier": {
+        "overview": "Command Center",
+        "resolve": "Resolve TNA",
+        "profile": "Profile",
+        "shipments": "Shipments",
+        "staff": "Staff",
+        "tasks": "Driver Tasks",
+        "settings": "Integration Settings"
+      },
+      "Gov": {
+        "overview": "System Metrics",
+        "tna_queue": "TNA Queue",
+        "address_queue": "Address Queue",
+        "queue": "Review Queue",
+        "adjustments": "Financial Adjustments",
+        "audit": "Audit Logs",
+        "agencies": "Gov Agencies",
+        "policy": "Policy Config",
+        "profile": "Profile"
+      }
+    }
   },
   "auth": {
     "login": {
@@ -237,6 +294,14 @@
       "field_required": "This field is required"
     }
   },
+  "ltr_1": "ltr",
+  "ltr_2": "ltr",
+  "ltr_3": "ltr",
+  "ltr_4": "ltr",
+  "ltr_5": "ltr",
+  "validation": {
+    "field_required": "This field is required"
+  },
   "visitor": {
     "home": {
       "title": "Temporary National Address",
@@ -262,6 +327,95 @@
       "actions": {
         "create_new": "Create New Temporary National Address",
         "order_shipment": "Order Shipment"
+      }
+    },
+    "search": {
+      "header": "Discover Addresses",
+      "title": "Search for an Available Property",
+      "breadcrumb_home": "Home",
+      "breadcrumb_search": "Search",
+      "continue_request": "Continue Request",
+      "filter_results": "Filter Results",
+      "search_placeholder": "Search by district, street, or building name",
+      "binding_note": "Note: You can only link your address to properties marked \"Available for linking\".",
+      "available_properties": "Available Properties ({count})",
+      "available_badge": "Available",
+      "address_line": "Sector {sector} · {city} · {district}",
+      "building_number": "Building Number",
+      "no_results": "No results match your search.",
+      "default_city": "Riyadh",
+      "default_district": "Al Malqa District",
+      "properties": {
+        "prop-01": {
+          "name": "Al Malqa Villa 12",
+          "city": "Riyadh",
+          "district": "Al Malqa District"
+        },
+        "prop-02": {
+          "name": "Al Narjis Building",
+          "city": "Riyadh",
+          "district": "Al Narjis District"
+        }
+      }
+    },
+    "shipments_page": {
+      "header": "Track Shipments",
+      "title": "Shipments History",
+      "columns": {
+        "tracking_number": "Tracking Number",
+        "carrier": "Carrier",
+        "tna_code": "TNA Code",
+        "status": "Status",
+        "estimated_delivery": "Estimated Delivery"
+      },
+      "statuses": {
+        "IN_TRANSIT": "In Transit",
+        "DELIVERED": "Delivered",
+        "OUT_FOR_DELIVERY": "Out for Delivery",
+        "PENDING": "Pending"
+      },
+      "destinations": {
+        "malqa_riyadh": "Al Malqa, Riyadh",
+        "narjis_riyadh": "Al Narjis, Riyadh"
+      },
+      "actions": {
+        "new_shipment": "New Shipment Request"
+      },
+      "notes": {
+        "auto_update": "Shipment statuses are automatically updated based on carrier data."
+      }
+    },
+    "profile_page": {
+      "header": "Profile",
+      "title": "Profile Settings",
+      "member_since": "Visitor • Member since 2025",
+      "mock": {
+        "full_name": "Ahmed Mohammed Al Otaibi",
+        "short_name": "Ahmed Al Otaibi"
+      },
+      "personal_info": {
+        "title": "Personal Information",
+        "description": "Your basic personal details as registered in the system.",
+        "full_name": "Full Name",
+        "email": "Email",
+        "mobile": "Mobile Number",
+        "birth_date": "Date of Birth"
+      },
+      "identity": {
+        "title": "Identity Information",
+        "description": "Details of your approved identity document.",
+        "document_type": "Document Type",
+        "national_id": "National ID",
+        "document_number": "Document Number",
+        "expiry_date": "Expiry Date",
+        "verification_status": "Verification Status",
+        "verified_nafath": "Verified via Nafath"
+      },
+      "actions": {
+        "notification_preferences": "Notification Preferences",
+        "change_language": "Change Language",
+        "kyc_verification": "Verification (KYC)",
+        "change_password": "Change Password"
       }
     },
     "tna_code_1": "TNA Code",
@@ -302,9 +456,135 @@
     "city_36": "City",
     "unit_37": "Unit",
     "unbind_tna_address_38": "Unbind TNA Address",
-    "ltr_1": "ltr"
+    "ltr_1": "ltr",
+    "wallet": "Wallet"
   },
   "owner": {
+    "home": {
+      "header": "Owner Dashboard",
+      "stats": {
+        "properties": "Properties",
+        "active_bindings": "Active Bindings",
+        "pending_requests": "Pending Requests",
+        "total_earnings": "Total Earnings"
+      },
+      "banner": {
+        "title": "Maximize Your Property's Potential",
+        "description": "List your residential or commercial units and start earning from TNA binding requests today.",
+        "cta": "Add New Property"
+      },
+      "pending": {
+        "title": "Pending Requests",
+        "new_request": "New Binding Request",
+        "request_for_tna": "Request for TNA",
+        "unit": "Unit",
+        "period": "Period",
+        "accept": "Accept",
+        "decline": "Decline",
+        "empty": "No pending requests at the moment."
+      },
+      "wallet": {
+        "title": "Digital Wallet",
+        "available_balance": "Available Balance",
+        "withdraw": "Withdraw Funds",
+        "total_withdrawn": "Total Withdrawn"
+      },
+      "revenue": {
+        "title": "Weekly Revenue",
+        "days": {
+          "sun": "Sun",
+          "mon": "Mon",
+          "tue": "Tue",
+          "wed": "Wed",
+          "thu": "Thu",
+          "fri": "Fri",
+          "sat": "Sat"
+        }
+      }
+    },
+    "bindings_page": {
+      "header": "Linking Requests",
+      "title": "Property Bindings",
+      "filters": {
+        "all": "All"
+      },
+      "statuses": {
+        "PENDING": "Pending",
+        "ACTIVE": "Active",
+        "COMPLETED": "Completed",
+        "TERMINATED": "Terminated",
+        "CANCELLED": "Cancelled"
+      },
+      "actions": {
+        "approve": "Approve",
+        "reject": "Reject",
+        "terminate": "Terminate",
+        "view_details": "View Details"
+      },
+      "units": {
+        "sub-1-room": "Guest Room",
+        "sub-2-apt1": "Apartment 1"
+      },
+      "empty": {
+        "no_bindings": "No bindings found",
+        "no_bindings_description": "You have no binding requests at the moment.",
+        "no_bindings_with_filter": "No {status} bindings found",
+        "no_bindings_with_filter_description": "There are no bindings with {status} status.",
+        "add_property": "Add Property"
+      }
+    },
+    "earnings_page": {
+      "header": "Earnings and Wallet",
+      "withdrawable_balance": "Withdrawable Balance",
+      "request_bank_transfer": "Request Bank Transfer",
+      "transfer_history": "Transfer History",
+      "total_earnings": "Total Earnings",
+      "monthly_change": "+12% from last month",
+      "previous_payouts": "Previous Payouts",
+      "last_payout": "Last transaction 10 days ago",
+      "revenue_overview": "Revenue Overview",
+      "chart_placeholder": "Financial distribution chart will appear here",
+      "recent_transactions": "Recent Transactions",
+      "periods": {
+        "day": "Day",
+        "week": "Week",
+        "month": "Month",
+        "year": "Year"
+      },
+      "columns": {
+        "source": "Income Source",
+        "date": "Date",
+        "amount": "Amount",
+        "status": "Status"
+      },
+      "statuses": {
+        "COMPLETED": "Completed",
+        "PENDING": "Pending"
+      },
+      "sources": {
+        "binding_sq": "Binding Fee: S. Q.",
+        "binding_mk": "Binding Fee: M. K.",
+        "binding_nt": "Binding Fee: N. T."
+      },
+      "properties": {
+        "malqa_villa_12": "Al Malqa Villa 12",
+        "narjis_building": "Al Narjis Building"
+      }
+    },
+    "withdrawal": {
+      "title": "Withdraw Balance",
+      "available_balance": "Available Balance",
+      "amount_label": "Amount to Withdraw",
+      "minimum": "Minimum withdrawal amount is {amount} SAR",
+      "choose_method": "Choose withdrawal method",
+      "bank_transfer": "Bank Transfer (IBAN)",
+      "bank_eta": "Arrives within 24-48 business hours",
+      "stcpay_eta": "Instant transfer via mobile number",
+      "confirm_request": "Confirm Request",
+      "success_title": "Your request has been received",
+      "success_message": "Your withdrawal request for {amount} via {method} is being processed.",
+      "return_home": "Return to Dashboard"
+    },
     "property": {
       "deed_required": "Title deed reference is required for property verification.",
       "registration": "Property Registration",
@@ -407,6 +687,113 @@
     "ltr_3": "ltr"
   },
   "carrier": {
+    "statuses": {
+      "CREATED": "Pending",
+      "PICKED_UP": "Picked Up",
+      "IN_TRANSIT": "In Transit",
+      "OUT_FOR_DELIVERY": "Out for Delivery",
+      "DELIVERED": "Delivered",
+      "FAILED": "Failed",
+      "RETURNED": "Returned"
+    },
+    "home": {
+      "header": "Carrier Dashboard",
+      "stats": {
+        "pending_pickups": "Pending Pickups",
+        "in_transit": "In Transit",
+        "delivered_today": "Delivered Today",
+        "active_drivers": "Active Drivers"
+      },
+      "scanner": {
+        "title": "Instant Shipment Scanner",
+        "description": "Scan TNA barcodes or QR codes to instantly retrieve shipment details and update statuses.",
+        "cta": "Open Scanner Simulator"
+      },
+      "operations": {
+        "title": "Active Operations",
+        "manage_all": "Manage All",
+        "deliver_to": "Deliver to",
+        "recipient": "Recipient"
+      },
+      "mock": {
+        "recipient_abdullah": "Abdullah Al-Ghamdi"
+      },
+      "overview": {
+        "title": "Operations Overview",
+        "fleet_utilization": "Fleet Utilization",
+        "task_distribution": "Task Distribution",
+        "show_map": "Show Map",
+        "view_analytics": "View Analytics",
+        "certification_warning": "3 staff members require certification renewal within the next 48 hours."
+      },
+      "quick_links": {
+        "manage_routes": "Manage Routes",
+        "staff_management": "Staff Management",
+        "vehicle_maintenance": "Vehicle Maintenance"
+      }
+    },
+    "shipments_page": {
+      "header": "Shipment Management",
+      "title": "Active Shipments"
+    },
+    "staff_page": {
+      "header": "Staff Management",
+      "title": "Transport Team",
+      "columns": {
+        "employee_name": "Employee Name",
+        "position": "Position",
+        "mobile": "Mobile Number",
+        "employee_id": "Employee ID",
+        "status": "Status",
+        "last_login": "Last Login"
+      },
+      "positions": {
+        "DRIVER": "Driver",
+        "DISPATCHER": "Dispatcher",
+        "MANAGER": "Operations Manager"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "names": {
+        "STF-001": "Mohammed Ali River",
+        "STF-002": "Ibrahim Hassan",
+        "STF-003": "Khaled Saleh",
+        "STF-004": "Fahad Alsubaie"
+      },
+      "actions": {
+        "add_staff": "Add New Staff",
+        "view_details": "View Details",
+        "more": "More"
+      }
+    },
+    "integration_page": {
+      "header": "Technical Integration Settings (API)",
+      "status": {
+        "title": "Connection Status: Connected",
+        "description": "Your postal system is receiving updates correctly through the webhook.",
+        "live_endpoint": "Live Endpoint"
+      },
+      "api_keys": {
+        "title": "Access Keys (API Keys)",
+        "live_secret_key": "Live Secret Key",
+        "generating": "Regenerating...",
+        "regenerate": "Regenerate Key"
+      },
+      "webhooks": {
+        "title": "Webhook Notifications",
+        "url_label": "Receiver URL",
+        "security_title": "Connection Security",
+        "security_description": "The URL must use HTTPS for security and to protect national address data privacy."
+      },
+      "docs": {
+        "title": "Developer Integration Guide",
+        "description": "Review the API documentation to learn how to receive address updates and track shipments.",
+        "download_pdf": "Download PDF"
+      },
+      "save_changes": "Save Changes"
+    },
     "resolve": {
       "unlinked": "TNA not linked to any address",
       "deliverable": "Deliverable Address",
@@ -511,7 +898,48 @@
     "mr2_4": "mr-2",
     "mr2_5": "mr-2",
     "mr2_6": "mr-2",
-    "mr2_7": "mr-2"
+    "mr2_7": "mr-2",
+    "tracking_1": "Tracking",
+    "driver": {
+      "map": {
+        "header": "Navigation and Delivery",
+        "pin_label": "Al Malqa District - TNA-667722",
+        "placeholder": "Interactive route tracking map will appear here soon",
+        "current_task": "Current Task",
+        "active": "Active",
+        "express_delivery": "Express parcel delivery",
+        "distance": "Distance",
+        "distance_value": "2.4 km",
+        "eta": "ETA",
+        "eta_value": "8 min",
+        "delivery_date": "Delivery Date",
+        "delivery_date_value": "April 25, 10:30 AM",
+        "delivery_address": "Delivery Address (TNA)",
+        "delivery_address_value": "Al Malqa District, Prince Mohammed bin Saad Street, Villa 12",
+        "confirm_delivery": "Confirm Delivery (Scan QR)",
+        "call": "Call",
+        "report_issue": "Report Issue",
+        "back_to_tasks": "Back to Task List"
+      },
+      "tasks": {
+        "header": "My Daily Tasks",
+        "driver_name": "Captain Mohammed Ali",
+        "today": "Today: April 25, 2026",
+        "scheduled_tasks": "Scheduled Tasks",
+        "high_priority": "High Priority",
+        "continue_navigation": "Continue Navigation",
+        "start_task": "Start Task",
+        "task_1_customer": "Ahmed Al-Otaibi",
+        "task_1_address": "Al Malqa District, Prince Mohammed bin Saad Street",
+        "task_1_time": "10:30 AM",
+        "task_2_customer": "Sarah Mohammed",
+        "task_2_address": "Al Narjis District, King Salman Road intersection",
+        "task_2_time": "11:15 AM",
+        "task_3_customer": "Fahad Al-Mutairi",
+        "task_3_address": "Al Yasmin District, Building 44",
+        "task_3_time": "12:00 PM"
+      }
+    }
   },
   "gov": {
     "home": {
@@ -723,8 +1151,179 @@
     "request_decision": "Request {decision}",
     "approval_completed": "Approval Completed",
     "rejection_completed": "Rejection Completed",
-    "request_approved": "Request Approved",
-    "request_rejected": "Request Rejected"
+    "overview": "System Metrics",
+    "visitor_information_162": "Visitor Information",
+    "nationality_163": "Nationality",
+    "visa_status_164": "Visa Status",
+    "eligibility_snapshot_165": "Eligibility Snapshot",
+    "visitor_eligibility_assessment_166": "Visitor Eligibility Assessment",
+    "visa_valid_167": "Visa Valid",
+    "yes_168": "Yes",
+    "no_169": "No",
+    "iqama_valid_170": "Iqama Valid",
+    "max_tnas_reached_171": "Max TNAs Reached",
+    "risk_score_172": "Risk Score",
+    "documents_submitted_by_visitor_173": "Documents Submitted by Visitor",
+    "passport_entry_174": "Passport Entry",
+    "id_copy_175": "ID Copy",
+    "residence_permit_176": "Residence Permit",
+    "review_action_177": "Review Action",
+    "approve_request_178": "Approve Request",
+    "the_tna_request_status_has_been_updated_179": "The TNA request status has been updated.",
+    "back_to_queue_180": "Back to Queue",
+    "verify_visitor_details_before_approving_181": "Verify visitor details before approving.",
+    "tna_request_review_182": "TNA Request Review",
+    "tna_request_183": "TNA Request",
+    "document_type_184": "Document Type",
+    "missing_185": "Missing",
+    "mock": {
+      "tna_requests": {
+        "req-pending-1": {
+          "visitor_name": "Abdullah Al-Ghamdi",
+          "nationality": "Saudi Arabia"
+        },
+        "req-pending-2": {
+          "visitor_name": "Sara Ahmed",
+          "nationality": "Egypt"
+        },
+        "req-pending-3": {
+          "visitor_name": "Michael Smith",
+          "nationality": "UK"
+        },
+        "req-pending-4": {
+          "visitor_name": "Fatima Zahra",
+          "nationality": "Morocco"
+        }
+      },
+      "address_requests": {
+        "sub-001": {
+          "owner_name": "Mohammed Al-Saud",
+          "full_address": "1234 King Fahd Road, Al Olaya District, Riyadh",
+          "label": "Unit 1"
+        },
+        "sub-002": {
+          "owner_name": "Al Rajhi Bank",
+          "full_address": "8472 Prince Mohammed Bin Fahd Road, Al Khobar",
+          "label": "Branch Office"
+        },
+        "sub-003": {
+          "owner_name": "Noura Al-Mansouri",
+          "full_address": "5678 King Abdulaziz Road, Jeddah",
+          "label": "Apartment 3"
+        }
+      },
+      "adjustments": {
+        "adj-001": {
+          "reason": "Incorrect fee calculation on binding BIND-123",
+          "initiated_by": "Gov User"
+        },
+        "adj-002": {
+          "reason": "Duplicate charge refund",
+          "initiated_by": "System"
+        }
+      }
+    },
+    "policy": {
+      "options": {
+        "MODERATED": "Moderated",
+        "AUTONOMOUS": "Autonomous"
+      }
+    },
+    "agencies": {
+      "title": "Government Agencies",
+      "add_new": "Add New Agency",
+      "tab": "Agencies",
+      "table": {
+        "id_label": "ID",
+        "headers": {
+          "name": "Agency Name",
+          "region": "Region",
+          "department": "Department",
+          "admin_user": "System Administrator",
+          "staff_count": "Staff Count"
+        }
+      },
+      "modal": {
+        "title": "Add New Government Agency",
+        "fields": {
+          "name": "Agency Name",
+          "region": "Region",
+          "department": "Responsible Department",
+          "admin_user": "System Administrator Nominee",
+          "name_placeholder": "e.g. Ministry of Tourism",
+          "department_placeholder": "e.g. Audit Department",
+          "admin_user_placeholder": "Full Name",
+          "regions": {
+            "riyadh": "Riyadh",
+            "jeddah": "Jeddah"
+          }
+        }
+      },
+      "mock": {
+        "AG-01": {
+          "name": "Communications Authority",
+          "region": "Riyadh",
+          "department": "Licensing",
+          "admin_user": "Saad Al-Mansour"
+        },
+        "AG-02": {
+          "name": "Ministry of Municipal Affairs",
+          "region": "Jeddah",
+          "department": "Urban Planning",
+          "admin_user": "Noura Al-Saeed"
+        },
+        "AG-03": {
+          "name": "Saudi Post (SPL)",
+          "region": "Dammam",
+          "department": "Logistics Operations",
+          "admin_user": "Ibrahim Hassan"
+        }
+      }
+    },
+    "staff": {
+      "title": "Government Staff",
+      "add_new": "Add New Staff",
+      "tab": "Personnel",
+      "table": {
+        "headers": {
+          "name": "Employee Name",
+          "department": "Department",
+          "permissions": "Permissions",
+          "status": "Status"
+        },
+        "permissions": {
+          "VERIFY": "Verify Requests",
+          "MANAGE_POLICY": "Manage Policies",
+          "AUDIT": "Audit Logs",
+          "READ_ONLY": "Read Only"
+        }
+      },
+      "modal": {
+        "title": "Add New Government Staff",
+        "fields": {
+          "name": "Employee Name",
+          "agency": "Agency",
+          "email": "Government Email",
+          "permissions": "Permissions",
+          "name_placeholder": "Full Name",
+          "email_placeholder": "name@agency.gov.sa"
+        }
+      },
+      "mock": {
+        "STF-501": {
+          "name": "Mohammed Al-Qahtani",
+          "department": "Address Management"
+        },
+        "STF-442": {
+          "name": "Sara Al-Otaibi",
+          "department": "Policies and Systems"
+        },
+        "STF-330": {
+          "name": "Khaled Al-Subaie",
+          "department": "Technical Support"
+        }
+      }
+    }
   },
   "kyc": {
     "title": "KYC Verification",
@@ -759,7 +1358,19 @@
     "success": {
       "title": "Documents Submitted",
       "message": "Your KYC documents have been submitted for review."
-    }
+    },
+    "documents_description": "Upload the documents required to complete identity verification.",
+    "process_info_1": "Submit clear, valid documents.",
+    "process_info_2": "Government reviewers verify your information.",
+    "process_info_3": "You will be notified when verification is complete.",
+    "process_info_title": "Verification Process",
+    "required_documents": "Required Documents",
+    "submit_for_verification": "Submit for Verification",
+    "upload_hint": "Upload a PDF, JPG, or PNG file.",
+    "upload_success": "Document uploaded successfully",
+    "uploaded_at": "Uploaded at",
+    "verification_description": "Complete KYC verification to unlock TNA services.",
+    "verification_title": "Identity Verification"
   },
   "tna": {
     "new": {
@@ -779,6 +1390,14 @@
       "active": "ACTIVE",
       "go_to_tnas": "Go to My TNAs",
       "return_dashboard": "Return to Dashboard"
+    },
+    "detail": {
+      "digital_card": "Digital Card",
+      "link_address": "Link Address",
+      "quick_actions": "Quick Actions",
+      "unbind": "Unbind",
+      "unbind_note": "Unbinding removes the linked address from this TNA.",
+      "unlinked_note": "This TNA is not linked to an address yet."
     }
   },
   "binding": {
@@ -787,7 +1406,43 @@
       "platform_fee": "Platform Fee",
       "authority_share": "Authority Share",
       "net_owner": "Net Owner Amount"
-    }
+    },
+    "authority_share": "Authority Share",
+    "available_units": "Available Units",
+    "breakdown": "Breakdown",
+    "calculating": "Calculating...",
+    "conflict_error": "This unit is already booked for the selected period.",
+    "created": "Binding request created",
+    "duration": "Duration",
+    "end_date": "End Date",
+    "escrow_notice": "Funds are held securely until the owner confirms the binding.",
+    "estimated_cost": "Estimated Cost",
+    "financial_breakdown": "Financial Breakdown",
+    "find_address": "Find Address",
+    "find_address_desc": "Search for an available verified unit to bind with your TNA.",
+    "gross_amount": "Gross Amount",
+    "no_properties": "No available properties found",
+    "owner_net": "Owner Receives",
+    "period": "Period",
+    "period_type": "Period Type",
+    "platform_fee": "Platform Fee",
+    "review_desc": "Review the binding details before submitting your request.",
+    "review_title": "Review Binding Request",
+    "search_placeholder": "Search by city, district, or address...",
+    "select_unit_desc": "Choose a verified unit and rental period.",
+    "select_unit_period": "Select Unit and Period",
+    "start_date": "Start Date",
+    "step1": "Address",
+    "step2": "Unit",
+    "step3": "Review",
+    "submit_notice": "Submitting creates a pending binding request for owner approval.",
+    "submit_request": "Submit Request",
+    "suffix": "Suffix",
+    "target_address": "Target Address",
+    "title": "Bind TNA to Address",
+    "tna_code": "TNA Code",
+    "total_amount": "Total Amount",
+    "total_payable": "Total Payable"
   },
   "checkout": {
     "payment_blocked": "Payment blocked - binding already processed",
@@ -817,7 +1472,30 @@
     "complete_top_up": "Complete Top Up",
     "payment_success": "Payment Successful!",
     "payment_success_message": "Your binding request has been submitted and is awaiting owner approval.",
-    "redirect_message": "Redirecting to your TNA details in 3 seconds..."
+    "redirect_message": "Redirecting to your TNA details in 3 seconds...",
+    "type": "Type"
+  },
+  "payment": {
+    "method": "Payment Method",
+    "credit_card": "Credit Card",
+    "apple_pay": "Apple Pay",
+    "stc_pay": "STC Pay",
+    "coming_soon": "Coming Soon",
+    "coming_soon_action": "Coming Soon",
+    "card_details": "Card Details",
+    "card_number": "Card Number",
+    "expiry": "Expiry Date",
+    "cvv": "CVV",
+    "cardholder_name": "Cardholder Name",
+    "top_up": "Top Up Wallet",
+    "top_up_success": "{amount} SAR added to wallet",
+    "top_up_title": "Add Funds",
+    "cardholder_placeholder": "Enter cardholder name",
+    "invalid_card": "Invalid card number",
+    "invalid_card_length": "Card number must be 16 digits",
+    "invalid_expiry": "Card expired or invalid date",
+    "invalid_cvv": "CVV must be at least 3 digits",
+    "name_required": "Cardholder name is required"
   },
   "payment": {
     "method": "Payment Method",
@@ -845,14 +1523,14 @@
     "ltr_1": "ltr",
     "left0_2": "left-0"
   },
-   "notifications": {
-     "title": "Notifications",
-     "markAllRead": "Mark all read",
-     "empty": {
-       "title": "No notifications",
-       "subtitle": "You're all caught up!"
-     }
-   },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all read",
+    "empty": {
+      "title": "No notifications",
+      "subtitle": "You're all caught up!"
+    }
+  },
   "roles": {
     "Owner": {
       "profile": "Profile"
@@ -882,8 +1560,108 @@
       "count": "{count} Active vehicles"
     },
     "department": {
-      "title": "Department"
+      "title": "Department",
+      "values": {
+        "monitoring_compliance": "Monitoring & Compliance"
+      }
     },
+    "default_user_name": "User Name",
     "logout": "Logout"
-  }
+  },
+  "shipments": {
+    "error": {
+      "not_found": "Shipment not found"
+    },
+    "status": {
+      "created": "Created",
+      "picked_up": "Picked Up",
+      "in_transit": "In Transit",
+      "out_for_delivery": "Out for Delivery",
+      "delivered": "Delivered",
+      "failed": "Failed",
+      "returned": "Returned"
+    },
+    "detail": {
+      "title": "Shipment Details",
+      "to_address": "Delivery Address",
+      "tracking_timeline": "Tracking Timeline",
+      "messages": "Messages",
+      "package_info": "Package Information",
+      "weight": "Weight",
+      "dimensions": "Dimensions",
+      "contents": "Contents"
+    }
+  },
+  "transactions": {
+    "type": {
+      "deposit": "Deposit",
+      "refund": "Refund",
+      "rental_payment": "Rental Payment",
+      "tna_issuance": "TNA Issuance",
+      "withdrawal": "Withdrawal"
+    }
+  },
+  "units": {
+    "days": "days"
+  },
+  "wallet": {
+    "available_balance": "Available Balance",
+    "columns": {
+      "amount": "Amount",
+      "date": "Date",
+      "status": "Status",
+      "type": "Type"
+    },
+    "statement": "Statement",
+    "top_up": "Top Up",
+    "transactions_title": "Transactions"
+  },
+  "actions": "Actions",
+  "active": "Active",
+  "addProperty": "Add Property",
+  "all": "All",
+  "approve": "Approve",
+  "authorityShare": "Authority Share",
+  "awaitingApproval": "Awaiting owner approval",
+  "bindingActivated": "Binding activated",
+  "bindingDetailsDesc": "Details of the binding request between TNA and unit",
+  "bindingInformation": "Binding Information",
+  "bindingTerminated": "Binding terminated",
+  "completed": "Completed",
+  "createSubAddress": "Create Sub-Address",
+  "createdAt": "Created At",
+  "description": "Description",
+  "descriptionDescription": "Optional unit description",
+  "endDate": "End Date",
+  "financialContract": "Financial Contract",
+  "financialDetailsDesc": "Breakdown of the financial distribution for the binding",
+  "financialNote": "Financial details show the final amount the owner will receive after deducting all fees.",
+  "grossAmount": "Gross Amount",
+  "label": "Label",
+  "labelDescription": "Unit name",
+  "loading": "Loading...",
+  "netOwnerAmount": "Net Owner Amount",
+  "noBindings": "No bindings found",
+  "noBindingsDescription": "You have no binding requests at the moment.",
+  "noBindingsWithFilter": "No {status} bindings found",
+  "noBindingsWithFilterDescription": "There are no bindings with {status} status.",
+  "note": "Note",
+  "pending": "Pending",
+  "platformFee": "Platform Fee",
+  "property": "Property",
+  "reject": "Reject",
+  "requestApproved": "Request approved",
+  "requestCreated": "Binding request created",
+  "startDate": "Start Date",
+  "status": "Status",
+  "statusTimeline": "Status Timeline",
+  "suffixCode": "Suffix Code",
+  "suffixCodeDescription": "4 unique characters for the unit, e.g. ROOM",
+  "terminate": "Terminate",
+  "terminated": "Terminated",
+  "terminatedByAgreement": "Binding terminated by agreement",
+  "terminationReason": "Termination Reason",
+  "tnaCode": "TNA Code",
+  "unit": "Unit",
+  "viewDetails": "View Details"
 }

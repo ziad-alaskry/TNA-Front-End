@@ -127,7 +127,10 @@ export default function VisitorHomeModule() {
 
       {/* STATS ROW */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-white p-6 rounded-2xl border border-neutral-100 shadow-sm flex items-center justify-between group hover:border-primary/20 transition-all">
+        <div 
+          onClick={() => router.push(`/${locale}/visitor/tnas`)}
+          className="bg-white p-6 rounded-2xl border border-neutral-100 shadow-sm flex items-center justify-between group hover:border-primary/20 transition-all cursor-pointer"
+        >
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
               <IdentificationCard size={28} weight="bold" />
@@ -139,7 +142,10 @@ export default function VisitorHomeModule() {
           </div>
           <TrendUp size={32} className="text-success opacity-20" />
         </div>
-        <div className="bg-white p-6 rounded-2xl border border-neutral-100 shadow-sm flex items-center justify-between group hover:border-primary/20 transition-all">
+        <div 
+          onClick={() => router.push(`/${locale}/visitor/shipments`)}
+          className="bg-white p-6 rounded-2xl border border-neutral-100 shadow-sm flex items-center justify-between group hover:border-primary/20 transition-all cursor-pointer"
+        >
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-white transition-all">
               <Package size={28} weight="bold" />

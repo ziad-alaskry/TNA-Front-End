@@ -19,7 +19,6 @@ import { mockGovQueue } from '@/lib/mock/gov.mock'
 import { useMock } from '@/lib/hooks/useMock'
 import Button from '@/components/ui/Button'
 import { cn } from '@/lib/utils/cn'
-import { useTranslation } from 'react-i18next';
 
 export default function GovTNAQueuePage() {
     const router = useRouter();
@@ -27,6 +26,11 @@ export default function GovTNAQueuePage() {
     const { data: queue, isLoading } = useMock(mockGovQueue);
 
     const pendingRequests = queue?.filter(q => q.status === 'PENDING_REVIEW') || [];
+    const getRequestText = (id: string, field: 'visitor_name' | 'nationality', fallback: string) => {
+        const key = `gov.mock.tna_requests.${id}.${field}`;
+        const translated = t(key);
+        return translated === key ? fallback : translated;
+    };
 
     const columns: DataTableColumn<any>[] = [
         {
@@ -39,8 +43,8 @@ export default function GovTNAQueuePage() {
                         <User size={20} weight="duotone" />
                     </div>
                     <div className="flex flex-col">
-                        <span className="font-bold text-neutral-900 line-clamp-1">{val}</span>
-                        <span className="text-[10px] text-neutral-400 font-mono">{row.nationality}</span>
+                        <span className="font-bold text-neutral-900 line-clamp-1">{getRequestText(row.request_id, 'visitor_name', val)}</span>
+                        <span className="text-[10px] text-neutral-400 font-mono">{getRequestText(row.request_id, 'nationality', row.nationality)}</span>
                     </div>
                 </div>
             )
@@ -49,8 +53,8 @@ export default function GovTNAQueuePage() {
             key: 'nationality',
             label: t('gov.nationality_18'),
             width: '20%',
-            render: (val) => (
-                <span className="text-xs font-medium text-neutral-600">{val}</span>
+            render: (val, row) => (
+                <span className="text-xs font-medium text-neutral-600">{getRequestText(row.request_id, 'nationality', val)}</span>
             )
         },
         {
@@ -73,7 +77,7 @@ export default function GovTNAQueuePage() {
             render: (val) => (
                 <div className="flex items-center gap-2 text-neutral-500">
                     <Calendar size={14} />
-                    <span className="text-xs font-medium">{new Date(val).toLocaleDateString()}</span>
+                    <span className="text-xs font-medium">{new Date(val).toLocaleDateString(locale)}</span>
                 </div>
             )
         },
