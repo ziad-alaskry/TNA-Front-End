@@ -50,7 +50,7 @@ export function MapTaskLayout({
       {/* FLOATING TASK CARD */}
       {showTaskCard && taskCard && (
         <div
-          className={`absolute ${positionClasses} z-40 w-full max-w-sm rounded-md border border-neutral-200 bg-surface-200 p-6 shadow-modal`}
+          className={`absolute ${positionClasses} z-40 w-full max-w-sm rounded-md border border-neutral-200 bg-surface p-6 shadow-modal`}
         >
           <div className="flex items-start justify-between">
             <div className="flex-1">{taskCard}</div>

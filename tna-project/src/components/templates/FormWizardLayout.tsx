@@ -44,9 +44,9 @@ export default function FormWizardLayout({
   const { t } = useLocale()
 
   return (
-    <div className="min-h-screen bg-surface-100">
+    <div className="min-h-screen bg-background">
       {/* HEADER */}
-      <div className="border border-neutral-200 bg-surface-200 px-5 py-8 shadow-card rounded-md">
+      <div className="border border-neutral-200 bg-surface px-5 py-8 shadow-sm rounded-md">
         <h1 className="text-2xl font-bold text-neutral-900">
           {steps[currentStep]?.label || 'Form'}
         </h1>
@@ -113,12 +113,12 @@ export default function FormWizardLayout({
           )}
 
           {/* FORM CONTENT */}
-          <div className="rounded-md border border-neutral-200 bg-surface-200 p-8 shadow-card">
+          <div className="rounded-md border border-neutral-200 bg-surface p-8 shadow-md">
             {children}
           </div>
 
           {/* STICKY FOOTER ACTIONS */}
-          <div className="mt-8 flex gap-4 border-t border-neutral-200 bg-surface-200 px-8 py-6">
+          <div className="mt-8 flex gap-4 border-t border-neutral-200 bg-surface px-8 py-6 rounded-md shadow-sm">
             <Button
               type="button"
               variant="outline"

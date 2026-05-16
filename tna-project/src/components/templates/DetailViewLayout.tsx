@@ -36,9 +36,9 @@ export function DetailViewLayout({
   children,
 }: DetailViewLayoutProps) {
   return (
-    <div className="min-h-screen bg-surface-100">
+    <div className="min-h-screen bg-background">
       {/* HEADER WITH BREADCRUMB */}
-      <div className="border border-neutral-200 bg-surface-200 px-5 py-8 shadow-card rounded-md">
+      <div className="border border-neutral-200 bg-surface px-5 py-8 shadow-sm rounded-md">
         <div className="flex items-center gap-3">
           {onBack && (
             <button
@@ -74,7 +74,7 @@ export function DetailViewLayout({
             {mainContent.map((section, idx) => (
               <div
                 key={idx}
-                className="rounded-md border border-neutral-200 bg-surface-200 shadow-card"
+                className="rounded-md border border-neutral-200 bg-surface shadow-md"
               >
                 <div className="border-b border-neutral-200 px-6 py-4">
                   <h2 className="text-lg font-semibold text-neutral-900">
@@ -111,7 +111,7 @@ export function DetailViewLayout({
           {/* SIDEBAR (1/3 width) */}
           {sidebar && (
             <div className="lg:col-span-1">
-              <div className="sticky top-20 rounded-md border border-neutral-200 bg-surface-200 p-6 shadow-card">
+              <div className="sticky top-20 rounded-md border border-neutral-200 bg-surface p-6 shadow-md">
                 {sidebar}
               </div>
             </div>

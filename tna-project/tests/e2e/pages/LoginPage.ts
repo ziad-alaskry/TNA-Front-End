@@ -63,7 +63,8 @@ export class LoginPage extends BasePage {
    * Click login button
    */
   async clickLogin(): Promise<void> {
-    await this.clickButton({ role: 'button', name: /Login|Sign in/i });
+    // Be more specific to avoid matching "Login with Nafath" or other buttons
+    await this.clickButton({ role: 'button', name: /^Login$|^Login as/i });
   }
 
   /**

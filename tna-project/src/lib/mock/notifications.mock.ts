@@ -15,8 +15,8 @@ export const getNotificationsForRole = (role: MockUserRole): Notification[] => {
     Visitor: [
       {
         id: 'n-1',
-        title: 'TNA Activated',
-        message: 'Your TNA TNA-001 has been activated successfully.',
+        title: 'notifications.visitor.tna_activated.title',
+        message: 'notifications.visitor.tna_activated.message',
         timestamp: '2h ago',
         read: false,
         type: 'success',
@@ -24,8 +24,8 @@ export const getNotificationsForRole = (role: MockUserRole): Notification[] => {
       },
       {
         id: 'n-2',
-        title: 'Shipment Update',
-        message: 'Shipment SHP-001 is out for delivery.',
+        title: 'notifications.visitor.shipment_update.title',
+        message: 'notifications.visitor.shipment_update.message',
         timestamp: '5h ago',
         read: false,
         type: 'info',
@@ -33,8 +33,8 @@ export const getNotificationsForRole = (role: MockUserRole): Notification[] => {
       },
       {
         id: 'n-3',
-        title: 'Address Linked',
-        message: 'Your temporary address has been linked to a property.',
+        title: 'notifications.visitor.address_linked.title',
+        message: 'notifications.visitor.address_linked.message',
         timestamp: '1d ago',
         read: true,
         type: 'success',
@@ -44,8 +44,8 @@ export const getNotificationsForRole = (role: MockUserRole): Notification[] => {
     Owner: [
       {
         id: 'n-10',
-        title: 'New Binding Request',
-        message: 'New binding request from أحمد الزائر requires your approval.',
+        title: 'notifications.owner.new_binding.title',
+        message: 'notifications.owner.new_binding.message',
         timestamp: '1h ago',
         read: false,
         type: 'alert',
@@ -53,8 +53,8 @@ export const getNotificationsForRole = (role: MockUserRole): Notification[] => {
       },
       {
         id: 'n-11',
-        title: 'Payout Processed',
-        message: 'Payout of SAR 1,200 has been processed to your bank account.',
+        title: 'notifications.owner.payout_processed.title',
+        message: 'notifications.owner.payout_processed.message',
         timestamp: '3h ago',
         read: false,
         type: 'success',
@@ -62,8 +62,8 @@ export const getNotificationsForRole = (role: MockUserRole): Notification[] => {
       },
       {
         id: 'n-12',
-        title: 'Property Verified',
-        message: 'Your property at Riyadh has been verified by authorities.',
+        title: 'notifications.owner.property_verified.title',
+        message: 'notifications.owner.property_verified.message',
         timestamp: '1d ago',
         read: true,
         type: 'success',
@@ -73,8 +73,8 @@ export const getNotificationsForRole = (role: MockUserRole): Notification[] => {
     Carrier: [
       {
         id: 'n-20',
-        title: 'New Assignment',
-        message: 'New shipment assigned to driver محمد.',
+        title: 'notifications.carrier.new_assignment.title',
+        message: 'notifications.carrier.new_assignment.message',
         timestamp: '30m ago',
         read: false,
         type: 'info',
@@ -82,8 +82,8 @@ export const getNotificationsForRole = (role: MockUserRole): Notification[] => {
       },
       {
         id: 'n-21',
-        title: 'Fleet Alert',
-        message: 'Fleet utilization below 50%. Consider adding more vehicles.',
+        title: 'notifications.carrier.fleet_alert.title',
+        message: 'notifications.carrier.fleet_alert.message',
         timestamp: '2h ago',
         read: false,
         type: 'alert',
@@ -91,8 +91,8 @@ export const getNotificationsForRole = (role: MockUserRole): Notification[] => {
       },
       {
         id: 'n-22',
-        title: 'Delivery Complete',
-        message: '10 shipments delivered successfully today.',
+        title: 'notifications.carrier.delivery_complete.title',
+        message: 'notifications.carrier.delivery_complete.message',
         timestamp: '5h ago',
         read: true,
         type: 'success',
@@ -102,8 +102,8 @@ export const getNotificationsForRole = (role: MockUserRole): Notification[] => {
     Gov: [
       {
         id: 'n-30',
-        title: 'Queue Alert',
-        message: '3 TNA issuance requests pending review in the queue.',
+        title: 'notifications.gov.queue_alert.title',
+        message: 'notifications.gov.queue_alert.message',
         timestamp: '15m ago',
         read: false,
         type: 'alert',
@@ -111,8 +111,8 @@ export const getNotificationsForRole = (role: MockUserRole): Notification[] => {
       },
       {
         id: 'n-31',
-        title: 'Policy Update',
-        message: 'Policy update requires your attention. New parameters available.',
+        title: 'notifications.gov.policy_update.title',
+        message: 'notifications.gov.policy_update.message',
         timestamp: '1h ago',
         read: false,
         type: 'info',
@@ -120,8 +120,8 @@ export const getNotificationsForRole = (role: MockUserRole): Notification[] => {
       },
       {
         id: 'n-32',
-        title: 'System Report',
-        message: 'Daily system audit report is now available.',
+        title: 'notifications.gov.system_report.title',
+        message: 'notifications.gov.system_report.message',
         timestamp: '1d ago',
         read: true,
         type: 'info',
