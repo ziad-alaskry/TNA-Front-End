@@ -120,6 +120,6 @@ export default function OwnerPropertiesPage() {
                   onCtaClick: () => router.push(`/${locale}/owner/properties/new`)
                 }}
             />
-        </AppShell>
+    </AppShell>
     );
 }

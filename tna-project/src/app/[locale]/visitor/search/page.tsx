@@ -88,25 +88,25 @@ export default function VisitorSearchPage() {
     </div>
   )
 
+
   return (
     <AppShell role="Visitor" header={t('visitor.search.header')}>
       <DetailViewLayout
         title={t('visitor.search.title')}
-        breadcrumb={[t('visitor.search.breadcrumb_home'), t('visitor.search.breadcrumb_search')]}
         mainContent={[]}
         sidebar={sidebar}
         actions={
           <Button
             type="button"
-            variant="primary"
-            disabled={!selectedObjId}
+            className="ui-gradient-primary text-white h-11 px-8 rounded-md font-bold flex items-center gap-2 border-none shadow-glow-primary hover:opacity-90 transition-opacity"
             onClick={handleProceedToRequest}
-            className="rounded-full px-6 h-10"
+            disabled={!selectedObjId}
           >
             {t('visitor.search.continue_request')}
-            <ArrowRight size={18} className={cn('ms-2', isRTL && 'rotate-180')} />
+            <ArrowRight size={20} className={cn(isRTL && 'rotate-180')} />
           </Button>
         }
+      >
       >
         <div className="rounded-md border border-neutral-200 bg-surface shadow-md">
           <div className="border-b border-neutral-200 px-6 py-4 flex items-center justify-between">

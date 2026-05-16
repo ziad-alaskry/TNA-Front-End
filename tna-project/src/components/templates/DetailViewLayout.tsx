@@ -14,7 +14,6 @@ interface DetailSection {
 
 interface DetailViewLayoutProps {
   title: string
-  breadcrumb?: string[]
   mainContent: DetailSection[]
   sidebar?: ReactNode
   onBack?: () => void
@@ -28,7 +27,6 @@ interface DetailViewLayoutProps {
  */
 export function DetailViewLayout({
   title,
-  breadcrumb,
   mainContent,
   sidebar,
   onBack,
@@ -50,16 +48,6 @@ export function DetailViewLayout({
             </button>
           )}
           <div className="flex-1">
-            {breadcrumb && breadcrumb.length > 0 && (
-              <div className="flex items-center gap-2 text-sm text-neutral-600 mb-3">
-                {breadcrumb.map((item, idx) => (
-                  <React.Fragment key={idx}>
-                    {idx > 0 && <span className="opacity-50">/</span>}
-                    <span>{item}</span>
-                  </React.Fragment>
-                ))}
-              </div>
-            )}
             <h1 className="text-2xl font-bold text-neutral-900">{title}</h1>
           </div>
           {actions && <div className="flex gap-3">{actions}</div>}

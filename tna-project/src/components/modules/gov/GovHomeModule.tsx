@@ -72,7 +72,7 @@ export default function GovHomeModule() {
         <div className="lg:col-span-2 space-y-8">
           
           {/* SYSTEM PERFORMANCE BANNER */}
-          <section className="bg-surface-200 rounded-3xl border border-neutral-200 p-8 flex flex-col md:flex-row items-center gap-8">
+          <section className="bg-white rounded-3xl border border-neutral-200 shadow-sm p-8 flex flex-col md:flex-row items-center gap-8">
             <div className="space-y-4 flex-1">
               <div className="flex items-center gap-2">
                 <Pulse size={24} className="text-success animate-pulse" weight="bold" />

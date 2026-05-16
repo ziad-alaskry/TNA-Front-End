@@ -6,7 +6,8 @@ import DataTableLayout, { DataTableColumn } from '@/components/templates/DataTab
 import { 
     Package as PackageIcon, 
     Truck as TruckIcon, 
-    Info as InfoIcon 
+    Info as InfoIcon,
+    MagnifyingGlass
 } from '@phosphor-icons/react'
 import { useRouter } from 'next/navigation'
 import Button from '@/components/ui/Button'

@@ -5,7 +5,6 @@ import Image from 'next/image'
 
 import { SidebarContent } from './RoleSidebar'
 import { useLocale } from '@/i18n/LocaleProvider'
-import Breadcrumbs from '@/components/shared/Breadcrumbs'
 import { BottomNav } from './BottomNav'
 import { cn } from '@/lib/utils/cn'
 import Header from '@/components/shell/Header'
@@ -108,7 +107,6 @@ export function AppShell({
         {/* MAIN CONTENT */}
         <main className="flex-1 min-w-0 overflow-y-auto text-start p-6 md:p-10 pb-28 md:pb-10 no-scrollbar">
           <div className="ui-content-container mx-auto">
-            <Breadcrumbs />
             <div className="animate-in slide-in-from-bottom-4 duration-500 fade-in fill-mode-both">
               {children}
             </div>
