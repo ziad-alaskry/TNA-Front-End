@@ -94,16 +94,18 @@ export function SidebarContent({ role, collapsed = false }: SidebarProps) {
        <div
          className={cn(
            "border-b border-white/20 bg-gradient-to-r from-primary to-primary-dark",
-           collapsed ? "flex h-[var(--navbar-height)] items-center justify-center px-2" : "px-4 py-7"
+           collapsed
+             ? "flex h-[var(--navbar-height)] items-center justify-center px-2"
+             : "flex min-h-28 items-center px-4"
          )}
        >
-         <div className={cn("flex items-center", collapsed ? "justify-center" : "gap-3")}>
-           <div className="h-10 w-10 rounded-lg bg-white/10 flex items-center justify-center shadow-sm">
+         <div className={cn("flex items-center", collapsed ? "justify-center" : "gap-4")}>
+           <div className="h-12 w-12 flex items-center justify-center">
              <Image
-               src="/brand/logo.svg"
+               src="/brand/logo-clean.svg"
                alt="TNA Logo"
-               width={28}
-               height={28}
+               width={44}
+               height={44}
                className="drop-shadow-sm"
              />
            </div>
