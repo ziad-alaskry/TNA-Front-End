@@ -101,8 +101,9 @@ export function AppShell({
 
         {/* DESKTOP SIDEBAR */}
         <aside className={cn(
-          'fixed left-0 top-[var(--navbar-height)] bottom-0 z-[40] hidden h-[calc(100vh-var(--navbar-height))] shrink-0 md:flex flex-col border-e border-[var(--divider-strong)]',
+          'fixed top-[var(--navbar-height)] bottom-0 z-[40] hidden h-[calc(100vh-var(--navbar-height))] shrink-0 md:flex flex-col border-[var(--divider-strong)]',
           !isDesktop ? 'hidden' : '', // Hide on mobile
+          isRTL ? 'right-0 border-s' : 'left-0 border-e',
           collapsed ? 'w-[72px]' : 'w-64', // Width based on collapsed state
           'transition-all duration-300 ease-in-out bg-white shadow-xl'
         )}>
