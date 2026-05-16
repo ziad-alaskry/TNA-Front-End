@@ -81,6 +81,7 @@ export function AppShell({
           title={header} 
           isMenuOpen={isMenuOpen}
           showCloseIcon={showCloseIcon}
+          desktopSidebarWidth={isDesktop ? (collapsed ? 72 : 256) : 0}
           onMenuClick={() => {
             if (isDesktop) {
               setCollapsed(!collapsed)
@@ -95,12 +96,12 @@ export function AppShell({
 
         {/* DESKTOP SIDEBAR */}
         <aside className={cn(
-          'hidden shrink-0 md:flex flex-col border-e border-[var(--divider-strong)] h-[calc(100vh-var(--navbar-height))] sticky top-[var(--navbar-height)] z-[40]',
+          'hidden shrink-0 md:flex flex-col border-e border-[var(--divider-strong)] h-screen -mt-[var(--navbar-height)] sticky top-0 z-[calc(var(--z-header)+1)]',
           !isDesktop ? 'hidden' : '', // Hide on mobile
           collapsed ? 'w-[72px]' : 'w-64', // Width based on collapsed state
           'transition-all duration-300 ease-in-out bg-white shadow-xl'
         )}>
-           <nav className="flex-1 overflow-hidden py-8 text-start no-scrollbar">
+           <nav className="flex-1 overflow-hidden text-start no-scrollbar">
             <SidebarContent role={role} collapsed={collapsed} />
           </nav>
         </aside>

@@ -20,12 +20,14 @@ export default function Header({
   title, 
   onMenuClick, 
   isMenuOpen = false, 
-  showCloseIcon = false 
+  showCloseIcon = false,
+  desktopSidebarWidth = 0,
 }: { 
   title?: React.ReactNode; 
   onMenuClick?: () => void; 
   isMenuOpen?: boolean; 
-  showCloseIcon?: boolean 
+  showCloseIcon?: boolean;
+  desktopSidebarWidth?: number;
 }) {
   const router = useRouter()
   const pathname = usePathname()
@@ -75,13 +77,16 @@ export default function Header({
          style={{ height: 'var(--navbar-height)' }}
        >
           {/* Main Header Container */}
-          <div className="h-full flex items-center justify-between px-[var(--space-4)] md:px-[var(--space-5)] lg:px-[var(--space-6)]">
+          <div
+            className="h-full flex items-center justify-between px-[var(--space-4)] md:px-[var(--space-5)] lg:px-[var(--space-6)] transition-[padding] duration-300 ease-in-out"
+            style={{ paddingLeft: desktopSidebarWidth ? `calc(${desktopSidebarWidth}px + var(--space-5))` : undefined }}
+          >
             
             {/* Section: Page Identity & Navigation Controls */}
             <div className="flex items-center gap-[var(--space-3)]">
               
               {/* Platform Logo - Anchors the sidebar column in RTL */}
-              <Link href={`/${currentLocale}/${rolePath}/home`} className="header-logo-link" aria-label="Go to home">
+              <Link href={`/${currentLocale}/${rolePath}/home`} className="header-logo-link md:hidden" aria-label="Go to home">
                 <svg viewBox="0 0 155 153" width="36" height="36">
                   <path fill="#29BBE3" d="M91.923096,74.412758 C92.011192,72.330902 92.483940,70.536263 92.014168,69.036934 C89.763351,61.853386 94.730690,58.297337 99.266914,54.810966 C100.399475,53.940525 103.616158,54.160423 104.732498,55.157841 C111.163475,60.903744 117.251717,67.033287 123.453949,73.035034 C123.692322,73.265709 123.985786,73.481956 124.123810,73.767632 C127.273087,80.285728 123.066048,85.552170 120.941574,91.064507 C119.538445,94.705208 117.849060,98.223228 112.516518,97.975098 C103.732346,97.566376 94.910515,98.018417 86.115845,97.744713 C84.165695,97.684021 81.143486,96.562157 80.573593,95.142593 C79.430595,92.295456 79.473679,88.874702 82.955864,86.886391 C87.688324,84.184158 90.568054,80.086647 91.923096,74.412758 z"/>
                   <path fill="#1ACDE4" d="M62.764862,52.310562 C57.106541,46.887779 51.812820,41.602070 46.300247,36.555412 C43.127430,33.650761 43.118984,31.410664 46.860374,29.203804 C48.715927,28.109304 50.469967,26.840391 52.339897,25.772957 C65.447098,18.290842 67.755020,18.608322 78.192497,28.973970 C82.790497,33.540325 87.405487,38.094681 92.152794,42.503719 C95.114746,45.254627 95.121445,47.540482 92.253738,50.459183 C88.642815,54.134319 85.519180,57.620945 79.507713,54.589443 C77.478653,53.566208 74.149223,54.134613 71.782951,54.992737 C68.005592,56.362595 65.378578,55.418049 62.764862,52.310562 z"/>
