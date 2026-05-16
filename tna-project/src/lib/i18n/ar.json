@@ -1,7 +1,7 @@
 {
     "common": {
         "next": "التالي",
-        "back": "رجوع",
+        "back": "الرجوع",
         "confirm": "تأكيد",
         "cancel": "إلغاء",
         "loading": "جاري التحميل...",
@@ -10,37 +10,37 @@
         "edit": "تعديل",
         "view_all": "عرض الكل",
         "menu": "القائمة",
-        "support": "الدعم الفني",
-        "logged_in_as": "مسجل الدخول بصفتك {role}",
+        "support": "الدعم",
+        "logged_in_as": "مسجل الدخول كـ {role}",
         "signOut": "تسجيل الخروج",
         "roles": {
             "Visitor": {
-                "overview": "الرئيسية",
+                "overview": "لوحة التحكم",
                 "address_search": "البحث عن عنوان",
-                "wallet": "المحفظة الرقمية",
-                "codes": "أكواد TNA",
-                "shipments": "تتبع الشحنات",
-                "profile": "الملف الشخصي"
+                "wallet": "Digital Wallet",
+                "codes": "رموز TNA",
+                "shipments": "الشحنات",
+                "profile": "ملفي الشخصي"
             },
             "Owner": {
                 "overview": "لوحة التحكم",
-                "properties": "إدارة العقارات",
+                "properties": "العقارات",
                 "bindings": "طلبات الربط",
                 "earnings": "الأرباح"
             },
             "Carrier": {
-                "overview": "مركز القيادة",
-                "fleet": "الأسطول",
-                "shipments": "إدارة الشحنات",
-                "tasks": "مهام السائقين",
-                "reports": "التقارير"
+                "overview": "مركز التحكم",
+                "fleet": "Fleet Management",
+                "shipments": "الشحنات",
+                "tasks": "مهام السائق",
+                "reports": "Reports"
             },
             "Gov": {
-                "overview": "مؤشرات الأنظمة",
-                "queue": "طلبات المراجعة",
-                "audit": "سجل التدقيق",
+                "overview": "مؤشرات النظام",
+                "queue": "قائمة المراجعة",
+                "audit": "سجلات التدقيق",
                 "agencies": "الجهات الحكومية",
-                "policy": "إعدادات السياسة"
+                "policy": "إعدادات السياسات"
             }
         },
         "statuses": {
@@ -52,38 +52,103 @@
             "UNLINKED": "غير مرتبط"
         }
     },
+    "notifications": {
+        "title": "الإشعارات",
+        "markAllRead": "تحديد الكل كمقروء",
+        "viewAll": "عرض كل الإشعارات",
+        "empty": {
+            "title": "لا توجد إشعارات",
+            "subtitle": "أنت على اطلاع بكل شيء!"
+        },
+        "visitor": {
+            "tna_activated": {
+                "title": "تم تفعيل العنوان المؤقت",
+                "message": "تم تفعيل عنوانك {tnaCode} بنجاح."
+            },
+            "shipment_update": {
+                "title": "تحديث الشحنة",
+                "message": "الشحنة {shipmentCode} خارجة للتسليم."
+            },
+            "address_linked": {
+                "title": "تم ربط العنوان",
+                "message": "تم ربط عنوانك المؤقت بعقار."
+            }
+        },
+        "owner": {
+            "new_binding": {
+                "title": "طلب ربط جديد",
+                "message": "طلب ربط جديد من {visitorName} بانتظار موافقتك."
+            },
+            "payout_processed": {
+                "title": "تمت عملية السحب",
+                "message": "تم تحويل مبلغ {amount} إلى حسابك البنكي."
+            },
+            "property_verified": {
+                "title": "تم التحقق من العقار",
+                "message": "تم التحقق من عقارك في {city} من قبل الجهات المختصة."
+            }
+        },
+        "carrier": {
+            "new_assignment": {
+                "title": "تعيين جديد",
+                "message": "شحنة جديدة مُسندة للسائق {driverName}."
+            },
+            "fleet_alert": {
+                "title": "تنبيه الأسطول",
+                "message": "استغلال الأسطول أقل من {percentage}%. فكر في إضافة مزيد من المركبات."
+            },
+            "delivery_complete": {
+                "title": "اكتمال التوصيل",
+                "message": "تم توصيل {count} شحنات بنجاح اليوم."
+            }
+        },
+        "gov": {
+            "queue_alert": {
+                "title": "تنبيه قائمة الانتظار",
+                "message": "{count} طلب إصدار عنوان مؤقت بانتظار المراجعة."
+            },
+            "policy_update": {
+                "title": "تحديث السياسة",
+                "message": "تحديث السياسة يستدعي انتباهك. معلمات جديدة متاحة."
+            },
+            "system_report": {
+                "title": "تقرير النظام",
+                "message": "تقرير التدقيق اليومي للنظام متاح الآن."
+            }
+        }
+    },
     "auth": {
-        "title": "إنشاء حساب جديد",
-        "personal_data": "البيانات الشخصية",
-        "full_name": "الأسم الثلاثي الرسمي",
-        "doc_number": "رقم الوثيقة الرسمية",
-        "passport": "جواز سفر",
-        "national_id": "هوية وطنية",
-        "iqama": "إقامة",
-        "dob": "تاريخ الميلاد",
-        "mobile": "رقم الجوال",
-        "confirm_checkbox": "أُقر بأن جميع البيانات الشخصية بياناتي الصحيحة",
-        "account_data": "بيانات حساب المستخدم",
-        "username": "أسم المستخدم",
-        "email": "البريد الإلكتروني",
-        "password": "كلمة المرور",
-        "confirm_password": "تأكيد كلمة المرور",
-        "terms_and_conditions": "أُوافق على شروط وأحكام العنوان الوطني المؤقت",
-        "create_account": "إنشاء حساب مستخدم جديد"
+        "title": "Create New Account",
+        "personal_data": "Personal Data",
+        "full_name": "Official Full Name",
+        "doc_number": "Official Document Number",
+        "passport": "Passport",
+        "national_id": "National ID",
+        "iqama": "Iqama",
+        "dob": "Date of Birth",
+        "mobile": "Mobile Number",
+        "confirm_checkbox": "I declare that all personal data is correct",
+        "account_data": "User Account Data",
+        "username": "Username",
+        "email": "Email Address",
+        "password": "Password",
+        "confirm_password": "Confirm Password",
+        "terms_and_conditions": "I agree to the terms and conditions",
+        "create_account": "Create New User Account"
     },
     "visitor": {
         "home": {
             "title": "العنوان الوطني المؤقت",
             "subtitle": "إدارة عناوينك وشحناتك في مكان واحد",
             "urgent": {
-                "title": "تنبيهات عاجلة",
-                "pending_binding": "طلب ربط معلق",
-                "awaiting_owner": "بانتظار موافقة المالك",
-                "pending_count": "طلبات معلقة",
-                "expiring_soon": "تنتهي الصلاحية قريباً",
-                "expires_date": "تاريخ الانتهاء",
-                "expiring_soon_desc": "تنتهي الصلاحية قريباً",
-                "warning": "تحذير"
+                "title": "Urgent Alerts",
+                "pending_binding": "Pending Binding Request",
+                "awaiting_owner": "Awaiting owner approval",
+                "pending_count": "Pending Requests",
+                "expiring_soon": "Expiring Soon",
+                "expires_date": "Expires on",
+                "expiring_soon_desc": "Expires soon",
+                "warning": "Warning"
             },
             "hero": {
                 "title": "الآن مع تطبيق العنوان الوطني المؤقت",
@@ -94,12 +159,12 @@
                 "from": "شحنة من",
                 "arrival_date": "تاريخ الوصول المتوقع",
                 "to_tna": "إلى العنوان المؤقت",
-                "empty_title": "لا توجد شحنات",
-                "empty_desc": "لا توجد شحنات لتتبعها حالياً"
+                "empty_title": "No shipments",
+                "empty_desc": "No shipments to track at the moment"
             },
             "addresses": {
                 "title": "عناويني المؤقتة",
-                "title_short": "العناوين",
+                "title_short": "Addresses",
                 "manage": "إدارة العناوين",
                 "linked_success": "مرتبط بنجاح",
                 "until_date": "حتى تاريخ",
@@ -108,217 +173,222 @@
             },
             "actions": {
                 "create_new": "إنشاء عنوان وطني مؤقت جديد",
-                "check_balance": "التحقق من الرصيد"
+                "check_balance": "Check Balance"
             },
             "status": {
-                "active": "نشط",
-                "in_transit": "في الطريق",
-                "pending": "قيد الانتظار",
-                "linked": "مرتبط"
+                "active": "Active",
+                "in_transit": "In Transit",
+                "pending": "Pending",
+                "linked": "Linked"
+            }
+        },
+        "shipments": {
+            "new": {
+                "header": "طلب شحن جديد",
+                "step1_label": "المسار",
+                "step1_title": "تحديد المسار",
+                "step1_description": "اختر مصدر ووجهة الشحنة.",
+                "step1_from": "من (المصدر)",
+                "step1_from_current": "موقعي الحالي",
+                "step1_from_tna": "عنواني المؤقت: {tnaCode}",
+                "step1_to": "إلى (الوجهة - كود TNA أو عنوان)",
+                "step1_placeholder": "مثلاً: TNA-667722",
+                "step1_info": "يمكنك إرسال الشحنة إلى أي كود TNA مسجل في النظام لضمان الخصوصية وسرعة التوصيل.",
+                "step1_required": "Please select the shipment origin",
+                "step2_label": "التفاصيل",
+                "step2_title": "تفاصيل الشحنة",
+                "step2_description": "أدخل معلومات الطرد المراد شحنه.",
+                "step2_category": "نوع الشحنة",
+                "step2_weight": "الوزن التقريبي (كجم)",
+                "step2_weight_unit": "كجم",
+                "step2_length": "الطول",
+                "step2_width": "العرض",
+                "step2_height": "الارتفاع",
+                "step2_required": "Please enter the destination",
+                "step3_label": "الناقل",
+                "step3_title": "اختر الناقل",
+                "step3_description": "حدد شركة الشحن المناسبة لك.",
+                "step3_delivery_days": "أيام",
+                "step3_error_required": "يجب اختيار الناقل",
+                "step3_required": "Please enter the weight",
+                "cat_documents": "وثائق وأوراق",
+                "cat_electronics": "إلكترونيات",
+                "cat_clothes": "ملابس وأقمشة",
+                "cat_food": "مواد غذائية مغلفة",
+                "cat_other": "أخرى",
+                "carrier_smsa": "Smsa Express",
+                "carrier_aramex": "Aramex",
+                "carrier_spl": "SPL Online",
+                "carrier_time_smsa": "24-48 ساعة",
+                "carrier_time_aramex": "24-72 ساعة",
+                "carrier_time_spl": "3-5 أيام",
+                "step4_label": "تأكيد",
+                "step4_title": "مراجعة الطلب",
+                "step4_description": "تأكد من البيانات قبل إنشاء بوليصة الشحن.",
+                "step4_origin_label": "المصدر",
+                "step4_destination_label": "الوجهة",
+                "step4_summary_label": "الشحنة",
+                "step4_carrier_label": "الناقل",
+                "step4_total_label": "إجمالي التكلفة",
+                "step4_warning": "بمجرد التأكيد، سيتم خصم المبلغ من محفظتك وتزويدك ببوليصة الشحن.",
+                "step4_required": "Please select a shipment category",
+                "step5_required": "Please select a carrier",
+                "success_title": "تم إنشاء الشحنة بنجاح!",
+                "success_desc": "يمكنك الآن تحميل بوليصة الشحن وتسليم الطرد للناقل.",
+                "success_tracking_label": "رقم التتبع",
+                "success_download_policy": "تحميل البوليصة",
+                "success_track_shipments": "تتبع الشحنات",
+                "success_back_home": "العودة للرئيسية"
             }
         }
     },
     "owner": {
         "home": {
-            "header": "لوحة التحكم",
-            "title": "مرحباً بك، شريك النجاح",
-            "subtitle": "إدارة عقاراتك، متابعة طلبات الربط، ومراقبة نمو أرباحك في منصة TNA.",
+            "header": "لوحة تحكم المالك",
+            "title": "Welcome, Partner",
+            "subtitle": "Manage your properties, track linking requests, and monitor your earnings growth in the TNA platform.",
             "stats": {
-                "properties": "العقارات المسجلة",
-                "bindings": "الارتباطات النشطة",
-                "earnings": "إجمالي الأرباح",
-                "balance": "الرصيد المتاح"
+                "properties": "العقارات",
+                "bindings": "Active Bindings",
+                "earnings": "Total Earnings",
+                "balance": "Available Balance"
             },
             "cta": {
-                "title": "سجل عقاراً جديداً",
-                "description": "ابدأ بجني الأرباح عبر تسجيل عقاراتك في المنصة وإتاحتها للزوار والباحثين عن عناوين وطنية مؤقتة.",
-                "button": "إضافة عقار جديد"
+                "title": "Register a New Property",
+                "description": "Start earning by registering your properties on the platform and making them available to visitors looking for TNA addresses.",
+                "button": "Add New Property"
             },
             "withdraw": {
-                "title": "سحب الرصيد",
-                "current_balance": "رصيدك الحالي",
-                "statement": "كشف حساب",
-                "transfer": "تحويل للبنك"
+                "title": "Withdraw Balance",
+                "current_balance": "Current Balance",
+                "statement": "Account Statement",
+                "transfer": "Transfer to Bank"
             },
             "analytics": {
-                "title": "تحليلات الأرباح (آخر ٧ أيام)",
-                "view_details": "مشاهدة التفاصيل",
-                "placeholder": "سيتم تفعيل الرسوم البيانية التفاعلية قريباً"
+                "title": "Earnings Analytics (Last 7 Days)",
+                "view_details": "View Details",
+                "placeholder": "Interactive charts will be activated soon"
             }
         }
     },
     "carrier": {
         "home": {
-            "header": "مركز قيادة العمليات",
-            "title": "موجز أداء الأسطول واللوجستيات",
-            "subtitle": "مراقبة أداء الشحنات وتوزيع المهام اليومية للسائقين.",
+            "header": "لوحة تحكم الناقل",
+            "title": "Fleet and Logistics Summary",
+            "subtitle": "Monitor shipment performance and distribute daily tasks to drivers.",
             "stats": {
-                "fleet_size": "حجم الأسطول",
-                "active_shipments": "شحنات نشطة",
-                "available_drivers": "السائقين المتاحين",
-                "pending_distribution": "بانتظار التوزيع"
+                "fleet_size": "Fleet Size",
+                "active_shipments": "Active Shipments",
+                "available_drivers": "Available Drivers",
+                "pending_distribution": "Pending Distribution"
             },
             "utilization": {
-                "title": "مؤشر استغلال الأسطول",
-                "view_report": "عرض التقرير",
-                "day_label": "اليوم"
+                "title": "Fleet Utilization Index",
+                "view_report": "View Report",
+                "day_label": "Day"
             },
             "tasks": {
-                "title": "توزيع المهام",
-                "description": "قم بتوزيع الشحنات الجديدة على السائقين المتاحين وتحديد المسارات المثلى.",
-                "map_button": "خريطة التوزيع",
-                "manage_fleet": "إدارة الأسطول"
+                "title": "Task Distribution",
+                "description": "Distribute new shipments to available drivers and determine optimal routes.",
+                "map_button": "Distribution Map",
+                "manage_fleet": "Manage Fleet"
             },
             "tracking": {
-                "title": "تتبع حي للشحنات",
-                "description": "يوجد حالياً {count} شحنة في طور التوصيل الفعلي.",
-                "button": "دخول الخريطة الحية"
+                "title": "Live Shipment Tracking",
+                "description": "There are currently {count} shipments in delivery mode.",
+                "button": "Enter Live Map"
             }
         }
     },
-"gov": {
-    "overview": "مؤشرات الأنظمة",
-    "queue": "طلبات المراجعة",
-    "audit": "سجل التدقيق",
-    "agencies": {
-        "title": "الجهات الحكومية",
-        "add_new": "إضافة جهة جديدة",
-        "tab": "الجهات",
-        "table": {
-            "headers": {
-                "name": "اسم الجهة",
-                "region": "المنطقة",
-                "department": "الإدارة",
-                "admin_user": "مدير النظام",
-                "staff_count": "عدد الموظفين"
-            }
-        },
-        "modal": {
-            "title": "إضافة جهة حكومية جديدة",
-            "fields": {
-                "name": "اسم الجهة",
-                "region": "المنطقة",
-                "department": "القسم المسؤول",
-                "admin_user": "مدير النظام المرشح",
-                "name_placeholder": "مثلاً: وزارة السياحة",
-                "department_placeholder": "مثلاً: قسم التدقيق",
-                "admin_user_placeholder": "الاسم الكامل",
-                "regions": {
-                    "riyadh": "الرياض",
-                    "jeddah": "جدة"
+    "gov": {
+        "overview": "مؤشرات النظام",
+        "queue": "Review Queue",
+        "audit": "Audit Logs",
+        "agencies": {
+            "title": "الجهات الحكومية",
+            "add_new": "إضافة جهة جديدة",
+            "tab": "الجهات",
+            "table": {
+                "headers": {
+                    "name": "اسم الجهة",
+                    "region": "المنطقة",
+                    "department": "الإدارة",
+                    "admin_user": "مدير النظام",
+                    "staff_count": "عدد الموظفين"
+                }
+            },
+            "modal": {
+                "title": "إضافة جهة حكومية جديدة",
+                "fields": {
+                    "name": "اسم الجهة",
+                    "region": "المنطقة",
+                    "department": "الإدارة المسؤولة",
+                    "admin_user": "مرشح إدارة النظام",
+                    "name_placeholder": "مثال: وزارة السياحة",
+                    "department_placeholder": "مثال: إدارة التدقيق",
+                    "admin_user_placeholder": "الاسم الكامل",
+                    "regions": {
+                        "riyadh": "الرياض",
+                        "jeddah": "جدة"
+                    }
                 }
             }
-        }
-    },
-    "staff": {
-        "title": "الموظفين",
-        "add_new": "إضافة موظف",
-        "tab": "الموظفين",
-        "table": {
-            "headers": {
-                "name": "اسم الموظف",
-                "department": "القسم",
-                "permissions": "الصلاحيات",
-                "status": "الحالة"
+        },
+        "staff": {
+            "title": "موظفو الحكومة",
+            "add_new": "إضافة موظف جديد",
+            "tab": "الموظفون",
+            "table": {
+                "headers": {
+                    "name": "اسم الموظف",
+                    "department": "الإدارة",
+                    "permissions": "الصلاحيات",
+                    "status": "الحالة"
+                },
+                "permissions": {
+                    "VERIFY": "التحقق من الطلبات",
+                    "MANAGE_POLICY": "إدارة السياسات",
+                    "AUDIT": "سجلات التدقيق",
+                    "READ_ONLY": "قراءة فقط"
+                }
             },
-            "permissions": {
-                "VERIFY": "التحقق من الطلبات",
-                "MANAGE_POLICY": "إدارة السياسات",
-                "AUDIT": "سجل التدقيق",
-                "READ_ONLY": "قراءة فقط"
-            }
-        },
-        "modal": {
-            "title": "إضافة موظف حكومي جديد",
-            "fields": {
-                "name": "اسم الموظف",
-                "agency": "الجهة",
-                "email": "البريد الإلكتروني الحكومي",
-                "permissions": "الصلاحيات",
-                "name_placeholder": "الاسم الكامل",
-                "email_placeholder": "name@agency.gov.sa"
-            }
-        }
-    },
-    "policy": "إعدادات السياسة",
-    "home": {
-        "header": "مركز التحكم والرقابة",
-        "title": "نظرة عامة على النظام",
-        "subtitle": "متابعة أداء العناوين الوطنية المؤقتة وحالات التحقق والسياسات العامة عبر المملكة.",
-        "stats": {
-            "total_tnas": "إجمالي عناوين TNA",
-            "pending_verification": "طلبات قيد المراجعة",
-            "daily_issuance": "معدل الإصدار اليومي",
-            "critical_alerts": "تنبيهات حرجة"
-        },
-        "map": {
-            "title": "التوزيع الجغرافي للطلبات",
-            "view_full": "عرض كامل الخارطة"
-        },
-        "actions": {
-            "title": "إجراءات سريعة",
-            "policy_config": "تعديل السياسات",
-            "audit_logs": "سجلات التدقيق"
-        }
-    }
-}
-        },
-        "modal": {
-            "title": "إضافة جهة حكومية جديدة",
-            "fields": {
-                "name": "اسم الجهة",
-                "region": "المنطقة",
-                "department": "القسم المسؤول",
-                "admin_user": "مدير النظام المرشح",
-                "name_placeholder": "مثلاً: وزارة السياحة",
-                "department_placeholder": "مثلاً: قسم التدقيق",
-                "admin_user_placeholder": "الاسم الكامل",
-                "regions": {
-                    "riyadh": "الرياض",
-                    "jeddah": "جدة"
+            "modal": {
+                "title": "إضافة موظف حكومي جديد",
+                "fields": {
+                    "name": "اسم الموظف",
+                    "agency": "الجهة",
+                    "email": "البريد الحكومي",
+                    "permissions": "الصلاحيات",
+                    "name_placeholder": "الاسم الكامل",
+                    "email_placeholder": "name@agency.gov.sa"
                 }
             }
-        }
-    },
-    "staff": {
-        "title": "الموظفين",
-        "add_new": "إضافة موظف",
-        "tab": "الموظفين",
-        "table": {
-            "headers": {
-                "name": "اسم الموظف",
-                "department": "القسم",
-                "permissions": "الصلاحيات",
-                "status": "الحالة"
+        },
+        "policy": {
+            "options": {
+                "MODERATED": "مراجعة يدوية",
+                "AUTONOMOUS": "إصدار تلقائي"
+            }
+        },
+        "home": {
+            "header": "مركز التحكم والرقابة",
+            "title": "نظرة عامة على النظام",
+            "subtitle": "متابعة أداء العناوين الوطنية المؤقتة وحالات التحقق والسياسات العامة عبر المملكة.",
+            "stats": {
+                "total_tnas": "إجمالي عناوين TNA",
+                "pending_verification": "طلبات قيد المراجعة",
+                "daily_issuance": "معدل الإصدار اليومي",
+                "critical_alerts": "تنبيهات حرجة"
             },
-            "permissions": {
-                "VERIFY": "التحقق من الطلبات",
-                "MANAGE_POLICY": "إدارة السياسات",
-                "AUDIT": "سجل التدقيق",
-                "READ_ONLY": "قراءة فقط"
+            "map": {
+                "title": "التوزيع الجغرافي للطلبات",
+                "view_full": "عرض كامل الخارطة"
+            },
+            "actions": {
+                "title": "إجراءات سريعة",
+                "policy_config": "تعديل السياسات",
+                "audit_logs": "سجلات التدقيق"
             }
         }
-    },
-    "policy": "إعدادات السياسة",
-    "home": {
-        "header": "مركز التحكم والرقابة",
-        "title": "نظرة عامة على النظام",
-        "subtitle": "متابعة أداء العناوين الوطنية المؤقتة وحالات التحقق والسياسات العامة عبر المملكة.",
-        "stats": {
-            "total_tnas": "إجمالي عناوين TNA",
-            "pending_verification": "طلبات قيد المراجعة",
-            "daily_issuance": "معدل الإصدار اليومي",
-            "critical_alerts": "تنبيهات حرجة"
-        },
-        "map": {
-            "title": "التوزيع الجغرافي للطلبات",
-            "view_full": "عرض كامل الخارطة"
-        },
-        "actions": {
-            "title": "إجراءات سريعة",
-            "policy_config": "تعديل السياسات",
-            "audit_logs": "سجلات التدقيق"
-        }
     }
-}
 }

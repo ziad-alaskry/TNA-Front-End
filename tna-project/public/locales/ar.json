@@ -364,6 +364,60 @@
         "shipments": "الشحنات"
       }
     },
+    "shipments": {
+      "new": {
+        "header": "طلب شحن جديد",
+        "step1_label": "المسار",
+        "step1_title": "تحديد المسار",
+        "step1_description": "اختر مصدر ووجهة الشحنة.",
+        "step1_from": "من (المصدر)",
+        "step1_from_current": "موقعي الحالي",
+        "step1_from_tna": "عنواني المؤقت: {tnaCode}",
+        "step1_to": "إلى (الوجهة - كود TNA أو عنوان)",
+        "step1_placeholder": "مثلاً: TNA-667722",
+        "step1_info": "يمكنك إرسال الشحنة إلى أي كود TNA مسجل في النظام لضمان الخصوصية وسرعة التوصيل.",
+        "step2_label": "التفاصيل",
+        "step2_title": "تفاصيل الشحنة",
+        "step2_description": "أدخل معلومات الطرد المراد شحنه.",
+        "step2_category": "نوع الشحنة",
+        "step2_weight": "الوزن التقريبي (كجم)",
+        "step2_weight_unit": "كجم",
+        "step2_length": "الطول",
+        "step2_width": "العرض",
+        "step2_height": "الارتفاع",
+        "cat_documents": "وثائق وأوراق",
+        "cat_electronics": "إلكترونيات",
+        "cat_clothes": "ملابس وأقمشة",
+        "cat_food": "مواد غذائية مغلفة",
+        "cat_other": "أخرى",
+        "carrier_smsa": "Smsa Express",
+        "carrier_aramex": "Aramex",
+        "carrier_spl": "SPL Online",
+        "carrier_time_smsa": "24-48 ساعة",
+        "carrier_time_aramex": "24-72 ساعة",
+        "carrier_time_spl": "3-5 أيام",
+        "step3_label": "الناقل",
+        "step3_title": "اختر الناقل",
+        "step3_description": "حدد شركة الشحن المناسبة لك.",
+        "step3_delivery_days": "أيام",
+        "step3_error_required": "يجب اختيار الناقل",
+        "step4_label": "تأكيد",
+        "step4_title": "مراجعة الطلب",
+        "step4_description": "تأكد من البيانات قبل إنشاء بوليصة الشحن.",
+        "step4_origin_label": "المصدر",
+        "step4_destination_label": "الوجهة",
+        "step4_summary_label": "الشحنة",
+        "step4_carrier_label": "الناقل",
+        "step4_total_label": "إجمالي التكلفة",
+        "step4_warning": "بمجرد التأكيد، سيتم خصم المبلغ من محفظتك وتزويدك ببوليصة الشحن.",
+        "success_title": "تم إنشاء الشحنة بنجاح!",
+        "success_desc": "يمكنك الآن تحميل بوليصة الشحن وتسليم الطرد للناقل.",
+        "success_tracking_label": "رقم التتبع",
+        "success_download_policy": "تحميل البوليصة",
+        "success_track_shipments": "تتبع الشحنات",
+        "success_back_home": "العودة للرئيسية"
+      }
+    },
     "search": {
       "header": "اكتشاف العناوين",
       "title": "البحث عن عقار متاح",
@@ -1629,12 +1683,69 @@
     "ltr_1": "rtl",
     "left0_2": "right-0"
   },
-  "notifications": {
+   "notifications": {
     "title": "الإشعارات",
     "markAllRead": "تحديد الكل كمقروء",
+    "viewAll": "عرض كل الإشعارات",
     "empty": {
       "title": "لا توجد إشعارات",
       "subtitle": "أنت على اطلاع بكل شيء!"
+    },
+    "visitor": {
+      "tna_activated": {
+        "title": "تم تفعيل العنوان المؤقت",
+        "message": "تم تفعيل عنوانك {tnaCode} بنجاح."
+      },
+      "shipment_update": {
+        "title": "تحديث الشحنة",
+        "message": "الشحنة {shipmentCode} خارجة للتسليم."
+      },
+      "address_linked": {
+        "title": "تم ربط العنوان",
+        "message": "تم ربط عنوانك المؤقت بعقار."
+      }
+    },
+    "owner": {
+      "new_binding": {
+        "title": "طلب ربط جديد",
+        "message": "طلب ربط جديد من {visitorName} بانتظار موافقتك."
+      },
+      "payout_processed": {
+        "title": "تمت عملية السحب",
+        "message": "تم تحويل مبلغ {amount} إلى حسابك البنكي."
+      },
+      "property_verified": {
+        "title": "تم التحقق من العقار",
+        "message": "تم التحقق من عقارك في {city} من قبل الجهات المختصة."
+      }
+    },
+    "carrier": {
+      "new_assignment": {
+        "title": "تعيين جديد",
+        "message": "شحنة جديدة مُسندة للسائق {driverName}."
+      },
+      "fleet_alert": {
+        "title": "تنبيه الأسطول",
+        "message": "استغلال الأسطول أقل من {percentage}%. فكر في إضافة مزيد من المركبات."
+      },
+      "delivery_complete": {
+        "title": "اكتمال التوصيل",
+        "message": "تم توصيل {count} شحنات بنجاح اليوم."
+      }
+    },
+    "gov": {
+      "queue_alert": {
+        "title": "تنبيه قائمة الانتظار",
+        "message": "{count} طلب إصدار عنوان مؤقت بانتظار المراجعة."
+      },
+      "policy_update": {
+        "title": "تحديث السياسة",
+        "message": "تحديث السياسة يستدعي انتباهك. معلمات جديدة متاحة."
+      },
+      "system_report": {
+        "title": "تقرير النظام",
+        "message": "تقرير التدقيق اليومي للنظام متاح الآن."
+      }
     }
   },
   "roles": {

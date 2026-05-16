@@ -161,15 +161,15 @@ export function NotificationPanel({ isOpen, anchorRef, onClose }: NotificationPa
                 >
                   <div className="notif-item-content">
                     <div className="flex items-center justify-between gap-2">
-                      <h4 className="notif-item-title">
-                        {notification.title}
-                      </h4>
+                    <h4 className="notif-item-title">
+                      {t(notification.title)}
+                    </h4>
                       {!notification.read && (
                         <Check size={14} className="notif-item-check" />
                       )}
                     </div>
                     <p className="notif-item-desc">
-                      {notification.message}
+                      {t(notification.message)}
                     </p>
                     <span className="notif-item-time">
                       {notification.timestamp}
@@ -184,7 +184,7 @@ export function NotificationPanel({ isOpen, anchorRef, onClose }: NotificationPa
         {/* Footer */}
         <div className="notif-panel-footer">
           <a href="/notifications" className="notif-view-all">
-            View all notifications
+            {t('notifications.viewAll')}
           </a>
         </div>
       </div>

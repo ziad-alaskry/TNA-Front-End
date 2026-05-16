@@ -52,6 +52,71 @@
             "UNLINKED": "Unlinked"
         }
     },
+    "notifications": {
+        "title": "Notifications",
+        "markAllRead": "Mark all read",
+        "viewAll": "View all notifications",
+        "empty": {
+            "title": "No notifications",
+            "subtitle": "You're all caught up!"
+        },
+        "visitor": {
+            "tna_activated": {
+                "title": "TNA Activated",
+                "message": "Your TNA {tnaCode} has been activated successfully."
+            },
+            "shipment_update": {
+                "title": "Shipment Update",
+                "message": "Shipment {shipmentCode} is out for delivery."
+            },
+            "address_linked": {
+                "title": "Address Linked",
+                "message": "Your temporary address has been linked to a property."
+            }
+        },
+        "owner": {
+            "new_binding": {
+                "title": "New Binding Request",
+                "message": "New binding request from {visitorName} requires your approval."
+            },
+            "payout_processed": {
+                "title": "Payout Processed",
+                "message": "Payout of {amount} has been processed to your bank account."
+            },
+            "property_verified": {
+                "title": "Property Verified",
+                "message": "Your property at {city} has been verified by authorities."
+            }
+        },
+        "carrier": {
+            "new_assignment": {
+                "title": "New Assignment",
+                "message": "New shipment assigned to driver {driverName}."
+            },
+            "fleet_alert": {
+                "title": "Fleet Alert",
+                "message": "Fleet utilization below {percentage}%. Consider adding more vehicles."
+            },
+            "delivery_complete": {
+                "title": "Delivery Complete",
+                "message": "{count} shipments delivered successfully today."
+            }
+        },
+        "gov": {
+            "queue_alert": {
+                "title": "Queue Alert",
+                "message": "{count} TNA issuance requests pending review in the queue."
+            },
+            "policy_update": {
+                "title": "Policy Update",
+                "message": "Policy update requires your attention. New parameters available."
+            },
+            "system_report": {
+                "title": "System Report",
+                "message": "Daily system audit report is now available."
+            }
+        }
+    },
     "auth": {
         "title": "Create New Account",
         "personal_data": "Personal Data",
@@ -115,6 +180,65 @@
                 "in_transit": "In Transit",
                 "pending": "Pending",
                 "linked": "Linked"
+            }
+        },
+        "shipments": {
+            "new": {
+                "header": "New Shipment Request",
+                "step1_label": "Route",
+                "step1_title": "Define Route",
+                "step1_description": "Select your shipment origin and destination.",
+                "step1_from": "From (Origin)",
+                "step1_from_current": "My Current Location",
+                "step1_from_tna": "My Temporary Address: {tnaCode}",
+                "step1_to": "To (Destination - TNA Code or Address)",
+                "step1_placeholder": "e.g., TNA-667722",
+                "step1_info": "You can send your shipment to any registered TNA code to ensure privacy and fast delivery.",
+                "step1_required": "Please select the shipment origin",
+                "step2_label": "Details",
+                "step2_title": "Shipment Details",
+                "step2_description": "Enter information about the parcel to be shipped.",
+                "step2_category": "Shipment Type",
+                "step2_weight": "Approximate Weight (kg)",
+                "step2_weight_unit": "kg",
+                "step2_length": "Length",
+                "step2_width": "Width",
+                "step2_height": "Height",
+                "step2_required": "Please enter the destination",
+                "step3_label": "Carrier",
+                "step3_title": "Choose Carrier",
+                "step3_description": "Select the shipping company that suits you.",
+                "step3_delivery_days": "days",
+                "step3_error_required": "Please select a carrier",
+                "step3_required": "Please enter the weight",
+                "cat_documents": "Documents",
+                "cat_electronics": "Electronics",
+                "cat_clothes": "Clothes & Fabric",
+                "cat_food": "Packaged Food Items",
+                "cat_other": "Other",
+                "carrier_smsa": "Smsa Express",
+                "carrier_aramex": "Aramex",
+                "carrier_spl": "SPL Online",
+                "carrier_time_smsa": "24-48 hours",
+                "carrier_time_aramex": "24-72 hours",
+                "carrier_time_spl": "3-5 days",
+                "step4_label": "Review",
+                "step4_title": "Review Order",
+                "step4_description": "Verify the data before creating the shipment policy.",
+                "step4_origin_label": "Origin",
+                "step4_destination_label": "Destination",
+                "step4_summary_label": "Shipment",
+                "step4_carrier_label": "Carrier",
+                "step4_total_label": "Total Cost",
+                "step4_warning": "Upon confirmation, the amount will be deducted from your wallet and a shipment policy will be issued.",
+                "step4_required": "Please select a shipment category",
+                "step5_required": "Please select a carrier",
+                "success_title": "Shipment created successfully!",
+                "success_desc": "You can now download the shipment policy and hand over the parcel to the carrier.",
+                "success_tracking_label": "Tracking Number",
+                "success_download_policy": "Download Policy",
+                "success_track_shipments": "Track Shipments",
+                "success_back_home": "Back to Home"
             }
         }
     },
