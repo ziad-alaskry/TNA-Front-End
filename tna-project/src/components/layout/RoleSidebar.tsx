@@ -91,27 +91,32 @@ export function SidebarContent({ role, collapsed = false }: SidebarProps) {
    
    return (
     <div className="flex h-full flex-col text-start font-english">
-       {/* Header Block with Logo + Role Badge (hidden when collapsed) */}
-       {!collapsed && (
-         <div className="px-4 py-6 border-b border-white/20 mb-2 bg-gradient-to-r from-primary to-primary-dark">
-           <div className="flex items-center gap-3">
-             {/* TNA Logo Image */}
-             <div className="h-10 w-10 rounded-lg bg-white/10 flex items-center justify-center shadow-sm">
-               <Image
-                 src="/brand/logo.svg"
-                 alt="TNA Logo"
-                 width={28}
-                 height={28}
-                 className="drop-shadow-sm"
-               />
-             </div>
+       <div
+         className={cn(
+           "border-b border-white/20 bg-gradient-to-r from-primary to-primary-dark",
+           collapsed
+             ? "flex h-[var(--navbar-height)] items-center justify-center px-2"
+             : "flex min-h-28 items-center px-4"
+         )}
+       >
+         <div className={cn("flex items-center", collapsed ? "justify-center" : "gap-4")}>
+           <div className="h-12 w-12 flex items-center justify-center">
+             <Image
+               src="/brand/logo-clean.svg"
+               alt="TNA Logo"
+               width={44}
+               height={44}
+               className="drop-shadow-sm"
+             />
+           </div>
+           {!collapsed && (
              <div className="flex flex-col">
                <span className="font-bold text-white text-lg leading-none tracking-tight">TNA</span>
                <span className="text-xs text-white/70 mt-0.5 uppercase font-semibold tracking-wide">{role}</span>
              </div>
-           </div>
+           )}
          </div>
-        )}
+       </div>
        
        {/* Navigation Menu */}
        <nav className={cn(
