@@ -25,7 +25,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
                     <input
                         ref={ref}
                         className={cn(
-                            'w-full h-input bg-surface-200 border border-divider rounded-sm px-4 text-start text-text-primary placeholder:text-text-placeholder focus:outline-none transition-all duration-fast',
+                            'w-full h-input bg-surface border border-divider rounded-sm px-4 text-start text-text-primary placeholder:text-text-placeholder focus:outline-none transition-all duration-fast shadow-sm',
                             error
                                 ? 'border-error ring-1 ring-error/20'
                                 : 'group-focus-within:border-primary group-focus-within:ring-2 group-focus-within:ring-primary/10',

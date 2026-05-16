@@ -60,14 +60,14 @@ export function DashboardLayout({
       case 'error':
         return 'bg-error-bg border-s-4 border-error'
       default:
-        return 'bg-surface-200'
+        return 'bg-surface border border-neutral-200'
     }
   }
 
   return (
-    <div className="min-h-screen bg-surface-100">
+    <div className="min-h-screen bg-background">
       {/* HEADER SECTION */}
-      <div className="border border-neutral-200 bg-surface-200 px-5 py-8 shadow-card rounded-md">
+      <div className="border border-neutral-200 bg-surface px-5 py-8 shadow-sm rounded-md">
         <h1 className="text-display text-neutral-900">
           {title}
         </h1>
@@ -89,7 +89,7 @@ export function DashboardLayout({
                   <button
                     key={idx}
                     onClick={() => onStatClick?.(stat)}
-                    className="rounded-md border border-neutral-200 bg-surface-200 p-6 shadow-card transition-all hover:shadow-modal hover:border-primary/40 text-start group"
+                    className="rounded-md border border-neutral-200 bg-surface p-6 shadow-md transition-all hover:shadow-lg hover:border-primary/40 text-start group"
                   >
                     <div className="flex items-center justify-between">
                       <div>

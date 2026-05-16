@@ -16,6 +16,7 @@ import {
 import { useBindingContext } from '@/context/BindingContext'
 import { useLocale } from '@/i18n/LocaleProvider'
 import { cn } from '@/lib/utils/cn'
+import Button from '@/components/ui/Button'
 
 export default function VisitorSearchPage() {
   const router = useRouter()
@@ -71,7 +72,7 @@ export default function VisitorSearchPage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className={cn(
-              'w-full rounded-sm border border-neutral-200 bg-surface-100 py-2.5 text-sm text-neutral-900 placeholder-neutral-400 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all outline-none',
+              'w-full rounded-sm border border-neutral-200 bg-surface py-2.5 text-sm text-neutral-900 placeholder-neutral-400 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all outline-none shadow-sm',
               isRTL ? 'pr-10 pl-4' : 'pl-10 pr-4'
             )}
             />
@@ -95,18 +96,19 @@ export default function VisitorSearchPage() {
         mainContent={[]}
         sidebar={sidebar}
         actions={
-          <button
+          <Button
             type="button"
+            variant="primary"
             disabled={!selectedObjId}
             onClick={handleProceedToRequest}
-            className="rounded-pill bg-btn-primary px-6 h-10 text-sm font-bold text-white shadow-btn flex items-center gap-2 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+            className="rounded-full px-6 h-10"
           >
             {t('visitor.search.continue_request')}
-            <ArrowRight size={18} className={cn(isRTL && 'rotate-180')} />
-          </button>
+            <ArrowRight size={18} className={cn('ms-2', isRTL && 'rotate-180')} />
+          </Button>
         }
       >
-        <div className="rounded-md border border-neutral-200 bg-surface-200 shadow-card">
+        <div className="rounded-md border border-neutral-200 bg-surface shadow-md">
           <div className="border-b border-neutral-200 px-6 py-4 flex items-center justify-between">
             <h2 className="text-lg font-bold text-neutral-900 flex items-center gap-2">
                 <MapPin size={22} className="text-primary" weight="fill" />

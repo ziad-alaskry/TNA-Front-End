@@ -90,7 +90,7 @@ export default function DataTableLayout<T extends Record<string, any>>({
                     placeholder={t('common.search_placeholder')}
                     value={searchQuery}
                     onChange={(e) => handleSearch(e.target.value)}
-                    className="w-full h-11 rounded-sm border border-neutral-200 bg-surface-200 ps-12 pe-4 text-body text-neutral-900 placeholder-neutral-400 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all outline-none"
+                    className="w-full h-11 rounded-sm border border-neutral-200 bg-surface ps-12 pe-4 text-body text-neutral-900 placeholder-neutral-400 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all outline-none shadow-sm"
                 />
             </div>
             {children}
@@ -98,7 +98,7 @@ export default function DataTableLayout<T extends Record<string, any>>({
       </div>
 
        {/* TABLE CONTAINER */}
-       <div className="overflow-hidden rounded-md border border-neutral-200 bg-surface-200 shadow-card">
+       <div className="overflow-hidden rounded-md border border-neutral-200 bg-surface shadow-md">
          <div className="w-full overflow-x-auto no-scrollbar">
            <table className="w-full text-start border-collapse table-fixed">
              <thead>
