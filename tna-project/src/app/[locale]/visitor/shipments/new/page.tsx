@@ -22,6 +22,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useRouter, useParams } from 'next/navigation';
 import { useBindingContext } from '@/context/BindingContext';
+import { useLocale } from '@/i18n/LocaleProvider';
 
 const shipmentSchema = z.object({
   origin: z.string().min(1, { message: 'يجب اختيار مصدر الشحنة' }),
@@ -36,6 +37,7 @@ type ShipmentInputs = z.infer<typeof shipmentSchema>;
 export default function NewShipmentPage() {
   const router = useRouter();
   const { locale } = useParams();
+  const { t } = useLocale();
   const { visitorTnas } = useBindingContext();
   
   const [currentStep, setCurrentStep] = useState(0);
@@ -166,7 +168,7 @@ export default function NewShipmentPage() {
                     </div>
                 </div>
                 <div className="text-left">
-                    <p className="text-lg font-bold text-primary">{carrier.price} SAR</p>
+                    <p className="text-lg font-bold text-primary">{carrier.price} {t('common.currency')}</p>
                 </div>
             </label>
           ))}
@@ -208,7 +210,7 @@ export default function NewShipmentPage() {
             </div>
             <div className="p-4 bg-primary/5 flex justify-between items-center">
                 <span className="font-bold text-neutral-900">إجمالي التكلفة</span>
-                <span className="text-xl font-extrabold text-primary">{carriers.find(c => c.id === watch('carrier'))?.price} SAR</span>
+                <span className="text-xl font-extrabold text-primary">{carriers.find(c => c.id === watch('carrier'))?.price} {t('common.currency')}</span>
             </div>
           </div>
 

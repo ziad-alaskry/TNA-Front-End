@@ -24,11 +24,11 @@ import { useMock } from '@/lib/hooks/useMock';
 import { mockGovQueue, mockSubAddressQueue, mockGovAdjustments, mockRegionStats } from '@/lib/mock/gov.mock';
 import { cn } from '@/lib/utils/cn';
 import Button from '@/components/ui/Button';
-import { useTranslation } from 'react-i18next';
 
 export default function GovHomeModule() {
    const router = useRouter();
    const { locale, isRTL, t } = useLocale();
+   const getRegionLabel = (region: string) => t(`gov.home.regions.${region.toLowerCase()}`);
 
    const { data: tnaQueue, isLoading: tnaQueueLoading } = useMock(mockGovQueue);
    const { data: addressQueue, isLoading: addressQueueLoading } = useMock(mockSubAddressQueue);
@@ -76,24 +76,29 @@ export default function GovHomeModule() {
             <div className="space-y-4 flex-1">
               <div className="flex items-center gap-2">
                 <Pulse size={24} className="text-success animate-pulse" weight="bold" />
-                <h2 className="text-xl font-black text-neutral-900 uppercase tracking-tight">System Health: Optimal</h2>
+                <h2 className="text-xl font-black text-neutral-900 uppercase tracking-tight">{t('gov.home.system_health')}</h2>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-4 bg-white rounded-2xl border border-neutral-100">
-                  <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">Avg Response Time</p>
+                  <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">{t('gov.home.avg_response_time')}</p>
                   <p className="text-xl font-black text-neutral-900">45ms</p>
                 </div>
                 <div className="p-4 bg-white rounded-2xl border border-neutral-100">
-                  <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">Success Rate</p>
+                  <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">{t('gov.home.success_rate')}</p>
                   <p className="text-xl font-black text-success">99.98%</p>
                 </div>
               </div>
             </div>
             <div className="w-px h-24 bg-neutral-200 hidden md:block" />
             <div className="space-y-2 text-center md:text-start">
-              <p className="text-xs font-bold text-neutral-500 uppercase tracking-widest">Active Services</p>
+              <p className="text-xs font-bold text-neutral-500 uppercase tracking-widest">{t('gov.home.active_services')}</p>
               <div className="flex flex-wrap gap-2 justify-center md:justify-start">
-                {['Registry', 'Auth', 'Mocks', 'Ledger'].map(s => (
+                {[
+                  t('gov.home.services.registry'),
+                  t('gov.home.services.auth'),
+                  t('gov.home.services.mocks'),
+                  t('gov.home.services.ledger'),
+                ].map(s => (
                   <span key={s} className="px-3 py-1 bg-success/10 text-success text-[10px] font-black rounded-full border border-success/20 uppercase">
                     {s}
                   </span>
@@ -105,13 +110,13 @@ export default function GovHomeModule() {
           {/* REGION DISTRIBUTION - Grid of region cards */}
           <section className="space-y-4 text-start">
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-black text-neutral-900 tracking-tight">التوزيع الجغرافي للطلبات</h3>
+              <h3 className="text-xl font-black text-neutral-900 tracking-tight">{t('gov.home.region_distribution')}</h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {(regionStats || []).map((region) => (
                 <div key={region.region} className="bg-white rounded-2xl border border-neutral-100 p-5 space-y-3 hover:border-primary/20 transition-all">
                   <div className="flex items-center justify-between">
-                    <h4 className="font-bold text-neutral-900">{region.region}</h4>
+                    <h4 className="font-bold text-neutral-900">{getRegionLabel(region.region)}</h4>
                     {region.trend === 'up' ? (
                       <TrendUp size={20} className="text-success" weight="bold" />
                     ) : (
@@ -214,13 +219,13 @@ export default function GovHomeModule() {
           <section className="p-6 bg-error/5 rounded-3xl border border-error/10 space-y-4">
             <div className="flex items-center gap-2 text-error">
               <Warning size={24} weight="fill" />
-              <h3 className="text-xs font-black uppercase tracking-widest">Critical Alerts</h3>
+              <h3 className="text-xs font-black uppercase tracking-widest">{t('gov.home.critical_alerts')}</h3>
             </div>
             <div className="space-y-2">
               <div className="p-3 bg-white rounded-xl border border-error/20 flex items-start gap-3">
                 <Clock size={16} className="text-error shrink-0 mt-0.5" />
                 <p className="text-[10px] font-bold text-neutral-600 leading-relaxed">
-                  TNA-9928: Multiple failed binding attempts detected from IP 192.168.1.1
+                  {t('gov.home.alert_failed_binding')}
                 </p>
               </div>
             </div>

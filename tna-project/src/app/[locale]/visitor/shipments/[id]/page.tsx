@@ -43,10 +43,7 @@ export default function ShipmentDetailPage() {
         setLogs(data.shipment_status_logs || []);
         setMessages(data.shipment_messages || []);
       } catch (err: any) {
-        setError(err.response?.status === 404 
-          ? t('shipments.error.not_found') || 'Shipment not found'
-          : t('common.error_network') || 'Failed to load shipment'
-        );
+        setError(err.response?.status === 404 ? t('shipments.error.not_found') : t('common.error_network'));
       } finally {
         setLoading(false);
       }
@@ -56,13 +53,13 @@ export default function ShipmentDetailPage() {
 
   const getStatusConfig = (status: string) => {
     const configs: Record<string, { label: string; class: string; icon: any }> = {
-      'CREATED': { label: t('shipments.status.created') || 'Created', class: 'bg-neutral-100 text-neutral-500', icon: Package },
-      'PICKED_UP': { label: t('shipments.status.picked_up') || 'Picked Up', class: 'bg-primary/10 text-primary', icon: Truck },
-      'IN_TRANSIT': { label: t('shipments.status.in_transit') || 'In Transit', class: 'bg-info/10 text-info', icon: Truck },
-      'OUT_FOR_DELIVERY': { label: t('shipments.status.out_for_delivery') || 'Out for Delivery', class: 'bg-warning/10 text-warning', icon: Truck },
-      'DELIVERED': { label: t('shipments.status.delivered') || 'Delivered', class: 'bg-success/10 text-success', icon: CheckCircle },
-      'FAILED': { label: t('shipments.status.failed') || 'Failed', class: 'bg-error/10 text-error', icon: Package },
-      'RETURNED': { label: t('shipments.status.returned') || 'Returned', class: 'bg-neutral-100 text-neutral-500', icon: Package },
+      'CREATED': { label: t('shipments.status.created'), class: 'bg-neutral-100 text-neutral-500', icon: Package },
+      'PICKED_UP': { label: t('shipments.status.picked_up'), class: 'bg-primary/10 text-primary', icon: Truck },
+      'IN_TRANSIT': { label: t('shipments.status.in_transit'), class: 'bg-info/10 text-info', icon: Truck },
+      'OUT_FOR_DELIVERY': { label: t('shipments.status.out_for_delivery'), class: 'bg-warning/10 text-warning', icon: Truck },
+      'DELIVERED': { label: t('shipments.status.delivered'), class: 'bg-success/10 text-success', icon: CheckCircle },
+      'FAILED': { label: t('shipments.status.failed'), class: 'bg-error/10 text-error', icon: Package },
+      'RETURNED': { label: t('shipments.status.returned'), class: 'bg-neutral-100 text-neutral-500', icon: Package },
     };
     return configs[status] || configs['CREATED'];
   };
@@ -85,7 +82,7 @@ export default function ShipmentDetailPage() {
       <RoleGuard requiredRole="Visitor">
         <AppShell role="Visitor">
           <div className="max-w-md mx-auto py-12">
-            <ErrorAlert message={error || t('shipments.error.not_found') || 'Shipment not found'} />
+            <ErrorAlert message={error || t('shipments.error.not_found')} />
           </div>
         </AppShell>
       </RoleGuard>
@@ -97,7 +94,7 @@ export default function ShipmentDetailPage() {
 
   return (
     <RoleGuard requiredRole="Visitor">
-      <AppShell role="Visitor" header={t('shipments.detail.title') || 'Shipment Details'}>
+      <AppShell role="Visitor" header={t('shipments.detail.title')}>
         <div className="max-w-3xl mx-auto space-y-8 py-4">
           {/* Header Card */}
           <div className="bg-white rounded-2xl border border-neutral-200 shadow-card p-6">
@@ -108,7 +105,7 @@ export default function ShipmentDetailPage() {
                   <span className="font-mono">{shipment.tracking_number}</span>
                 </div>
                 <h1 className="text-2xl font-black text-neutral-900">
-                  {t('shipments.detail.to_address') || 'To'}: {shipment.tna_code || 'N/A'}
+                  {t('shipments.detail.to_address')}: {shipment.tna_code || t('common.not_available')}
                 </h1>
                 {shipment.destination_address_full && (
                   <p className="text-sm text-neutral-600 flex items-center gap-2">
@@ -132,7 +129,7 @@ export default function ShipmentDetailPage() {
             <div className="bg-white rounded-2xl border border-neutral-200 shadow-card p-6">
               <h2 className="text-lg font-bold text-neutral-900 mb-6 flex items-center gap-2">
                 <Clock className="text-primary" />
-                {t('shipments.detail.tracking_timeline') || 'Tracking Timeline'}
+                {t('shipments.detail.tracking_timeline')}
               </h2>
               <div className="relative space-y-6 before:absolute before:inset-0 before:ml-5 before:h-full before:w-0.5 before:bg-neutral-200 before:content-['']">
                 {logs.map((log, idx) => (
@@ -165,7 +162,7 @@ export default function ShipmentDetailPage() {
             <div className="bg-white rounded-2xl border border-neutral-200 shadow-card p-6">
               <h2 className="text-lg font-bold text-neutral-900 mb-6 flex items-center gap-2">
                 <ChatCircleDots className="text-primary" />
-                {t('shipments.detail.messages') || 'Messages'}
+                {t('shipments.detail.messages')}
               </h2>
               <div className="space-y-4">
                 {messages.map((msg) => (
@@ -189,24 +186,24 @@ export default function ShipmentDetailPage() {
           {shipment.package_details && (
             <div className="bg-white rounded-2xl border border-neutral-200 shadow-card p-6">
               <h2 className="text-lg font-bold text-neutral-900 mb-4">
-                {t('shipments.detail.package_info') || 'Package Information'}
+                {t('shipments.detail.package_info')}
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                 {shipment.package_details.weight && (
                   <div>
-                    <p className="text-xs text-neutral-500">{t('shipments.detail.weight') || 'Weight'}</p>
+                    <p className="text-xs text-neutral-500">{t('shipments.detail.weight')}</p>
                     <p className="font-bold">{shipment.package_details.weight} kg</p>
                   </div>
                 )}
                 {shipment.package_details.dimensions && (
                   <div>
-                    <p className="text-xs text-neutral-500">{t('shipments.detail.dimensions') || 'Dimensions'}</p>
+                    <p className="text-xs text-neutral-500">{t('shipments.detail.dimensions')}</p>
                     <p className="font-bold">{shipment.package_details.dimensions}</p>
                   </div>
                 )}
                 {shipment.package_details.contents && (
                   <div className="col-span-2">
-                    <p className="text-xs text-neutral-500">{t('shipments.detail.contents') || 'Contents'}</p>
+                    <p className="text-xs text-neutral-500">{t('shipments.detail.contents')}</p>
                     <p className="font-bold">{shipment.package_details.contents}</p>
                   </div>
                 )}
@@ -222,7 +219,7 @@ export default function ShipmentDetailPage() {
               className="gap-2"
             >
               <ArrowLeft size={16} className={cn(isRTL && "rotate-180")} />
-              {t('common.back') || 'Back'}
+              {t('common.back')}
             </Button>
           </div>
         </div>

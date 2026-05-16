@@ -37,6 +37,7 @@ export default function TNABindingWizard() {
   const toast = useToast();
   const tnaId = params.id as string;
   const { addPendingBinding } = useBindingContext();
+  const quoteErrorMessage = t('binding.quote_error');
 
   const { getRentQuote, loading: quoteLoading } = usePriceCatalogStore();
 
@@ -92,7 +93,7 @@ export default function TNABindingWizard() {
           setQuote(quoteData);
           setError(null);
         } catch (err: any) {
-          setError(err.message || 'Failed to get price quote');
+          setError(err.message || quoteErrorMessage);
           setQuote(null);
         } finally {
           setLoadingQuote(false);
@@ -100,9 +101,9 @@ export default function TNABindingWizard() {
       };
       fetchQuote();
     }
-  }, [selectedVariant, startDate, endDate, rentalPeriodType, days, tnaId, getRentQuote]);
+  }, [selectedVariant, startDate, endDate, rentalPeriodType, days, tnaId, getRentQuote, quoteErrorMessage]);
 
-  if (!tna) return <div>TNA not found</div>;
+  if (!tna) return <div>{t('tna.error.not_found')}</div>;
 
   const handleSubmit = async () => {
     if (!quote) return;
@@ -120,15 +121,15 @@ export default function TNABindingWizard() {
       const { data: binding, rent_contract } = response;
       // Add binding to local context state so it can be activated after payment
       addPendingBinding(binding);
-      toast.success(t('binding.created') || 'Binding request created successfully');
+      toast.success(t('binding.created'));
 
       // Redirect to checkout page
       router.push(`/${locale}/visitor/checkout/${binding.binding_id}`);
     } catch (err: any) {
       if (err.response?.status === 409) {
-        setError(t('binding.conflict_error') || 'This sub-address is no longer available. Please select another.');
+        setError(t('binding.conflict_error'));
       } else {
-        setError(err.message || 'Failed to create binding');
+        setError(err.message || t('binding.create_error'));
       }
     } finally {
       setSubmitting(false);
@@ -152,9 +153,9 @@ export default function TNABindingWizard() {
               "text-xs font-bold uppercase tracking-wider hidden sm:block",
               step === s ? "text-primary" : "text-neutral-400"
             )}>
-              {s === 1 ? t('binding.step1') || 'Search Address' : 
-               s === 2 ? t('binding.step2') || 'Details & Period' : 
-               t('binding.step3') || 'Review'}
+              {s === 1 ? t('binding.step1') : 
+               s === 2 ? t('binding.step2') : 
+               t('binding.step3')}
             </span>
             {s < 3 && <div className="w-8 h-0.5 bg-neutral-200 mx-2" />}
           </div>
@@ -168,17 +169,17 @@ export default function TNABindingWizard() {
             <div className="space-y-2">
               <h2 className="text-2xl font-bold text-neutral-900 flex items-center gap-2">
                 <MapPin className="text-primary" />
-                {t('binding.find_address') || 'Find a National Address'}
+                {t('binding.find_address')}
               </h2>
               <p className="text-neutral-500">
-                {t('binding.find_address_desc') || 'Search for a registered and verified property to bind your TNA to.'}
+                {t('binding.find_address_desc')}
               </p>
             </div>
 
             <div className="relative">
               <InputField 
                 icon={MagnifyingGlass}
-                placeholder={t('binding.search_placeholder') || 'Search by city, district or address...'}
+                placeholder={t('binding.search_placeholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full"
@@ -188,7 +189,7 @@ export default function TNABindingWizard() {
             <div className="grid grid-cols-1 gap-4 max-h-[400px] overflow-y-auto pr-2 no-scrollbar">
               {filteredProperties.length === 0 ? (
                 <div className="p-8 text-center text-neutral-500">
-                  {t('binding.no_properties') || 'No properties found matching your search.'}
+                  {t('binding.no_properties')}
                 </div>
               ) : (
                 filteredProperties.map((prop) => {
@@ -218,10 +219,10 @@ export default function TNABindingWizard() {
                             <div className="flex items-center gap-3 mt-2">
                               <span className="flex items-center gap-1 text-[10px] font-bold text-success">
                                 <Star size={12} weight="fill" />
-                                Verified
+                                {t('binding.verified')}
                               </span>
                               <span className="text-[10px] font-bold text-neutral-400 uppercase">
-                                {mockSubAddresses.filter(s => s.na_id === prop.na_id && s.is_available && s.is_verified).length} Units Available
+                                {t('binding.units_available', { count: mockSubAddresses.filter(s => s.na_id === prop.na_id && s.is_available && s.is_verified).length })}
                               </span>
                             </div>
                           </div>
@@ -244,7 +245,7 @@ export default function TNABindingWizard() {
                 disabled={!selectedProperty}
                 className="px-8"
               >
-                {t('common.next') || 'Next Step'}
+                {t('common.next')}
                 <ArrowRight className={cn("ml-2", isRTL && "rotate-180")} />
               </Button>
             </div>
@@ -256,10 +257,10 @@ export default function TNABindingWizard() {
           <div className="p-6 md:p-8 space-y-8">
             <div className="space-y-2">
               <h2 className="text-2xl font-bold text-neutral-900">
-                {t('binding.select_unit_period') || 'Select Unit & Rental Period'}
+                {t('binding.select_unit_period')}
               </h2>
               <p className="text-neutral-500">
-                {t('binding.select_unit_desc') || 'Choose a specific unit in the property and define your usage period.'}
+                {t('binding.select_unit_desc')}
               </p>
             </div>
 
@@ -274,7 +275,7 @@ export default function TNABindingWizard() {
 
             <div className="space-y-4">
               <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest">
-                {t('binding.available_units') || 'Available Units'}
+                {t('binding.available_units')}
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {propertyVariants.map((v) => (
@@ -290,7 +291,7 @@ export default function TNABindingWizard() {
                   >
                     <p className="font-bold text-neutral-900">{v.label}</p>
                     <p className="text-xs text-neutral-500 font-mono mt-1">
-                      {t('binding.suffix') || 'Suffix'}: {v.suffix_code}
+                      {t('binding.suffix')}: {v.suffix_code}
                     </p>
                   </div>
                 ))}
@@ -300,7 +301,7 @@ export default function TNABindingWizard() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-xs font-black text-neutral-400 uppercase tracking-widest">
-                  {t('binding.start_date') || 'Start Date'} *
+                  {t('binding.start_date')} *
                 </label>
                 <input 
                   type="date" 
@@ -312,7 +313,7 @@ export default function TNABindingWizard() {
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-black text-neutral-400 uppercase tracking-widest">
-                  {t('binding.end_date') || 'End Date'} *
+                  {t('binding.end_date')} *
                 </label>
                 <input 
                   type="date" 
@@ -326,7 +327,7 @@ export default function TNABindingWizard() {
 
             <div className="space-y-2">
               <label className="text-xs font-black text-neutral-400 uppercase tracking-widest">
-                {t('binding.period_type') || 'Rental Period'} *
+                {t('binding.period_type')} *
               </label>
               <div className="flex gap-3">
                 {(['DAILY', 'MONTHLY', 'YEARLY'] as RentalPeriodType[]).map((period) => (
@@ -337,7 +338,7 @@ export default function TNABindingWizard() {
                     variant={rentalPeriodType === period ? "primary" : "outline"}
                     onClick={() => setRentalPeriodType(period)}
                   >
-                    {t(`rental_period.${period.toLowerCase()}`) || period}
+                    {t(`rental_period.${period.toLowerCase()}`)}
                   </Button>
                 ))}
               </div>
@@ -345,7 +346,7 @@ export default function TNABindingWizard() {
 
             {loadingQuote && (
               <div className="p-4 bg-neutral-50 rounded-xl border border-neutral-200 text-center">
-                <p className="text-sm text-neutral-500">{t('binding.calculating') || 'Calculating quote...'}</p>
+                <p className="text-sm text-neutral-500">{t('binding.calculating')}</p>
               </div>
             )}
 
@@ -356,13 +357,13 @@ export default function TNABindingWizard() {
                 <CurrencyCircleDollar size={24} className="text-info mt-1" />
                 <div className="flex-1">
                   <p className="text-sm font-bold text-info">
-                    {t('binding.estimated_cost') || 'Estimated Total'}: SAR {quote.gross_amount.toFixed(2)}
+                    {t('binding.estimated_cost')}: {t('common.currency')} {quote.gross_amount.toFixed(2)}
                   </p>
                   <p className="text-xs text-info/70">
-                    {t('binding.breakdown') || 'Breakdown'} - 
-                    Platform: SAR {quote.platform_fee_amount.toFixed(2)} | 
-                    Authority: SAR {quote.authority_share_amount.toFixed(2)} | 
-                    Owner: SAR {quote.net_owner_amount.toFixed(2)}
+                    {t('binding.breakdown')} - 
+                    {t('binding.platform_fee')}: {t('common.currency')} {quote.platform_fee_amount.toFixed(2)} | 
+                    {t('binding.authority_share')}: {t('common.currency')} {quote.authority_share_amount.toFixed(2)} | 
+                    {t('binding.owner_net')}: {t('common.currency')} {quote.net_owner_amount.toFixed(2)}
                   </p>
                 </div>
               </div>
@@ -374,14 +375,14 @@ export default function TNABindingWizard() {
                 onClick={() => setStep(1)}
               >
                 <ArrowLeft className={cn("mr-2", isRTL && "rotate-180")} />
-                {t('common.back') || 'Back'}
+                {t('common.back')}
               </Button>
               <Button 
                 onClick={() => setStep(3)}
                 disabled={!selectedVariant || !startDate || !endDate || days <= 0 || !quote}
                 className="px-8"
               >
-                {t('common.review') || 'Review Order'}
+                {t('common.review')}
               </Button>
             </div>
           </div>
@@ -392,10 +393,10 @@ export default function TNABindingWizard() {
           <div className="p-6 md:p-8 space-y-8">
             <div className="text-center space-y-2">
               <h2 className="text-2xl font-bold text-neutral-900">
-                {t('binding.review_title') || 'Final Review'}
+                {t('binding.review_title')}
               </h2>
               <p className="text-neutral-500">
-                {t('binding.review_desc') || 'Please review your binding request before submitting.'}
+                {t('binding.review_desc')}
               </p>
             </div>
 
@@ -409,24 +410,24 @@ export default function TNABindingWizard() {
                       <IdentificationCard size={20} />
                     </div>
                     <div>
-                      <p className="text-[10px] font-bold text-neutral-400 uppercase">{t('binding.tna_code') || 'TNA Code'}</p>
+                      <p className="text-[10px] font-bold text-neutral-400 uppercase">{t('binding.tna_code')}</p>
                       <p className="font-mono font-bold text-neutral-900">{tna.tna_code}</p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-[10px] font-bold text-neutral-400 uppercase">{t('binding.target_address') || 'Target Address'}</p>
+                    <p className="text-[10px] font-bold text-neutral-400 uppercase">{t('binding.target_address')}</p>
                     <p className="font-bold text-neutral-900">{selectedVariant?.suffix_code}</p>
                   </div>
                 </div>
 
                 <div className="p-4 grid grid-cols-2 gap-4">
                   <div>
-                    <p className="text-[10px] font-bold text-neutral-400 uppercase">{t('binding.period') || 'Period'}</p>
+                    <p className="text-[10px] font-bold text-neutral-400 uppercase">{t('binding.period')}</p>
                     <p className="text-sm font-bold text-neutral-900">{startDate} → {endDate}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-[10px] font-bold text-neutral-400 uppercase">{t('binding.duration') || 'Duration'}</p>
-                    <p className="text-sm font-bold text-neutral-900">{days} {t('units.days') || 'Days'}</p>
+                    <p className="text-[10px] font-bold text-neutral-400 uppercase">{t('binding.duration')}</p>
+                    <p className="text-sm font-bold text-neutral-900">{days} {t('units.days')}</p>
                   </div>
                 </div>
 
@@ -434,33 +435,33 @@ export default function TNABindingWizard() {
                   <>
                     <div className="p-4">
                       <h4 className="text-sm font-bold text-neutral-900 mb-3">
-                        {t('binding.financial_breakdown') || 'Financial Breakdown'}
+                        {t('binding.financial_breakdown')}
                       </h4>
                       <div className="space-y-2">
                         <div className="flex justify-between text-sm">
-                          <span className="text-neutral-600">{t('binding.gross_amount') || 'Gross Amount'}</span>
-                          <span className="font-medium">SAR {quote.gross_amount.toFixed(2)}</span>
+                          <span className="text-neutral-600">{t('binding.gross_amount')}</span>
+                          <span className="font-medium">{t('common.currency')} {quote.gross_amount.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between text-sm">
                           <span className="text-neutral-600">
-                            {t('binding.platform_fee') || 'Platform Fee'} ({quote.platform_fee_percentage}%)
+                            {t('binding.platform_fee')} ({quote.platform_fee_percentage}%)
                           </span>
-                          <span className="font-medium text-error">- SAR {quote.platform_fee_amount.toFixed(2)}</span>
+                          <span className="font-medium text-error">- {t('common.currency')} {quote.platform_fee_amount.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between text-sm">
                           <span className="text-neutral-600">
-                            {t('binding.authority_share') || 'Authority Fee'} ({quote.authority_share_percentage}%)
+                            {t('binding.authority_share')} ({quote.authority_share_percentage}%)
                           </span>
-                          <span className="font-medium text-error">- SAR {quote.authority_share_amount.toFixed(2)}</span>
+                          <span className="font-medium text-error">- {t('common.currency')} {quote.authority_share_amount.toFixed(2)}</span>
                         </div>
                         <div className="h-px bg-neutral-100 my-2" />
                         <div className="flex justify-between text-lg font-black text-primary">
-                          <span>{t('binding.total_payable') || 'Total Payable'}</span>
-                          <span>SAR {quote.gross_amount.toFixed(2)}</span>
+                          <span>{t('binding.total_payable')}</span>
+                          <span>{t('common.currency')} {quote.gross_amount.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between text-sm text-neutral-500 pt-1">
-                          <span>{t('binding.owner_net') || 'Owner Receives'}</span>
-                          <span className="font-semibold text-success">+ SAR {quote.net_owner_amount.toFixed(2)}</span>
+                          <span>{t('binding.owner_net')}</span>
+                          <span className="font-semibold text-success">+ {t('common.currency')} {quote.net_owner_amount.toFixed(2)}</span>
                         </div>
                       </div>
                     </div>
@@ -471,15 +472,15 @@ export default function TNABindingWizard() {
                 <div className="p-6 bg-primary text-white">
                   <div className="flex justify-between items-center mb-4">
                     <p className="text-sm font-medium opacity-80">
-                      {t('binding.total_amount') || 'Total Amount'}
+                      {t('binding.total_amount')}
                     </p>
                     <p className="text-2xl font-bold">
-                      SAR {quote?.gross_amount.toFixed(2) || '0.00'}
+                      {t('common.currency')} {quote?.gross_amount.toFixed(2) || '0.00'}
                     </p>
                   </div>
                   <div className="flex items-center gap-2 text-xs opacity-80">
                     <CircleWavyCheckIcon size={16} weight="fill" />
-                    {t('binding.escrow_notice') || 'Payment is held securely until binding is activated.'}
+                    {t('binding.escrow_notice')}
                   </div>
                 </div>
               </div>
@@ -487,7 +488,7 @@ export default function TNABindingWizard() {
               <div className="p-4 rounded-xl bg-warning/5 border border-warning/20 flex items-start gap-3">
                 <Info size={20} className="text-warning mt-0.5" />
                 <p className="text-xs text-warning-dark leading-relaxed">
-                  {t('binding.submit_notice') || 'Submitting this request will create a pending binding. You will be redirected to checkout to complete the payment.'}
+                  {t('binding.submit_notice')}
                 </p>
               </div>
             </div>
@@ -499,7 +500,7 @@ export default function TNABindingWizard() {
                 disabled={submitting}
               >
                 <ArrowLeft className={cn("mr-2", isRTL && "rotate-180")} />
-                {t('common.back') || 'Back'}
+                {t('common.back')}
               </Button>
               <Button 
                 onClick={handleSubmit}
@@ -507,7 +508,7 @@ export default function TNABindingWizard() {
                 disabled={!quote}
                 className="px-10 py-6 text-lg shadow-glow-primary"
               >
-                {t('binding.submit_request') || 'Submit Binding Request'}
+                {t('binding.submit_request')}
               </Button>
             </div>
           </div>

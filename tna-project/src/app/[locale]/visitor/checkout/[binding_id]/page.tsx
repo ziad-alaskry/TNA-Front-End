@@ -78,6 +78,8 @@ export default function CheckoutPage() {
   const { locale } = params as { locale: string; binding_id: string };
   const bindingId = params.binding_id as string;
   const { t, isRTL } = useLocale();
+  const currency = t('common.currency');
+  const loadErrorMessage = t('checkout.load_error');
   const { balance, updateBalance } = useWallet();
   const { processPayment, activateBinding } = useBindingContext();
 
@@ -106,13 +108,13 @@ export default function CheckoutPage() {
         setBinding(bindingRes.data);
         setRentContract(contract);
       } catch (err: any) {
-        setError(err.message || 'Failed to load checkout details');
+        setError(err.message || loadErrorMessage);
       } finally {
         setLoading(false);
       }
     };
     fetchData();
-  }, [bindingId]);
+  }, [bindingId, loadErrorMessage]);
 
   const total = rentContract?.gross_amount || 0;
   const deficit = Math.max(0, total - balance);
@@ -124,21 +126,21 @@ export default function CheckoutPage() {
       const errors: {cardNumber?: string; expiry?: string; cvv?: string; name?: string} = {};
       
       if (!luhnCheck(cardNumber.replace(/\s/g, ''))) {
-        errors.cardNumber = t('payment.invalid_card') || 'Invalid card number';
+        errors.cardNumber = t('payment.invalid_card');
       } else if (cardNumber.replace(/\s/g, '').length !== 16) {
-        errors.cardNumber = t('payment.invalid_card_length') || 'Card number must be 16 digits';
+        errors.cardNumber = t('payment.invalid_card_length');
       }
       
       if (!isValidExpiry(cardExpiry)) {
-        errors.expiry = t('payment.invalid_expiry') || 'Card expired or invalid date';
+        errors.expiry = t('payment.invalid_expiry');
       }
       
       if (cardCvv.length < 3) {
-        errors.cvv = t('payment.invalid_cvv') || 'CVV must be at least 3 digits';
+        errors.cvv = t('payment.invalid_cvv');
       }
       
       if (!cardName.trim()) {
-        errors.name = t('payment.name_required') || 'Cardholder name is required';
+        errors.name = t('payment.name_required');
       }
       
       if (Object.keys(errors).length > 0) {
@@ -184,7 +186,7 @@ export default function CheckoutPage() {
         router.push(`/${locale}/visitor/tnas/${binding?.tna_id}`);
       }, 3000);
     } catch (err: any) {
-      setError(err.message || 'Payment failed. Please try again.');
+      setError(err.message || t('checkout.payment_failed'));
       setPaymentStatus('IDLE');
     }
   };
@@ -194,7 +196,7 @@ export default function CheckoutPage() {
       <RoleGuard requiredRole="Visitor">
         <AppShell role="Visitor">
           <div className="flex items-center justify-center min-h-[400px]">
-            <p className="text-neutral-500">{t('common.loading') || 'Loading...'}</p>
+            <p className="text-neutral-500">{t('common.loading')}</p>
           </div>
         </AppShell>
       </RoleGuard>
@@ -206,7 +208,7 @@ export default function CheckoutPage() {
       <RoleGuard requiredRole="Visitor">
         <AppShell role="Visitor">
           <div className="max-w-md mx-auto py-12">
-            <ErrorAlert message={error || 'Checkout data not available'} />
+            <ErrorAlert message={error || t('checkout.data_not_available')} />
           </div>
         </AppShell>
       </RoleGuard>
@@ -215,7 +217,7 @@ export default function CheckoutPage() {
 
   return (
     <RoleGuard requiredRole="Visitor">
-      <AppShell role="Visitor" header={t('checkout.title') || 'Checkout'}>
+      <AppShell role="Visitor" header={t('checkout.title')}>
         <div className="max-w-4xl mx-auto py-4 px-4 grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Order Details */}
           <div className="lg:col-span-2 space-y-6">
@@ -223,20 +225,20 @@ export default function CheckoutPage() {
               <div className="p-6 border-b border-neutral-100 bg-neutral-50/50">
                 <h2 className="text-lg font-bold text-neutral-900 flex items-center gap-2">
                   <Receipt className="text-primary" />
-                  {t('checkout.order_summary') || 'Order Summary'}
+                  {t('checkout.order_summary')}
                 </h2>
               </div>
               <div className="p-6 space-y-6">
                 <div className="flex items-start justify-between">
                   <div className="space-y-1">
                     <p className="text-sm font-bold text-neutral-900">
-                      {t('checkout.binding_request') || 'TNA Binding Request'}
+                      {t('checkout.binding_request')}
                     </p>
-                    <p className="text-xs text-neutral-500">Binding ID: {binding.binding_id}</p>
-                    <p className="text-xs text-neutral-500">TNA: {binding.tna_code}</p>
+                    <p className="text-xs text-neutral-500">{t('checkout.binding_id')}: {binding.binding_id}</p>
+                    <p className="text-xs text-neutral-500">{t('checkout.tna')}: {binding.tna_code}</p>
                   </div>
                   <p className="font-bold text-neutral-900">
-                    SAR {total.toFixed(2)}
+                    {currency} {total.toFixed(2)}
                   </p>
                 </div>
 
@@ -244,29 +246,29 @@ export default function CheckoutPage() {
 
                 <div className="space-y-3">
                   <div className="flex justify-between text-sm">
-                    <span className="text-neutral-500">{t('checkout.gross_amount') || 'Gross Amount'}</span>
-                    <span className="font-medium">SAR {rentContract.gross_amount.toFixed(2)}</span>
+                    <span className="text-neutral-500">{t('checkout.gross_amount')}</span>
+                    <span className="font-medium">{currency} {rentContract.gross_amount.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-neutral-500">
-                      {t('checkout.platform_fee') || 'Platform Fee'} ({rentContract.platform_fee_percentage}%)
+                      {t('checkout.platform_fee')} ({rentContract.platform_fee_percentage}%)
                     </span>
-                    <span className="font-medium text-error">- SAR {rentContract.platform_fee_amount.toFixed(2)}</span>
+                    <span className="font-medium text-error">- {currency} {rentContract.platform_fee_amount.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-neutral-500">
-                      {t('checkout.authority_share') || 'Authority Fee'} ({rentContract.authority_share_percentage}%)
+                      {t('checkout.authority_share')} ({rentContract.authority_share_percentage}%)
                     </span>
-                    <span className="font-medium text-error">- SAR {rentContract.authority_share_amount.toFixed(2)}</span>
+                    <span className="font-medium text-error">- {currency} {rentContract.authority_share_amount.toFixed(2)}</span>
                   </div>
                   <div className="h-px bg-neutral-100 my-2" />
                   <div className="flex justify-between text-lg font-black text-primary">
-                    <span>{t('checkout.total_payable') || 'Total Payable'}</span>
-                    <span>SAR {total.toFixed(2)}</span>
+                    <span>{t('checkout.total_payable')}</span>
+                    <span>{currency} {total.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-sm text-neutral-500 pt-1">
-                    <span>{t('checkout.owner_net') || 'Owner Receives'}</span>
-                    <span className="font-semibold text-success">+ SAR {rentContract.net_owner_amount.toFixed(2)}</span>
+                    <span>{t('checkout.owner_net')}</span>
+                    <span className="font-semibold text-success">+ {currency} {rentContract.net_owner_amount.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
@@ -276,10 +278,10 @@ export default function CheckoutPage() {
               <ShieldCheck size={32} className="text-primary" weight="fill" />
               <div className="space-y-1">
                 <p className="text-sm font-bold text-primary">
-                  {t('checkout.secure_checkout') || 'Secure Checkout'}
+                  {t('checkout.secure_checkout')}
                 </p>
                 <p className="text-xs text-primary/70">
-                  {t('checkout.escrow_notice') || 'Your payment is processed securely. Funds are held in escrow until the binding is confirmed by the property owner.'}
+                  {t('checkout.escrow_notice')}
                 </p>
               </div>
             </div>
@@ -289,7 +291,7 @@ export default function CheckoutPage() {
           <div className="space-y-6">
             <div className="bg-white rounded-2xl border border-neutral-200 shadow-xl p-6 space-y-6 sticky top-24">
               <h3 className="font-bold text-neutral-900">
-                {t('checkout.payment_method') || 'Payment Method'}
+                {t('checkout.payment_method')}
               </h3>
 
               <div className={cn(
@@ -300,20 +302,20 @@ export default function CheckoutPage() {
                   <div className="flex items-center gap-2">
                     <Wallet size={20} className={isInsufficient ? "text-warning" : "text-primary"} weight="fill" />
                     <span className="text-xs font-bold uppercase tracking-wider text-neutral-500">
-                      {t('checkout.wallet_balance') || 'Digital Wallet'}
+                      {t('checkout.wallet_balance')}
                     </span>
                   </div>
                   {isInsufficient && (
                     <span className="px-2 py-0.5 bg-warning text-white text-[10px] font-bold rounded-full">
-                      {t('checkout.insufficient') || 'INSUFFICIENT'}
+                      {t('checkout.insufficient')}
                     </span>
                   )}
                 </div>
                 <p className="text-2xl font-black text-neutral-900">
-                  SAR {balance.toFixed(2)}
+                  {currency} {balance.toFixed(2)}
                 </p>
                 <p className="text-[10px] text-neutral-400 mt-1 uppercase font-bold tracking-widest">
-                  {t('checkout.available_balance') || 'Available Balance'}
+                  {t('checkout.available_balance')}
                 </p>
               </div>
 
@@ -322,7 +324,7 @@ export default function CheckoutPage() {
                   <div className="flex items-start gap-2 text-warning">
                     <WarningCircle size={16} className="mt-0.5 shrink-0" />
                     <p className="text-xs font-medium">
-                      {t('checkout.insufficient_funds') || `You need an additional SAR ${deficit.toFixed(2)} to complete this transaction.`}
+                      {t('checkout.insufficient_funds', { amount: deficit.toFixed(2) })}
                     </p>
                   </div>
                   <Button
@@ -330,7 +332,7 @@ export default function CheckoutPage() {
                     className="w-full border-warning text-warning hover:bg-warning/10"
                     onClick={() => setIsTopUpOpen(true)}
                   >
-                    {t('checkout.top_up') || 'Top Up Wallet'}
+                    {t('checkout.top_up')}
                   </Button>
                 </div>
               )}
@@ -342,26 +344,26 @@ export default function CheckoutPage() {
                 onClick={handlePay}
               >
                 {paymentStatus === 'PROCESSING'
-                  ? t('checkout.processing') || 'Processing...'
-                  : t('checkout.pay_amount', { amount: total.toFixed(2) }) || `Pay SAR ${total.toFixed(2)}`}
+                  ? t('checkout.processing')
+                  : t('checkout.pay_amount', { amount: total.toFixed(2) })}
               </Button>
 
               <p className="text-[10px] text-center text-neutral-400 px-4">
-                {t('checkout.terms_notice') || 'By clicking Pay, you agree to our Terms of Service and Refund Policy.'}
+                {t('checkout.terms_notice')}
               </p>
             </div>
           </div>
         </div>
 
         {/* Top Up Modal */}
-        <Modal isOpen={isTopUpOpen} onClose={() => setIsTopUpOpen(false)} title={t('checkout.top_up_title') || 'Top Up Digital Wallet'}>
+        <Modal isOpen={isTopUpOpen} onClose={() => setIsTopUpOpen(false)} title={t('checkout.top_up_title')}>
           <div className="p-6 space-y-6">
             <div className="space-y-4">
               <label className="text-xs font-black text-neutral-400 uppercase tracking-widest">
-                {t('checkout.top_up_amount') || 'Amount to Add (SAR)'}
+                {t('checkout.top_up_amount')}
               </label>
               <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-neutral-400">SAR</span>
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-neutral-400">{currency}</span>
                 <input
                   type="number"
                   value={topUpAmount}
@@ -373,13 +375,13 @@ export default function CheckoutPage() {
 
             <div className="space-y-3">
               <p className="text-xs font-black text-neutral-400 uppercase tracking-widest">
-                {t('payment.method') || 'Payment Method'}
+                {t('payment.method')}
               </p>
               <div className="grid grid-cols-1 gap-2">
                 {[
-                  { id: 'card', label: t('payment.credit_card') || 'Credit Card', enabled: true },
-                  { id: 'apple', label: t('payment.apple_pay') || 'Apple Pay', enabled: false },
-                  { id: 'stc', label: t('payment.stc_pay') || 'STC Pay', enabled: false },
+                  { id: 'card', label: t('payment.credit_card'), enabled: true },
+                  { id: 'apple', label: t('payment.apple_pay'), enabled: false },
+                  { id: 'stc', label: t('payment.stc_pay'), enabled: false },
                 ].map((m) => (
                   <button
                     key={m.id}
@@ -403,7 +405,7 @@ export default function CheckoutPage() {
                       <div>
                         <span className="font-bold text-neutral-700 block">{m.label}</span>
                         {!m.enabled && (
-                          <span className="text-[10px] text-neutral-400">{t('payment.coming_soon') || 'Coming Soon'}</span>
+                          <span className="text-[10px] text-neutral-400">{t('payment.coming_soon')}</span>
                         )}
                       </div>
                     </div>
@@ -423,13 +425,13 @@ export default function CheckoutPage() {
             {paymentMethod === 'card' && (
               <div className="space-y-4 pt-4 border-t">
                 <h4 className="text-sm font-bold text-neutral-900">
-                  {t('payment.card_details') || 'Card Details'}
+                  {t('payment.card_details')}
                 </h4>
                 
                 <div>
                   <InputField
-                    label={t('payment.card_number') || 'Card Number'}
-                    placeholder="4111 1111 1111 1111"
+                    label={t('payment.card_number')}
+                    placeholder={t('payment.card_number_placeholder')}
                     value={cardNumber}
                     onChange={(e) => {
                       setCardNumber(formatCardNumber(e.target.value));
@@ -442,8 +444,8 @@ export default function CheckoutPage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <InputField
-                      label={t('payment.expiry') || 'Expiry'}
-                      placeholder="MM/YY"
+                      label={t('payment.expiry')}
+                      placeholder={t('payment.expiry_placeholder')}
                       value={cardExpiry}
                       onChange={(e) => {
                         setCardExpiry(formatExpiry(e.target.value));
@@ -454,8 +456,8 @@ export default function CheckoutPage() {
                   </div>
                   <div>
                     <InputField
-                      label={t('payment.cvv') || 'CVV'}
-                      placeholder="123"
+                      label={t('payment.cvv')}
+                      placeholder={t('payment.cvv_placeholder')}
                       value={cardCvv}
                       onChange={(e) => {
                         setCardCvv(e.target.value.replace(/\D/g, '').slice(0, 4));
@@ -468,8 +470,8 @@ export default function CheckoutPage() {
 
                 <div>
                   <InputField
-                    label={t('payment.cardholder_name') || 'Cardholder Name'}
-                    placeholder="Ahmed Ali"
+                    label={t('payment.cardholder_name')}
+                    placeholder={t('payment.cardholder_placeholder')}
                     value={cardName}
                     onChange={(e) => {
                       setCardName(e.target.value);
@@ -483,8 +485,8 @@ export default function CheckoutPage() {
 
             <Button className="w-full py-4 shadow-glow-primary" onClick={handleTopUp} isLoading={paymentStatus === 'PROCESSING'}>
               {paymentMethod === 'card'
-                ? t('checkout.complete_top_up') || 'Complete Top Up'
-                : t('payment.coming_soon_action') || 'Coming Soon'}
+                ? t('checkout.complete_top_up')
+                : t('payment.coming_soon_action')}
             </Button>
           </div>
         </Modal>
@@ -498,15 +500,15 @@ export default function CheckoutPage() {
               </div>
               <div className="space-y-2">
                 <h2 className="text-3xl font-black text-neutral-900 uppercase">
-                  {t('checkout.payment_success') || 'Payment Successful!'}
+                  {t('checkout.payment_success')}
                 </h2>
                 <p className="text-neutral-500">
-                  {t('checkout.payment_success_message') || 'Your binding request has been submitted and is awaiting owner approval.'}
+                  {t('checkout.payment_success_message')}
                 </p>
               </div>
               <div className="p-6 bg-neutral-50 rounded-2xl border border-neutral-200">
                 <p className="text-sm text-neutral-600">
-                  {t('checkout.redirect_message') || 'Redirecting to your TNA details in 3 seconds...'}
+                  {t('checkout.redirect_message')}
                 </p>
               </div>
             </div>

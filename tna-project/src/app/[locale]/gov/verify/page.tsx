@@ -19,6 +19,12 @@ import {
 } from '@phosphor-icons/react'
 import { useRouter, useParams, useSearchParams } from 'next/navigation'
 import Button from '@/components/ui/Button'
+import { useLocale } from '@/i18n/LocaleProvider'
+
+function VerifyLoading() {
+    const { t } = useLocale()
+    return <div className="p-8 text-center">{t('gov.loading_request_details')}</div>
+}
 
 function VerifyActionContent() {
     const router = useRouter();
@@ -199,7 +205,7 @@ function VerifyActionContent() {
 
 export default function VerifyActionPage() {
     return (
-        <Suspense fallback={<div className="p-8 text-center">Loading request details...</div>}>
+        <Suspense fallback={<VerifyLoading />}>
             <VerifyActionContent />
         </Suspense>
     );

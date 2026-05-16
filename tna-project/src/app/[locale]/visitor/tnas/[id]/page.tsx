@@ -22,7 +22,6 @@ import { useLocale } from '@/i18n/LocaleProvider'
 import { useMock } from '@/lib/hooks/useMock'
 import Button from '@/components/ui/Button'
 import { cn } from '@/lib/utils/cn'
-import { useTranslation } from 'react-i18next';
 
 export default function VisitorTnaDetailPage() {
     const { id } = useParams();
@@ -32,8 +31,8 @@ export default function VisitorTnaDetailPage() {
     const { data: tnas, isLoading } = useMock(mockTNAs);
     const tna = tnas?.find(t => t.tna_id === id);
 
-    if (isLoading) return <div>Loading...</div>;
-    if (!tna) return <div>TNA not found</div>;
+    if (isLoading) return <div>{t('common.loading')}</div>;
+    if (!tna) return <div>{t('tna.error.not_found')}</div>;
 
     const isUnlinked = tna.status === 'UNLINKED';
 
@@ -76,7 +75,7 @@ export default function VisitorTnaDetailPage() {
     const sidebar = (
         <div className="space-y-6">
             <div>
-              <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest mb-4">{t('tna.detail.quick_actions') || 'Quick Actions'}</h3>
+              <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest mb-4">{t('tna.detail.quick_actions')}</h3>
               <div className="space-y-3">
                 {isUnlinked ? (
                   <Button 
@@ -84,13 +83,13 @@ export default function VisitorTnaDetailPage() {
                     onClick={() => router.push(`/${locale}/visitor/tnas/${id}/bind`)}
                   >
                     <LinkIcon size={20} weight="bold" />
-                    {t('tna.detail.link_address') || 'Link to Address'}
+                    {t('tna.detail.link_address')}
                   </Button>
                 ) : (
                   <>
                     <Button className="w-full py-4 shadow-glow-primary">
                       <IdentificationCard size={20} weight="bold" />
-                      {t('tna.detail.digital_card') || 'Digital Card'}
+                      {t('tna.detail.digital_card')}
                     </Button>
                     <Button 
                       variant="outline"
@@ -98,7 +97,7 @@ export default function VisitorTnaDetailPage() {
                       onClick={() => {/* TODO: Implement unbind with conflict check */}}
                     >
                       <DotsThree size={20} weight="bold" />
-                      {t('tna.detail.unbind') || 'Unbind Address'}
+                      {t('tna.detail.unbind')}
                     </Button>
                   </>
                 )}
@@ -108,12 +107,12 @@ export default function VisitorTnaDetailPage() {
             <div className="p-4 bg-info/5 rounded-2xl border border-info/10 space-y-2">
               <div className="flex items-center gap-2 text-info">
                 <Info size={20} weight="fill" />
-                <p className="text-xs font-bold uppercase tracking-wider">{t('common.note') || 'Note'}</p>
+                <p className="text-xs font-bold uppercase tracking-wider">{t('common.note')}</p>
               </div>
               <p className="text-xs text-neutral-600 leading-relaxed">
                 {isUnlinked 
-                  ? (t('tna.detail.unlinked_note') || 'This TNA is issued but not yet bound to a physical address. You must bind it to start receiving shipments.')
-                  : (t('tna.detail.unbind_note') || 'To unbind this address, ensure no shipments are currently in transit.')}
+                  ? t('tna.detail.unlinked_note')
+                  : t('tna.detail.unbind_note')}
               </p>
             </div>
         </div>

@@ -26,7 +26,6 @@ import { useLocale } from '@/i18n/LocaleProvider';
 import Button from '@/components/ui/Button';
 import { cn } from '@/lib/utils/cn';
 import { useBindingContext } from '@/context/BindingContext';
-import { useTranslation } from 'react-i18next';
 
 export default function VisitorTnaUnbindPage() {
     const { id } = useParams();
@@ -50,7 +49,7 @@ export default function VisitorTnaUnbindPage() {
         if (result.success) {
             setUnboundSuccess(true);
         } else {
-            setUnbindError(result.error || 'An unknown error occurred.');
+            setUnbindError(result.error || t('common.error_unknown'));
         }
     };
 
@@ -63,7 +62,7 @@ export default function VisitorTnaUnbindPage() {
         }
     }, [unboundSuccess, router, locale]);
 
-    if (!tna) return <div>TNA not found</div>;
+    if (!tna) return <div>{t('tna.error.not_found')}</div>;
 
     const sections = [
         {
@@ -104,13 +103,13 @@ export default function VisitorTnaUnbindPage() {
     const sidebar = (
         <div className="space-y-6">
             <div>
-              <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest mb-4">Actions</h3>
+              <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest mb-4">{t('actions')}</h3>
               <div className="space-y-3">
                 {hasActiveShipments ? (
                   <div className="p-4 bg-warning/5 border border-warning/10 rounded-2xl flex items-start gap-3">
                     <Warning size={20} className="text-warning shrink-0" weight="fill" />
                     <p className="text-xs text-warning-dark font-medium leading-relaxed">
-                      Cannot unbind: Active shipments are currently in transit. Please wait for them to be delivered.
+                      {t('tna.detail.cannot_unbind_active_shipments')}
                     </p>
                   </div>
                 ) : (
@@ -121,12 +120,12 @@ export default function VisitorTnaUnbindPage() {
                     disabled={isUnbinding}
                   >
                     <IdentificationCard size={20} weight="bold" />
-                    Unbind Address
+                    {t('tna.detail.unbind')}
                   </Button>
                 )}
                 <Button variant="outline" className="w-full py-4">
                   <DotsThree size={20} weight="bold" />
-                  View History
+                  {t('tna.detail.view_history')}
                 </Button>
               </div>
             </div>
@@ -138,17 +137,17 @@ export default function VisitorTnaUnbindPage() {
             )}
             {unboundSuccess && (
               <div className="p-4 bg-success/5 border border-success/10 rounded-2xl text-center text-success text-xs font-medium">
-                Address unbound successfully! Redirecting...
+                {t('tna.detail.unbind_success')}
               </div>
             )}
 
             <div className="p-4 bg-info/5 rounded-2xl border border-info/10 space-y-2">
                 <div className="flex items-center gap-2 text-info">
                   <Info size={20} weight="fill" />
-                  <p className="text-xs font-bold uppercase tracking-wider">Note</p>
+                  <p className="text-xs font-bold uppercase tracking-wider">{t('common.note')}</p>
                 </div>
                 <p className="text-xs text-neutral-600 leading-relaxed">
-                    To unbind this address, ensure no shipments are currently in transit.
+                    {t('tna.detail.unbind_note')}
                 </p>
             </div>
         </div>

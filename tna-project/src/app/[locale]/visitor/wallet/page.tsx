@@ -23,22 +23,22 @@ export default function VisitorWalletPage() {
 
   const getTransactionTypeLabel = (type: string) => {
     const labels: Record<string, string> = {
-      'TNA_ISSUANCE_FEE': t('transactions.type.tna_issuance') || 'TNA Issuance Fee',
-      'RENTAL_PAYMENT': t('transactions.type.rental_payment') || 'Rental Payment',
-      'DEPOSIT': t('transactions.type.deposit') || 'Wallet Top-up',
-      'WITHDRAWAL': t('transactions.type.withdrawal') || 'Withdrawal',
-      'REFUND': t('transactions.type.refund') || 'Refund',
+      'TNA_ISSUANCE_FEE': t('transactions.type.tna_issuance'),
+      'RENTAL_PAYMENT': t('transactions.type.rental_payment'),
+      'DEPOSIT': t('transactions.type.deposit'),
+      'WITHDRAWAL': t('transactions.type.withdrawal'),
+      'REFUND': t('transactions.type.refund'),
     };
     return labels[type] || type;
   };
 
   const getStatusBadge = (status: string) => {
     const configs: Record<string, { label: string; class: string }> = {
-      'PENDING': { label: t('common.statuses.PENDING') || 'Pending', class: 'bg-warning/10 text-warning' },
-      'COMPLETED': { label: t('common.statuses.ACTIVE') || 'Completed', class: 'bg-success/10 text-success' },
-      'FAILED': { label: t('common.statuses.REJECTED') || 'Failed', class: 'bg-error/10 text-error' },
-      'REFUNDED': { label: 'Refunded', class: 'bg-neutral-100 text-neutral-500' },
-      'DISPUTED': { label: 'Disputed', class: 'bg-warning/10 text-warning' },
+      'PENDING': { label: t('common.statuses.PENDING'), class: 'bg-warning/10 text-warning' },
+      'COMPLETED': { label: t('common.statuses.COMPLETED'), class: 'bg-success/10 text-success' },
+      'FAILED': { label: t('common.statuses.FAILED'), class: 'bg-error/10 text-error' },
+      'REFUNDED': { label: t('common.statuses.REFUNDED'), class: 'bg-neutral-100 text-neutral-500' },
+      'DISPUTED': { label: t('common.statuses.DISPUTED'), class: 'bg-warning/10 text-warning' },
     };
     const cfg = configs[status] || { label: status, class: 'bg-neutral-100 text-neutral-500' };
     return <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${cfg.class}`}>{cfg.label}</span>;
@@ -47,7 +47,7 @@ export default function VisitorWalletPage() {
   const columns: DataTableColumn<FinancialTransaction>[] = [
     {
       key: 'transaction_type',
-      label: t('wallet.columns.type') || 'Transaction Type',
+      label: t('wallet.columns.type'),
       render: (val, row) => (
         <div className="flex items-center gap-3">
           <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
@@ -66,7 +66,7 @@ export default function VisitorWalletPage() {
     },
     {
       key: 'created_at',
-      label: t('wallet.columns.date') || 'Date',
+      label: t('wallet.columns.date'),
       render: (val) => (
         <span className="text-xs text-neutral-500">
           {new Date(val).toLocaleDateString()}
@@ -75,12 +75,12 @@ export default function VisitorWalletPage() {
     },
     {
       key: 'status',
-      label: t('wallet.columns.status') || 'Status',
+      label: t('wallet.columns.status'),
       render: (val) => getStatusBadge(val)
     },
     {
       key: 'amount',
-      label: t('wallet.columns.amount') || 'Amount',
+      label: t('wallet.columns.amount'),
       render: (val, row) => (
         <span className={`font-bold ${val > 0 ? 'text-success' : 'text-neutral-900'}`}>
           {val > 0 ? `+${val.toFixed(2)}` : val.toFixed(2)} {row.currency}
@@ -95,20 +95,20 @@ export default function VisitorWalletPage() {
         {/* Balance Card */}
         <div className="relative overflow-hidden p-8 rounded-md bg-primary-dark text-white shadow-card flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="relative z-10">
-            <p className="text-sm font-medium mb-2">{t('wallet.available_balance') || 'Available Balance'}</p>
+            <p className="text-sm font-medium mb-2">{t('wallet.available_balance')}</p>
             <h2 className="text-4xl font-bold flex items-baseline gap-2">
               {ownerAccount.current_balance.toFixed(2)}
-              <span className="text-lg opacity-90">SAR</span>
+              <span className="text-lg opacity-90">{t('common.currency')}</span>
             </h2>
           </div>
           <div className="relative z-10 flex gap-4">
             <button className="h-12 px-6 rounded-md bg-white text-primary-dark font-bold flex items-center gap-2 shadow-sm hover:bg-neutral-50 transition-colors">
               <PlusCircle size={20} weight="fill" />
-              {t('wallet.top_up') || 'Top Up'}
+              {t('wallet.top_up')}
             </button>
             <button className="h-12 px-6 rounded-pill bg-white/20 text-white font-bold flex items-center gap-2 backdrop-blur-md hover:bg-white/30 transition-colors">
               <Receipt size={20} weight="fill" />
-              {t('wallet.statement') || 'Statement'}
+              {t('wallet.statement')}
             </button>
           </div>
           
@@ -117,7 +117,7 @@ export default function VisitorWalletPage() {
 
         {/* Transactions */}
         <DataTableLayout
-          title={t('wallet.transactions_title') || 'Transaction History'}
+          title={t('wallet.transactions_title')}
           columns={columns}
           data={financialTransactions}
           pageSize={10}

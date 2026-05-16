@@ -67,35 +67,35 @@ export default function TNAIssuanceWizard() {
       </div>
 
       <div className="bg-white rounded-2xl border border-neutral-200 shadow-xl overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
-        {/* Step 1: Identity Confirmation */}
+        {/* Step 1 */}
         {step === 1 && (
           <div className="p-8 space-y-6">
             <div className="space-y-2">
               <h2 className="text-2xl font-bold text-neutral-900 flex items-center gap-2">
                 <UserIcon className="text-primary" />
-                Identity Confirmation
+                {t('tna.new.identity_confirmation')}
               </h2>
-              <p className="text-neutral-500">Please confirm your personal data as registered in the national registry.</p>
+              <p className="text-neutral-500">{t('tna.new.identity_confirmation_desc')}</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-6 bg-neutral-50 rounded-xl border border-neutral-100">
               <div className="space-y-1">
-                <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider">Full Name</p>
-                <p className="font-bold text-neutral-900">{user?.full_name || 'Abdullah Al-Ghamdi'}</p>
+                <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider">{t('auth.register.personal.labels.full_name')}</p>
+                <p className="font-bold text-neutral-900">{user?.full_name || t('tna.new.mock.full_name')}</p>
               </div>
                <div className="space-y-1">
-                 <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider">Document Number</p>
+                 <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider">{t('auth.register.personal.labels.document_number')}</p>
                  <p className="font-bold text-neutral-900">{user?.document_number || '1098237465'}</p>
                </div>
               <div className="space-y-1">
-                <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider">Nationality</p>
+                <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider">{t('auth.register.personal.labels.nationality')}</p>
                 <div className="flex items-center gap-2">
                   <Globe size={16} className="text-neutral-400" />
-                  <p className="font-bold text-neutral-900">Saudi Arabia</p>
+                  <p className="font-bold text-neutral-900">{t('tna.new.mock.nationality')}</p>
                 </div>
               </div>
               <div className="space-y-1">
-                <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider">Birth Date</p>
+                <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider">{t('auth.register.personal.labels.dob')}</p>
                 <p className="font-bold text-neutral-900">1992-05-14</p>
               </div>
             </div>
@@ -108,7 +108,7 @@ export default function TNAIssuanceWizard() {
                 className="mt-1 w-5 h-5 rounded border-neutral-300 text-primary focus:ring-primary"
               />
               <span className="text-sm font-medium text-neutral-700 group-hover:text-neutral-900 transition-colors">
-                I confirm that all personal data shown above is correct and matches my official identification.
+                {t('tna.new.identity_confirm')}
               </span>
             </label>
 
@@ -118,22 +118,22 @@ export default function TNAIssuanceWizard() {
                 disabled={!confirmed}
                 className="px-8"
               >
-                Next Step
+                {t('common.next')}
                 <ArrowRight className={cn("ml-2", isRTL && "rotate-180")} />
               </Button>
             </div>
           </div>
         )}
 
-        {/* Step 2: Policy Acknowledgment */}
+        {/* Step 2 */}
         {step === 2 && (
           <div className="p-8 space-y-6">
             <div className="space-y-2">
               <h2 className="text-2xl font-bold text-neutral-900 flex items-center gap-2">
                 <FileText className="text-primary" />
-                Policy Acknowledgment
+                {t('tna.new.policy_acknowledgment')}
               </h2>
-              <p className="text-neutral-500">Review the TNA issuance policy and terms of service.</p>
+              <p className="text-neutral-500">{t('tna.new.policy_acknowledgment_desc')}</p>
             </div>
 
             <div className="p-6 bg-primary/5 rounded-xl border border-primary/10 space-y-4">
@@ -142,19 +142,19 @@ export default function TNAIssuanceWizard() {
                   <ShieldCheck size={24} weight="fill" />
                 </div>
                 <div>
-                  <p className="font-bold text-primary">Issuance Mode: {issuancePolicyConfig.issuance_mode}</p>
+                  <p className="font-bold text-primary">{t('tna.new.issuance_mode')}: {t(`gov.policy.options.${issuancePolicyConfig.issuance_mode}`)}</p>
                   <p className="text-xs text-primary/70">
                     {issuancePolicyConfig.issuance_mode === 'AUTONOMOUS' 
-                      ? 'Your TNA will be issued immediately upon submission.' 
-                      : 'Your request requires administrative review before issuance.'}
+                      ? t('tna.new.autonomous') 
+                      : t('tna.new.moderated')}
                   </p>
                 </div>
               </div>
               
               <ul className="space-y-2 text-sm text-neutral-600 list-disc list-inside ps-2">
-                <li>TNAs are valid for a maximum of 12 months.</li>
-                <li>Maximum active TNAs allowed: {issuancePolicyConfig.max_active_tnas_per_visitor}.</li>
-                <li>Users are responsible for ensuring binding requests are valid.</li>
+                <li>{t('tna.new.validity_rule')}</li>
+                <li>{t('tna.new.max_active')}: {issuancePolicyConfig.max_active_tnas_per_visitor}.</li>
+                <li>{t('tna.new.binding_responsibility')}</li>
               </ul>
             </div>
 
@@ -166,7 +166,7 @@ export default function TNAIssuanceWizard() {
                 className="mt-1 w-5 h-5 rounded border-neutral-300 text-primary focus:ring-primary"
               />
               <span className="text-sm font-medium text-neutral-700 group-hover:text-neutral-900 transition-colors">
-                I agree to the TNA Terms and Conditions and understand the operational policies.
+                {t('tna.new.terms_agreement')}
               </span>
             </label>
 
@@ -176,7 +176,7 @@ export default function TNAIssuanceWizard() {
                 onClick={() => setStep(1)}
               >
                 <ArrowLeft className={cn("mr-2", isRTL && "rotate-180")} />
-                Back
+                {t('common.back')}
               </Button>
               <Button 
                 onClick={handleSubmit}
@@ -184,7 +184,7 @@ export default function TNAIssuanceWizard() {
                 disabled={!agreed}
                 className="px-8"
               >
-                Submit Request
+                {t('tna.new.submit_request')}
               </Button>
             </div>
           </div>
@@ -199,17 +199,17 @@ export default function TNAIssuanceWizard() {
                   <Check size={48} weight="bold" />
                 </div>
                 <div className="space-y-3">
-                  <h2 className="text-3xl font-black text-neutral-900 uppercase tracking-tight">Approved!</h2>
-                  <p className="text-neutral-500">Your Temporary National Address has been issued successfully.</p>
+                  <h2 className="text-3xl font-black text-neutral-900 uppercase tracking-tight">{t('tna.new.approved')}</h2>
+                  <p className="text-neutral-500">{t('tna.new.issued_success')}</p>
                 </div>
 
                 <div className="p-8 bg-primary/5 rounded-2xl border-2 border-dashed border-primary/30 relative group">
-                  <p className="text-xs font-bold text-primary uppercase tracking-[0.2em] mb-2 opacity-60">Your TNA Code</p>
+                  <p className="text-xs font-bold text-primary uppercase tracking-[0.2em] mb-2 opacity-60">{t('tna.new.your_tna_code')}</p>
                   <p className="text-5xl font-black text-primary font-mono tracking-tighter">
                     {newTnaCode}
                   </p>
                   <div className="absolute -top-3 -right-3 px-3 py-1 bg-success text-white text-[10px] font-bold rounded-full shadow-lg">
-                    ACTIVE
+                    {t('tna.new.active')}
                   </div>
                 </div>
 
@@ -218,7 +218,7 @@ export default function TNAIssuanceWizard() {
                     className="w-full sm:w-auto px-10 py-6 text-lg shadow-glow-primary"
                     onClick={() => router.push(`/${locale}/visitor/tnas`)}
                   >
-                    Go to My TNAs
+                    {t('tna.new.go_to_tnas')}
                     <ArrowRight size={20} className={cn("mr-2", isRTL && "rotate-180")} />
                   </Button>
                   <Button 
@@ -226,7 +226,7 @@ export default function TNAIssuanceWizard() {
                     className="w-full sm:w-auto px-10 py-6 text-lg"
                     onClick={() => router.push(`/${locale}/visitor/home`)}
                   >
-                    Return to Dashboard
+                    {t('tna.new.return_dashboard')}
                   </Button>
                 </div>
               </>
@@ -236,13 +236,13 @@ export default function TNAIssuanceWizard() {
                   <Clock size={48} weight="fill" />
                 </div>
                 <div className="space-y-3">
-                  <h2 className="text-3xl font-black text-neutral-900 uppercase tracking-tight">Pending Review</h2>
-                  <p className="text-neutral-500">Your request has been routed for manual administrative review.</p>
+                  <h2 className="text-3xl font-black text-neutral-900 uppercase tracking-tight">{t('tna.new.pending_review')}</h2>
+                  <p className="text-neutral-500">{t('tna.new.manual_review')}</p>
                 </div>
 
                 <div className="p-6 bg-neutral-50 rounded-xl border border-neutral-200 max-w-sm mx-auto">
                   <p className="text-sm text-neutral-600 leading-relaxed">
-                    Due to high demand or system policies, your request will be reviewed within <span className="font-bold text-neutral-900">24 hours</span>. You will receive a notification once approved.
+                    {t('tna.new.review_note')}
                   </p>
                 </div>
 
@@ -252,7 +252,7 @@ export default function TNAIssuanceWizard() {
                     className="px-10 py-4"
                     onClick={() => router.push(`/${locale}/visitor/home`)}
                   >
-                    Return to Dashboard
+                    {t('tna.new.return_dashboard')}
                   </Button>
                 </div>
               </>

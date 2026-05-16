@@ -99,6 +99,10 @@
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
       "PENDING": "Pending Review",
+      "COMPLETED": "Completed",
+      "FAILED": "Failed",
+      "REFUNDED": "Refunded",
+      "DISPUTED": "Disputed",
       "EXPIRED": "Expired",
       "REJECTED": "Rejected",
       "SUSPENDED": "Suspended",
@@ -112,6 +116,8 @@
     "no_notifications_5": "No notifications",
     "you_are_all_caught_up_6": "You are all caught up",
     "error_network": "Network error. Please try again.",
+    "error_unknown": "An unknown error occurred.",
+    "not_available": "N/A",
     "note": "Note",
     "review": "Review",
     "uploaded": "Uploaded",
@@ -291,7 +297,8 @@
     "ltr_4": "ltr",
     "ltr_5": "ltr",
     "validation": {
-      "field_required": "This field is required"
+      "field_required": "This field is required",
+      "user_not_authenticated": "User is not authenticated"
     }
   },
   "ltr_1": "ltr",
@@ -314,11 +321,18 @@
         "title": "Shipments",
         "from": "Shipment from",
         "arrival_date": "Expected Arrival",
-        "to_tna": "To TNA Address"
+        "to_tna": "To TNA Address",
+        "recent_title": "Recent Shipments",
+        "to": "To",
+        "empty": "No active shipments found.",
+        "order_first": "Order Your First Shipment"
       },
       "addresses": {
         "title": "My Temporary Addresses",
+        "active_title": "My Active Addresses",
         "manage": "Manage Addresses",
+        "expires_on": "Expires On",
+        "view_details": "View Details",
         "linked_success": "Linked Successfully",
         "until_date": "Until date",
         "not_linked": "Not Linked",
@@ -327,6 +341,27 @@
       "actions": {
         "create_new": "Create New Temporary National Address",
         "order_shipment": "Order Shipment"
+      },
+      "slides": {
+        "proxy": {
+          "title": "Saudi National Address Proxy",
+          "desc": "Get your temporary national address today and receive shipments anywhere in the Kingdom with ease and security.",
+          "cta": "Request TNA"
+        },
+        "secure": {
+          "title": "Secure & Reliable",
+          "desc": "Our system ensures your privacy and security throughout the shipping process.",
+          "cta": "Find Address"
+        },
+        "instant": {
+          "title": "Instant Verification",
+          "desc": "Quick administrative review and autonomous issuance for eligible users.",
+          "cta": "Start Now"
+        }
+      },
+      "stats": {
+        "active_tnas": "Active TNAs",
+        "shipments": "Shipments"
       }
     },
     "search": {
@@ -960,7 +995,26 @@
         "title": "Quick Actions",
         "policy_config": "Modify Policies",
         "audit_logs": "Audit Logs"
-      }
+      },
+      "system_health": "System Health: Optimal",
+      "avg_response_time": "Avg Response Time",
+      "success_rate": "Success Rate",
+      "active_services": "Active Services",
+      "services": {
+        "registry": "Registry",
+        "auth": "Auth",
+        "mocks": "Mocks",
+        "ledger": "Ledger"
+      },
+      "regions": {
+        "riyadh": "Riyadh",
+        "jeddah": "Jeddah",
+        "dammam": "Dammam",
+        "makkah": "Makkah"
+      },
+      "region_distribution": "Geographical Distribution of Requests",
+      "critical_alerts": "Critical Alerts",
+      "alert_failed_binding": "TNA-9928: Multiple failed binding attempts detected from IP 192.168.1.1"
     },
     "address_queue": {
       "title": "Address Verification Queue",
@@ -1000,6 +1054,7 @@
     "system_audit_14": "System Audit",
     "agency_management_15": "Agency Management",
     "financial_adjustments_16": "Financial Adjustments",
+    "loading_request_details": "Loading request details...",
     "applicant_17": "Applicant",
     "nationality_18": "Nationality",
     "mode_19": "Mode",
@@ -1351,10 +1406,22 @@
     "security_note2": "We never share your personal data with third parties.",
     "security_note3": "Verification typically completes within 24-48 hours.",
     "status": {
+      "not_started": "Not Started",
       "pending": "Pending Review",
       "verified": "Verified",
-      "rejected": "Rejected"
+      "rejected": "Rejected",
+      "expired": "Expired"
     },
+    "status_desc": {
+      "pending": "Your documents are being reviewed. This usually takes 24-48 hours.",
+      "rejected": "Your documents were rejected. Please upload corrected documents.",
+      "approved": "Your identity has been verified. You can now request a TNA."
+    },
+    "validation": {
+      "at_least_one_document": "At least one document must be uploaded",
+      "submit_failed": "Failed to submit documents"
+    },
+    "drag_drop": "or drag and drop",
     "success": {
       "title": "Documents Submitted",
       "message": "Your KYC documents have been submitted for review."
@@ -1389,7 +1456,23 @@
       "your_tna_code": "Your TNA Code",
       "active": "ACTIVE",
       "go_to_tnas": "Go to My TNAs",
-      "return_dashboard": "Return to Dashboard"
+      "return_dashboard": "Return to Dashboard",
+      "identity_confirmation": "Identity Confirmation",
+      "identity_confirmation_desc": "Please confirm your personal data as registered in the national registry.",
+      "identity_confirm": "I confirm that all personal data shown above is correct and matches my official identification.",
+      "policy_acknowledgment": "Policy Acknowledgment",
+      "policy_acknowledgment_desc": "Review the TNA issuance policy and terms of service.",
+      "validity_rule": "TNAs are valid for a maximum of 12 months.",
+      "binding_responsibility": "Users are responsible for ensuring binding requests are valid.",
+      "issued_success": "Your Temporary National Address has been issued successfully.",
+      "manual_review": "Your request has been routed for manual administrative review.",
+      "mock": {
+        "full_name": "Abdullah Al-Ghamdi",
+        "nationality": "Saudi Arabia"
+      }
+    },
+    "error": {
+      "not_found": "TNA not found"
     },
     "detail": {
       "digital_card": "Digital Card",
@@ -1397,7 +1480,10 @@
       "quick_actions": "Quick Actions",
       "unbind": "Unbind",
       "unbind_note": "Unbinding removes the linked address from this TNA.",
-      "unlinked_note": "This TNA is not linked to an address yet."
+      "unlinked_note": "This TNA is not linked to an address yet.",
+      "cannot_unbind_active_shipments": "Cannot unbind: active shipments are currently in transit. Please wait for them to be delivered.",
+      "view_history": "View History",
+      "unbind_success": "Address unbound successfully. Redirecting..."
     }
   },
   "binding": {
@@ -1411,6 +1497,7 @@
     "available_units": "Available Units",
     "breakdown": "Breakdown",
     "calculating": "Calculating...",
+    "create_error": "Failed to create binding",
     "conflict_error": "This unit is already booked for the selected period.",
     "created": "Binding request created",
     "duration": "Duration",
@@ -1442,7 +1529,15 @@
     "title": "Bind TNA to Address",
     "tna_code": "TNA Code",
     "total_amount": "Total Amount",
-    "total_payable": "Total Payable"
+    "total_payable": "Total Payable",
+    "quote_error": "Failed to get price quote",
+    "verified": "Verified",
+    "units_available": "{count} Units Available"
+  },
+  "rental_period": {
+    "daily": "Daily",
+    "monthly": "Monthly",
+    "yearly": "Yearly"
   },
   "checkout": {
     "payment_blocked": "Payment blocked - binding already processed",
@@ -1473,7 +1568,12 @@
     "payment_success": "Payment Successful!",
     "payment_success_message": "Your binding request has been submitted and is awaiting owner approval.",
     "redirect_message": "Redirecting to your TNA details in 3 seconds...",
-    "type": "Type"
+    "type": "Type",
+    "load_error": "Failed to load checkout details",
+    "payment_failed": "Payment failed. Please try again.",
+    "data_not_available": "Checkout data not available",
+    "binding_id": "Binding ID",
+    "tna": "TNA"
   },
   "payment": {
     "method": "Payment Method",
@@ -1490,6 +1590,9 @@
     "top_up": "Top Up Wallet",
     "top_up_success": "{amount} SAR added to wallet",
     "top_up_title": "Add Funds",
+    "card_number_placeholder": "4111 1111 1111 1111",
+    "expiry_placeholder": "MM/YY",
+    "cvv_placeholder": "123",
     "cardholder_placeholder": "Enter cardholder name",
     "invalid_card": "Invalid card number",
     "invalid_card_length": "Card number must be 16 digits",
@@ -1512,6 +1615,9 @@
     "top_up": "Top Up Wallet",
     "top_up_success": "{amount} SAR added to wallet",
     "top_up_title": "Add Funds",
+    "card_number_placeholder": "4111 1111 1111 1111",
+    "expiry_placeholder": "MM/YY",
+    "cvv_placeholder": "123",
     "cardholder_placeholder": "Enter cardholder name",
     "invalid_card": "Invalid card number",
     "invalid_card_length": "Card number must be 16 digits",

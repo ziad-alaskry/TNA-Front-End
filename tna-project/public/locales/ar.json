@@ -99,6 +99,10 @@
       "ACTIVE": "نشط",
       "INACTIVE": "غير نشط",
       "PENDING": "قيد المراجعة",
+      "COMPLETED": "مكتمل",
+      "FAILED": "فشل",
+      "REFUNDED": "مسترد",
+      "DISPUTED": "متنازع عليه",
       "EXPIRED": "منتهي",
       "REJECTED": "مرفوض",
       "SUSPENDED": "موقوف",
@@ -112,6 +116,8 @@
     "no_notifications_5": "لا توجد إشعارات",
     "you_are_all_caught_up_6": "أنت كل شيء جيد",
     "error_network": "حدث خطأ في الشبكة. حاول مرة أخرى.",
+    "error_unknown": "حدث خطأ غير معروف.",
+    "not_available": "غير متاح",
     "note": "ملاحظة",
     "review": "مراجعة",
     "uploaded": "تم الرفع",
@@ -291,7 +297,8 @@
     "ltr_4": "rtl",
     "ltr_5": "rtl",
     "validation": {
-      "field_required": "هذا الحقل مطلوب"
+      "field_required": "هذا الحقل مطلوب",
+      "user_not_authenticated": "المستخدم غير مصادق عليه"
     }
   },
   "ltr_1": "rtl",
@@ -314,11 +321,18 @@
         "title": "الشحنات",
         "from": "شحنة من",
         "arrival_date": "تاريخ الوصول المتوقع",
-        "to_tna": "إلى العنوان المؤقت"
+        "to_tna": "إلى العنوان المؤقت",
+        "recent_title": "الشحنات الأخيرة",
+        "to": "إلى",
+        "empty": "لا توجد شحنات نشطة.",
+        "order_first": "اطلب أول شحنة"
       },
       "addresses": {
         "title": "عناويني المؤقتة",
+        "active_title": "عناويني النشطة",
         "manage": "إدارة العناوين",
+        "expires_on": "ينتهي في",
+        "view_details": "عرض التفاصيل",
         "linked_success": "مرتبط بنجاح",
         "until_date": "حتى تاريخ",
         "not_linked": "لم يتم الربط",
@@ -327,6 +341,27 @@
       "actions": {
         "create_new": "إنشاء عنوان وطني مؤقت جديد",
         "order_shipment": "طلب شحنة"
+      },
+      "slides": {
+        "proxy": {
+          "title": "وكيل العنوان الوطني السعودي",
+          "desc": "احصل على عنوانك الوطني المؤقت اليوم واستقبل الشحنات في أي مكان داخل المملكة بسهولة وأمان.",
+          "cta": "طلب TNA"
+        },
+        "secure": {
+          "title": "آمن وموثوق",
+          "desc": "يضمن نظامنا خصوصيتك وأمانك طوال عملية الشحن.",
+          "cta": "البحث عن عنوان"
+        },
+        "instant": {
+          "title": "تحقق فوري",
+          "desc": "مراجعة إدارية سريعة وإصدار تلقائي للمستخدمين المؤهلين.",
+          "cta": "ابدأ الآن"
+        }
+      },
+      "stats": {
+        "active_tnas": "عناوين TNA النشطة",
+        "shipments": "الشحنات"
       }
     },
     "search": {
@@ -960,7 +995,26 @@
         "title": "إجراءات سريعة",
         "policy_config": "تعديل السياسات",
         "audit_logs": "سجلات التدقيق"
-      }
+      },
+      "system_health": "حالة النظام: مثالية",
+      "avg_response_time": "متوسط وقت الاستجابة",
+      "success_rate": "معدل النجاح",
+      "active_services": "الخدمات النشطة",
+      "services": {
+        "registry": "السجل",
+        "auth": "المصادقة",
+        "mocks": "المحاكاة",
+        "ledger": "دفتر السجلات"
+      },
+      "regions": {
+        "riyadh": "الرياض",
+        "jeddah": "جدة",
+        "dammam": "الدمام",
+        "makkah": "مكة"
+      },
+      "region_distribution": "التوزيع الجغرافي للطلبات",
+      "critical_alerts": "تنبيهات حرجة",
+      "alert_failed_binding": "TNA-9928: تم رصد محاولات ربط فاشلة متعددة من العنوان 192.168.1.1"
     },
     "address_queue": {
       "title": "طابور التحقق من العناوين",
@@ -1000,6 +1054,7 @@
     "system_audit_14": "سجل التدقيق",
     "agency_management_15": "إدارة الجهات",
     "financial_adjustments_16": "تعديلات الماليات",
+    "loading_request_details": "جاري تحميل تفاصيل الطلب...",
     "applicant_17": "مقدم الطلب",
     "nationality_18": "الجنسية",
     "mode_19": "وضع المراجعة",
@@ -1351,10 +1406,22 @@
     "security_note2": "لا نشارك بياناتك الشخصية مع أطراف ثالثة.",
     "security_note3": "عادة ما يكتمل التحقق خلال 24-48 ساعة.",
     "status": {
+      "not_started": "لم يبدأ",
       "pending": "قيد المراجعة",
       "verified": "تم التحقق",
-      "rejected": "مرفوض"
+      "rejected": "مرفوض",
+      "expired": "منتهي"
     },
+    "status_desc": {
+      "pending": "تتم مراجعة مستنداتك. يستغرق ذلك عادة من 24 إلى 48 ساعة.",
+      "rejected": "تم رفض مستنداتك. يرجى رفع مستندات مصححة.",
+      "approved": "تم التحقق من هويتك. يمكنك الآن طلب TNA."
+    },
+    "validation": {
+      "at_least_one_document": "يجب رفع مستند واحد على الأقل",
+      "submit_failed": "تعذر إرسال المستندات"
+    },
+    "drag_drop": "أو اسحب الملف وأفلته",
     "success": {
       "title": "تم إرسال المستندات",
       "message": "تم إرسال مستنداتك للتحقق."
@@ -1389,7 +1456,23 @@
       "your_tna_code": "رمز TNA الخاص بك",
       "active": "نشط",
       "go_to_tnas": "انتقل إلى عناوين TNA الخاصة بي",
-      "return_dashboard": "العودة إلى لوحة التحكم"
+      "return_dashboard": "العودة إلى لوحة التحكم",
+      "identity_confirmation": "تأكيد الهوية",
+      "identity_confirmation_desc": "يرجى تأكيد بياناتك الشخصية كما هي مسجلة في السجل الوطني.",
+      "identity_confirm": "أؤكد أن جميع البيانات الشخصية المعروضة أعلاه صحيحة وتطابق وثيقة هويتي الرسمية.",
+      "policy_acknowledgment": "الإقرار بالسياسة",
+      "policy_acknowledgment_desc": "راجع سياسة إصدار TNA وشروط الخدمة.",
+      "validity_rule": "تكون عناوين TNA صالحة لمدة أقصاها 12 شهراً.",
+      "binding_responsibility": "يتحمل المستخدم مسؤولية التأكد من صحة طلبات الربط.",
+      "issued_success": "تم إصدار عنوانك الوطني المؤقت بنجاح.",
+      "manual_review": "تم تحويل طلبك للمراجعة الإدارية اليدوية.",
+      "mock": {
+        "full_name": "عبدالله الغامدي",
+        "nationality": "المملكة العربية السعودية"
+      }
+    },
+    "error": {
+      "not_found": "لم يتم العثور على TNA"
     },
     "detail": {
       "digital_card": "البطاقة الرقمية",
@@ -1397,7 +1480,10 @@
       "quick_actions": "إجراءات سريعة",
       "unbind": "إلغاء الربط",
       "unbind_note": "إلغاء الربط يزيل العنوان المرتبط من هذا الرمز.",
-      "unlinked_note": "رمز TNA هذا غير مرتبط بعنوان بعد."
+      "unlinked_note": "رمز TNA هذا غير مرتبط بعنوان بعد.",
+      "cannot_unbind_active_shipments": "لا يمكن إلغاء الربط: توجد شحنات نشطة قيد النقل حالياً. يرجى الانتظار حتى تسليمها.",
+      "view_history": "عرض السجل",
+      "unbind_success": "تم إلغاء ربط العنوان بنجاح. جارٍ التحويل..."
     }
   },
   "binding": {
@@ -1411,6 +1497,7 @@
     "available_units": "الوحدات المتاحة",
     "breakdown": "التفاصيل",
     "calculating": "جاري الحساب...",
+    "create_error": "تعذر إنشاء طلب الربط",
     "conflict_error": "هذه الوحدة محجوزة بالفعل خلال الفترة المحددة.",
     "created": "تم إنشاء طلب الربط",
     "duration": "المدة",
@@ -1442,7 +1529,15 @@
     "title": "ربط TNA بعنوان",
     "tna_code": "كود TNA",
     "total_amount": "المبلغ الإجمالي",
-    "total_payable": "إجمالي المستحق"
+    "total_payable": "إجمالي المستحق",
+    "quote_error": "تعذر الحصول على عرض السعر",
+    "verified": "موثق",
+    "units_available": "{count} وحدة متاحة"
+  },
+  "rental_period": {
+    "daily": "يومي",
+    "monthly": "شهري",
+    "yearly": "سنوي"
   },
   "checkout": {
     "payment_blocked": "الدفع محظور - تم معالجة الربط بالفعل",
@@ -1473,7 +1568,12 @@
     "payment_success": "تم الدفع بنجاح!",
     "payment_success_message": "تم إرسال طلب الربط الخاص بك وينتظر موافقة مالك العقار.",
     "redirect_message": "سيتم توجيهك إلى تفاصيل TNA الخاص بك خلال 3 ثوانٍ...",
-    "type": "النوع"
+    "type": "النوع",
+    "load_error": "تعذر تحميل تفاصيل الدفع",
+    "payment_failed": "فشلت عملية الدفع. يرجى المحاولة مرة أخرى.",
+    "data_not_available": "بيانات الدفع غير متاحة",
+    "binding_id": "معرف الربط",
+    "tna": "TNA"
   },
   "payment": {
     "method": "طريقة الدفع",
@@ -1490,6 +1590,9 @@
     "top_up": "إضافة رصيد",
     "top_up_success": "{amount} ريال تم إضافتها إلى المحفظة",
     "top_up_title": "إضافة أموال",
+    "card_number_placeholder": "4111 1111 1111 1111",
+    "expiry_placeholder": "شهر/سنة",
+    "cvv_placeholder": "123",
     "cardholder_placeholder": "أدخل اسم حامل البطاقة",
     "invalid_card": "رقم البطاقة غير صالح",
     "invalid_card_length": "رقم البطاقة يجب أن يكون 16 رقم",
@@ -1512,6 +1615,9 @@
     "top_up": "إضافة رصيد",
     "top_up_success": "{amount} ريال تم إضافتها إلى المحفظة",
     "top_up_title": "إضافة أموال",
+    "card_number_placeholder": "4111 1111 1111 1111",
+    "expiry_placeholder": "شهر/سنة",
+    "cvv_placeholder": "123",
     "cardholder_placeholder": "أدخل اسم حامل البطاقة",
     "invalid_card": "رقم البطاقة غير صالح",
     "invalid_card_length": "رقم البطاقة يجب أن يكون 16 رقم",

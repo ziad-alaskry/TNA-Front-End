@@ -57,7 +57,7 @@ export default function KYCUploadPage() {
     setSubmitLoading(true)
 
     try {
-      if (!user?.user_id) throw new Error('User not authenticated')
+      if (!user?.user_id) throw new Error(t('auth.validation.user_not_authenticated'))
 
       const documents = []
       if (frontFile) {
@@ -83,13 +83,13 @@ export default function KYCUploadPage() {
       }
 
       if (documents.length === 0) {
-        throw new Error('At least one document must be uploaded')
+        throw new Error(t('kyc.validation.at_least_one_document'))
       }
 
       await submitDocuments(user.user_id, documents)
       setSuccess(true)
     } catch (err: any) {
-      setError(err.message || 'Failed to submit documents')
+      setError(err.message || t('kyc.validation.submit_failed'))
     } finally {
       setSubmitLoading(false)
     }
@@ -99,11 +99,11 @@ export default function KYCUploadPage() {
     if (!currentStatus) return null
 
     const statusConfig = {
-      'NOT_STARTED': { icon: UploadSimple, color: 'text-neutral-500 bg-neutral-100', label: 'Not Started' },
-      'PENDING': { icon: Clock, color: 'text-warning bg-warning/10', label: 'Pending Review' },
-      'APPROVED': { icon: CheckCircle, color: 'text-success bg-success/10', label: 'Verified' },
-      'REJECTED': { icon: XCircle, color: 'text-error bg-error/10', label: 'Rejected' },
-      'EXPIRED': { icon: Clock, color: 'text-neutral-500 bg-neutral-100', label: 'Expired' },
+      'NOT_STARTED': { icon: UploadSimple, color: 'text-neutral-500 bg-neutral-100', label: t('kyc.status.not_started') },
+      'PENDING': { icon: Clock, color: 'text-warning bg-warning/10', label: t('kyc.status.pending') },
+      'APPROVED': { icon: CheckCircle, color: 'text-success bg-success/10', label: t('kyc.status.verified') },
+      'REJECTED': { icon: XCircle, color: 'text-error bg-error/10', label: t('kyc.status.rejected') },
+      'EXPIRED': { icon: Clock, color: 'text-neutral-500 bg-neutral-100', label: t('kyc.status.expired') },
     }
 
     const config = statusConfig[currentStatus] || statusConfig['NOT_STARTED']
@@ -115,13 +115,13 @@ export default function KYCUploadPage() {
         <div>
           <p className="font-bold text-sm">{config.label}</p>
           {currentStatus === 'PENDING' && (
-            <p className="text-xs opacity-80 mt-1">Your documents are being reviewed. This usually takes 24-48 hours.</p>
+            <p className="text-xs opacity-80 mt-1">{t('kyc.status_desc.pending')}</p>
           )}
           {currentStatus === 'REJECTED' && (
-            <p className="text-xs opacity-80 mt-1">Your documents were rejected. Please upload corrected documents.</p>
+            <p className="text-xs opacity-80 mt-1">{t('kyc.status_desc.rejected')}</p>
           )}
           {currentStatus === 'APPROVED' && (
-            <p className="text-xs opacity-80 mt-1">Your identity has been verified. You can now request a TNA.</p>
+            <p className="text-xs opacity-80 mt-1">{t('kyc.status_desc.approved')}</p>
           )}
         </div>
       </div>
@@ -138,10 +138,10 @@ export default function KYCUploadPage() {
             </div>
             <div className="space-y-2">
               <h2 className="text-3xl font-black text-neutral-900 uppercase">
-                {t('kyc.success.title') || 'Documents Submitted'}
+                {t('kyc.success.title')}
               </h2>
               <p className="text-neutral-500">
-                {t('kyc.success.message') || 'Your KYC documents have been submitted for review.'}
+                {t('kyc.success.message')}
               </p>
             </div>
             <Button 
@@ -149,7 +149,7 @@ export default function KYCUploadPage() {
               variant="outline"
               className="px-8"
             >
-              {t('common.back') || 'Back'}
+              {t('common.back')}
             </Button>
           </div>
         </AppShell>
@@ -158,9 +158,9 @@ export default function KYCUploadPage() {
   }
 
   const docOptions = [
-    { value: 'NATIONAL_ID', label: t('kyc.doc_types.national_id') || 'National ID' },
-    { value: 'PASSPORT', label: t('kyc.doc_types.passport') || 'Passport' },
-    { value: 'RESIDENCE_PERMIT', label: t('kyc.doc_types.residence_permit') || 'Residence Permit (Iqama)' },
+    { value: 'NATIONAL_ID', label: t('kyc.doc_types.national_id') },
+    { value: 'PASSPORT', label: t('kyc.doc_types.passport') },
+    { value: 'RESIDENCE_PERMIT', label: t('kyc.doc_types.residence_permit') },
   ]
 
   return (
@@ -170,7 +170,7 @@ export default function KYCUploadPage() {
           {/* Status Banner */}
           <section>
             <h2 className="text-lg font-bold text-neutral-900 mb-3">
-              {t('kyc.status_title') || 'Verification Status'}
+              {t('kyc.status_title')}
             </h2>
             {renderStatus()}
           </section>
@@ -180,10 +180,10 @@ export default function KYCUploadPage() {
             <div className="space-y-2">
               <h2 className="text-2xl font-bold text-neutral-900 flex items-center gap-2">
                 <FileArrowUp className="text-primary" />
-                {t('kyc.upload_title') || 'Upload Documents'}
+                {t('kyc.upload_title')}
               </h2>
               <p className="text-neutral-500">
-                {t('kyc.upload_desc') || 'Please upload clear images of your identification documents.'}
+                {t('kyc.upload_desc')}
               </p>
             </div>
 
@@ -191,7 +191,7 @@ export default function KYCUploadPage() {
               {/* Document Type */}
               <div className="space-y-2">
                 <label className="text-sm font-bold text-neutral-700">
-                  {t('kyc.document_type') || 'Document Type'} *
+                  {t('kyc.document_type')} *
                 </label>
                 <Select
                   value={docType}
@@ -206,29 +206,31 @@ export default function KYCUploadPage() {
                 {/* Front Side */}
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-neutral-700">
-                    {t('kyc.front_side') || 'Front Side'} *
+                    {t('kyc.front_side')} *
                   </label>
                   <FileUpload
                     accept="image/*,.pdf"
                     value={frontFile}
                     onChange={(e) => setFrontFile(e.target.files?.[0] || null)}
-                    placeholder={t('kyc.drop_front') || 'Drop front image or click to upload'}
+                    placeholder={t('kyc.drop_front')}
+                    dragHint={t('kyc.drag_drop')}
                   />
                   <p className="text-xs text-neutral-500">
-                    {t('kyc.max_size') || 'Max 10MB'}
+                    {t('kyc.max_size')}
                   </p>
                 </div>
 
                 {/* Back Side */}
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-neutral-700">
-                    {t('kyc.back_side') || 'Back Side'} *
+                    {t('kyc.back_side')} *
                   </label>
                   <FileUpload
                     accept="image/*,.pdf"
                     value={backFile}
                     onChange={(e) => setBackFile(e.target.files?.[0] || null)}
-                    placeholder={t('kyc.drop_back') || 'Drop back image or click to upload'}
+                    placeholder={t('kyc.drop_back')}
+                    dragHint={t('kyc.drag_drop')}
                   />
                 </div>
               </div>
@@ -236,16 +238,17 @@ export default function KYCUploadPage() {
               {/* Selfie */}
               <div className="space-y-2 max-w-md">
                 <label className="text-sm font-bold text-neutral-700">
-                  {t('kyc.selfie') || 'Selfie Photo'} *
+                  {t('kyc.selfie')} *
                 </label>
                 <FileUpload
                   accept="image/*"
                   value={selfieFile}
                   onChange={(e) => setSelfieFile(e.target.files?.[0] || null)}
-                  placeholder={t('kyc.drop_selfie') || 'Take or upload a clear selfie'}
+                  placeholder={t('kyc.drop_selfie')}
+                  dragHint={t('kyc.drag_drop')}
                 />
                 <p className="text-xs text-neutral-500">
-                  {t('kyc.selfie_hint') || 'Face must be clearly visible'}
+                  {t('kyc.selfie_hint')}
                 </p>
               </div>
 
@@ -257,7 +260,7 @@ export default function KYCUploadPage() {
                   variant="outline"
                   onClick={() => window.history.back()}
                 >
-                  {t('common.cancel') || 'Cancel'}
+                  {t('common.cancel')}
                 </Button>
                 <Button 
                   type="submit"
@@ -266,8 +269,8 @@ export default function KYCUploadPage() {
                   className="px-8"
                 >
                   {currentStatus === 'REJECTED' 
-                    ? (t('kyc.resubmit') || 'Resubmit Documents')
-                    : (t('kyc.submit') || 'Submit for Verification')
+                    ? t('kyc.resubmit')
+                    : t('kyc.submit')
                   }
                 </Button>
               </div>
@@ -279,13 +282,13 @@ export default function KYCUploadPage() {
             <div className="flex items-center gap-2 text-info">
               <ShieldCheck size={20} weight="fill" />
               <p className="text-sm font-bold uppercase tracking-wider">
-                {t('kyc.security_title') || 'Secure & Private'}
+                {t('kyc.security_title')}
               </p>
             </div>
             <ul className="text-sm text-neutral-600 space-y-1 list-disc list-inside ps-2">
-              <li>{t('kyc.security_note1') || 'Your documents are encrypted and stored securely.'}</li>
-              <li>{t('kyc.security_note2') || 'We never share your personal data with third parties.'}</li>
-              <li>{t('kyc.security_note3') || 'Verification typically completes within 24-48 hours.'}</li>
+              <li>{t('kyc.security_note1')}</li>
+              <li>{t('kyc.security_note2')}</li>
+              <li>{t('kyc.security_note3')}</li>
             </ul>
           </div>
         </div>
@@ -299,12 +302,14 @@ function FileUpload({
   accept,
   value,
   onChange,
-  placeholder
+  placeholder,
+  dragHint
 }: {
   accept: string
   value: File | null
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   placeholder: string
+  dragHint: string
 }) {
   const [dragActive, setDragActive] = useState(false)
 
@@ -358,7 +363,7 @@ function FileUpload({
             <UploadSimple size={24} />
           </div>
           <p className="text-sm font-medium text-neutral-600">{placeholder}</p>
-          <p className="text-xs text-neutral-400">or drag and drop</p>
+          <p className="text-xs text-neutral-400">{dragHint}</p>
         </div>
       )}
     </div>

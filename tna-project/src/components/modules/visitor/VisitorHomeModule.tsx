@@ -39,25 +39,25 @@ export default function VisitorHomeModule() {
 
   const slides = [
     {
-      title: "Saudi National Address Proxy",
-      desc: "Get your temporary national address today and receive shipments anywhere in the Kingdom with ease and security.",
-      cta: "Request TNA",
+      title: t('visitor.home.slides.proxy.title'),
+      desc: t('visitor.home.slides.proxy.desc'),
+      cta: t('visitor.home.slides.proxy.cta'),
       onClick: () => router.push(`/${locale}/visitor/tna/new`),
       image: "/brand/banner-1.jpg",
       color: "bg-primary"
     },
     {
-      title: "Secure & Reliable",
-      desc: "Our system ensures your privacy and security throughout the shipping process.",
-      cta: "Find Address",
+      title: t('visitor.home.slides.secure.title'),
+      desc: t('visitor.home.slides.secure.desc'),
+      cta: t('visitor.home.slides.secure.cta'),
       onClick: () => router.push(`/${locale}/visitor/search`),
       image: "/brand/banner-2.jpg",
       color: "bg-primary-dark"
     },
     {
-      title: "Instant Verification",
-      desc: "Quick administrative review and autonomous issuance for eligible users.",
-      cta: "Start Now",
+      title: t('visitor.home.slides.instant.title'),
+      desc: t('visitor.home.slides.instant.desc'),
+      cta: t('visitor.home.slides.instant.cta'),
       onClick: () => router.push(`/${locale}/visitor/tna/new`),
       image: "/brand/banner-3.jpg",
       color: "bg-secondary"
@@ -136,7 +136,7 @@ export default function VisitorHomeModule() {
               <IdentificationCard size={28} weight="bold" />
             </div>
             <div>
-              <p className="text-xs font-black text-neutral-400 uppercase tracking-widest">Active TNAs</p>
+              <p className="text-xs font-black text-neutral-400 uppercase tracking-widest">{t('visitor.home.stats.active_tnas')}</p>
               <p className="text-3xl font-black text-neutral-900">{activeTnas.length}</p>
             </div>
           </div>
@@ -151,7 +151,7 @@ export default function VisitorHomeModule() {
               <Package size={28} weight="bold" />
             </div>
             <div>
-              <p className="text-xs font-black text-neutral-400 uppercase tracking-widest">Shipments</p>
+              <p className="text-xs font-black text-neutral-400 uppercase tracking-widest">{t('visitor.home.stats.shipments')}</p>
               <p className="text-3xl font-black text-neutral-900">{shipments?.length || 0}</p>
             </div>
           </div>
@@ -162,12 +162,12 @@ export default function VisitorHomeModule() {
        {/* MY TNAS SECTION */}
        <section className="space-y-4">
          <div className="flex items-center justify-between">
-           <h2 className="text-xl font-black text-neutral-900 tracking-tight">My Active Addresses</h2>
+           <h2 className="text-xl font-black text-neutral-900 tracking-tight">{t('visitor.home.addresses.active_title')}</h2>
            <button 
              onClick={() => router.push(`/${locale}/visitor/tnas`)}
              className="text-sm font-bold text-primary flex items-center gap-1 hover:underline"
            >
-             Manage Addresses
+             {t('visitor.home.addresses.manage')}
              <CaretRight size={14} className={cn(isRTL && "rotate-180")} />
            </button>
          </div>
@@ -196,11 +196,11 @@ export default function VisitorHomeModule() {
                    </span>
                  </div>
                  <div className="space-y-1">
-                   <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">Expires On</p>
+                   <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">{t('visitor.home.addresses.expires_on')}</p>
                    <p className="text-xs font-bold text-neutral-600">{new Date(tna.expires_at).toLocaleDateString()}</p>
                  </div>
                  <div className="pt-2 flex items-center gap-2 text-xs font-bold text-primary">
-                   View Details
+                   {t('visitor.home.addresses.view_details')}
                    <ArrowRight size={14} className={cn(isRTL && "rotate-180")} />
                  </div>
                </div>
@@ -212,12 +212,12 @@ export default function VisitorHomeModule() {
       {/* RECENT SHIPMENTS SECTION */}
       <section className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-black text-neutral-900 tracking-tight">Recent Shipments</h2>
+          <h2 className="text-xl font-black text-neutral-900 tracking-tight">{t('visitor.home.shipments.recent_title')}</h2>
           <button 
             onClick={() => router.push(`/${locale}/visitor/shipments`)}
             className="text-sm font-bold text-primary flex items-center gap-1 hover:underline"
           >
-            View All
+            {t('common.view_all')}
             <CaretRight size={14} className={cn(isRTL && "rotate-180")} />
           </button>
         </div>
@@ -250,7 +250,7 @@ export default function VisitorHomeModule() {
                   <p className="font-mono font-bold text-neutral-900">{shipment.tracking_no}</p>
                   <div className="flex items-center gap-1.5 mt-1">
                     <MapPin size={12} className="text-neutral-400" />
-                    <p className="text-[10px] text-neutral-500 font-medium">To: <span className="text-primary font-bold">{shipment.tna_code}</span></p>
+                    <p className="text-[10px] text-neutral-500 font-medium">{t('visitor.home.shipments.to')}: <span className="text-primary font-bold">{shipment.tna_code}</span></p>
                   </div>
                 </div>
                 <ArrowSquareOut size={20} className="text-neutral-300 group-hover:text-secondary transition-colors" />
@@ -264,13 +264,13 @@ export default function VisitorHomeModule() {
             <div className="mx-auto w-12 h-12 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-400">
               <Info size={24} />
             </div>
-            <p className="text-sm text-neutral-500 font-medium">No active shipments found.</p>
+            <p className="text-sm text-neutral-500 font-medium">{t('visitor.home.shipments.empty')}</p>
             <Button 
               variant="outline" 
               size="sm"
               onClick={() => router.push(`/${locale}/visitor/shipments/order`)}
             >
-              Order Your First Shipment
+              {t('visitor.home.shipments.order_first')}
             </Button>
           </div>
         )}
