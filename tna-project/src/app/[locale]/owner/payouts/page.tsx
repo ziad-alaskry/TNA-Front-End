@@ -3,6 +3,7 @@
 import React from 'react'
 import { AppShell } from '@/components/layout/AppShell'
 import DataTableLayout, { DataTableColumn } from '@/components/templates/DataTableLayout'
+import { CurrencySymbol } from '@/components/ui/CurrencySymbol'
 import { 
     Bank, 
     CheckCircle, 
@@ -38,7 +39,7 @@ export default function OwnerPayoutsPage() {
         {
             key: 'amount',
             label: 'المبلغ',
-            render: (val) => <span className="font-bold text-neutral-900">{val.toFixed(2)} SAR</span>
+            render: (val) => <span className="font-bold text-neutral-900">{val.toFixed(2)} <CurrencySymbol /></span>
         },
         {
             key: 'method',
@@ -97,7 +98,7 @@ export default function OwnerPayoutsPage() {
                     <Receipt size={24} weight="fill" className="text-primary" />
                     <div>
                         <p className="text-xs font-bold text-neutral-900">ملخص التحويلات</p>
-                        <p className="text-sm text-neutral-600">إجمالي ما تم تحويله لحساباتك البنكية هو 6,540.00 SAR</p>
+                        <p className="text-sm text-neutral-600">إجمالي ما تم تحويله لحساباتك البنكية هو 6,540.00 <CurrencySymbol /></p>
                     </div>
                 </div>
             </DataTableLayout>

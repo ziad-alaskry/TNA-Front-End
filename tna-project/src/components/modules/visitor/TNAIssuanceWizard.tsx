@@ -116,10 +116,10 @@ export default function TNAIssuanceWizard() {
               <Button 
                 onClick={() => setStep(2)}
                 disabled={!confirmed}
-                className="px-8"
+                className="px-8 gap-2"
               >
                 {t('common.next')}
-                <ArrowRight className={cn("ml-2", isRTL && "rotate-180")} />
+                <ArrowRight className={cn(isRTL && "rotate-180")} />
               </Button>
             </div>
           </div>
@@ -174,8 +174,9 @@ export default function TNAIssuanceWizard() {
               <Button 
                 variant="outline"
                 onClick={() => setStep(1)}
+                className="gap-2"
               >
-                <ArrowLeft className={cn("mr-2", isRTL && "rotate-180")} />
+                <ArrowLeft className={cn(isRTL && "rotate-180")} />
                 {t('common.back')}
               </Button>
               <Button 
@@ -215,11 +216,11 @@ export default function TNAIssuanceWizard() {
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
                   <Button 
-                    className="w-full sm:w-auto px-10 py-6 text-lg shadow-glow-primary"
+                    className="w-full sm:w-auto px-10 py-6 text-lg shadow-glow-primary gap-2"
                     onClick={() => router.push(`/${locale}/visitor/tnas`)}
                   >
                     {t('tna.new.go_to_tnas')}
-                    <ArrowRight size={20} className={cn("mr-2", isRTL && "rotate-180")} />
+                    <ArrowRight size={20} className={cn(isRTL && "rotate-180")} />
                   </Button>
                   <Button 
                     variant="outline"

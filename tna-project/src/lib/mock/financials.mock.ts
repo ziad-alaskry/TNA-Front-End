@@ -14,7 +14,7 @@ export const mockTransactions: FinancialTransaction[] = [
     user_role: 'VISITOR',
     transaction_type: 'RENTAL_PAYMENT',
     amount: 500.00,
-    currency: 'SAR',
+    currency: '\u20C1',
     status: 'COMPLETED',
     description: 'TNA Binding Rental - TNA-ABCD1234',
     metadata: {
@@ -31,7 +31,7 @@ export const mockTransactions: FinancialTransaction[] = [
     user_role: 'VISITOR',
     transaction_type: 'DEPOSIT',
     amount: 1000.00,
-    currency: 'SAR',
+    currency: '\u20C1',
     status: 'COMPLETED',
     description: 'Wallet Top-up',
     created_at: '2024-02-01T12:00:00Z',

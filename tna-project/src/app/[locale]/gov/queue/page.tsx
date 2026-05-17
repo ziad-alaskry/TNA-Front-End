@@ -85,7 +85,7 @@ export default function GovQueuePage() {
                         onClick={() => router.push(`/${locale}/gov/queue/${id}`)}
                         variant="outline"
                         size="sm"
-                        className="h-9 px-4 border-neutral-200"
+                        className="h-9 px-4 border-neutral-200 gap-2"
                     >
                         {t('gov.review_30')}
                         <ArrowRight size={16} className={cn(isRTL && "rotate-180")} />

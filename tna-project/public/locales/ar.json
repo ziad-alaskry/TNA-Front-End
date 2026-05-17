@@ -21,7 +21,7 @@
     "page_of": "الصفحة {current} من {total}",
     "no_data": "لا توجد بيانات",
     "no_data_desc": "لم نتمكن من العثور على أي سجلات تطابق معايير البحث.",
-    "currency": "SAR",
+    "currency": "\u20C1",
     "goBack": "الرجوع",
     "signOut": "تسجيل الخروج",
     "breadcrumbs": {
@@ -549,6 +549,29 @@
     "wallet": "المحفظة"
   },
   "owner": {
+    "profile_page": {
+      "header": "الملف الشخصي",
+      "title": "إعدادات الملف الشخصي",
+      "member_since": "المالك • عضو منذ 2025",
+      "personal_info": {
+        "title": "المعلومات الشخصية",
+        "description": "تفاصيلك الشخصية الأساسية المسجلة في النظام.",
+        "full_name": "الاسم الكامل",
+        "email": "البريد الإلكتروني",
+        "mobile": "رقم الجوال"
+      },
+      "account": {
+        "title": "معلومات الحساب",
+        "description": "تفاصيل عن عقاراتك ومحفظتك الرقمية.",
+        "properties_count": "العقارات المسجلة",
+        "wallet_balance": "رصيد المحفظة"
+      },
+      "actions": {
+        "notification_preferences": "تفضيلات الإشعارات",
+        "change_language": "تغيير اللغة",
+        "change_password": "تغيير كلمة المرور"
+      }
+    },
     "home": {
       "header": "لوحة تحكم المالك",
       "stats": {
@@ -664,7 +687,7 @@
       "title": "سحب الرصيد",
       "available_balance": "الرصيد المتاح",
       "amount_label": "المبلغ المراد سحبه",
-      "minimum": "الحد الأدنى للسحب {amount} SAR",
+      "minimum": "الحد الأدنى للسحب {amount} \u20C1",
       "choose_method": "اختر طريقة السحب",
       "bank_transfer": "تحويل بنكي (IBAN)",
       "bank_eta": "يصل خلال ٢٤-٤٨ ساعة عمل",
@@ -1166,7 +1189,7 @@
     "economic_parameters_71": "المعايير الاقتصادية",
     "platform_fee_72": "عمولة المنصة (%)",
     "percentage_taken_from_owner_earnings_73": "النسبة المئوية التي تأخذها المنصة من أرباح المالك.",
-    "binding_fee_sar_74": "رسوم الربط (SAR)",
+    "binding_fee_sar_74": "رسوم الربط (\u20C1)",
     "flat_fee_for_linking_a_tna_to_a_property_75": "الرسوم الثابتة لربط TNA بعنوان.",
     "eligibility_rules_76": "قواعد الأهلية",
     "autoapprove_if_visa_valid_77": "الموافقة التلقائية إذا كان التأشيرة صالحة",
@@ -1609,14 +1632,14 @@
     "wallet_balance": "المحفظة الرقمية",
     "available_balance": "الرصيد المتاح",
     "insufficient": "غير كافي",
-    "insufficient_funds": "تحتاج إلى مبلغ إضافي قدره SAR {amount} لإكمال هذه المعاملة.",
+    "insufficient_funds": "تحتاج إلى مبلغ إضافي قدره \u20C1 {amount} لإكمال هذه المعاملة.",
     "top_up": "شحن المحفظة",
-    "pay_amount": "دفع SAR {amount}",
+    "pay_amount": "دفع \u20C1 {amount}",
     "processing": "جاري المعالجة...",
     "pay": "دفع",
     "terms_notice": "بالنقر على دفع، فإنك توافق على شروط الخدمة وسياسة الاسترداد.",
     "top_up_title": "شحن المحفظة الرقمية",
-    "top_up_amount": "المبلغ المراد إضافته (SAR)",
+    "top_up_amount": "المبلغ المراد إضافته (\u20C1)",
     "select_payment_method": "اختر طريقة الدفع",
     "complete_top_up": "إكمال الشحن",
     "payment_success": "تم الدفع بنجاح!",

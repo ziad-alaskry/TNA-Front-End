@@ -113,7 +113,7 @@ export default function CarrierResolvePage() {
 
               <Button
                 type="submit"
-                className="w-full h-12 text-base font-bold shadow-glow-primary"
+                className="w-full h-12 text-base font-bold shadow-glow-primary gap-2"
                 disabled={!tnaCode.trim() || isLoading}
                 isLoading={isLoading}
               >

@@ -114,7 +114,7 @@ export default function VisitorTnaUnbindPage() {
                   </div>
                 ) : (
                   <Button 
-                    className="w-full py-4 shadow-glow-primary"
+                    className="w-full py-4 shadow-glow-primary gap-2"
                     onClick={handleUnbind}
                     isLoading={isUnbinding}
                     disabled={isUnbinding}
@@ -123,7 +123,7 @@ export default function VisitorTnaUnbindPage() {
                     {t('tna.detail.unbind')}
                   </Button>
                 )}
-                <Button variant="outline" className="w-full py-4">
+                <Button variant="outline" className="w-full py-4 gap-2">
                   <DotsThree size={20} weight="bold" />
                   {t('tna.detail.view_history')}
                 </Button>

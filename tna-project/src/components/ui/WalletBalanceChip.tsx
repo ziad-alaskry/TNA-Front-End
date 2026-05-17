@@ -4,6 +4,7 @@ import React from 'react';
 import { Wallet } from '@phosphor-icons/react';
 import { cn } from '@/lib/utils/cn';
 import { useLocale } from '@/i18n/LocaleProvider';
+import { CurrencySymbol } from './CurrencySymbol';
 
 interface WalletBalanceChipProps {
   balance: number;
@@ -14,7 +15,7 @@ interface WalletBalanceChipProps {
 
 export function WalletBalanceChip({ 
   balance, 
-  currency = 'SAR', 
+  currency = '\u20C1', 
   onClick, 
   className 
 }: WalletBalanceChipProps) {
@@ -36,7 +37,9 @@ export function WalletBalanceChip({
           {t('common.wallet_balance')}
         </span>
         <span className="text-sm leading-none font-bold text-primary tabular-nums">
-          {balance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <span className="text-[10px] opacity-70">{currency}</span>
+          {balance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <span className="text-[10px] opacity-70">
+            {currency === '\u20C1' || currency === 'SAR' ? <CurrencySymbol /> : currency}
+          </span>
         </span>
       </div>
     </div>

@@ -21,7 +21,7 @@
     "page_of": "Page {current} of {total}",
     "no_data": "No data found",
     "no_data_desc": "We couldn't find any records matching your criteria.",
-    "currency": "SAR",
+    "currency": "\u20C1",
     "goBack": "Go Back",
     "signOut": "Sign Out",
     "breadcrumbs": {
@@ -549,6 +549,29 @@
     "wallet": "Wallet"
   },
   "owner": {
+    "profile_page": {
+      "header": "Profile",
+      "title": "Profile Settings",
+      "member_since": "Owner • Member since 2025",
+      "personal_info": {
+        "title": "Personal Information",
+        "description": "Your basic personal details as registered in the system.",
+        "full_name": "Full Name",
+        "email": "Email",
+        "mobile": "Mobile Number"
+      },
+      "account": {
+        "title": "Account Information",
+        "description": "Details about your properties and digital wallet.",
+        "properties_count": "Registered Properties",
+        "wallet_balance": "Wallet Balance"
+      },
+      "actions": {
+        "notification_preferences": "Notification Preferences",
+        "change_language": "Change Language",
+        "change_password": "Change Password"
+      }
+    },
     "home": {
       "header": "Owner Dashboard",
       "stats": {
@@ -664,7 +687,7 @@
       "title": "Withdraw Balance",
       "available_balance": "Available Balance",
       "amount_label": "Amount to Withdraw",
-      "minimum": "Minimum withdrawal amount is {amount} SAR",
+      "minimum": "Minimum withdrawal amount is {amount} \u20C1",
       "choose_method": "Choose withdrawal method",
       "bank_transfer": "Bank Transfer (IBAN)",
       "bank_eta": "Arrives within 24-48 business hours",
@@ -1166,7 +1189,7 @@
     "economic_parameters_71": "Economic Parameters",
     "platform_fee_72": "Platform Fee (%)",
     "percentage_taken_from_owner_earnings_73": "Percentage taken from owner earnings.",
-    "binding_fee_sar_74": "Binding Fee (SAR)",
+    "binding_fee_sar_74": "Binding Fee (\u20C1)",
     "flat_fee_for_linking_a_tna_to_a_property_75": "Flat fee for linking a TNA to a property.",
     "eligibility_rules_76": "Eligibility Rules",
     "autoapprove_if_visa_valid_77": "Auto-Approve If Visa Valid",
@@ -1609,14 +1632,14 @@
     "wallet_balance": "Digital Wallet",
     "available_balance": "Available Balance",
     "insufficient": "INSUFFICIENT",
-    "insufficient_funds": "You need an additional SAR {amount} to complete this transaction.",
+    "insufficient_funds": "You need an additional \u20C1 {amount} to complete this transaction.",
     "top_up": "Top Up Wallet",
-    "pay_amount": "Pay SAR {amount}",
+    "pay_amount": "Pay \u20C1 {amount}",
     "processing": "Processing...",
     "pay": "Pay",
     "terms_notice": "By clicking Pay, you agree to our Terms of Service and Refund Policy.",
     "top_up_title": "Top Up Digital Wallet",
-    "top_up_amount": "Amount to Add (SAR)",
+    "top_up_amount": "Amount to Add (\u20C1)",
     "select_payment_method": "Select Payment Method",
     "complete_top_up": "Complete Top Up",
     "payment_success": "Payment Successful!",
@@ -1642,7 +1665,7 @@
     "cvv": "CVV",
     "cardholder_name": "Cardholder Name",
     "top_up": "Top Up Wallet",
-    "top_up_success": "{amount} SAR added to wallet",
+    "top_up_success": "{amount} \u20C1 added to wallet",
     "top_up_title": "Add Funds",
     "card_number_placeholder": "4111 1111 1111 1111",
     "expiry_placeholder": "MM/YY",
@@ -1667,7 +1690,7 @@
     "cvv": "CVV",
     "cardholder_name": "Cardholder Name",
     "top_up": "Top Up Wallet",
-    "top_up_success": "{amount} SAR added to wallet",
+    "top_up_success": "{amount} \u20C1 added to wallet",
     "top_up_title": "Add Funds",
     "card_number_placeholder": "4111 1111 1111 1111",
     "expiry_placeholder": "MM/YY",

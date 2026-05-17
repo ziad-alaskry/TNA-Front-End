@@ -259,7 +259,7 @@ function DeliveryConfirmationContent() {
             disabled={confirmDeliveryMutation.isPending || !otpCode.trim() || !photo}
             isLoading={confirmDeliveryMutation.isPending}
           >
-            <CheckCircle size={24} weight="fill" className={isRTL ? "rotate-180 ml-2" : "mr-2"} />
+            <CheckCircle size={24} weight="fill" />
             {t('carrier.confirm_delivery_80')}
           </Button>
 

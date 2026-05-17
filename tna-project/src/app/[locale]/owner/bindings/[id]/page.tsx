@@ -4,6 +4,7 @@ import React from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { AppShell } from '@/components/layout/AppShell'
 import { DetailViewLayout } from '@/components/templates/DetailViewLayout'
+import { CurrencySymbol } from '@/components/ui/CurrencySymbol'
 import { mockBindings, mockRentContracts, mockSubAddresses, mockProperties, mockUsers } from '@/lib/mock/index'
 import { useMock } from '@/lib/hooks/useMock'
 import { useLocale } from '@/i18n/LocaleProvider'
@@ -147,22 +148,22 @@ export default function BindingDetailPage() {
       items: [
         { 
           label: t('grossAmount'), 
-          value: `${gross_amount} SAR`,
+          value: <span className="flex items-center gap-1">{gross_amount} <CurrencySymbol /></span>,
           isHighlight: false
         },
         { 
           label: t('platformFee'), 
-          value: `${platform_fee_amount} SAR`,
+          value: <span className="flex items-center gap-1">{platform_fee_amount} <CurrencySymbol /></span>,
           isHighlight: false
         },
         { 
           label: t('authorityShare'), 
-          value: `${authority_share_amount} SAR`,
+          value: <span className="flex items-center gap-1">{authority_share_amount} <CurrencySymbol /></span>,
           isHighlight: false
         },
         { 
           label: t('netOwnerAmount'), 
-          value: `${net_owner_amount} SAR`,
+          value: <span className="flex items-center gap-1 text-primary">{net_owner_amount} <CurrencySymbol /></span>,
           isHighlight: true
         },
       ]
@@ -201,9 +202,9 @@ export default function BindingDetailPage() {
                 console.log('Approve binding:', id)
               }}
             >
-              <span className="flex items-center justify-between">
-                <span>{t('approve')}</span>
+              <span className="flex items-center gap-2">
                 <CheckCircle size={20} weight="bold" />
+                <span>{t('approve')}</span>
               </span>
             </Button>
             <Button 
@@ -213,9 +214,9 @@ export default function BindingDetailPage() {
                 console.log('Reject binding:', id)
               }}
             >
-              <span className="flex items-center justify-between">
-                <span>{t('reject')}</span>
+              <span className="flex items-center gap-2">
                 <XCircle size={20} weight="bold" />
+                <span>{t('reject')}</span>
               </span>
             </Button>
           </div>
@@ -233,9 +234,9 @@ export default function BindingDetailPage() {
                 console.log('Terminate binding:', id)
               }}
             >
-              <span className="flex items-center justify-between">
-                <span>{t('terminate')}</span>
+              <span className="flex items-center gap-2">
                 <XCircle size={20} weight="bold" />
+                <span>{t('terminate')}</span>
               </span>
             </Button>
           </div>

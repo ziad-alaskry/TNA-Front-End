@@ -79,7 +79,7 @@ export default function VisitorTnaDetailPage() {
               <div className="space-y-3">
                 {isUnlinked ? (
                   <Button 
-                    className="w-full py-4 shadow-glow-primary"
+                    className="w-full py-4 shadow-glow-primary gap-2"
                     onClick={() => router.push(`/${locale}/visitor/tnas/${id}/bind`)}
                   >
                     <LinkIcon size={20} weight="bold" />
@@ -87,13 +87,13 @@ export default function VisitorTnaDetailPage() {
                   </Button>
                 ) : (
                   <>
-                    <Button className="w-full py-4 shadow-glow-primary">
+                    <Button className="w-full py-4 shadow-glow-primary gap-2">
                       <IdentificationCard size={20} weight="bold" />
                       {t('tna.detail.digital_card')}
                     </Button>
                     <Button 
                       variant="outline"
-                      className="w-full py-4"
+                      className="w-full py-4 gap-2"
                       onClick={() => {/* TODO: Implement unbind with conflict check */}}
                     >
                       <DotsThree size={20} weight="bold" />

@@ -100,10 +100,10 @@ export default function VisitorHomeModule() {
               <div className="pt-4">
                 <Button 
                   onClick={slide.onClick}
-                  className="bg-white text-primary hover:bg-white/90 border-none px-8 py-6 text-lg font-black shadow-xl"
+                  className="bg-white text-primary hover:bg-white/90 border-none px-8 py-6 text-lg font-black shadow-xl gap-2"
                 >
                   {slide.cta}
-                  <ArrowRight size={20} className={cn("ml-2", isRTL && "rotate-180")} />
+                  <ArrowRight size={20} className={cn(isRTL && "rotate-180")} />
                 </Button>
               </div>
             </div>

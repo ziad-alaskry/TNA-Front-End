@@ -368,17 +368,13 @@ export default function ShipmentDetailPage() {
                 {t('carrier.quick_actions_30')}
               </h3>
               <div className="space-y-2">
-                <Button variant="outline" className="w-full justify-start">
-                  <Phone size={18} />
-                  {t('carrier.call_customer_31')}
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
+                <Button variant="outline" className="w-full justify-start gap-2">
                   <MapPin size={18} />
                   {t('carrier.open_in_maps_32')}
                 </Button>
                 {shipment.status === 'OUT_FOR_DELIVERY' && (
                   <Button 
-                    className="w-full justify-start bg-success text-white hover:bg-success/90"
+                    className="w-full justify-start bg-success text-white hover:bg-success/90 gap-2"
                     onClick={() => router.push(`/${locale}/carrier/driver/confirm?shipment=${shipmentId}`)}
                   >
                     <CheckCircle size={18} weight="fill" />

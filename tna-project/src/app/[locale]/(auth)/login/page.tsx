@@ -21,7 +21,7 @@ import {
 import type { User, UserRole } from "@/lib/types/auth";
 
 export default function LoginPage() {
-  const [role, setRole] = useState("owner");
+  const [role, setRole] = useState("visitor");
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const { locale, isRTL, t } = useLocale();
@@ -36,10 +36,10 @@ export default function LoginPage() {
   };
 
   const roles = [
-    { id: "owner", label: t("auth.login.role_owner"), icon: House },
-    { id: "carrier", label: t("auth.login.role_carrier"), icon: Truck },
-    { id: "gov", label: t("auth.login.role_gov"), icon: Buildings },
     { id: "visitor", label: t("auth.login.role_visitor"), icon: UserIcon },
+    { id: "owner", label: t("auth.login.role_owner"), icon: House },
+    { id: "gov", label: t("auth.login.role_gov"), icon: Buildings },
+    { id: "carrier", label: t("auth.login.role_carrier"), icon: Truck },
   ];
 
   const currentRoleLabel = roles.find((r) => r.id === role)?.label || "";

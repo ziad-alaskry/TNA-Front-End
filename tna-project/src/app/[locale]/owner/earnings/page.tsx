@@ -128,7 +128,7 @@ export default function OwnerEarningsPage() {
                         </h3>
                         <div className="flex gap-2">
                             {(['day', 'week', 'month', 'year'] as const).map(v => (
-                                <button key={v} className={`px-3 py-1 rounded text-[10px] font-bold transition-all ${v === 'week' ? 'bg-primary text-white' : 'text-neutral-600 hover:text-neutral-900'}`}>{t(`owner.earnings_page.periods.${v}`)}</button>
+                                <button key={v} className={`px-3 py-1 rounded-pill text-[10px] font-bold transition-all ${v === 'week' ? 'bg-primary text-white hover:opacity-90' : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100'}`}>{t(`owner.earnings_page.periods.${v}`)}</button>
                             ))}
                         </div>
                     </div>

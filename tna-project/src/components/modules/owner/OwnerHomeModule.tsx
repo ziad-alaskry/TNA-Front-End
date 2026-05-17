@@ -74,7 +74,7 @@ export default function OwnerHomeModule() {
               <div className="pt-2">
                 <Button 
                   onClick={() => router.push(`/${locale}/owner/properties`)}
-                  className="bg-white text-primary-dark hover:bg-neutral-100 border-none px-8 py-4 font-bold shadow-xl"
+                  className="bg-white text-primary-dark hover:bg-neutral-100 border-none px-8 py-4 font-bold shadow-xl gap-2"
                 >
                   <PlusCircle size={20} weight="fill" />
                   {t('owner.home.banner.cta')}

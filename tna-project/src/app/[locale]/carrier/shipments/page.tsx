@@ -74,11 +74,11 @@ export default function CarrierShipmentsPage() {
                 isLoading={isLoading}
                 actions={
                   <div className="flex gap-3">
-                    <Button variant="outline" className="border-neutral-200" onClick={() => router.push(`/${locale}/carrier/resolve`)}>
+                    <Button variant="outline" className="border-neutral-200 gap-2" onClick={() => router.push(`/${locale}/carrier/resolve`)}>
                       <MapPin size={20} weight="bold" />
                       {t('carrier.resolve_tna_5')}
                     </Button>
-                    <Button className="shadow-glow-primary" onClick={() => router.push(`/${locale}/carrier/shipments/new`)}>
+                    <Button className="shadow-glow-primary gap-2" onClick={() => router.push(`/${locale}/carrier/shipments/new`)}>
                       <Plus size={20} weight="bold" />
                       {t('carrier.new_shipment_6')}
                     </Button>

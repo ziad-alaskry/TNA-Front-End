@@ -120,11 +120,11 @@ export default function PropertyDetailPage() {
             <div className="p-6 bg-white rounded-3xl border border-neutral-200 shadow-sm space-y-4">
                 <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest">Management</h3>
                 <div className="space-y-3">
-                    <Button className="w-full py-4 shadow-glow-primary">
+                    <Button className="w-full py-4 shadow-glow-primary gap-2">
                         <PlusCircle size={20} weight="bold" />
                         Add Sub-unit
                     </Button>
-                    <Button variant="outline" className="w-full py-4 border-neutral-200">
+                    <Button variant="outline" className="w-full py-4 border-neutral-200 gap-2">
                         <CheckCircle size={20} weight="bold" />
                         Verify Ownership
                     </Button>

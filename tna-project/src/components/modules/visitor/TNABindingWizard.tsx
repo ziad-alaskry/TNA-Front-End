@@ -243,10 +243,10 @@ export default function TNABindingWizard() {
               <Button 
                 onClick={() => setStep(2)}
                 disabled={!selectedProperty}
-                className="px-8"
+                className="px-8 gap-2"
               >
                 {t('common.next')}
-                <ArrowRight className={cn("ml-2", isRTL && "rotate-180")} />
+                <ArrowRight className={cn(isRTL && "rotate-180")} />
               </Button>
             </div>
           </div>
@@ -373,8 +373,9 @@ export default function TNABindingWizard() {
               <Button 
                 variant="outline"
                 onClick={() => setStep(1)}
+                className="gap-2"
               >
-                <ArrowLeft className={cn("mr-2", isRTL && "rotate-180")} />
+                <ArrowLeft className={cn(isRTL && "rotate-180")} />
                 {t('common.back')}
               </Button>
               <Button 
@@ -498,8 +499,9 @@ export default function TNABindingWizard() {
                 variant="outline"
                 onClick={() => setStep(2)}
                 disabled={submitting}
+                className="gap-2"
               >
-                <ArrowLeft className={cn("mr-2", isRTL && "rotate-180")} />
+                <ArrowLeft className={cn(isRTL && "rotate-180")} />
                 {t('common.back')}
               </Button>
               <Button 

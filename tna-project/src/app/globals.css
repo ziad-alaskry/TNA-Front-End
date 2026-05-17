@@ -73,8 +73,8 @@
   --text-caption:             #4B5563;
 
   /* ─── TYPOGRAPHY ─── */
-  --font-arabic:    'Rubik', sans-serif;
-  --font-english:   'Rubik', sans-serif;
+  --font-arabic:    'Rubik', 'SaudiRiyal', sans-serif;
+  --font-english:   'Rubik', 'SaudiRiyal', sans-serif;
   --font-mono:      'JetBrains Mono', monospace;
 
   /* ─── FONT SIZES ─── */
@@ -279,6 +279,15 @@
   .ui-dark-surface-deep {
     background: var(--primitive-navy-dark);
     color: var(--color-white);
+  }
+
+  .saudi-riyal-symbol {
+    font-family: 'SaudiRiyal', sans-serif !important;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: none;
+    line-height: 1;
+    display: inline-block;
   }
 
   .ui-content-container {
