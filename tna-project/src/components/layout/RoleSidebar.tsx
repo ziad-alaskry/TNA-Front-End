@@ -112,8 +112,7 @@ export function SidebarContent({ role, collapsed = false }: SidebarProps) {
                />
              </div>
              <div className="flex flex-col">
-               <span className="font-bold text-white text-lg leading-none tracking-tight">TNA</span>
-               <span className="text-xs text-white/70 mt-0.5 uppercase font-semibold tracking-wide">{role}</span>
+               <span className="font-bold text-white text-[17px] leading-none tracking-tight">استدلال</span>
              </div>
            </div>
          )}

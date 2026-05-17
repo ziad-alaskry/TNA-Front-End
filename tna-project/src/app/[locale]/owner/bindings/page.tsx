@@ -84,7 +84,7 @@ export default function OwnerBindingsPage() {
                         <>
                             <Button 
                                 size="sm" 
-                                className="h-8 px-3 text-[10px] bg-success/10 text-success hover:bg-success/20"
+                                className="h-8 px-4 text-[10px]"
                                 onClick={() => {
                                     console.log('Approve binding:', id);
                             }}
@@ -94,7 +94,7 @@ export default function OwnerBindingsPage() {
                             <Button 
                                 size="sm" 
                                 variant="outline" 
-                                className="h-8 px-3 text-[10px] border-neutral-200"
+                                className="h-8 px-4 text-[10px] border-neutral-200"
                                 onClick={() => {
                                     console.log('Reject binding:', id);
                             }}
