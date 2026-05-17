@@ -22,6 +22,7 @@ import {
     SignOut
 } from '@phosphor-icons/react'
 import Image from 'next/image'
+import logoBlack from '@/assets/logo-black.png'
 import { useLocale } from '@/i18n/LocaleProvider'
 import { useAuthStore } from '@/lib/store/useAuthStore'
 import { cn } from '@/lib/utils/cn'
@@ -103,7 +104,7 @@ export function SidebarContent({ role, collapsed = false }: SidebarProps) {
            <div className="flex items-center gap-4">
              <div className="h-12 w-12 flex items-center justify-center">
                <Image
-                 src="/brand/logo-clean.svg"
+                 src={logoBlack}
                  alt="TNA Logo"
                  width={44}
                  height={44}
