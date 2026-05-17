@@ -93,29 +93,29 @@ export function SidebarContent({ role, collapsed = false }: SidebarProps) {
     <div className="flex h-full flex-col text-start font-english">
        <div
          className={cn(
-           "border-b border-white/20 bg-gradient-to-r from-primary to-primary-dark",
+           "border-b transition-colors",
            collapsed
-             ? "flex h-[var(--navbar-height)] items-center justify-center px-2"
-             : "flex min-h-28 items-center px-4"
+             ? "flex h-[var(--navbar-height)] items-center justify-center px-2 bg-white border-transparent"
+             : "flex min-h-28 items-center px-4 bg-gradient-to-r from-primary to-primary-dark border-white/20"
          )}
        >
-         <div className={cn("flex items-center", collapsed ? "justify-center" : "gap-4")}>
-           <div className="h-12 w-12 flex items-center justify-center">
-             <Image
-               src="/brand/logo-clean.svg"
-               alt="TNA Logo"
-               width={44}
-               height={44}
-               className="drop-shadow-sm"
-             />
-           </div>
-           {!collapsed && (
+         {!collapsed && (
+           <div className="flex items-center gap-4">
+             <div className="h-12 w-12 flex items-center justify-center">
+               <Image
+                 src="/brand/logo-clean.svg"
+                 alt="TNA Logo"
+                 width={44}
+                 height={44}
+                 className="drop-shadow-sm"
+               />
+             </div>
              <div className="flex flex-col">
                <span className="font-bold text-white text-lg leading-none tracking-tight">TNA</span>
                <span className="text-xs text-white/70 mt-0.5 uppercase font-semibold tracking-wide">{role}</span>
              </div>
-           )}
-         </div>
+           </div>
+         )}
        </div>
        
        {/* Navigation Menu */}

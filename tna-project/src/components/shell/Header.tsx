@@ -79,10 +79,7 @@ export default function Header({
        >
           {/* Main Header Container */}
           <div
-            className="h-full flex items-center justify-between px-[var(--space-4)] md:px-[var(--space-5)] lg:px-[var(--space-6)] transition-[padding] duration-300 ease-in-out"
-            style={desktopSidebarWidth ? {
-              [isRTL ? 'paddingRight' : 'paddingLeft']: `calc(${desktopSidebarWidth}px + var(--space-5))`
-            } : undefined}
+            className="h-full flex items-center justify-between pe-[var(--space-4)] md:pe-[var(--space-5)] lg:pe-[var(--space-6)] ps-2 transition-[padding] duration-300 ease-in-out"
           >
             
             {/* Section: Page Identity & Navigation Controls */}

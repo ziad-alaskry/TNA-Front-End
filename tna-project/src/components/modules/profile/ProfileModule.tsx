@@ -62,7 +62,7 @@ export function ProfileModule({ role }: ProfileModuleProps) {
         
         {/* KYC Status (Visitor only) */}
         {role === 'Visitor' && (
-          <div className="p-4 rounded-lg border border-neutral-200 bg-surface-50">
+          <div className="p-4 rounded-lg border border-neutral-200 bg-white shadow-sm">
             <div className="flex items-center gap-2 mb-2">
               <ShieldCheck size={20} className="text-success" weight="fill" />
               <h3 className="font-semibold text-neutral-900">{t('profile.kycStatus.title')}</h3>
@@ -73,7 +73,7 @@ export function ProfileModule({ role }: ProfileModuleProps) {
 
         {/* Wallet Balance (Visitor & Owner) */}
         {(role === 'Visitor' || role === 'Owner') && (
-          <div className="p-4 rounded-lg border border-neutral-200 bg-surface-50">
+          <div className="p-4 rounded-lg border border-neutral-200 bg-white shadow-sm">
             <div className="flex items-center gap-2 mb-2">
               <Wallet size={20} className="text-primary" />
               <h3 className="font-semibold text-neutral-900">{t('profile.wallet.title')}</h3>
@@ -85,7 +85,7 @@ export function ProfileModule({ role }: ProfileModuleProps) {
 
         {/* Properties Count (Owner only) */}
         {role === 'Owner' && (
-          <div className="p-4 rounded-lg border border-neutral-200 bg-surface-50">
+          <div className="p-4 rounded-lg border border-neutral-200 bg-white shadow-sm">
             <div className="flex items-center gap-2 mb-2">
               <Building size={20} className="text-emerald-600" />
               <h3 className="font-semibold text-neutral-900">{t('profile.properties.title')}</h3>
@@ -97,7 +97,7 @@ export function ProfileModule({ role }: ProfileModuleProps) {
 
         {/* Fleet Size (Carrier only) */}
         {role === 'Carrier' && (
-          <div className="p-4 rounded-lg border border-neutral-200 bg-surface-50">
+          <div className="p-4 rounded-lg border border-neutral-200 bg-white shadow-sm">
             <div className="flex items-center gap-2 mb-2">
               <Truck size={20} className="text-amber-600" />
               <h3 className="font-semibold text-neutral-900">{t('profile.fleet.title')}</h3>
@@ -109,7 +109,7 @@ export function ProfileModule({ role }: ProfileModuleProps) {
 
         {/* Department (Gov only) */}
         {role === 'Gov' && (
-          <div className="p-4 rounded-lg border border-neutral-200 bg-surface-50">
+          <div className="p-4 rounded-lg border border-neutral-200 bg-white shadow-sm">
             <div className="flex items-center gap-2 mb-2">
               <Bank size={20} className="text-purple-600" />
               <h3 className="font-semibold text-neutral-900">{t('profile.department.title')}</h3>
