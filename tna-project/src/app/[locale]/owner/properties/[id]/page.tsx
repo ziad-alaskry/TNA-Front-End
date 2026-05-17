@@ -1,27 +1,24 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { AppShell } from '@/components/layout/AppShell'
 import { DetailViewLayout } from '@/components/templates/DetailViewLayout'
-import { 
-    Buildings, 
-    MapPin, 
-    CheckCircle, 
-    PlusCircle,
-    Info,
-    Door,
-    IdentificationCard,
-    Link as LinkIcon
-} from '@phosphor-icons/react'
+import Modal from '@/components/ui/Modal'
+import { PlusCircle, CheckCircle, Info, Door } from '@phosphor-icons/react'
 import { useParams, useRouter } from 'next/navigation'
 import { mockProperties, mockSubAddresses } from '@/lib/mock/properties.mock'
-import { mockBindings } from '@/lib/mock/bindings.mock'
 import { useLocale } from '@/i18n/LocaleProvider'
 import { useMock } from '@/lib/hooks/useMock'
 import Button from '@/components/ui/Button'
 import { cn } from '@/lib/utils/cn'
 import DataTableLayout, { DataTableColumn } from '@/components/templates/DataTableLayout'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
+import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import { subAddressesApi } from '@/lib/api/subAddresses'
+import InputField from '@/components/ui/InputField'
+import Textarea from '@/components/ui/Textarea'
 
 export default function PropertyDetailPage() {
     const { id } = useParams();
@@ -33,6 +30,47 @@ export default function PropertyDetailPage() {
 
     const property = properties?.find(p => p.na_id === id);
     const units = subAddresses?.filter(s => s.na_id === id) || [];
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const subUnitSchema = z.object({
+      suffix_code: z.string().length(4, 'Must be exactly 4 characters'),
+      description: z.string().optional().or(z.literal('')),
+    });
+
+    type SubUnitInputs = z.infer<typeof subUnitSchema>;
+
+    const methods = useForm<SubUnitInputs>({
+      resolver: zodResolver(subUnitSchema),
+    });
+
+    const onSubmit: SubmitHandler<SubUnitInputs> = async (data) => {
+      const isDuplicate = units.some(
+        (u: any) => u.suffix_code.toUpperCase() === data.suffix_code.toUpperCase()
+      );
+
+      if (isDuplicate) {
+        methods.setError('suffix_code', {
+          type: 'validate',
+          message: 'Suffix code already exists for this property',
+        });
+        return;
+      }
+
+      try {
+        await subAddressesApi.createSubAddress(na_id, {
+          suffix_code: data.suffix_code,
+          description: data.description,
+          is_verified: false,
+          is_available: true,
+        });
+        methods.reset();
+        setIsModalOpen(false);
+        window.location.reload();
+      } catch (err) {
+        console.error('Failed to create sub-unit:', err);
+      }
+    };
 
     if (propLoading || unitsLoading) return <div className="p-12 text-center">Loading property details...</div>;
     if (!property) return <div className="p-12 text-center text-error">Property not found</div>;
@@ -120,7 +158,7 @@ export default function PropertyDetailPage() {
             <div className="p-6 bg-white rounded-3xl border border-neutral-200 shadow-sm space-y-4">
                 <h3 className="text-xs font-black text-neutral-400 uppercase tracking-widest">Management</h3>
                 <div className="space-y-3">
-                    <Button className="w-full py-4 shadow-glow-primary gap-2">
+                    <Button className="w-full py-4 shadow-glow-primary gap-2" onClick={() => setIsModalOpen(true)}>
                         <PlusCircle size={20} weight="bold" />
                         Add Sub-unit
                     </Button>
@@ -168,6 +206,32 @@ export default function PropertyDetailPage() {
                     />
                 </div>
             )}
+
+            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Add Sub-unit">
+                <FormProvider {...methods}>
+                    <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4">
+                        <InputField
+                            label="Sub-unit code"
+                            helperText="4 characters identifying the unit (e.g. R101)"
+                            maxLength={4}
+                            {...methods.register('suffix_code')}
+                        />
+                        <Textarea
+                            label="Description"
+                            helperText="Optional (Room, Apartment, Suite...) "
+                            {...methods.register('description')}
+                        />
+                        <div className="flex justify-end gap-2 pt-2">
+                            <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)}>
+                                Cancel
+                            </Button>
+                            <Button type="submit" className="w-48">
+                                Create Unit
+                            </Button>
+                        </div>
+                    </form>
+                </FormProvider>
+            </Modal>
         </AppShell>
     );
 }

@@ -71,8 +71,9 @@ export default function OwnerHomeModule() {
         <div className="lg:col-span-2 space-y-8">
           
           {/* ACTION BANNER */}
-          <section className="relative overflow-hidden rounded-3xl bg-primary-dark text-white p-8 md:p-10 shadow-2xl">
-            <div className="relative z-10 space-y-4 max-w-md">
+          <section className="relative overflow-hidden rounded-3xl p-8 md:p-10 shadow-2xl" style={{ backgroundImage: 'url(/ownerBanner/ownerBanner.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+            <div className="absolute inset-0 bg-primary-dark/70" />
+            <div className="relative z-10 space-y-4 max-w-md text-white">
               <h2 className="text-3xl font-black tracking-tight leading-tight">{t('owner.home.banner.title')}</h2>
               <p className="text-white/70 text-sm md:text-base">{t('owner.home.banner.description')}</p>
               <div className="pt-2">

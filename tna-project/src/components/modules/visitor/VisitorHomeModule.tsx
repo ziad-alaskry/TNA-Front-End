@@ -43,24 +43,21 @@ export default function VisitorHomeModule() {
       desc: t('visitor.home.slides.proxy.desc'),
       cta: t('visitor.home.slides.proxy.cta'),
       onClick: () => router.push(`/${locale}/visitor/tna/new`),
-      image: "/brand/banner-1.jpg",
-      color: "bg-primary"
+      image: "/visitorBanners/firstb.png",
     },
     {
       title: t('visitor.home.slides.secure.title'),
       desc: t('visitor.home.slides.secure.desc'),
       cta: t('visitor.home.slides.secure.cta'),
       onClick: () => router.push(`/${locale}/visitor/search`),
-      image: "/brand/banner-2.jpg",
-      color: "bg-primary-dark"
+      image: "/visitorBanners/secondb.png",
     },
     {
       title: t('visitor.home.slides.instant.title'),
       desc: t('visitor.home.slides.instant.desc'),
       cta: t('visitor.home.slides.instant.cta'),
       onClick: () => router.push(`/${locale}/visitor/tna/new`),
-      image: "/brand/banner-3.jpg",
-      color: "bg-secondary"
+      image: "/visitorBanners/thirdB.png",
     }
   ];
 
@@ -80,21 +77,22 @@ export default function VisitorHomeModule() {
             key={i}
             className={cn(
               "absolute inset-0 transition-all duration-1000 ease-in-out flex items-center p-8 md:p-12",
-              slide.color,
               activeSlide === i ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full"
             )}
           >
-            {/* Mock background pattern */}
-            <div className="absolute inset-0 opacity-10 pointer-events-none">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full -mr-32 -mt-32 blur-3xl" />
-              <div className="absolute bottom-0 left-0 w-48 h-48 bg-white rounded-full -ml-24 -mb-24 blur-2xl" />
-            </div>
+            <img 
+                src={slide.image} 
+                alt={slide.title} 
+                className="absolute inset-0 w-full h-full object-cover" 
+            />
+            {/* Dark overlay for text readability */}
+            <div className="absolute inset-0 bg-black/40" />
 
             <div className="relative z-10 max-w-lg space-y-4">
               <h1 className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tighter">
                 {slide.title}
               </h1>
-              <p className="text-white/80 text-sm md:text-lg font-medium leading-relaxed">
+              <p className="text-white text-sm md:text-lg font-medium leading-relaxed">
                 {slide.desc}
               </p>
               <div className="pt-4">

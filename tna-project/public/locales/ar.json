@@ -360,8 +360,8 @@
         }
       },
       "stats": {
-        "active_tnas": "عناوين TNA النشطة",
-        "shipments": "الشحنات"
+        "active_tnas": "رموز العناوين المؤقتة",
+        "shipments": "الشحنات المنتظرة"
       }
     },
     "shipments": {

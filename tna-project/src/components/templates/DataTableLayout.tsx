@@ -24,6 +24,7 @@ interface DataTableLayoutProps<T extends Record<string, any>> {
   onFilter?: (filters: Record<string, any>) => void
   onRowClick?: (row: T) => void
   actions?: ReactNode
+  filterComponent?: ReactNode
   pageSize?: number
   isLoading?: boolean
   children?: ReactNode
@@ -47,6 +48,7 @@ export default function DataTableLayout<T extends Record<string, any>>({
   onFilter,
   onRowClick,
   actions,
+  filterComponent,
   pageSize = 10,
   isLoading = false,
   children,
@@ -76,92 +78,98 @@ export default function DataTableLayout<T extends Record<string, any>>({
             {t('common.total_records').replace('{count}', String(data.length))}
           </p>
         </div>
-        
-        {/* Actions/Filters */}
+
+        {/* Actions */}
         <div className="flex flex-wrap items-center gap-3">
-            {actions}
-            <div className="relative min-w-[240px]">
-                <MagnifyingGlass
-                    size={20}
-                    className="pointer-events-none absolute start-4 top-1/2 -translate-y-1/2 text-neutral-400"
-                />
-                <input
-                    type="text"
-                    placeholder={t('common.search_placeholder')}
-                    value={searchQuery}
-                    onChange={(e) => handleSearch(e.target.value)}
-                    className="w-full h-11 rounded-sm border border-neutral-200 bg-surface ps-12 pe-4 text-body text-neutral-900 placeholder-neutral-400 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all outline-none shadow-sm"
-                />
-            </div>
-            {children}
+          {actions}
+          <div className="relative min-w-[240px]">
+            <MagnifyingGlass
+              size={20}
+              className="pointer-events-none absolute start-4 top-1/2 -translate-y-1/2 text-neutral-400"
+            />
+            <input
+              type="text"
+              placeholder={t('common.search_placeholder')}
+              value={searchQuery}
+              onChange={(e) => handleSearch(e.target.value)}
+              className="w-full h-11 rounded-sm border border-neutral-200 bg-surface ps-12 pe-4 text-body text-neutral-900 placeholder-neutral-400 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all outline-none shadow-sm"
+            />
+          </div>
+          {children}
         </div>
       </div>
 
-       {/* TABLE CONTAINER */}
-       <div className="overflow-hidden rounded-md border border-neutral-200 bg-surface shadow-md">
-         <div className="w-full overflow-x-auto no-scrollbar">
-           <table className="w-full text-start border-collapse table-fixed">
-             <thead>
-               <tr className="border-b border-neutral-200 bg-neutral-50/50">
-                 {columns.map((col) => (
-                   <th
-                     key={String(col.key)}
-                     className="px-3 py-2 text-start text-[10px] font-bold uppercase text-neutral-500 tracking-wider whitespace-nowrap"
-                     style={{ width: col.width }}
-                   >
-                     <div className="flex items-center gap-1.5">
-                         {col.label}
-                         {col.sortable && (
-                         <ArrowsDownUp size={12} weight="bold" className="text-neutral-400" />
-                         )}
-                     </div>
-                   </th>
-                 ))}
-               </tr>
-             </thead>
-             <tbody className="divide-y divide-neutral-100">
-               {isLoading ? (
-                 Array.from({ length: 5 }).map((_, i) => (
-                     <SkeletonTableRow key={i} cols={columns.length} />
-                 ))
-               ) : paginatedData.length === 0 ? (
-                 <tr>
-                   <td colSpan={columns.length} className="px-6 py-16">
-                     <EmptyState 
-                         compact 
-                         title={emptyState?.title || t('common.no_data')} 
-                         description={emptyState?.description || t('common.no_data_desc') || 'No records found matching your criteria.'}
-                         cta={emptyState?.cta}
-                         onCtaClick={emptyState?.onCtaClick}
-                     />
-                   </td>
-                 </tr>
-               ) : (
-                 paginatedData.map((row, idx) => (
-                   <tr
-                     key={idx}
-                     onClick={() => onRowClick?.(row)}
-                     className={cn(
-                         "transition-all duration-200 hover:bg-neutral-50/80 group",
-                         onRowClick && 'cursor-pointer'
-                     )}
-                   >
-                     {columns.map((col) => (
-                       <td
-                         key={String(col.key)}
-                         className="px-3 py-2 text-sm text-neutral-700 group-hover:text-neutral-900"
-                       >
-                         {col.render
-                           ? col.render(row[col.key], row)
-                           : row[col.key]}
-                       </td>
-                     ))}
-                   </tr>
-                 ))
-               )}
-             </tbody>
-           </table>
-         </div>
+      {filterComponent && (
+        <div className="border-t border-neutral-100 pt-4">
+          {filterComponent}
+        </div>
+      )}
+
+      {/* TABLE CONTAINER */}
+      <div className="overflow-hidden rounded-md border border-neutral-200 bg-surface shadow-md">
+        <div className="w-full overflow-x-auto no-scrollbar">
+          <table className="w-full text-start border-collapse table-fixed">
+            <thead>
+              <tr className="border-b border-neutral-200 bg-neutral-50/50">
+                {columns.map((col) => (
+                  <th
+                    key={String(col.key)}
+                    className="px-3 py-2 text-start text-[10px] font-bold uppercase text-neutral-500 tracking-wider whitespace-nowrap"
+                    style={{ width: col.width }}
+                  >
+                    <div className="flex items-center gap-1.5">
+                      {col.label}
+                      {col.sortable && (
+                        <ArrowsDownUp size={12} weight="bold" className="text-neutral-400" />
+                      )}
+                    </div>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-neutral-100">
+              {isLoading ? (
+                Array.from({ length: 5 }).map((_, i) => (
+                  <SkeletonTableRow key={i} cols={columns.length} />
+                ))
+              ) : paginatedData.length === 0 ? (
+                <tr>
+                  <td colSpan={columns.length} className="px-6 py-16">
+                    <EmptyState
+                      compact
+                      title={emptyState?.title || t('common.no_data')}
+                      description={emptyState?.description || t('common.no_data_desc') || 'No records found matching your criteria.'}
+                      cta={emptyState?.cta}
+                      onCtaClick={emptyState?.onCtaClick}
+                    />
+                  </td>
+                </tr>
+              ) : (
+                paginatedData.map((row, idx) => (
+                  <tr
+                    key={idx}
+                    onClick={() => onRowClick?.(row)}
+                    className={cn(
+                      "transition-all duration-200 hover:bg-neutral-50/80 group",
+                      onRowClick && 'cursor-pointer'
+                    )}
+                  >
+                    {columns.map((col) => (
+                      <td
+                        key={String(col.key)}
+                        className="px-3 py-2 text-sm text-neutral-700 group-hover:text-neutral-900"
+                      >
+                        {col.render
+                          ? col.render(row[col.key], row)
+                          : row[col.key]}
+                      </td>
+                    ))}
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
 
         {/* PAGINATION FOOTER */}
         {totalPages > 1 && (
@@ -178,20 +186,20 @@ export default function DataTableLayout<T extends Record<string, any>>({
                 className="flex items-center justify-center h-10 w-10 rounded-sm border border-neutral-200 bg-white text-neutral-600 hover:bg-neutral-100 disabled:opacity-30 disabled:hover:bg-white transition-all shadow-sm"
               >
                 <MirrorIcon>
-                    <CaretLeft size={18} weight="bold" />
+                  <CaretLeft size={18} weight="bold" />
                 </MirrorIcon>
               </button>
-              
+
               <div className="flex px-1 gap-1">
-                  {[...Array(totalPages)].map((_, i) => (
-                      <div 
-                        key={i} 
-                        className={cn(
-                            "h-1.5 rounded-full transition-all duration-300",
-                            currentPage === i + 1 ? "w-4 bg-primary" : "w-1.5 bg-neutral-200"
-                        )}
-                      />
-                  ))}
+                {[...Array(totalPages)].map((_, i) => (
+                  <div
+                    key={i}
+                    className={cn(
+                      "h-1.5 rounded-full transition-all duration-300",
+                      currentPage === i + 1 ? "w-4 bg-primary" : "w-1.5 bg-neutral-200"
+                    )}
+                  />
+                ))}
               </div>
 
               <button
@@ -200,7 +208,7 @@ export default function DataTableLayout<T extends Record<string, any>>({
                 className="flex items-center justify-center h-10 w-10 rounded-sm border border-neutral-200 bg-white text-neutral-600 hover:bg-neutral-100 disabled:opacity-30 disabled:hover:bg-white transition-all shadow-sm"
               >
                 <MirrorIcon>
-                    <CaretRight size={18} weight="bold" />
+                  <CaretRight size={18} weight="bold" />
                 </MirrorIcon>
               </button>
             </div>

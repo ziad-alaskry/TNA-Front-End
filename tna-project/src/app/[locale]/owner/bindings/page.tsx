@@ -9,6 +9,7 @@ import { mockBindings } from '@/lib/mock/bindings.mock'
 import { useMock } from '@/lib/hooks/useMock'
 import Button from '@/components/ui/Button'
 import { cn } from '@/lib/utils/cn'
+import { Funnel } from '@phosphor-icons/react'
 
 export default function OwnerBindingsPage() {
     const router = useRouter();
@@ -136,25 +137,29 @@ export default function OwnerBindingsPage() {
 
     return (
         <AppShell role="Owner" header={t('owner.bindings_page.header')}>
-            <div className="mt-6 flex flex-wrap gap-3">
-                {[ 'all', 'PENDING', 'ACTIVE', 'COMPLETED', 'TERMINATED' ].map((status) => (
-                    <Button
-                        key={status}
-                        className={`px-4 py-2 text-sm ${filter === status ? 
-                            'bg-primary/10 text-primary border-primary' : 
-                            'bg-neutral-50 text-neutral-600 border-neutral-200'}`}
-                        onClick={() => setFilter(status as any)}
-                    >
-                        {filterLabel(status as typeof filter)}
-                    </Button>
-                ))}
-            </div>
-            
             <DataTableLayout
                 title={t('owner.bindings_page.title')}
                 columns={columns}
                 data={filteredBindings || []}
                 isLoading={isLoading}
+                filterComponent={
+                    <div className="flex items-center gap-3">
+                        <Funnel size={20} className="text-neutral-400" />
+                        <div className="flex gap-2">
+                            {[ 'all', 'PENDING', 'ACTIVE', 'COMPLETED', 'TERMINATED' ].map((status) => (
+                                <Button
+                                    key={status}
+                                    size="sm"
+                                    variant={filter === status ? "primary" : "outline"}
+                                    onClick={() => setFilter(status as any)}
+                                    className="px-4"
+                                >
+                                    {filterLabel(status as typeof filter)}
+                                </Button>
+                            ))}
+                        </div>
+                    </div>
+                }
                 emptyState={{
                     title: filter === 'all'
                         ? t('owner.bindings_page.empty.no_bindings')
