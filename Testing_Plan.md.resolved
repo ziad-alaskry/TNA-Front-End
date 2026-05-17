@@ -219,7 +219,7 @@ Custom assertions implemented in `tests/e2e/assertions/`:
 // Reusable assertions that verify design system compliance
 async expectSPATIALTheme(page: Page) {
   // Verify CSS variables are loaded (--color-primary: #2196C9)
-  // Verify font-family includes 'Rubik' or 'IBM Plex Sans Arabic'
+  // Verify font-family includes 'Rubik' (Unified typography)
   // Verify no raw browser-default fonts
   // Verify primary gradient exists on CTA buttons
 }

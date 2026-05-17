@@ -92,7 +92,7 @@ module.exports = {
             },
             fontFamily: {
                 sans:    ['Rubik', 'sans-serif'],
-                arabic:  ['"IBM Plex Sans Arabic"', 'sans-serif'],
+                arabic:  ['Rubik', 'sans-serif'],
                 english: ['Rubik', 'sans-serif'],
                 mono:    ['var(--font-mono)', 'monospace'],
             },

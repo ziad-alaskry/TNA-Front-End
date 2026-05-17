@@ -10,7 +10,10 @@
         "test": "vitest",
         "test:e2e": "playwright test",
         "test:e2e:ui": "playwright test --ui",
-        "test:e2e:report": "playwright show-report"
+        "test:e2e:report": "playwright show-report",
+        "test:vrt": "playwright test tests/visual",
+        "test:vrt:update": "playwright test tests/visual --update-snapshots",
+        "test:vrt:ui": "playwright test tests/visual --ui"
     },
     "dependencies": {
         "@hookform/resolvers": "^5.2.2",

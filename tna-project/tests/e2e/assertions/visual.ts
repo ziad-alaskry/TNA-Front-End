@@ -15,19 +15,17 @@ export async function expectSPATIALTheme(page: Page): Promise<void> {
   });
   expect(primaryColor).toBe('#2196C9');
 
-  // Check font families contain expected fonts (Rubik or IBM Plex Sans Arabic)
+  // Check font families contain expected font (Rubik)
   const fontFamily = await page.evaluate(() => {
     return getComputedStyle(document.body).fontFamily;
   });
   const lowerFontFamily = fontFamily.toLowerCase();
-  const hasExpectedFont = lowerFontFamily.includes('rubik') ||
-                          lowerFontFamily.includes('ibm plex') ||
-                          lowerFontFamily.includes('ibm plex sans arabic');
+  const hasExpectedFont = lowerFontFamily.includes('rubik');
   expect(hasExpectedFont).toBe(true);
 
-  // Ensure the primary font (first in stack) is a custom font, not a raw browser default
+  // Ensure the primary font (first in stack) is Rubik
   const primaryFont = fontFamily.split(',')[0].trim().toLowerCase();
-  const isPrimaryCustom = primaryFont.includes('rubik') || primaryFont.includes('ibm plex');
+  const isPrimaryCustom = primaryFont.includes('rubik');
   expect(isPrimaryCustom).toBe(true);
 
   // Verify gradient exists on CTA buttons

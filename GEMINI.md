@@ -1,6 +1,7 @@
 ## Session Memory
 - [2026-04-16] Project: TNA (Total National Address) project for Qatar/KSA market.
-- [2026-04-16] UI/UX Standard: Production-grade, professional registry Arabic (e.g., "سجل الأصول العقارية"), slate-100/200 palette, Rubik/JetBrains Mono fonts.
+- [2026-04-16] UI/UX Standard: Production-grade, professional registry Arabic (e.g., "سجل الأصول العقارية"), slate-100/200 palette, Rubik (Unified for Arabic/English) / JetBrains Mono fonts.
+- [2026-05-17] Standard: All Arabic and English UI text must use 'Rubik' font family. IBM Plex Sans Arabic is removed.
 - [2026-04-16] Technical Stack: Next.js (App Router), Tailwind CSS, TypeScript, Context API for state management.
 - [2026-04-16] Preference: Avoid generic layouts; use backdrop-blur, navy borders for active states, and custom EmptyStates.
 
