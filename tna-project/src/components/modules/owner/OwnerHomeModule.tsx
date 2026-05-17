@@ -16,12 +16,14 @@ import {
   User,
 } from '@phosphor-icons/react';
 import { useLocale } from '@/i18n/LocaleProvider';
+import { useBindingContext } from '@/context/BindingContext';
 import { useMock } from '@/lib/hooks/useMock';
 import { mockProperties } from '@/lib/mock/properties.mock';
 import { mockBindings } from '@/lib/mock/bindings.mock';
 import { mockBalances, mockWeeklyRevenue } from '@/lib/mock/financials.mock';
 import { cn } from '@/lib/utils/cn';
 import Button from '@/components/ui/Button';
+import WithdrawalWizard from './WithdrawalWizard';
 
 export default function OwnerHomeModule() {
   const router = useRouter();
@@ -29,7 +31,9 @@ export default function OwnerHomeModule() {
 
   const { data: properties } = useMock(mockProperties);
   const { data: bindings } = useMock(mockBindings);
-  const balance = mockBalances['user-owner-1'] || 0;
+  const { ownerAccount } = useBindingContext();
+  const [isWithdrawalOpen, setIsWithdrawalOpen] = useState(false);
+  const balance = ownerAccount?.current_balance ?? mockBalances['user-owner-1'] ?? 0;
 
   const pendingBindings = bindings?.filter(b => b.status === 'PENDING') || [];
   const activeBindings = bindings?.filter(b => b.status === 'ACTIVE') || [];
@@ -163,7 +167,7 @@ export default function OwnerHomeModule() {
 
             <div className="pt-2">
               <Button 
-                onClick={() => router.push(`/${locale}/owner/wallet`)}
+                onClick={() => setIsWithdrawalOpen(true)}
                 className="w-full py-4 shadow-glow-primary"
               >
                 {t('owner.home.wallet.withdraw')}
@@ -220,6 +224,12 @@ export default function OwnerHomeModule() {
 
         </div>
       </div>
+
+      <WithdrawalWizard 
+        isOpen={isWithdrawalOpen} 
+        onClose={() => setIsWithdrawalOpen(false)} 
+        balance={balance} 
+      />
     </div>
   );
 }
