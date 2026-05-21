@@ -67,7 +67,12 @@ export default function CarrierHomeModule() {
         <div className="lg:col-span-2 space-y-8">
           
           {/* SCANNER QUICK ACTION */}
-          <section className="relative overflow-hidden rounded-3xl bg-primary text-white p-8 md:p-10 shadow-2xl group cursor-pointer" onClick={() => router.push(`/${locale}/carrier/scan`)}>
+          <section 
+            className="relative overflow-hidden rounded-3xl text-white p-8 md:p-10 shadow-2xl group cursor-pointer bg-cover bg-center" 
+            style={{ backgroundImage: `url('/carrierBanner/carrierBanner.png')` }}
+            onClick={() => router.push(`/${locale}/carrier/scan`)}
+          >
+            <div className="absolute inset-0 bg-black/50 pointer-events-none" />
             <div className="relative z-10 space-y-4 max-w-md">
               <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md">
                 <Scan size={28} weight="bold" />
